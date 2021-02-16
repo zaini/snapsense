@@ -3,6 +3,7 @@ import Home from "./pages/Home.js";
 import About from "./pages/About.js";
 import Profile from "./pages/Profile.js";
 import LoginPage from "./pages/LoginPage.js";
+import PatientsLogPage from "./pages/PatientsLogPage.js";
 
 function App() {
   return (
@@ -34,6 +35,9 @@ function App() {
           </Route>
           <Route path="/login">
             <LoginPage />
+          </Route>
+          <Route path="/patients_logs">
+            <PatientsLogPage />
           </Route>
         </Switch>
       </div>
