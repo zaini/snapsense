@@ -1,8 +1,14 @@
 import React from "react";
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+//import {Formik} from 'formik'
 // import {secureLogin} from "frontend/src/secure_login.svg";
 import {
   Button,
+  FormControl,
+  FormLabel,
+  FormControlLabel,
+  RadioGroup,
+  Radio,
   Grid,
   Paper,
   Avatar,
@@ -13,7 +19,7 @@ import {
 import { useForm } from "react-hook-form";
 
 const LoginForm = (props) => {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, handleChange, value } = useForm();
   const onSubmit = (data) => console.log(data);
   console.log(errors);
 
@@ -22,6 +28,7 @@ const LoginForm = (props) => {
       <Paper elevation={10} style={paperStyle}>
       {/* <img src={secureLogin} /> */}
         <h2>Sign into SnapSense AI</h2>
+        <Avatar></Avatar>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextField
             label="Email"
@@ -41,10 +48,43 @@ const LoginForm = (props) => {
             fullWidth
             required
           />
+
+          <FormControl component="fieldset">
+            <div height= "100px"></div>
+            <FormLabel component="legend">I am a</FormLabel>
+            <RadioGroup 
+              aria-label="userType" 
+              name="userType1" 
+              value={value} 
+              onChange={handleChange}>
+              <Grid> 
+              <FormControlLabel 
+              value="patient" 
+              control={<Radio />} 
+              label="Patient" 
+              labelPlacement = "bottom"
+              />
+              <FormControlLabel 
+              value="doctor" 
+              control={<Radio />} 
+              label="Doctor" 
+              labelPlacement = "bottom"
+
+              />
+              </Grid>
+            </RadioGroup>
+          </FormControl>
+
+
+
           
-          <Button type="submit" color="primary" variant="contained" fullWidth>
+          <Button 
+            type="submit" 
+            color="primary" 
+            variant="contained" 
+            fullWidth>
             Login
-          <LockOpenIcon />
+          {/* <LockOpenIcon /> */}
           </Button>
           <Typography>
             <Link href="#">Forgot password?</Link>
