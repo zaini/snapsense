@@ -1,11 +1,20 @@
-const express = require('express')
-const app = express()
-const port = 8080
+const { ApolloServer } = require('apollo-server');
 
-app.get('/', (req, res) => {
-  res.send('GET works!!')
-})
+const typeDefs = require('./graphql/typeDefs');
+const resolvers = require('./graphql/resolvers');
+const port = process.env.PORT || 5000;
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req }) => ({ req })
+});
+
+
+// TODO: Connect to database
+
+
+server.listen({ port }).then(({ url }) => {
+  console.log(`🚀  Server ready at ${url}`);
+});
