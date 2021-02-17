@@ -1,10 +1,5 @@
 const { DataTypes } = require("sequelize");
 
-// Example Patient model from database to be used in the resolvers
-// Potentially using https://sequelize.org/
-
-// example:
-
 const patient_model = (sequelize) => {
   const patient = sequelize.define("patient", {
     patient_id: {
