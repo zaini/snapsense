@@ -1,4 +1,6 @@
 import React from "react";
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+// import {secureLogin} from "frontend/src/secure_login.svg";
 import {
   Button,
   Grid,
@@ -18,7 +20,8 @@ const LoginForm = (props) => {
   return (
     <Grid align="center">
       <Paper elevation={10} style={paperStyle}>
-        <h2>Sign into SnapSense</h2>
+      {/* <img src={secureLogin} /> */}
+        <h2>Sign into SnapSense AI</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextField
             label="Email"
@@ -38,8 +41,10 @@ const LoginForm = (props) => {
             fullWidth
             required
           />
+          
           <Button type="submit" color="primary" variant="contained" fullWidth>
             Login
+          <LockOpenIcon />
           </Button>
           <Typography>
             <Link href="#">Forgot password?</Link>
@@ -53,7 +58,7 @@ const LoginForm = (props) => {
 const paperStyle = {
   padding: 20,
   height: "70vh",
-  width: 300,
+  width: "75vw",
   margin: "20px auto",
 };
 
