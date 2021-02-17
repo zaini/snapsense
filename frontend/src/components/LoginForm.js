@@ -1,6 +1,8 @@
 import React from "react";
 import { Button, Grid, Paper, Avatar, TextField, Link, Typography} from "@material-ui/core";
 import { useForm } from 'react-hook-form';
+import {secureLogin} from './secure_login.svg';
+
 
 const LoginForm = (props) => {
   const { register, handleSubmit, errors } = useForm();
@@ -12,6 +14,7 @@ const LoginForm = (props) => {
   return (
     <Grid  align = 'center'>
       <Paper elevation = {10} style = {paperStyle}>
+        <img src={secureLogin}/>
         <Avatar>K</Avatar>
         <h2>Sign in</h2>
     <form onSubmit={handleSubmit(onSubmit)}>
