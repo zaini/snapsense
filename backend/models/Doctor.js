@@ -1,28 +1,27 @@
-// const { DataTypes } = require("sequelize");
+const { DataTypes } = require("sequelize");
 
-// const sequelize = require("../db");
+const Admin = require("./Admin");
+const Patient = require("./Patient");
 
-// const Doctor = () => {
-//   return sequelize.define("doctor", {
-//     doctor_id: {
-//       type: DataTypes.INTEGER,
-//       primaryKey: true,
-//       autoIncrement: true,
-//     },
-//     doctor_fname: DataTypes.STRING,
-//     doctor_lname: DataTypes.STRING,
-//     doctor_email: DataTypes.STRING,
-//     doctor_password: DataTypes.STRING,
-//     doctor_date_joined: DataTypes.DATE,
-//   });
-// };
+const sequelize = require("../db");
 
-// module.exports = Doctor();
-// const Doctor = require("./models/Doctor.js");
+const Doctor = () => {
+  const doctor = sequelize.define("doctor", {
+    doctor_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    doctor_fname: DataTypes.STRING,
+    doctor_lname: DataTypes.STRING,
+    doctor_email: DataTypes.STRING,
+    doctor_password: DataTypes.STRING,
+    doctor_date_joined: DataTypes.DATE,
+  });
+  doctor.belongsTo(Admin, { foreignKey: "admin_id" });
+  doctor.belongsToMany(Patient, { through: 'doctor_patient_relations', foreignKey: 'doctor_id' });
+  Patient.belongsToMany(doctor, { through: 'doctor_patient_relations', foreignKey: 'patient_id' });
+  return doctor;
+};
 
-// const doc1 = Doctor.create({
-//   doctor_fname: "MD",
-//   doctor_lname: "House",
-//   doctor_email: "HOUSE@gmail.com",
-//   doctor_password: "tripleshotrespresso",
-//   doctor_date_joined: (new Date()).toISOString()});
+module.exports = Doctor();
