@@ -1,7 +1,9 @@
 const { DataTypes } = require("sequelize");
 
-const patient_model = (sequelize) => {
-  const patient = sequelize.define("patient", {
+const sequelize = require("../db");
+
+const Patient = () => {
+  return sequelize.define("patient", {
     patient_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -13,8 +15,6 @@ const patient_model = (sequelize) => {
     patient_password: DataTypes.STRING,
     patient_date_joined: DataTypes.DATE,
   });
-
-  return patient;
 };
 
-module.exports = patient_model;
+module.exports = Patient();
