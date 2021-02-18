@@ -1,25 +1,68 @@
 import React from "react";
-import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import { Container, List, ListItem, ListItemText, Grid, Paper } from "@material-ui/core";
 
 const UserInfo = (props) => {
   return (
-    <div className="UserInfo">
+    <Container className="UserInfo">
       <h1>Your information</h1>
-      <div>
-        <label for="fistname">First name</label>
-        <p>{props.firstName}</p>
-      </div>
-      <div>
-        <label for="lastname">Last name</label>
-        <p>{props.lastName}</p>
-      </div>
-      <div>
-        <label for="email">Email</label>
-        <p>{props.email}</p>
-      </div>
-      <button onClick={() => props.history.push("/about")}> Edit Profile </button>
-    </div>
+      <Paper>
+        <Grid container direction="row" alignItems="center" justify="center">
+          <Grid item xs={12}>
+            <List>
+              <ListItem>
+                <ListItemText
+                  primary="First name"
+                  secondary={props.firstName}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemText
+                  primary="Last name"
+                  secondary={props.lastName}
+                />
+              </ListItem>
+            </List>
+          </Grid>
+
+          <Grid item xs={6}>
+            <List>
+              <ListItem>
+                <ListItemText
+                  primary="Email"
+                  secondary={props.email}
+                />
+              </ListItem>
+            </List>
+          </Grid>
+
+          <Grid item xs={6}>
+            <Button component={Link} to="/about" color="primary">
+              Change email
+        </Button>
+          </Grid>
+
+          <Grid item xs={6}>
+            <List>
+              <ListItem>
+                <ListItemText
+                  primary="Password"
+                  secondary={props.password}
+                />
+              </ListItem>
+            </List>
+          </Grid>
+
+          <Grid item xs={6}>
+            <Button component={Link} to="/about" color="primary">
+              Change password
+        </Button>
+          </Grid>
+        </Grid>
+      </Paper>
+    </Container >
   );
 }
 
-export default withRouter(UserInfo);
+export default UserInfo;
