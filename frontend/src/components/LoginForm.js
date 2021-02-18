@@ -1,5 +1,7 @@
 import { useForm } from "react-hook-form";
 import Error from "../components/Error";
+import { Button, Input, InputAdornment } from "@material-ui/core";
+import { MailOutline, LockOutlined } from "@material-ui/icons";
 
 const LoginForm = () => {
   const { register, handleSubmit, errors } = useForm();
@@ -8,24 +10,36 @@ const LoginForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Error errors={errors} />
-
       <br />
-
-      <input
+      <Input
         type="text"
         placeholder="Email"
         name="Email"
         ref={register({ required: true, pattern: /^\S+@\S+$/i })}
+        startAdornment={
+          <InputAdornment position="start">
+            <MailOutline />
+          </InputAdornment>
+        }
       />
       <br />
-      <input
+      <br />
+      <Input
         type="password"
         placeholder="Password"
         name="Password"
         ref={register({ required: true })}
+        startAdornment={
+          <InputAdornment position="start">
+            <LockOutlined />
+          </InputAdornment>
+        }
       />
       <br />
-      <input type="submit" value="Login" />
+      <br />
+      <Button name="submit" variant="contained" color="primary" type="submit">
+        Submit
+      </Button>
     </form>
   );
 };

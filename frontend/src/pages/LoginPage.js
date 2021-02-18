@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Grid } from "@material-ui/core";
+
 import LoginForm from "../components/LoginForm";
 import AccountTypeSelector from "../components/AccountTypeSelector";
 
@@ -21,7 +23,9 @@ const LoginPage = () => {
         accountType={accountType}
       />
 
-      <p>Hello {accountType}! Please fill out the form below to get started</p>
+      <h4>
+        Hello {accountType}! Please fill out the form below to get started
+      </h4>
 
       <LoginForm
         email={email}
@@ -30,7 +34,9 @@ const LoginPage = () => {
         setPassword={setPassword}
       />
 
-      <p>No account? Signup</p>
+      <p>
+        No account? <Link to={"/login"}>Sign up</Link>
+      </p>
     </Grid>
   );
 };
