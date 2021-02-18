@@ -12,7 +12,6 @@ const server = new ApolloServer({
   context: ({ req }) => ({ req }),
 });
 
-
 server.listen({ port }).then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);
 });
