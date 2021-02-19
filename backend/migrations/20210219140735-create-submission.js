@@ -8,8 +8,8 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      deadline: {
-        type: Sequelize.DATE
+      patient_id: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

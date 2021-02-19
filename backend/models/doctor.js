@@ -9,10 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Doctor.belongsTo(models.Admin);
+      Doctor.belongsTo(models.Admin, { foreignKey: "admin_id" });
       Doctor.belongsToMany(models.Patient, {
-        through: "doctor_patient_relations",
+        through: "Doctor_Patient_Relation",
+        foreignKey: "doctor_id",
       });
+      Doctor.hasMany(models.Submission);
     }
   }
   Doctor.init(
@@ -21,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       lname: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
+      admin_id: DataTypes.INTEGER,
     },
     {
       sequelize,

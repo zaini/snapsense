@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Admin.belongsTo(models.Hospital);
+      Admin.belongsTo(models.Hospital, { foreignKey: "hospital_id" });
       Admin.hasMany(models.Doctor);
     }
   }
@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       lname: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
+      hospital_id: DataTypes.INTEGER,
     },
     {
       sequelize,

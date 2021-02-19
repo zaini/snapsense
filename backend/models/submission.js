@@ -9,13 +9,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Submission.belongsTo(models.Patient);
+      Submission.belongsTo(models.Patient, { foreignKey: "patient_id" });
+      Submission.belongsTo(models.Doctor, { foreignKey: "doctor_id" });
       Submission.hasMany(models.Image);
     }
   }
   Submission.init(
     {
+      patient_id: DataTypes.INTEGER,
+      doctor_id: DataTypes.INTEGER,
       deadline: DataTypes.DATE,
+      fulfilled: DataTypes.DATE,
     },
     {
       sequelize,
