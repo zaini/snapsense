@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const navBarTable = {
-  admin: ["account info", <Button value="logout" onCLick={() => setAccountType("")}/>],
+  admin: ["account info", "logout"],
   patient: ["history", "log out"],
   doctor: ["Patient list", "log out"],
 };
