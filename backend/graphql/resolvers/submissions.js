@@ -1,10 +1,10 @@
 const { Submission } = require("../../models/index.js");
 
 module.exports = {
-    Query: {
+  Query: {
 
-    },
-    Mutation: {
-        
-    },
+  },
+  Mutation: {
+    
+  },
 };
