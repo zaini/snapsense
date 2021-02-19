@@ -73,5 +73,8 @@ module.exports = gql`
 
   type Query {
     helloWorld: String!
+    getAdmins: [Admin!]
+    getDoctors: [Doctor!]
+    getSubmissions: [Submission!]
   }
 `;
