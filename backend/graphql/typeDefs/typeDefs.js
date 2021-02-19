@@ -56,7 +56,7 @@ module.exports = gql`
   type Submission {
     id: ID!
     patient_id: ID!
-    doctor_id: ID!
+    doctor_id: ID
     deadline: String!
     fulfilled: String!
     createdAt: String!
