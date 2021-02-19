@@ -16,6 +16,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
+import NavBarController from "../../controller/NavBarController";
 
 const drawerWidth = 240;
 
@@ -86,6 +87,8 @@ function NavBar() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const navBarController = new NavBarController(); //TODO: pass a state (type of user)
+  const menuList = navBarController.getMenuList();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -134,7 +137,7 @@ function NavBar() {
         </div>
         <Divider />
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+          {menuList.map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
