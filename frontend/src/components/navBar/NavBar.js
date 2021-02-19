@@ -87,8 +87,25 @@ function NavBar() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const navBarController = new NavBarController(); //TODO: pass a state (type of user)
-  const menuList = navBarController.getMenuList();
+  // const navBarController = new NavBarController(); //TODO: pass a state (type of user)
+  // const menuList = navBarController.getMenuList();
+  const accountType = "patient";
+  const patientMenu = ["Account info", "Log out"];
+  const doctorMenu = ["Patients", "Log out"];
+  const adminMenu = ["Log out"];
+
+  if (accountType == "patient") {
+    var menuList = patientMenu;
+  }
+  else if (accountType == "doctor") {
+    var menuList = doctorMenu;
+  }
+  else if (accountType == "admin") {
+    var menuList = adminMenu;
+  }
+  else {
+    var menuList = [];
+  }
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -109,7 +126,7 @@ function NavBar() {
             // edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
           >
-            =
+            = 
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             Logo
