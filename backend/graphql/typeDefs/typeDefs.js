@@ -18,31 +18,31 @@ module.exports = gql`
   # The attribute 'token' will be used to determine whether the user is logged
   # in or not, it represents a JWT token
   type Admin {
-    id: Int!
+    id: ID!
     fname: String!
     lname: String!
     email: String!
     password: String!
     role: AccountRole!
-    hospital_id: Int!
+    hospital_id: ID!
     token: String!
     createdAt: String!
   }
 
   type Doctor {
-    id: Int!
+    id: ID!
     fname: String!
     lname: String!
     email: String!
     password: String!
     role: AccountRole!
-    admin_id: Int!
+    admin_id: ID!
     token: String!
     createdAt: String!
   }
 
   type Patient {
-    id: Int!
+    id: ID!
     fname: String!
     lname: String!
     email: String!
@@ -53,9 +53,9 @@ module.exports = gql`
   }
 
   type Submission {
-    id: Int!
-    patient_id: Int!
-    doctor_id: Int!
+    id: ID!
+    patient_id: ID!
+    doctor_id: ID!
     deadline: String!
     fulfilled: String!
   }
