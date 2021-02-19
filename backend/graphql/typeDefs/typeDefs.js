@@ -4,6 +4,7 @@ module.exports = gql`
   type Hospital {
     name: String!
     contact_email: String!
+    createdAt: String!
   }
 
   # Each 'user' type will have to have an AccountRole associated with it
@@ -58,6 +59,15 @@ module.exports = gql`
     doctor_id: ID!
     deadline: String!
     fulfilled: String!
+    createdAt: String!
+  }
+
+  type Image {
+    id: ID!
+    name: ID!
+    url: ID!
+    submission_id: ID!
+    createdAt: String!
   }
 
   type File {
