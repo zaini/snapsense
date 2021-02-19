@@ -14,18 +14,18 @@ class ImageUpload extends React.Component {
             pictures: this.state.pictures.concat(picture),
         });
     }
- 
+   
     render() {
         return (
             <div className='ImageUploader' style={{ display: 'flex', justifyContent: 'center' }}>
-                <div>
-                    <h1> Upload Your Image </h1>
+                <div style={{width:'500px', heigh:'auto'}}>
                     <ImageUploader
                         withIcon={true}
-                        buttonText='Choose images'
+                        withPreview={true}
+                        buttonText='Choose images to Upload'
                         onChange={this.onDrop}
                         imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                        maxFileSize={5242880}
+                        maxFileSize={5242880}                      
                         />
                 </div>
             </div>

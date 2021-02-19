@@ -3,7 +3,6 @@ import QuestionBox from "../components/QuestionBox/QuestionBox";
 import ImageUpload from "../components/ImageUpload/ImageUpload";
 import Logo from "../components/Logo/Logo";
 import ParticlesBG from '../components/Particles/Particles';
-// import ImageRecognition from "../components/ImageRecognition/ImageRecognition";
 
 
 const Home = () => {
@@ -11,8 +10,7 @@ const Home = () => {
     <div>
       <ParticlesBG />
       <Logo />
-      <ImageUpload />
-      {/* <ImageRecognition /> */}
+      <ImageUpload />      
       <QuestionBox />
     </div>
   );
