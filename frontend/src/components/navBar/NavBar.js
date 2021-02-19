@@ -17,6 +17,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import { Link } from "react-router-dom";
+import {navBarOptions, navBarLinks} from "../../model/navBarModels";
 
 const drawerWidth = 240;
 
@@ -83,24 +84,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const navBarTable = {
-  admin: ["account info", "logout"],
-  patient: ["history", "log out"],
-  doctor: ["Patient list", "log out"],
-};
-const navBarTableExtra = {
-  "account info": "./accountInfo",
-  "log out": "./home",
-};
-
 function NavBar() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
-  const [accountType, setAccountType] = useState();
+  const [accountType, setAccountType] = useState("admin");
 
-  let menuList = navBarTable[accountType] || [
+  let menuList = navBarOptions[accountType] || [
     <Link to="/">Home</Link>,
     <Link to="/about">About</Link>,
   ];
