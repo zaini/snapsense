@@ -2,6 +2,7 @@ import { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import MenuIcon from '@material-ui/icons/Menu';
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import clsx from "clsx";
@@ -14,10 +15,8 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import { Link } from "react-router-dom";
-import {navBarOptions, navBarLinks} from "../../model/navBarModels";
+import {navBarOptions, navBarLinks, navBarIcons} from "../../model/navBarModels";
 
 const drawerWidth = 240;
 
@@ -89,7 +88,7 @@ function NavBar() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
-  const [accountType, setAccountType] = useState("admin");
+  const [accountType, setAccountType] = useState("doctor");
 
   let menuList = navBarOptions[accountType] || [
     <Link to="/">Home</Link>,
@@ -115,7 +114,7 @@ function NavBar() {
             // edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
           >
-            =
+          <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             Logo
@@ -146,9 +145,9 @@ function NavBar() {
           {menuList.map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {navBarIcons[text]}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={navBarLinks[text]} />
             </ListItem>
           ))}
         </List>
