@@ -1,6 +1,10 @@
-// Once all the resolvers are setup, require them here
+const imageResolvers = require("./images");
 
 module.exports = {
+  Mutation: {
+    ...imageResolvers.Mutation,
+  },
+
   Query: {
     helloWorld() {
       return "Hello World";
