@@ -1,8 +1,8 @@
-import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import { useState } from "react";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -33,29 +33,29 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   hide: {
-    display: "none"
+    display: "none",
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0
+    flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
   },
   drawerHeader: {
     display: "flex",
@@ -63,49 +63,44 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
+      duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: -drawerWidth
+    marginLeft: -drawerWidth,
   },
   contentShift: {
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
+      duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: 0
-  }
+    marginLeft: 0,
+  },
 }));
+
+const navBarTable = {
+  admin: ["account info", "log out"],
+  patient: ["history", "log out"],
+  doctor: ["Patient list", "log out"],
+};
+const navBarTableExtra = {
+  "account info": "./accountInfo",
+  "log out": "./home",
+};
 
 function NavBar() {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  // const navBarController = new NavBarController(); //TODO: pass a state (type of user)
-  // const menuList = navBarController.getMenuList();
-  const accountType = "patient";
-  const patientMenu = ["Account info", "Log out"];
-  const doctorMenu = ["Patients", "Log out"];
-  const adminMenu = ["Log out"];
+  const [open, setOpen] = useState(false);
 
-  if (accountType == "patient") {
-    var menuList = patientMenu;
-  }
-  else if (accountType == "doctor") {
-    var menuList = doctorMenu;
-  }
-  else if (accountType == "admin") {
-    var menuList = adminMenu;
-  }
-  else {
-    var menuList = [];
-  }
+  const [accountType, setAccountType] = useState("admin");
+
+  let menuList = navBarTable[accountType] || [];
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -126,7 +121,7 @@ function NavBar() {
             // edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
           >
-            = 
+            =
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             Logo
@@ -140,7 +135,7 @@ function NavBar() {
         anchor="left"
         open={open}
         classes={{
-          paper: classes.drawerPaper
+          paper: classes.drawerPaper,
         }}
       >
         <div className={classes.drawerHeader}>
@@ -165,7 +160,7 @@ function NavBar() {
         </List>
       </Drawer>
     </div>
-  )
+  );
 }
 
 export default NavBar;
