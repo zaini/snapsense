@@ -9,32 +9,27 @@ const fs = require("fs");
 //////AWS//////
 const port = process.env.PORT || 5000;
 
-
 //////AWS//////
-const { S3Client, PutObjectCommand  } = require("@aws-sdk/client-s3");
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const s3 = new S3Client({ region: process.env.AWS_REGION });
-
 
 const file = "toupload/test.jpg";
 
-const uploadParams = { Bucket: "snapsensebucket", ACL:'public-read' };
+const uploadParams = { Bucket: "snapsensebucket", ACL: "public-read" };
 uploadParams.Key = path.basename(file);
-
 
 // Configure the file stream and obtain the upload parameters
 var fileStream = fs.createReadStream(file);
-fileStream.on('error', function(err) {
-  console.log('File Error', err);
+fileStream.on("error", function (err) {
+  console.log("File Error", err);
 });
 uploadParams.Body = fileStream;
 uploadParams.Key = path.basename(file);
 
 const command = new PutObjectCommand(uploadParams);
 
-
 // promise method.
-s3
-  .send(command)
+s3.send(command)
   .then((data) => {
     console.log("Success", data);
   })
