@@ -88,12 +88,9 @@ function NavBar() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
-  const [accountType, setAccountType] = useState("doctor");
+  const [accountType, setAccountType] = useState("patient");
 
-  let menuList = navBarOptions[accountType] || [
-    <Link to="/">Home</Link>,
-    <Link to="/about">About</Link>,
-  ];
+  let menuList = navBarOptions[accountType] || null;
 
   const handleDrawerOpen = () => {
     setOpen(true);
