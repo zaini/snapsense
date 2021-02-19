@@ -6,7 +6,7 @@ const imageUploader = require("./utils/imageUploader");
 
 const port = process.env.PORT || 5000;
 
-imageUploader("./nasa.jpg");
+// imageUploader("./nasa.jpg");
 
 // GraphQL Apollo Connection
 const server = new ApolloServer({
