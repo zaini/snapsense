@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Admin.belongsTo(models.Hospital, { foreignKey: "hospital_id" });
-      Admin.hasMany(models.Doctor);
+      Admin.hasMany(models.Doctor, { foreignKey: "admin_id" });
     }
   }
   Admin.init(
