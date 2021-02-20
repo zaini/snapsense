@@ -7,11 +7,7 @@ import { useForm } from 'react-hook-form';
 const PasswordForm = (props) => {
     const { register, handleSubmit, errors } = useForm();
 
-    const onSubmit = data => console.log("Password updated");
-    // handleSubmit(event) {
-    //     alert('A name was submitted: ' + this.state.value);
-    //     event.preventDefault();
-    // }
+    const onSubmit = data => console.log("Password updated"); // not working yet
 
     return (
         <Container>
