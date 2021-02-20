@@ -5,7 +5,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import clsx from "clsx";
 import { Link } from "react-router-dom";
-import {navbarOptions, navbarLinks, navbarIcons} from "../../model/NavbarModels";
+import {navbarOptions, navbarLinks, navbarIcons} from "../../model/navbarModels";
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 const drawerWidth = 240;
