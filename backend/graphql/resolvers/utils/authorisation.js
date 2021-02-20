@@ -2,10 +2,11 @@ const argon2 = require("argon2");
 const { sign } = require("jsonwebtoken");
 require("dotenv").config();
 
+const {
+  createAccessToken,
+  createRefreshToken,
+} = require("../utils/authTokens");
 const { Admin, Doctor, Patient } = require("../../../models/index");
-
-const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
-const REFRESH_TOKEN_SECRET_KEY = process.env.REFRESH_TOKEN_SECRET_KEY;
 
 module.exports = {
   Query: {},
@@ -88,13 +89,7 @@ module.exports = {
       // This is the refresh token, which is stored in the cookie
       res.cookie(
         "jid",
-        sign(
-          { id: user.id, accountType: account_type },
-          REFRESH_TOKEN_SECRET_KEY,
-          {
-            expiresIn: "90d",
-          }
-        ),
+        createRefreshToken({ id: user.id, accountType: account_type }),
         {
           htmlOnly: true,
         }
@@ -102,13 +97,10 @@ module.exports = {
 
       // This is the actual token, not stored in the cookie.
       return {
-        accessToken: sign(
-          { id: user.id, accountType: account_type },
-          ACCESS_TOKEN_SECRET_KEY,
-          {
-            expiresIn: "30m",
-          }
-        ),
+        accessToken: createAccessToken({
+          id: user.id,
+          accountType: account_type,
+        }),
       };
     },
   },
