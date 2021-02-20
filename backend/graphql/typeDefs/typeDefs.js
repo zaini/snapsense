@@ -12,7 +12,7 @@ module.exports = gql`
   }
 
   # access token will include information such as account type/role
-  type LoginResponse {
+  type AuthResponse {
     accessToken: String
   }
 
@@ -120,13 +120,15 @@ module.exports = gql`
       lname: String!
       email: String!
       password: String!
+      hospital_id: ID
+      admin_id: ID
       account_type: String!
     ): Boolean
     login(
       email: String!
       password: String!
       account_type: String!
-    ): LoginResponse
+    ): AuthResponse
   }
 
   type Query {
