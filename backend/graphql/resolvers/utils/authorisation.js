@@ -1,56 +1,92 @@
 const argon2 = require("argon2");
-require("dotenv").config();
 const { UserInputError, ApolloError } = require("apollo-server");
+const { verify } = require("jsonwebtoken");
+require("dotenv").config();
 
 const { createAccessToken } = require("../utils/authTokens");
 const { Admin, Doctor, Patient } = require("../../../models/index");
+const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
 
 module.exports = {
   Query: {},
   Mutation: {
     register: async (_, user_details) => {
-      const { fname, lname, email, password, account_type } = user_details;
-      const basic_user_details = { fname, lname, email };
-
+      const { fname, lname, password, invitationToken } = user_details;
+      const { inviterEmail, newAccountEmail, accountType } = verify(
+        invitationToken,
+        ACCESS_TOKEN_SECRET_KEY
+      );
       const hashedPassword = await argon2.hash(password);
+      let doctor;
 
-      let user;
-      switch (account_type) {
-        case "ADMIN":
-          user = new Admin({
-            ...basic_user_details,
-            password: hashedPassword,
-            hospital_id: user_details.hospital_id,
-            createdAt: new Date(),
-          });
-          break;
+      switch (accountType) {
         case "DOCTOR":
-          user = new Doctor({
-            ...basic_user_details,
-            password: hashedPassword,
-            admin_id: user_details.admin_id,
-            createdAt: new Date(),
+          const admin = await Admin.findOne({
+            where: { email: inviterEmail },
           });
+          doctor = await Doctor.findOne({
+            where: { email: newAccountEmail },
+          });
+          if (admin) {
+            // admin exists
+            if (!doctor) {
+              // Doctor is a new doctor
+              doctor = await new Doctor({
+                fname,
+                lname,
+                password: hashedPassword,
+                email: newAccountEmail,
+                admin_id: admin.getDataValue("id"),
+              }).save();
+
+              return true; // New doctor has been created successfully
+            } else {
+              // This doctor already exists
+              throw new ApolloError("Invalid credentials", 400);
+            }
+          } else {
+            // Invalid admin
+            throw new ApolloError("Invalid invitation", 400);
+          }
           break;
+
         case "PATIENT":
-          user = new Patient({
-            ...basic_user_details,
-            password: hashedPassword,
-            createdAt: new Date(),
+          doctor = await Doctor.findOne({
+            where: { email: inviterEmail },
           });
+          let patient = await Patient.findOne({
+            where: { email: newAccountEmail },
+          });
+          if (doctor) {
+            // doctor exists
+            if (!patient) {
+              // Patient does not exist
+              patient = await new Patient({
+                fname,
+                lname,
+                password: hashedPassword,
+                email: newAccountEmail,
+              }).save();
+
+              // Add the relationship between the doctor and patient
+              await doctor.addPatients(patient);
+              await patient.addDoctors(doctor);
+
+              return true;
+            } else {
+              // This patient exists
+              throw new ApolloError("Invalid credentials", 400);
+            }
+          } else {
+            // Invalid doctor
+            throw new ApolloError("Invalid invitation", 400);
+          }
           break;
+
         default:
+          throw new ApolloError("Invalid invitation", 400);
           break;
       }
-
-      try {
-        user.save();
-      } catch (error) {
-        console.log(error);
-        return false;
-      }
-
-      return true;
     },
     login: async (_, user_details) => {
       const { email, password, account_type } = user_details;
@@ -69,7 +105,7 @@ module.exports = {
           break;
         default:
           // Account type is invalid
-          throw new ApolloError("Malformed expression", 400)
+          throw new ApolloError("Malformed expression", 400);
           break;
       }
 
