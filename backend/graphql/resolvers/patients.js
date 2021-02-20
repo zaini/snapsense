@@ -16,13 +16,13 @@ module.exports = {
     createPatient: async (_, user_details) => {
       const hashedPassword = await argon2.hash(user_details.password);
 
-      const patient = new Patient({
+      const patient = await new Patient({
         ...user_details,
         password: hashedPassword,
         createdAt: new Date(),
-      });
+      }).save();
 
-      return { ...patient.save(), role: "patient" };
+      return { ...patient.dataValues, role: "PATIENTS" };
     },
   },
 };
