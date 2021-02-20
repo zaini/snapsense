@@ -72,7 +72,7 @@ function NavBar() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
-  const [accountType, setAccountType] = useState("patient");
+  const [accountType, setAccountType] = useState("admin");
 
   let menuList = navBarOptions[accountType] || null;
 

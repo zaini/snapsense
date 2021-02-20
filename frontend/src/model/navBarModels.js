@@ -10,7 +10,7 @@ import DynamicFeedIcon from '@material-ui/icons/DynamicFeed';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 
 export const navBarOptions = {
-  admin: ["Account info", "Doctors", "Patients", "Invite patient", "Log out"],
+  admin: ["Account info", "Doctors", "Patients", "Invite doctor", "Log out"],
   patient: ["Account info", "History", "Upload report", "Log out"],
   doctor: ["Account info", "Patients", "Invite patient", "Latest uploads", "Log out"],
 };
@@ -21,6 +21,7 @@ export const navBarLinks = {
   "Doctors": <Link to="/">Doctors</Link>,
   "Patients": <Link to="/">Patients</Link>,
   "Invite patient": <Link to="/">Invite Patient</Link>,
+  "Invite doctor": <Link to="/">Invite Doctor</Link>,
   "History": <Link to="/">History</Link>,
   "Upload report": <Link to="/">Upload report</Link>,
   "Latest uploads": <Link to="/">Latest uploads</Link>,
@@ -33,6 +34,7 @@ export const navBarIcons = {
   "Patients": <GroupIcon />,
   "Upload report": <NoteAddIcon />,
   "Invite patient": <ContactMailIcon />,
+  "Invite doctor": <ContactMailIcon />,
   "History": <HistoryIcon />,
   "Latest uploads": <DynamicFeedIcon />,
   "Log out": <ExitToAppIcon />,
