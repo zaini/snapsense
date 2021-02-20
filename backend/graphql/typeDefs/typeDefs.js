@@ -2,6 +2,7 @@ const { gql } = require("apollo-server");
 
 module.exports = gql`
   type Hospital {
+    id: ID!
     name: String!
     contact_email: String!
     createdAt: String!
@@ -77,11 +78,13 @@ module.exports = gql`
   }
 
   type Mutation {
+    createHospital(name: String!, contact_email: String!): Hospital
     singleUpload(file: Upload!): File!
     singleUploadStream(file: Upload!): File!
   }
 
   type Query {
+    getHospitals: [Hospital!]
     getAdmins: [Admin!]
     getDoctors: [Doctor!]
     getSubmissions: [Submission!]
