@@ -1,10 +1,7 @@
 const argon2 = require("argon2");
 require("dotenv").config();
 
-const {
-  createAccessToken,
-  createRefreshToken,
-} = require("../utils/authTokens");
+const { createAccessToken } = require("../utils/authTokens");
 const { Admin, Doctor, Patient } = require("../../../models/index");
 
 module.exports = {
@@ -85,19 +82,10 @@ module.exports = {
 
       // console.log("Correct user details");
 
-      // This is the refresh token, which is stored in the cookie
-      res.cookie(
-        "jid",
-        createRefreshToken({ id: user.id, accountType: account_type }),
-        {
-          htmlOnly: true,
-        }
-      );
-
       // This is the actual token, not stored in the cookie.
       return {
         accessToken: createAccessToken({
-          id: user.id,
+          ...user,
           accountType: account_type,
         }),
       };
