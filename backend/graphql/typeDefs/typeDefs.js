@@ -131,5 +131,6 @@ module.exports = gql`
     getPatients: [Patient!]
     getSubmissions: [Submission!]
     getImages: [Image!]
+    onlyPatients: String!
   }
 `;

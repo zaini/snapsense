@@ -11,7 +11,7 @@ const app = express();
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req, res }) => ({ req, res }),
+  context: ({ req, res, payload }) => ({ req, res, payload }),
 });
 
 apolloServer.applyMiddleware({ app });

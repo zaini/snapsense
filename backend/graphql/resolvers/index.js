@@ -1,7 +1,9 @@
 const argon2 = require("argon2");
+require("dotenv").config();
 
 const { Patient } = require("../../models/index.js");
-const { sign } = require("jsonwebtoken");
+const { sign, verify } = require("jsonwebtoken");
+const isAuth = require("../../utils/isAuth");
 
 const hospitalResolvers = require("./hospitals");
 const adminResolvers = require("./admins");
@@ -9,6 +11,9 @@ const doctorResolvers = require("./doctors");
 const patientResolvers = require("./patients");
 const submissionResolvers = require("./submissions");
 const imageResolvers = require("./images");
+
+const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
+const REFRESH_TOKEN_SECRET_KEY = process.env.REFRESH_TOKEN_SECRET_KEY;
 
 module.exports = {
   Mutation: {
@@ -60,7 +65,7 @@ module.exports = {
         "jid",
         sign(
           { id: patient.id, accountType: "patient" },
-          "anothersecrettokenkey",
+          REFRESH_TOKEN_SECRET_KEY,
           {
             expiresIn: "90d",
           }
@@ -74,7 +79,7 @@ module.exports = {
       return {
         accessToken: sign(
           { id: patient.id, accountType: "patient" },
-          "secrettokenkey",
+          ACCESS_TOKEN_SECRET_KEY,
           {
             expiresIn: "30m",
           }
@@ -90,5 +95,24 @@ module.exports = {
     ...patientResolvers.Query,
     ...submissionResolvers.Query,
     ...imageResolvers.Query,
+    onlyPatients: (_, __, { req, res, payload }) => {
+      const authorization = req.headers["authorization"];
+
+      if (!authorization) {
+        throw new Error("Not authenticated");
+      }
+
+      try {
+        const token = authorization.split(" ")[1];
+        console.log("token", token);
+        const new_payload = verify(token, ACCESS_TOKEN_SECRET_KEY);
+        payload = new_payload;
+        console.log(payload);
+      } catch (error) {
+        throw new Error(error);
+      }
+
+      return `it works! your id is ${payload.id} and yoru account type is ${payload.accountType}`;
+    },
   },
 };
