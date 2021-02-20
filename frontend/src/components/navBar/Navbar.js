@@ -8,6 +8,86 @@ import { Link } from "react-router-dom";
 import {navbarOptions, navbarLinks, navbarIcons} from "../../models/navbarModels";
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
+
+function Navbar() {
+  const classes = useStyles();
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    setOpen(false);
+  },[]) 
+  const [accountType, setAccountType] = useState("admin");
+  const [isLoggedIn, setLogedStatus] = useState(true);
+  //const isLoggedIn = window.localStorage.getItem("authUser") ? true : false;
+
+  let menuList = navbarOptions[accountType] || null;
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  const handleClickAway = () => {
+    setOpen(false);
+  };
+
+  return (
+
+    <ClickAwayListener
+    mouseEvent="onMouseDown"
+    touchEvent="onTouchStart"
+    onClickAway={handleClickAway}
+    >
+      <div>
+        <AppBar position="static">
+          <Toolbar>
+            <Link to='/' className={classes.title}>
+                Logo
+            </Link>               
+            {isLoggedIn &&<IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              className={clsx(classes.menuButton, open && classes.hide)}
+            >
+            <MenuIcon />
+            </IconButton>}
+          </Toolbar>
+      </AppBar>
+       <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="right"
+        open={open}
+        classes={{
+        paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            <CloseIcon />
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          {menuList.map((text, index) => (
+            <ListItem button key={text} onClick = {() => setOpen(false)}>
+              <ListItemIcon>
+                {navbarIcons[text]}
+              </ListItemIcon>
+              <ListItemText primary={navbarLinks[text]} />
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
+    </div>
+   </ClickAwayListener>
+ );
+};
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -66,83 +146,5 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 0,
   },
 }));
-
-function Navbar() {
-  const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = useState(false);
-  useEffect(() => {
-    setOpen(false);
-  },[]) 
-  const [accountType, setAccountType] = useState("admin");
-  const [logStatus, setLogStatus] = useState("notLogged")
-
-  let menuList = navbarOptions[accountType] || null;
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  const handleClickAway = () => {
-    setOpen(false);
-  };
-
-  return (
-
-    <ClickAwayListener
-    mouseEvent="onMouseDown"
-    touchEvent="onTouchStart"
-    onClickAway={handleClickAway}
-    >
-      <div>
-        <AppBar position="static">
-          <Toolbar>
-          <Link to='/' className={classes.title}>
-              Logo
-          </Link>               
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-          <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar> 
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="right"
-        open={open}
-        classes={{
-        paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-              <CloseIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {menuList.map((text, index) => (
-            <ListItem button key={text} onClick = {() => setOpen(false)}>
-              <ListItemIcon>
-                {navbarIcons[text]}
-              </ListItemIcon>
-              <ListItemText primary={navbarLinks[text]} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-    </div>
-   </ClickAwayListener>
- );
-};
 
 export default Navbar;
