@@ -1,3 +1,8 @@
+const argon2 = require("argon2");
+
+const { Patient } = require("../../models/index.js");
+const { sign } = require("jsonwebtoken");
+
 const hospitalResolvers = require("./hospitals");
 const adminResolvers = require("./admins");
 const doctorResolvers = require("./doctors");
@@ -13,6 +18,53 @@ module.exports = {
     ...patientResolvers.Mutation,
     ...submissionResolvers.Mutation,
     ...imageResolvers.Mutation,
+    registerPatient: async (_, user_details) => {
+      const { fname, lname, email, password } = user_details;
+      const hashedPassword = await argon2.hash(password);
+
+      const patient = new Patient({
+        ...user_details,
+        password: hashedPassword,
+        createdAt: new Date(),
+      });
+
+      try {
+        patient.save();
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+
+      return true;
+    },
+
+    loginPatient: async (_, user_details) => {
+      const { email, password } = user_details;
+      const patient = await Patient.findOne({ where: { email: email } });
+
+      if (!patient) {
+        throw new Error("Invalid patient login details");
+      }
+
+      const valid_password = await argon2.verify(patient.password, password);
+
+      if (!valid_password) {
+        throw new Error("Invalid password");
+      }
+
+      console.log("Correct patient details");
+      // console.log(patient);
+
+      return {
+        accessToken: sign(
+          { id: patient.id, accountType: "patient" },
+          "secrettokenkey",
+          {
+            expiresIn: "30m",
+          }
+        ),
+      };
+    },
   },
 
   Query: {
