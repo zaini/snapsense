@@ -57,14 +57,14 @@ module.exports = {
 
       let user;
       switch (account_type) {
-        case "admin":
+        case "ADMIN":
           user = await Admin.findOne({ where: { email: email } });
           break;
-        case "doctor":
+        case "DOCTOR":
           user = await Doctor.findOne({ where: { email: email } });
 
           break;
-        case "patient":
+        case "PATIENT":
           user = await Patient.findOne({ where: { email: email } });
           break;
         default:
