@@ -6,7 +6,7 @@ const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
 
 const isAuth = (context) => {
   // Context = { ...headers }
-  const authHeader = context.req.headers["authorization"];
+  const authHeader = context.req.headers.authorization;
   const needle = "Bearer ";
   if (authHeader) {
     const token = authHeader.split(needle)[1];
