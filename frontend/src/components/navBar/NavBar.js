@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AppBar, Toolbar, Typography, Button, IconButton, makeStyles, useTheme, Drawer, 
          List, Divider, ListItem, ListItemIcon, ListItemText }  from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
@@ -6,6 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import {navbarOptions, navbarLinks, navbarIcons} from "../../model/NavbarModels";
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 const drawerWidth = 240;
 
@@ -48,15 +49,15 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
   },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginRight: -drawerWidth,
-  },
+  // content: {
+  //   flexGrow: 1,
+  //   padding: theme.spacing(3),
+  //   transition: theme.transitions.create('margin', {
+  //     easing: theme.transitions.easing.sharp,
+  //     duration: theme.transitions.duration.leavingScreen,
+  //   }),
+  //   marginRight: -drawerWidth,
+  // },
   contentShift: {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
@@ -66,13 +67,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 function Navbar() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-
+  useEffect(() => {
+    setOpen(false);
+  },[]) 
   const [accountType, setAccountType] = useState("admin");
+  const [logStatus, setLogStatus] = useState("notLogged")
 
   let menuList = navbarOptions[accountType] || null;
 
@@ -84,51 +87,62 @@ function Navbar() {
     setOpen(false);
   };
 
+  const handleClickAway = () => {
+    setOpen(false);
+  };
+
   return (
-    <div>
-      <AppBar position="static">
-        <Toolbar>
-        <Link to='/' className={classes.title}>
-            TRVL
-        </Link>               
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={handleDrawerOpen}
-          className={clsx(classes.menuButton, open && classes.hide)}
-         >
-        <MenuIcon />
-         </IconButton>
-      </Toolbar>
-     </AppBar>
-    <Drawer
-      className={classes.drawer}
-      variant="persistent"
-      anchor="right"
-      open={open}
-      classes={{
-      paper: classes.drawerPaper,
-       }}
+
+    <ClickAwayListener
+    mouseEvent="onMouseDown"
+    touchEvent="onTouchStart"
+    onClickAway={handleClickAway}
     >
-      <div className={classes.drawerHeader}>
-         <IconButton onClick={handleDrawerClose}>
-            <CloseIcon />
-        </IconButton>
-      </div>
-       <Divider />
-       <List>
-         {menuList.map((text, index) => (
-           <ListItem button key={text}>
-            <ListItemIcon>
-              {navbarIcons[text]}
-            </ListItemIcon>
-            <ListItemText primary={navbarLinks[text]} />
-          </ListItem>
-         ))}
-      </List>
-    </Drawer>
-   </div>
+      <div>
+        <AppBar position="static">
+          <Toolbar>
+          <Link to='/' className={classes.title}>
+              Logo
+          </Link>               
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            className={clsx(classes.menuButton, open && classes.hide)}
+          >
+          <MenuIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar> 
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="right"
+        open={open}
+        classes={{
+        paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+              <CloseIcon />
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          {menuList.map((text, index) => (
+            <ListItem button key={text} onClick = {() => setOpen(false)}>
+              <ListItemIcon>
+                {navbarIcons[text]}
+              </ListItemIcon>
+              <ListItemText primary={navbarLinks[text]} />
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
+    </div>
+   </ClickAwayListener>
  );
-}
+};
 
 export default Navbar;
