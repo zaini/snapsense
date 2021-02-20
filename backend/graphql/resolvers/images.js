@@ -28,7 +28,5 @@ module.exports = {
       return file;
     },
   },
-  Query: {
-
-  },
+  Query: {},
 };

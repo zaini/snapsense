@@ -2,7 +2,7 @@ const { Submission } = require("../../models/index.js");
 
 module.exports = {
   Query: {
-    async getSubmissions() {
+    getSubmissions: async () => {
       try {
         const submissions = await Submission.findAll();
         return submissions;
@@ -11,7 +11,5 @@ module.exports = {
       }
     },
   },
-  Mutation: {
-    
-  },
+  Mutation: {},
 };

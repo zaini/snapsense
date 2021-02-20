@@ -2,7 +2,7 @@ const { Doctor } = require("../../models/index.js");
 
 module.exports = {
   Query: {
-    async getDoctors() {
+    getDoctors: async () => {
       try {
         const doctors = await Doctor.findAll();
         return doctors;
@@ -11,7 +11,5 @@ module.exports = {
       }
     },
   },
-  Mutation: {
-    
-  },
+  Mutation: {},
 };
