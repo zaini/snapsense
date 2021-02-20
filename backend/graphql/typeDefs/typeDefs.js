@@ -115,13 +115,18 @@ module.exports = gql`
     singleUploadStream(file: Upload!): File!
 
     # TODO jwt stuff
-    registerPatient(
+    register(
       fname: String!
       lname: String!
       email: String!
       password: String!
+      account_type: String!
     ): Boolean
-    loginPatient(email: String!, password: String!): LoginResponse
+    login(
+      email: String!
+      password: String!
+      account_type: String!
+    ): LoginResponse
   }
 
   type Query {
@@ -131,6 +136,6 @@ module.exports = gql`
     getPatients: [Patient!]
     getSubmissions: [Submission!]
     getImages: [Image!]
-    onlyPatients: String!
+    isLoggedIn: String!
   }
 `;
