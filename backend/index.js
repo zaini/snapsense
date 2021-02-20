@@ -7,6 +7,10 @@ const resolvers = require("./graphql/resolvers");
 const port = process.env.PORT || 5000;
 const app = express();
 
+app.post("/refresh_token", (req) => {
+  console.log(req.headers);
+});
+
 // GraphQL Apollo Connection
 const apolloServer = new ApolloServer({
   typeDefs,
