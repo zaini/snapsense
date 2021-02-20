@@ -3,7 +3,7 @@ import Home from "./pages/Home.js";
 import About from "./pages/About.js";
 import Profile from "./pages/Profile.js";
 import LoginPage from "./pages/LoginPage.js";
-import Navbar from "./components/navbar/Navbar.js";
+import Navbar from "./components/navBar/Navbar.js";
 
 function App() {
   return (
