@@ -3,12 +3,12 @@ import Home from "./pages/Home.js";
 import About from "./pages/About.js";
 import Profile from "./pages/Profile.js";
 import LoginPage from "./pages/LoginPage.js";
-import NavBar from "./components/navBar/NavBar.js";
+import Navbar from "./components/navbar/Navbar.js";
 
 function App() {
   return (
     <Router>
-      <div><NavBar/></div>
+      <div><Navbar/></div>
       <div>
         <ul>
           <li>

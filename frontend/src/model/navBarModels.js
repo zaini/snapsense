@@ -9,14 +9,14 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import DynamicFeedIcon from '@material-ui/icons/DynamicFeed';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 
-export const navBarOptions = {
+export const navbarOptions = {
   admin: ["Account info", "Doctors", "Patients", "Invite doctor", "Log out"],
   patient: ["Account info", "History", "Upload report", "Log out"],
   doctor: ["Account info", "Patients", "Invite patient", "Latest uploads", "Log out"],
 };
 
 //TODO: Change the links to the appropriate pages once created
-export const navBarLinks = {
+export const navbarLinks = {
   "Account info": <Link to="/">Account info</Link>,
   "Doctors": <Link to="/">Doctors</Link>,
   "Patients": <Link to="/">Patients</Link>,
@@ -28,7 +28,7 @@ export const navBarLinks = {
   "Log out": <Link to="/">Logout</Link>,
 };
 
-export const navBarIcons = {
+export const navbarIcons = {
   "Account info": <AccountBoxIcon />,
   "Doctors": <LocalHospitalIcon />,
   "Patients": <GroupIcon />,

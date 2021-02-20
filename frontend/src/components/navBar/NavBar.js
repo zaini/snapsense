@@ -5,7 +5,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import clsx from "clsx";
 import { Link } from "react-router-dom";
-import {navBarOptions, navBarLinks, navBarIcons} from "../../model/navBarModels";
+import {navbarOptions, navbarLinks, navbarIcons} from "../../model/NavbarModels";
 
 const drawerWidth = 240;
 
@@ -67,14 +67,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function NavBar() {
+function Navbar() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
   const [accountType, setAccountType] = useState("admin");
 
-  let menuList = navBarOptions[accountType] || null;
+  let menuList = navbarOptions[accountType] || null;
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -121,9 +121,9 @@ function NavBar() {
           {menuList.map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
-                {navBarIcons[text]}
+                {navbarIcons[text]}
               </ListItemIcon>
-              <ListItemText primary={navBarLinks[text]} />
+              <ListItemText primary={navbarLinks[text]} />
             </ListItem>
           ))}
         </List>
@@ -132,4 +132,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default Navbar;
