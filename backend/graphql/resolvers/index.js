@@ -22,8 +22,5 @@ module.exports = {
     ...patientResolvers.Query,
     ...submissionResolvers.Query,
     ...imageResolvers.Query,
-    helloWorld() {
-      return "Hello World";
-    },
   },
 };
