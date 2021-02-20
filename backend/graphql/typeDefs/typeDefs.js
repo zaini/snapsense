@@ -27,7 +27,7 @@ module.exports = gql`
     password: String!
     role: AccountRole!
     hospital_id: ID!
-    token: String!
+    # token: String!
     createdAt: String!
   }
 
@@ -79,6 +79,7 @@ module.exports = gql`
 
   type Mutation {
     createHospital(name: String!, contact_email: String!): Hospital
+    createAdmin(fname: String!, lname: String!, email: String!, password: String!, hospital_id: ID!): Admin
     singleUpload(file: Upload!): File!
     singleUploadStream(file: Upload!): File!
   }
