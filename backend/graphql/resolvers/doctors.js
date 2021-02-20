@@ -22,7 +22,7 @@ module.exports = {
         createdAt: new Date(),
       }).save();
 
-      return { ...doctor.dataValues, role: "DOCTOR" };
+      return { ...doctor.dataValues };
     },
   },
 };

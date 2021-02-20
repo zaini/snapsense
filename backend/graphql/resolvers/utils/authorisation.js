@@ -1,6 +1,6 @@
 const argon2 = require("argon2");
 require("dotenv").config();
-const { UserInputError } = require("apollo-server");
+const { UserInputError, ApolloError } = require("apollo-server");
 
 const { createAccessToken } = require("../utils/authTokens");
 const { Admin, Doctor, Patient } = require("../../../models/index");
@@ -68,6 +68,8 @@ module.exports = {
           user = await Patient.findOne({ where: { email: email } });
           break;
         default:
+          // Account type is invalid
+          throw new ApolloError("Malformed expression", 400)
           break;
       }
 

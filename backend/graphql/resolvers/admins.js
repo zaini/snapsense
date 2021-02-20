@@ -22,7 +22,7 @@ module.exports = {
         createdAt: new Date(),
       }).save();
 
-      return { ...admin.dataValues, role: "ADMIN" };
+      return { ...admin.dataValues };
     },
   },
 };

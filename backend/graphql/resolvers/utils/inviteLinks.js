@@ -11,37 +11,37 @@ module.exports = {
   Mutation: {
     inviteUser: async (_, { email }, context) => {
       // Get the user and their email from the authorization header token
-			
-			const user = isAuth(context);
+
+      const user = isAuth(context);
       const userEmail = user.dataValues.email;
 
-      let role;
+      let accountType;
 
       switch (user.accountType) {
         case "ADMIN":
-          role = "DOCTOR";
-					// Check if JWT admin exists
-					try {
-						const admin = await Admin.findOne(user.id);
-					} catch (error) {
-						throw new ApolloError("Invalid user", 400);
-					}
+          accountType = "DOCTOR";
+          // Check if JWT admin exists
+          try {
+            const admin = await Admin.findOne(user.id);
+          } catch (error) {
+            throw new ApolloError("Invalid user", 400);
+          }
 
-					// Check if doctor exists
-					const doctor = await Doctor.findOne({where:{email}});
-					if(doctor) {
-						throw new ApolloError("Invalid recipient", 400)
-					}
+          // Check if doctor exists
+          const doctor = await Doctor.findOne({ where: { email } });
+          if (doctor) {
+            throw new ApolloError("Invalid recipient", 400);
+          }
           break;
         case "DOCTOR":
-          role = "PATIENT";
+          accountType = "PATIENT";
 
-					// Check if JWT doctor exists
-					try {
-						const doctor = await Doctor.findOne(user.id);
-					} catch (error) {
-						throw new ApolloError("Invalid user", 400);
-					}
+          // Check if JWT doctor exists
+          try {
+            const doctor = await Doctor.findOne(user.id);
+          } catch (error) {
+            throw new ApolloError("Invalid user", 400);
+          }
           break;
         default:
           throw new ApolloError("Invalid invite request", 400);
@@ -62,7 +62,7 @@ module.exports = {
       const inviteTokenParams = {
         inviterEmail: userEmail,
         newAccountEmail: email,
-        role,
+        accountType,
       };
 
       const inviteToken = createAccessToken(inviteTokenParams);

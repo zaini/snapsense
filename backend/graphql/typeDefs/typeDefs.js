@@ -1,16 +1,6 @@
 const { gql } = require("apollo-server");
 
 module.exports = gql`
-  # Each 'user' type will have to have an AccountRole associated with it
-  # this is because on the frontend there must be a way to identify the
-  # type of the user.
-  # TODO can this just be string instead of enum? Because if we use enum we'll have to import it everywhere.
-  enum AccountRole {
-    ADMIN
-    DOCTOR
-    PATIENT
-  }
-
   # access token will include information such as account type/role
   type AuthResponse {
     accessToken: String
@@ -33,7 +23,6 @@ module.exports = gql`
     lname: String!
     email: String!
     password: String!
-    role: AccountRole!
     hospital_id: ID!
     createdAt: String!
   }
@@ -44,7 +33,6 @@ module.exports = gql`
     lname: String!
     email: String!
     password: String!
-    role: AccountRole!
     admin_id: ID!
     createdAt: String!
   }
@@ -55,7 +43,6 @@ module.exports = gql`
     lname: String!
     email: String!
     password: String!
-    role: AccountRole!
     createdAt: String!
   }
 
