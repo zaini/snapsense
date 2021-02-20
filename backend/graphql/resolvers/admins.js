@@ -15,14 +15,14 @@ module.exports = {
   Mutation: {
     createAdmin: async (_, user_details) => {
       const hashedPassword = await argon2.hash(user_details.password);
-
-      const admin = new Admin({
+      
+      const admin = await new Admin({
         ...user_details,
         password: hashedPassword,
         createdAt: new Date(),
-      });
+      }).save();
 
-      return { ...admin.save(), role: "admin" };
+      return { ...admin.dataValues, role: "ADMIN" };
     },
   },
 };

@@ -1,5 +1,6 @@
 const argon2 = require("argon2");
 require("dotenv").config();
+const { UserInputError } = require("apollo-server");
 
 const { createAccessToken } = require("../utils/authTokens");
 const { Admin, Doctor, Patient } = require("../../../models/index");
@@ -51,7 +52,7 @@ module.exports = {
 
       return true;
     },
-    login: async (_, user_details, { res }) => {
+    login: async (_, user_details) => {
       const { email, password, account_type } = user_details;
 
       let user;
@@ -70,17 +71,17 @@ module.exports = {
           break;
       }
 
+      const userInvalidError = "Invalid Login Credentials. Please try again!";
+
       if (!user) {
-        throw new Error("Invalid user login details");
+        throw new UserInputError(userInvalidError);
       }
 
       const valid_password = await argon2.verify(user.password, password);
 
       if (!valid_password) {
-        throw new Error("Invalid password");
+        throw new UserInputError(userInvalidError);
       }
-
-      // console.log("Correct user details");
 
       // This is the actual token, not stored in the cookie.
       return {
