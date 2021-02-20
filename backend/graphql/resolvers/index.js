@@ -7,6 +7,7 @@ const patientResolvers = require("./patients");
 const submissionResolvers = require("./submissions");
 const imageResolvers = require("./images");
 const authorisation = require("./utils/authorisation");
+const inviteTokenResolvers = require("./utils/inviteLinks");
 
 module.exports = {
   Mutation: {
@@ -17,6 +18,7 @@ module.exports = {
     ...submissionResolvers.Mutation,
     ...imageResolvers.Mutation,
     ...authorisation.Mutation,
+    ...inviteTokenResolvers.Mutation,
   },
   Query: {
     ...hospitalResolvers.Query,

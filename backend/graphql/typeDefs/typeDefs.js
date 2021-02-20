@@ -129,6 +129,9 @@ module.exports = gql`
       password: String!
       account_type: String!
     ): AuthResponse
+
+    # Invitation service
+    inviteUser(email: String!): String!
   }
 
   type Query {
