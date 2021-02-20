@@ -11,6 +11,7 @@ const isAuth = (req, payload) => {
 
   try {
     const token = authorization.split(" ")[1];
+    console.log("token", token)
     const new_payload = verify(token, ACCESS_TOKEN_SECRET_KEY);
     payload = new_payload;
     console.log(payload);

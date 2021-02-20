@@ -6,6 +6,7 @@ require("dotenv").config();
 
 const typeDefs = require("./graphql/typeDefs/typeDefs");
 const resolvers = require("./graphql/resolvers");
+const { Admin, Doctor, Patient } = require("./models/index");
 const { createAccessToken } = require("./graphql/resolvers/utils/authTokens");
 
 const REFRESH_TOKEN_SECRET_KEY = process.env.REFRESH_TOKEN_SECRET_KEY;
@@ -18,7 +19,7 @@ app.use(cookieParser());
 
 app.post("/refresh_token", async (req, res) => {
   const token = req.cookies.jid;
-  console.log(token)
+  console.log(token);
   if (!token) {
     return res.send({ ok: false, accessToken: "" });
   }
@@ -31,16 +32,15 @@ app.post("/refresh_token", async (req, res) => {
     return res.send({ ok: false, accessToken: "" });
   }
 
-  const account_type = payload.account_type;
+  const accountType = payload.accountType;
   const id = payload.id;
   let user;
-  switch (account_type) {
+  switch (accountType) {
     case "admin":
       user = await Admin.findOne({ where: { id: id } });
       break;
     case "doctor":
       user = await Doctor.findOne({ where: { id: id } });
-
       break;
     case "patient":
       user = await Patient.findOne({ where: { id: id } });
@@ -48,6 +48,8 @@ app.post("/refresh_token", async (req, res) => {
     default:
       break;
   }
+
+  console.log(payload, user);
 
   if (!user) {
     return res.send({ ok: false, accessToken: "" });
