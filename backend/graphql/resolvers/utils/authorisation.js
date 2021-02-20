@@ -16,7 +16,7 @@ module.exports = {
 
       let user;
       switch (account_type) {
-        case "admin":
+        case "ADMIN":
           user = new Admin({
             ...basic_user_details,
             password: hashedPassword,
@@ -24,7 +24,7 @@ module.exports = {
             createdAt: new Date(),
           });
           break;
-        case "doctor":
+        case "DOCTOR":
           user = new Doctor({
             ...basic_user_details,
             password: hashedPassword,
@@ -32,7 +32,7 @@ module.exports = {
             createdAt: new Date(),
           });
           break;
-        case "patient":
+        case "PATIENT":
           user = new Patient({
             ...basic_user_details,
             password: hashedPassword,
