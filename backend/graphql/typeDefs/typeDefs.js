@@ -105,11 +105,8 @@ module.exports = gql`
     register(
       fname: String!
       lname: String!
-      email: String!
       password: String!
-      hospital_id: ID
-      admin_id: ID
-      account_type: String!
+      invitationToken: String!
     ): Boolean
     login(
       email: String!
