@@ -38,7 +38,7 @@ module.exports = {
       return true;
     },
 
-    loginPatient: async (_, user_details) => {
+    loginPatient: async (_, user_details, { res }) => {
       const { email, password } = user_details;
       const patient = await Patient.findOne({ where: { email: email } });
 
@@ -55,6 +55,22 @@ module.exports = {
       console.log("Correct patient details");
       // console.log(patient);
 
+      // This is the refresh token, which is stored in the cookie
+      res.cookie(
+        "jid",
+        sign(
+          { id: patient.id, accountType: "patient" },
+          "anothersecrettokenkey",
+          {
+            expiresIn: "90d",
+          }
+        ),
+        {
+          htmlOnly: true,
+        }
+      );
+
+      // This is the actual token, not stored in the cookie.
       return {
         accessToken: sign(
           { id: patient.id, accountType: "patient" },
