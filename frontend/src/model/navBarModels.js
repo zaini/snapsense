@@ -17,14 +17,14 @@ export const navbarOptions = {
 
 //TODO: Change the links to the appropriate pages once created
 export const navbarLinks = {
-  "Account info": <Link to="/">Account info</Link>,
-  "Doctors": <Link to="/">Doctors</Link>,
-  "Patients": <Link to="/">Patients</Link>,
-  "Invite patient": <Link to="/">Invite Patient</Link>,
-  "Invite doctor": <Link to="/">Invite Doctor</Link>,
-  "History": <Link to="/">History</Link>,
-  "Upload report": <Link to="/">Upload report</Link>,
-  "Latest uploads": <Link to="/">Latest uploads</Link>,
+  "Account info": <Link to="/account_info">Account info</Link>,
+  "Doctors": <Link to="/doctor_list">Doctors</Link>,
+  "Patients": <Link to="/patient_list">Patients</Link>,
+  "Invite patient": <Link to="/invite_p">Invite Patient</Link>,
+  "Invite doctor": <Link to="/invite_d">Invite Doctor</Link>,
+  "History": <Link to="/upload_list">History</Link>,
+  "Upload report": <Link to="/upload">Upload report</Link>,
+  "Latest uploads": <Link to="/latest_list">Latest uploads</Link>,
   "Log out": <Link to="/">Logout</Link>,
 };
 

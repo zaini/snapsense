@@ -88,48 +88,47 @@ function Navbar() {
     <div>
       <AppBar position="static">
         <Toolbar>
-        <Typography variant="h6" className={classes.title}>
-            Logo
-          </Typography>          
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            // edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-          <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="right"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-              <CloseIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {menuList.map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {navbarIcons[text]}
-              </ListItemIcon>
-              <ListItemText primary={navbarLinks[text]} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-    </div>
-  );
+        <Link to='/' className={classes.title}>
+            TRVL
+        </Link>               
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={handleDrawerOpen}
+          className={clsx(classes.menuButton, open && classes.hide)}
+         >
+        <MenuIcon />
+         </IconButton>
+      </Toolbar>
+     </AppBar>
+    <Drawer
+      className={classes.drawer}
+      variant="persistent"
+      anchor="right"
+      open={open}
+      classes={{
+      paper: classes.drawerPaper,
+       }}
+    >
+      <div className={classes.drawerHeader}>
+         <IconButton onClick={handleDrawerClose}>
+            <CloseIcon />
+        </IconButton>
+      </div>
+       <Divider />
+       <List>
+         {menuList.map((text, index) => (
+           <ListItem button key={text}>
+            <ListItemIcon>
+              {navbarIcons[text]}
+            </ListItemIcon>
+            <ListItemText primary={navbarLinks[text]} />
+          </ListItem>
+         ))}
+      </List>
+    </Drawer>
+   </div>
+ );
 }
 
 export default Navbar;
