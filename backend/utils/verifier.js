@@ -1,7 +1,7 @@
 module.exports = {
   Verifier: (Model) => {
     class verifier {
-      // Verify if the instance exists
+      // Verify if user exists
       static async isVerified(user) {
         const record = await Model.findOne({
           where: {
