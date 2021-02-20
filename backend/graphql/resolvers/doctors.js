@@ -11,5 +11,17 @@ module.exports = {
       }
     },
   },
-  Mutation: {},
+  Mutation: {
+    createDoctor: async (_, user_details) => {
+      const hashedPassword = await argon2.hash(user_details.password);
+
+      const doctor = new Doctor({
+        ...user_details,
+        password: hashedPassword,
+        createdAt: new Date(),
+      });
+
+      return { ...doctor.save(), role: "doctor" };
+    },
+  },
 };

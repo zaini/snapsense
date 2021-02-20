@@ -17,8 +17,10 @@ module.exports = gql`
     PATIENT
   }
 
+  # TODO move tokens to a 'me' function
   # The attribute 'token' will be used to determine whether the user is logged
   # in or not, it represents a JWT token
+
   type Admin {
     id: ID!
     fname: String!
@@ -27,7 +29,6 @@ module.exports = gql`
     password: String!
     role: AccountRole!
     hospital_id: ID!
-    # token: String!
     createdAt: String!
   }
 
@@ -39,7 +40,6 @@ module.exports = gql`
     password: String!
     role: AccountRole!
     admin_id: ID!
-    token: String!
     createdAt: String!
   }
 
@@ -50,7 +50,6 @@ module.exports = gql`
     email: String!
     password: String!
     role: AccountRole!
-    token: String!
     createdAt: String!
   }
 
@@ -79,7 +78,33 @@ module.exports = gql`
 
   type Mutation {
     createHospital(name: String!, contact_email: String!): Hospital
-    createAdmin(fname: String!, lname: String!, email: String!, password: String!, hospital_id: ID!): Admin
+    createAdmin(
+      fname: String!
+      lname: String!
+      email: String!
+      password: String!
+      hospital_id: ID!
+    ): Admin
+    createDoctor(
+      fname: String!
+      lname: String!
+      email: String!
+      password: String!
+      admin_id: ID!
+    ): Doctor
+    createPatient(
+      fname: String!
+      lname: String!
+      email: String!
+      password: String!
+    ): Patient
+    createSubmission(
+      patient_id: ID!
+      doctor_id: ID!
+      deadline: String
+    ): Submission
+
+    # TODO Image Mutations
     singleUpload(file: Upload!): File!
     singleUploadStream(file: Upload!): File!
   }
@@ -88,6 +113,8 @@ module.exports = gql`
     getHospitals: [Hospital!]
     getAdmins: [Admin!]
     getDoctors: [Doctor!]
+    getPatients: [Patient!]
     getSubmissions: [Submission!]
+    getImages: [Image!]
   }
 `;

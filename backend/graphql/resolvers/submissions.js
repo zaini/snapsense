@@ -11,5 +11,14 @@ module.exports = {
       }
     },
   },
-  Mutation: {},
+  Mutation: {
+    createSubmission: async (_, submission_details) => {
+      const submission = new Submission({
+        ...submission_details,
+        createdAt: new Date(),
+      });
+
+      return { ...submission.save() };
+    },
+  },
 };
