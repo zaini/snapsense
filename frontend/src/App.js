@@ -4,6 +4,7 @@ import About from "./pages/About.js";
 import Profile from "./pages/Profile.js";
 import LoginPage from "./pages/LoginPage.js";
 import ChangePassword from "./pages/ChangePassword.js";
+import ChangeEmail from "./pages/ChangeEmail.js";
 
 
 function App() {
@@ -39,6 +40,9 @@ function App() {
           </Route>
           <Route path="/changepassword">
             <ChangePassword />
+          </Route>
+          <Route path="/changeemail">
+            <ChangeEmail />
           </Route>
         </Switch>
       </div>
