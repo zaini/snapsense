@@ -4,18 +4,20 @@ import About from "./pages/About.js";
 import Profile from "./pages/Profile.js";
 import LoginPage from "./pages/LoginPage.js";
 import Navbar from "./components/navBar/Navbar.js";
+import InvitePage from "./pages/InvitePage.js";
 
 function App() {
   return (
     <Router>
-      <div><Navbar/></div>
       <div>
-        <hr />
-
+        <Navbar />
+      </div>
+      <div>
         <Switch>
           <Route exact path="/">
             <LoginPage />
           </Route>
+          <Route path="/invite/:token_id" component={InvitePage} />
         </Switch>
       </div>
     </Router>
