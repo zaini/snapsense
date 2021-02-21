@@ -17,11 +17,11 @@ const PasswordForm = (props) => {
 
                     <List>
                         <ListItem>
-                            <FormControl variant="outlined">
+                            {/* <FormControl variant="outlined">
                                 <InputLabel htmlFor="email">Email address</InputLabel>
                                 <Input id="email" aria-describedby="my-helper-text" />
                                 <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
-                            </FormControl>
+                            </FormControl> */}
                         </ListItem>
                         <ListItem>
                             <TextField
