@@ -62,6 +62,11 @@ const InviteForm = ({ invitation }) => {
           <FormLabel>Password</FormLabel>
           <Input type="password" placeholder="Password" />
         </FormControl>
+        <br />
+        <FormControl id="repeat_password" isRequired>
+          <FormLabel>Repeat Password</FormLabel>
+          <Input type="password" placeholder="Repeat password" />
+        </FormControl>
         <Button mt={4} colorScheme="blue" type="submit">
           Accept Invite
         </Button>
