@@ -1,5 +1,9 @@
 "use strict";
 const { Model } = require("sequelize");
+const { Validator } = require("../utils/validator");
+
+const ModelValidator = Validator();
+
 module.exports = (sequelize, DataTypes) => {
   class Patient extends Model {
     /**
@@ -18,10 +22,50 @@ module.exports = (sequelize, DataTypes) => {
   }
   Patient.init(
     {
-      fname: DataTypes.STRING,
-      lname: DataTypes.STRING,
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
+      fname: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isName(value) {
+            if (!ModelValidator.isName(value)) {
+              throw new Error("Invalid name");
+            }
+          }
+        }
+      },
+      lname: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isName(value) {
+            if (!ModelValidator.isName(value)) {
+              throw new Error("Invalid name");
+            }
+          }
+        }
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isEmail(value) {
+            if (!ModelValidator.isEmail(value)) {
+              throw new Error("Invalid email address");
+            }
+          }
+        }
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isPassword(value) {
+            if (!ModelValidator.isPassword(value)) {
+              throw new Error("Invalid password");
+            }
+          }
+        }
+      }
     },
     {
       sequelize,
