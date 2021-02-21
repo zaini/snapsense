@@ -17,7 +17,7 @@ function App() {
           <Route exact path="/">
             <LoginPage />
           </Route>
-          <Route path="/invite/:token_id" component={InvitePage} />
+          <Route exact path="/invite/:token_id" component={InvitePage} />
         </Switch>
       </div>
     </Router>
