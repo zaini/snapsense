@@ -31,13 +31,9 @@ module.exports = {
       }
 
       static validatePassword(password) {
-        const minimumLenght = 6;
-        if (password.length < minimumLenght) {
-          return false;
-        }
         /*
             Check if:
-                - password length does not exceed 20 characters;
+                - password length is between 6 and 20 characters;
                 - password contains 1 numeric digit;
                 - password contains 1 uppercase and 1 lowercase characters;
         */
