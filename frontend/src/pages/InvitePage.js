@@ -23,7 +23,6 @@ const InvitePage = (props) => {
     setInvitation(invite);
 
     // check if the newAccountEmail already has an account.
-    // only needs to be done if the invite is from a doctor, since admins can only invite doctors who dont have accounts.
     // would be done by a GraphQL query
     const accountExists = true;
     if (accountExists) {
