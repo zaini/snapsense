@@ -48,7 +48,7 @@ const UserInfo = (props) => {
               <ListItem>
                 <ListItemText
                   primary="Password"
-                  secondary={props.password}
+                  secondary={props.password.substring(0,3) + "******"}
                 />
               </ListItem>
             </List>
