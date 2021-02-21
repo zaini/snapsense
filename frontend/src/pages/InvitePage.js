@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import InviteForm from "../components/InviteForm";
-import { Box, Container } from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 
 const InvitePage = (props) => {
   const [invitation, setInvitation] = useState({
