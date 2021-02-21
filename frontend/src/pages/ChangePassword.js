@@ -4,7 +4,7 @@ import PasswordForm from "../components/PasswordForm.js";
 const ChangePassword = () => {
     return (
         <div>
-            <PasswordForm newPassword="new****" />
+            <PasswordForm/>
         </div>
     );
 };

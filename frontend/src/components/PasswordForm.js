@@ -1,47 +1,65 @@
 import React from "react";
 import Button from '@material-ui/core/Button';
-import { Container, TextField, List, ListItem, FormControl, InputLabel, Input, FormHelperText, Paper } from "@material-ui/core";
+import { Container, TextField, List, ListItem, Paper, FormControl, InputLabel, Input, FormHelperText } from "@material-ui/core";
 import { useForm } from 'react-hook-form';
 
 
 const PasswordForm = (props) => {
     const { register, handleSubmit, errors } = useForm();
-
-    const onSubmit = data => console.log("Password updated"); // not working yet
+    const onSubmit = data => console.log(data);
+    console.log(errors);
 
     return (
         <Container>
             <h1>Change Password</h1>
             <Paper>
                 <form onSubmit={handleSubmit(onSubmit)}>
-
                     <List>
+
                         <ListItem>
-                            {/* <FormControl variant="outlined">
-                                <InputLabel htmlFor="email">Email address</InputLabel>
-                                <Input id="email" aria-describedby="my-helper-text" />
-                                <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
-                            </FormControl> */}
+                            <FormControl error={Boolean(errors.currentPassword)}>
+                                <InputLabel htmlFor="currentPassword">Current password</InputLabel>
+                                <Input id="currentPassword" name="currentPassword" type="password" />
+                            </FormControl>
                         </ListItem>
+
                         <ListItem>
-                            <TextField
-                                variant="outlined"
-                                id="currentPassword"
-                                name="currentPassword"
-                                label="Current password"
-                                type="password"
-                            />
+                            <FormControl error={Boolean(errors.newPassword)}>
+                                <InputLabel htmlFor="newPassword">New password</InputLabel>
+                                <Input id="newPassword" name="newPassword" type="password" inputRef={register({
+                                    required: true
+                                    // minLength: 5,
+                                    // pattern: /^[0-9]+$/
+                                })} />
+                                <FormHelperText>
+                                    {errors.newPassword
+                                        && errors.newPassword.type === 'required'
+                                        && <span>Please enter your new password</span>}
+                                    {/* {errors.currentPassword
+                                        && errors.currentPassword.type === 'minLength'
+                                        && <span>Your password should be at least 5 characters</span>}
+                                    {errors.currentPassword
+                                        && errors.currentPassword.type === 'pattern'
+                                        && <span></span>} */}
+                                </FormHelperText>
+                            </FormControl>
                         </ListItem>
+
                         <ListItem>
-                            <TextField
-                                variant="outlined"
-                                id="newPassword"
-                                name="newPassword"
-                                label="New password"
-                                type="password"
-                            />
+                            <FormControl error={Boolean(errors.reEnterPassword)}>
+                                <InputLabel htmlFor="reEnterPassword">Re-enter password</InputLabel>
+                                <Input id="reEnterPassword" name="reEnterPassword" type="password" inputRef={register({
+                                    required: true
+                                })} />
+                                <FormHelperText>
+                                    {errors.reEnterPassword
+                                        && errors.reEnterPassword.type === 'required'
+                                        && <span>Please enter your password</span>}
+                                </FormHelperText>
+                            </FormControl>
                         </ListItem>
-                        <ListItem>
+
+                        {/* <ListItem>
                             <TextField
                                 variant="outlined"
                                 id="checkPassword"
@@ -49,17 +67,17 @@ const PasswordForm = (props) => {
                                 label="Re-enter new password"
                                 type="password"
                             />
-                        </ListItem>
-                        <ListItem>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                            // className={classes.submit}
-                            >
-                                Save changes
+                        </ListItem> */}
+
+                        <ListItem><Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                        >
+                            Save changes
                     </Button>
                         </ListItem>
+
                     </List>
                 </form>
             </Paper>
