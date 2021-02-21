@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import InviteForm from "../components/InviteForm";
+import InviteForm from "../components/InviteForm/InviteForm";
 import { Container } from "@chakra-ui/react";
 
 const InvitePage = (props) => {
@@ -24,7 +24,7 @@ const InvitePage = (props) => {
 
     // check if the newAccountEmail already has an account.
     // would be done by a GraphQL query
-    const accountExists = true;
+    const accountExists = false;
     if (accountExists) {
       setInvitation({ ...invite, accountExists: true });
     }
