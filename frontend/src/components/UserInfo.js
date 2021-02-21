@@ -38,7 +38,7 @@ const UserInfo = (props) => {
           </Grid>
 
           <Grid item xs={6}>
-            <Button component={Link} to="/about" color="primary">
+            <Button component={Link} to="/changeemail" color="primary">
               Change email
         </Button>
           </Grid>
@@ -58,6 +58,7 @@ const UserInfo = (props) => {
             <Button component={Link} to="/changepassword" color="primary">
               Change password
         </Button>
+
           </Grid>
         </Grid>
       </Paper>
