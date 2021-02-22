@@ -3,43 +3,19 @@ import Home from "./pages/Home.js";
 import About from "./pages/About.js";
 import Profile from "./pages/Profile.js";
 import LoginPage from "./pages/LoginPage.js";
+import Navbar from "./components/navBar/Navbar.js";
+import InvitePage from "./pages/InvitePage.js";
+import CreateInvitePage from "./pages/CreateInvitePage.js";
 
 function App() {
   return (
     <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/profile">Profile</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-        </ul>
-
-        <hr />
-
+        <Navbar />
         <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/profile">
-            <Profile />
-          </Route>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
+          <Route exact path="/" component={LoginPage} />
+          <Route exact path="/invite/:token_id" component={InvitePage} />
+          <Route exact path="/invite" component={CreateInvitePage} />
         </Switch>
-      </div>
     </Router>
   );
 }
