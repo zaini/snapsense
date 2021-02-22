@@ -8,7 +8,7 @@ const mailSender = require("./utils/mailSender");
 const port = process.env.PORT || 5000;
 
 // imageUploader("./nasa.jpg");
-mailSender("ayanahmad.ahay@gmail.com","Fre ShavAcodo","FRESHHHHH!!!","Alt Body");
+//mailSender("ayanahmad.ahay@gmail.com","Fre ShavAcodo","FRESHHHHH!!!","Alt Body");
 // GraphQL Apollo Connection
 const server = new ApolloServer({
   typeDefs,
