@@ -1,3 +1,4 @@
+/backend/.env
+/backend/.env.development
 node_modules
 /backend/config/config.json
-/backend/.env
