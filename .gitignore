@@ -1,0 +1,3 @@
+backend/config/config.json
+backend/node_modules
+backend/.env
