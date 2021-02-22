@@ -116,6 +116,8 @@ module.exports = gql`
 
     # Invitation service
     inviteUser(email: String!): String!
+
+    addPatientToDoctor(patient_email: String!, doctor_email: String!): Boolean!
   }
 
   type Query {
@@ -126,5 +128,6 @@ module.exports = gql`
     getSubmissions: [Submission!]
     getImages: [Image!]
     isLoggedIn: String!
+    checkInvitation(invitationToken: String!): String!
   }
 `;

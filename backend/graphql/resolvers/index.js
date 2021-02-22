@@ -27,6 +27,7 @@ module.exports = {
     ...patientResolvers.Query,
     ...submissionResolvers.Query,
     ...imageResolvers.Query,
+    ...inviteTokenResolvers.Query,
     isLoggedIn: async (_, __, { req, payload }) => {
       // This is an example query. Will be deleted.
       // user_data will store the payload, which is basically the data that's in the token

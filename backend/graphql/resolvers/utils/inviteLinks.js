@@ -1,13 +1,84 @@
-const { ApolloError } = require("apollo-server");
+const {
+  ApolloError,
+  UserInputError,
+  AuthenticationError,
+} = require("apollo-server");
+const { verify } = require("jsonwebtoken");
 
 const isAuth = require("../../../utils/isAuth");
 const { createAccessToken } = require("./authTokens");
-const { Admin, Doctor } = require("../../../models/index");
+const { Admin, Doctor, Patient } = require("../../../models/index");
 require("dotenv").config();
 
-const URL_PREFIX = process.env.URL_PREFIX;
+const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
 
 module.exports = {
+  Query: {
+    checkInvitation: async (_, { invitationToken }) => {
+      try {
+        let {
+          inviterEmail,
+          newAccountEmail,
+          accountType,
+          accountExists,
+        } = verify(invitationToken, ACCESS_TOKEN_SECRET_KEY);
+
+        let doctor;
+        switch (accountType) {
+          case "DOCTOR":
+            const admin = await Admin.findOne({
+              where: { email: inviterEmail },
+            });
+
+            if (!admin) {
+              throw new ApolloError("Inviter no longer exists!", 400);
+            }
+
+            doctor = await Doctor.findOne({
+              where: { email: newAccountEmail },
+            });
+
+            if (doctor) {
+              throw new ApolloError("You already have an account!", 400);
+            }
+            break;
+
+          case "PATIENT":
+            doctor = await Doctor.findOne({
+              where: { email: inviterEmail },
+            });
+
+            if (!doctor) {
+              throw new ApolloError("Inviter no longer exists!", 400);
+            }
+
+            const patient = await Patient.findOne({
+              where: { email: newAccountEmail },
+            });
+            if (patient && (await patient.hasDoctor(doctor))) {
+              throw new UserInputError(
+                "You are already registered with this doctor!"
+              );
+            }
+            accountExists = !!patient;
+            break;
+          default:
+            break;
+        }
+        return createAccessToken(
+          {
+            inviterEmail,
+            newAccountEmail,
+            accountType,
+            accountExists,
+          },
+          "7d"
+        );
+      } catch (error) {
+        throw new AuthenticationError(error);
+      }
+    },
+  },
   Mutation: {
     inviteUser: async (_, { email }, context) => {
       // Get the user and their email from the authorization header token
@@ -16,6 +87,7 @@ module.exports = {
       const userEmail = user.dataValues.email;
 
       let accountType, doctor;
+      let accountExists = false;
 
       switch (user.accountType) {
         case "ADMIN":
@@ -40,6 +112,15 @@ module.exports = {
           if (!doctor) {
             throw new ApolloError("Invalid user", 400);
           }
+
+          const patient = await Patient.findOne({ where: { email } });
+          if (patient && (await patient.hasDoctor(doctor))) {
+            throw new UserInputError(
+              "This patient is already registered with you"
+            );
+          }
+
+          accountExists = !!patient;
           break;
         default:
           throw new ApolloError("Invalid invite request", 400);
@@ -61,11 +142,12 @@ module.exports = {
         inviterEmail: userEmail,
         newAccountEmail: email,
         accountType,
+        accountExists,
       };
 
-      const inviteToken = createAccessToken(inviteTokenParams);
+      const inviteToken = createAccessToken(inviteTokenParams, "7d");
 
-      return `${URL_PREFIX}/invite/${inviteToken}`;
+      return inviteToken;
     },
   },
 };
