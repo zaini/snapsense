@@ -16,10 +16,22 @@ module.exports = (sequelize, DataTypes) => {
   }
   Submission.init(
     {
-      patient_id: DataTypes.INTEGER,
-      doctor_id: DataTypes.INTEGER,
-      deadline: DataTypes.DATE,
-      fulfilled: DataTypes.DATE,
+      patient_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      doctor_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      deadline: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+      fulfilled: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
     },
     {
       sequelize,

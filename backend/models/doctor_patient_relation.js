@@ -13,8 +13,14 @@ module.exports = (sequelize, DataTypes) => {
   }
   Doctor_Patient_Relation.init(
     {
-      doctor_id: DataTypes.INTEGER,
-      patient_id: DataTypes.INTEGER,
+      doctor_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      patient_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
     {
       sequelize,

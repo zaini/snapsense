@@ -1,54 +1,47 @@
-const { Doctor } = require("../models/index");
-
 module.exports = {
-  Validator: (Model) => {
+  Validator: () => {
     class validator {
-      // TODO: Privatize validateName, validateEmail and validatePassword
+   
+        static isShort(value, minLength) {
+            return String(value).length < minLength;
+        }
 
-      static validateName(name) {
+        static isLong(value, maxLength) {
+            return String(value).length > maxLength;
+        }   
+
+      static isName(name) {
         /*
             Check if:
-            - name starts with capital letter
             - name does not include special or numeric character
-            - name length does not exceed 35 characters
+            - name length is between 2 and 35 characters
         */
-        const re = /^[A-Z][a-z]{1,35}$/;
-        return re.test(name);
+        const re = /^[a-z]{2,35}$/;
+        return re.test(String(name).toLowerCase().trim());
       }
 
-      static validateEmail(email) {
+      static isEmail(email, isDoctor = false) {
         /*
             Check if:
                 - Model is not Doctor
                 - if Doctor, email must end with @nhs.co.uk
                 - email does not start with special characters
         */
-        const re =
-          Model !== Doctor
+        const re = !isDoctor
             ? /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
             : /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@nhs.co.uk$/;
-        return re.test(email);
+        return re.test(String(email).trim());
       }
 
-      static validatePassword(password) {
+      static isPassword(password) {
         /*
             Check if:
                 - password length is between 6 and 20 characters;
-                - password contains 1 numeric digit;
-                - password contains 1 uppercase and 1 lowercase characters;
+                - password contains at least 1 numeric digit;
+                - password contains at least 1 uppercase and at least 1 lowercase characters;
         */
         const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
         return re.test(password);
-      }
-
-      // Verify if user information is valid
-      static isValid(user) {
-        return (
-          validator.validateEmail(user.getDataValue("email")) &&
-          validator.validateName(user.getDataValue("fname")) &&
-          validator.validateName(user.getDataValue("lname")) &&
-          validator.validatePassword(user.getDataValue("password"))
-        );
       }
     }
     return validator;
