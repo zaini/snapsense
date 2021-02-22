@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Center } from "@chakra-ui/react";
 
 const InvitePatientExists = ({ invitation }) => {
   return (
@@ -10,12 +10,14 @@ const InvitePatientExists = ({ invitation }) => {
         clinic?
       </h1>
       <br />
-      <Button mt={4} mr={4} colorScheme="blue" type="submit">
-        Accept Invite
-      </Button>
-      <Button mt={4} colorScheme="red" type="submit">
-        Decline Invite
-      </Button>
+      <Center>
+        <Button mt={4} mr={4} colorScheme="blue" type="submit">
+          Accept Invite
+        </Button>
+        <Button mt={4} colorScheme="red" type="submit">
+          Decline Invite
+        </Button>
+      </Center>
     </Box>
   );
 };

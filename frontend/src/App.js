@@ -5,6 +5,7 @@ import Profile from "./pages/Profile.js";
 import LoginPage from "./pages/LoginPage.js";
 import Navbar from "./components/navBar/Navbar.js";
 import InvitePage from "./pages/InvitePage.js";
+import CreateInvitePage from "./pages/CreateInvitePage.js";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <LoginPage />
           </Route>
           <Route exact path="/invite/:token_id" component={InvitePage} />
+          <Route exact path="/invite" component={CreateInvitePage} />
         </Switch>
       </div>
     </Router>

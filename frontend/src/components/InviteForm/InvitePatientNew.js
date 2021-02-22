@@ -1,6 +1,13 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Box, FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Center,
+} from "@chakra-ui/react";
 
 const InvitePatientNew = ({ invitation }) => {
   const { register, handleSubmit, errors } = useForm();
@@ -36,9 +43,11 @@ const InvitePatientNew = ({ invitation }) => {
           <FormLabel>Repeat Password</FormLabel>
           <Input type="password" placeholder="Repeat password" />
         </FormControl>
-        <Button mt={4} colorScheme="blue" type="submit">
-          Accept Invite
-        </Button>
+        <Center>
+          <Button mt={4} colorScheme="blue" type="submit">
+            Accept Invite
+          </Button>
+        </Center>
       </form>
     </Box>
   );
