@@ -3,7 +3,7 @@ const smtpTransport = require("nodemailer-smtp-transport");
 require("dotenv").config();
 
 
-const sendMail =  (to,subject,body) =>  {
+const sendMail =  (to,subject,body,altBody) =>  {
   let transporter = nodemailer.createTransport(
     smtpTransport({
       service: "gmail",
@@ -16,16 +16,16 @@ const sendMail =  (to,subject,body) =>  {
   );
 
   const mailOptions = {
-    sender: '"Snapsense AI" <seg.snapsense.project@gmail.com>',
-    to: "ayanahmad.ahay@gmail.com",
-    subject: "TEST NODE EMAIL",
-    text: "SEND TEST MAIL",
-    html: "<h1>Test Email<h1>"
+    from: '"Snapsense AI" <seg.snapsense.project@gmail.com>',
+    to: to,
+    subject: subject,
+    text: altBody,
+    html: body
   };
 
-  transporter.sendMail(mailOptions, function (error, info) {
+  transporter.sendMail(mailOptions,  (error, info) => {
     if (error) {
-      console.log(error);
+      throw new Error("500 Internal Server Error: Error Sending Mail");
     } else {
       console.log("Email sent: " + info.response);
     }
