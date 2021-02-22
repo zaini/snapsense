@@ -110,7 +110,7 @@ module.exports = {
       // This is the actual token, not stored in the cookie.
       return {
         accessToken: createAccessToken({
-          ...user,
+          ...user.dataValues,
           accountType: account_type,
         }),
       };
