@@ -10,18 +10,12 @@ import CreateInvitePage from "./pages/CreateInvitePage.js";
 function App() {
   return (
     <Router>
-      <div>
         <Navbar />
-      </div>
-      <div>
         <Switch>
-          <Route exact path="/">
-            <LoginPage />
-          </Route>
+          <Route exact path="/" component={LoginPage} />
           <Route exact path="/invite/:token_id" component={InvitePage} />
           <Route exact path="/invite" component={CreateInvitePage} />
         </Switch>
-      </div>
     </Router>
   );
 }

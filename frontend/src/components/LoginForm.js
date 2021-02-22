@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
-import { Button } from "@material-ui/core";
 import { useForm } from "react-hook-form";
+import Error from "../components/Error";
+import { Button, Input, InputAdornment } from "@material-ui/core";
+import { MailOutline, LockOutlined } from "@material-ui/icons";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-
 import { AuthContext } from "../context/auth";
 
 const LoginForm = (props) => {
@@ -32,21 +32,37 @@ const LoginForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {errors.error && <p severity="error">{errors.error.message}</p>}
-      <input
+      <Error errors={errors} />
+      <br />
+      <Input
         type="text"
         placeholder="Email"
-        name="email"
+        name="Email"
         ref={register({ required: true, pattern: /^\S+@\S+$/i })}
+        startAdornment={
+          <InputAdornment position="start">
+            <MailOutline />
+          </InputAdornment>
+        }
       />
-      <input
-        type="text"
+      <br />
+      <br />
+      <Input
+        type="password"
         placeholder="Password"
-        name="password"
-        ref={register({ required: true, max: 18, min: 0 })}
+        name="Password"
+        ref={register({ required: true })}
+        startAdornment={
+          <InputAdornment position="start">
+            <LockOutlined />
+          </InputAdornment>
+        }
       />
-
-      <input type="submit" />
+      <br />
+      <br />
+      <Button name="submit" variant="contained" color="primary" type="submit">
+        Submit
+      </Button>
     </form>
   );
 };
