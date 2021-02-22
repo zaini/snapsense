@@ -1,20 +1,16 @@
 const { gql } = require("apollo-server");
 
 module.exports = gql`
+  # access token will include information such as account type/role
+  type AuthResponse {
+    accessToken: String
+  }
+
   type Hospital {
     id: ID!
     name: String!
     contact_email: String!
     createdAt: String!
-  }
-
-  # Each 'user' type will have to have an AccountRole associated with it
-  # this is because on the frontend there must be a way to identify the
-  # type of the user.
-  enum AccountRole {
-    ADMIN
-    DOCTOR
-    PATIENT
   }
 
   # TODO move tokens to a 'me' function
@@ -27,7 +23,6 @@ module.exports = gql`
     lname: String!
     email: String!
     password: String!
-    role: AccountRole!
     hospital_id: ID!
     createdAt: String!
   }
@@ -38,7 +33,6 @@ module.exports = gql`
     lname: String!
     email: String!
     password: String!
-    role: AccountRole!
     admin_id: ID!
     createdAt: String!
   }
@@ -49,7 +43,6 @@ module.exports = gql`
     lname: String!
     email: String!
     password: String!
-    role: AccountRole!
     createdAt: String!
   }
 
@@ -107,6 +100,24 @@ module.exports = gql`
     # TODO Image Mutations
     singleUpload(file: Upload!): File!
     singleUploadStream(file: Upload!): File!
+
+    # TODO jwt stuff
+    register(
+      fname: String!
+      lname: String!
+      password: String!
+      invitationToken: String!
+    ): Boolean
+    login(
+      email: String!
+      password: String!
+      account_type: String!
+    ): AuthResponse
+
+    # Invitation service
+    inviteUser(email: String!): String!
+
+    addPatientToDoctor(patient_email: String!, doctor_email: String!): Boolean!
   }
 
   type Query {
@@ -116,5 +127,7 @@ module.exports = gql`
     getPatients: [Patient!]
     getSubmissions: [Submission!]
     getImages: [Image!]
+    isLoggedIn: String!
+    checkInvitation(invitationToken: String!): String!
   }
 `;

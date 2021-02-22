@@ -1,4 +1,5 @@
 const { Hospital } = require("../../models/index.js");
+const isAuth = require("../../utils/isAuth.js");
 
 module.exports = {
   Query: {
