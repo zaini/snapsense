@@ -22,11 +22,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isName(value) {
-            if (!ModelValidator.isName(value, 75)) {
+          isCorrectLength(value) {
+            if (ModelValidator.isLong(value, 75) || ModelValidator.isShort(value, 10)) {
               throw new Error("Invalid name");
             }
-          },
+          }
         },
       },
       contact_email: {
