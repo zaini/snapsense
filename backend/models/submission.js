@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Submission.belongsTo(models.Patient, { foreignKey: "patient_id" });
       Submission.belongsTo(models.Doctor, { foreignKey: "doctor_id" });
-      Submission.hasMany(models.Image);
+      Submission.hasMany(models.Image, { foreignKey: "submission_id" });
     }
   }
   Submission.init(

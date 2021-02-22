@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         through: "Doctor_Patient_Relation",
         foreignKey: "patient_id",
       });
-      Patient.hasMany(models.Submission);
+      Patient.hasMany(models.Submission, { foreignKey: "patient_id" });
     }
   }
   Patient.init(
