@@ -1,10 +1,15 @@
-import React from "react";
+import React, {useState} from "react";
 import Button from '@material-ui/core/Button';
 import { Container, TextField, List, ListItem, Paper, FormControl, InputLabel, Input, FormHelperText } from "@material-ui/core";
 import { useForm } from 'react-hook-form';
 
 
 const PasswordForm = (props) => {
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const togglePasswordVisiblity = () => {
+        setPasswordVisible(passwordVisible ? false : true);
+    };
+
     const { register, handleSubmit, errors } = useForm();
     const onSubmit = data => console.log(data);
     console.log(errors);
@@ -19,14 +24,15 @@ const PasswordForm = (props) => {
                         <ListItem>
                             <FormControl error={Boolean(errors.currentPassword)}>
                                 <InputLabel htmlFor="currentPassword">Current password</InputLabel>
-                                <Input id="currentPassword" name="currentPassword" type="password" />
+                                <Input id="currentPassword" name="currentPassword" type={passwordVisible ? "text" : "password"} />
+                                {/* <i onClick={togglePasswordVisiblity}>{eye}</i>{" "} */}
                             </FormControl>
                         </ListItem>
 
                         <ListItem>
                             <FormControl error={Boolean(errors.newPassword)}>
                                 <InputLabel htmlFor="newPassword">New password</InputLabel>
-                                <Input id="newPassword" name="newPassword" type="password" inputRef={register({
+                                <Input id="newPassword" name="newPassword" type={passwordVisible ? "text" : "password"} inputRef={register({
                                     required: true
                                     // minLength: 5,
                                     // pattern: /^[0-9]+$/
@@ -48,13 +54,13 @@ const PasswordForm = (props) => {
                         <ListItem>
                             <FormControl error={Boolean(errors.reEnterPassword)}>
                                 <InputLabel htmlFor="reEnterPassword">Re-enter password</InputLabel>
-                                <Input id="reEnterPassword" name="reEnterPassword" type="password" inputRef={register({
+                                <Input id="reEnterPassword" name="reEnterPassword" type={passwordVisible ? "text" : "password"} inputRef={register({
                                     required: true
                                 })} />
                                 <FormHelperText>
                                     {errors.reEnterPassword
                                         && errors.reEnterPassword.type === 'required'
-                                        && <span>Please enter your password</span>}
+                                        && <span>Please re-enter your password</span>}
                                 </FormHelperText>
                             </FormControl>
                         </ListItem>
@@ -65,7 +71,7 @@ const PasswordForm = (props) => {
                                 id="checkPassword"
                                 name="checkPassword"
                                 label="Re-enter new password"
-                                type="password"
+                                type={passwordVisible ? "text" : "password"}
                             />
                         </ListItem> */}
 
