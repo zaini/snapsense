@@ -45,7 +45,9 @@ module.exports = {
 
         case "PATIENT":
           inviter = await Doctor.findOne({ where: { email: inviterEmail } });
-          invited = await Patient.findOne({ where: { email: newAccountEmail } });
+          invited = await Patient.findOne({
+            where: { email: newAccountEmail },
+          });
           user = new Patient({
             fname,
             lname,
@@ -107,10 +109,15 @@ module.exports = {
         throw new UserInputError(userInvalidError);
       }
 
+      // Remove password from the JWT token, no need to expose it even though its hashed
+
+      user = { ...user.dataValues };
+      delete user.password;
+
       // This is the actual token, not stored in the cookie.
       return {
         accessToken: createAccessToken({
-          ...user.dataValues,
+          ...user,
           accountType: account_type,
         }),
       };
