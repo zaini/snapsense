@@ -1,4 +1,7 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+//delete react react and footer to put into diff page
+import React from 'react';
+import Footer from './components/Footer.js';
 import Home from "./pages/Home.js";
 import About from "./pages/About.js";
 import Profile from "./pages/Profile.js";
@@ -13,9 +16,14 @@ function App() {
         <Navbar />
       </div>
       <div>
+        <hr />
+
         <Switch>
           <Route exact path="/">
             <LoginPage />
+            <>
+              <Footer />
+            </>
           </Route>
           <Route exact path="/invite/:token_id" component={InvitePage} />
         </Switch>
