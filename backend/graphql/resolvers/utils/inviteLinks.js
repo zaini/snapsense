@@ -15,20 +15,19 @@ module.exports = {
       const user = isAuth(context);
       const userEmail = user.dataValues.email;
 
-      let accountType;
+      let accountType, doctor;
 
       switch (user.accountType) {
         case "ADMIN":
           accountType = "DOCTOR";
           // Check if JWT admin exists
-          try {
-            const admin = await Admin.findOne(user.id);
-          } catch (error) {
+          const admin = await Admin.findOne(user.id);
+          if (!admin) {
             throw new ApolloError("Invalid user", 400);
           }
 
           // Check if doctor exists
-          const doctor = await Doctor.findOne({ where: { email } });
+          doctor = await Doctor.findOne({ where: { email } });
           if (doctor) {
             throw new ApolloError("Invalid recipient", 400);
           }
@@ -37,9 +36,8 @@ module.exports = {
           accountType = "PATIENT";
 
           // Check if JWT doctor exists
-          try {
-            const doctor = await Doctor.findOne(user.id);
-          } catch (error) {
+          doctor = await Doctor.findOne(user.id);
+          if (!doctor) {
             throw new ApolloError("Invalid user", 400);
           }
           break;
