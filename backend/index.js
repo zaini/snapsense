@@ -5,10 +5,14 @@ require("dotenv").config();
 
 const typeDefs = require("./graphql/typeDefs/typeDefs");
 const resolvers = require("./graphql/resolvers");
+const imageUploader = require("./utils/imageUploader");
+const mailSender = require("./utils/mailSender");
 
 const port = process.env.PORT || 5000;
-
 const app = express();
+
+// imageUploader("./nasa.jpg");
+//mailSender("ayanahmad.ahay@gmail.com","Fre ShavAcodo","FRESHHHHH!!!","Alt Body");
 
 // GraphQL Apollo Connection
 const apolloServer = new ApolloServer({
