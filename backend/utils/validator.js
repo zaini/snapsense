@@ -1,7 +1,15 @@
 module.exports = {
   Validator: () => {
     class validator {
-    
+   
+        static isShort(value, minLength) {
+            return String(value).length < minLength;
+        }
+
+        static isLong(value, maxLength) {
+            return String(value).length > maxLength;
+        }   
+
       static isName(name) {
         /*
             Check if:
