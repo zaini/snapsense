@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@material-ui/icons": "^4.11.2",
-    "formik": "^2.2.6",
-    "yup": "^0.32.8"
-  }
-}
