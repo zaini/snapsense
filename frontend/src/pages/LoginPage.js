@@ -1,18 +1,22 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Grid } from "@material-ui/core";
-
 import LoginForm from "../components/LoginForm";
 import AccountTypeSelector from "../components/AccountTypeSelector";
+import { AuthContext } from "../context/auth";
 
 const LoginPage = () => {
+  const { user } = useContext(AuthContext);
+
   const [accountType, setAccountType] = useState("patient");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const onAccountTypeChange = (e) => {
     setAccountType(e.target.value);
   };
+
+  if (user) {
+    return <p>youre already logged in</p>;
+  }
 
   return (
     <Grid container justify="center" direction="column" alignItems="center">
@@ -27,12 +31,7 @@ const LoginPage = () => {
         Hello {accountType}! Please fill out the form below to get started
       </h4>
 
-      <LoginForm
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-      />
+      <LoginForm />
 
       <p>
         No account? <Link to={"/login"}>Sign up</Link>

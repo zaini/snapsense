@@ -6,6 +6,7 @@ import { MailOutline, LockOutlined } from "@material-ui/icons";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { AuthContext } from "../context/auth";
+import { useHistory } from "react-router-dom";
 
 const LoginForm = (props) => {
   const history = useHistory();
@@ -20,24 +21,26 @@ const LoginForm = (props) => {
       history.push("/");
     },
     onError(err) {
+      console.log(err);
       setError("error", { message: err.graphQLErrors[0].message });
     },
     variables: values,
   });
 
-  const onSubmit = ({ email, password }) => {
+  const onSubmit = async ({ email, password }) => {
     setValues({ email, password, account_type: "ADMIN" });
-    login();
+    const res = await login();
+    console.log(res);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Error errors={errors} />
       <br />
-      <Input
+      <input
         type="text"
         placeholder="Email"
-        name="Email"
+        name="email"
         ref={register({ required: true, pattern: /^\S+@\S+$/i })}
         startAdornment={
           <InputAdornment position="start">
@@ -47,10 +50,10 @@ const LoginForm = (props) => {
       />
       <br />
       <br />
-      <Input
+      <input
         type="password"
         placeholder="Password"
-        name="Password"
+        name="password"
         ref={register({ required: true })}
         startAdornment={
           <InputAdornment position="start">
