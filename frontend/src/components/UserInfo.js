@@ -95,7 +95,7 @@ const UserInfo = (props) => {
                 <Button onClick={handleClose} color="primary">
                   Cancel
           </Button>
-                <Button onClick={handleClose} color="primary" autoFocus>
+                <Button onClick={handleClose} component={Link} to="/login" color="primary" autoFocus>
                   Continue
           </Button>
               </DialogActions>
