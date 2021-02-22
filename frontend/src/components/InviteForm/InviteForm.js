@@ -14,6 +14,7 @@ const InviteForm = ({ invitation }) => {
     }
   }
 
+  // InviteUser
   return <InvitePatientNew invitation={invitation} />;
 };
 

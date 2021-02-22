@@ -11,9 +11,15 @@ const InvitePage = (props) => {
   });
 
   useEffect(() => {
+    // log person out of all accounts whne they go to this page
     // this will actually be decrypted first
     const token_id = props.match.params.token_id;
     // imagine we decrypt the token and get the invitees info
+    // checkInvitation(token_id)
+    // if theres an error, show an error TODO add this
+    // if no errors, continue
+    // decode the return
+
     const invite = {
       inviterEmail: "bob@nhs.net",
       newAcccountEmail: "jane@doemail.com",
