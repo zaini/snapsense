@@ -8,7 +8,7 @@ import { setContext } from "apollo-link-context";
 import { ChakraProvider } from "@chakra-ui/react";
 
 const backendLink = createHttpLink({
-  uri: process.env.BACKEND_URL || "http://192.168.0.31:5000/graphql",
+  uri: process.env.BACKEND_URL || "http://localhost:5000/graphql",
 });
 
 // TODO: Once login is setup, use setContext to create an auth context
