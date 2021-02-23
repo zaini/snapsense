@@ -31,7 +31,7 @@ export const navbarLinks = {
   History: <Link to="/upload_list">History</Link>,
   "Upload report": <Link to="/upload">Upload report</Link>,
   "Latest uploads": <Link to="/latest_list">Latest uploads</Link>,
-  "Log out": <Link to="/">Logout</Link>,
+  "Log out": <Link to="/logout">Logout</Link>,
 };
 
 export const headerToRoute = {
