@@ -1,6 +1,6 @@
 import React from "react";
 import Button from '@material-ui/core/Button';
-import { Container, List, ListItem, FormControl, InputLabel, Input, FormHelperText } from "@material-ui/core";
+import { Container, List, ListItem, FormControl, FormLabel, Input, FormHelperText } from "@material-ui/core";
 import { useForm } from 'react-hook-form';
 
 
@@ -11,12 +11,12 @@ const EmailForm = (props) => {
 
     return (
         <Container>
+            <h3>Change Email</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <List>
-
                     <ListItem>
                         <FormControl error={Boolean(errors.newEmail)}>
-                            <InputLabel htmlFor="newEmail">New Email</InputLabel>
+                            <FormLabel>New email</FormLabel>
                             <Input id="newEmail" name="newEmail" type="text" inputRef={register({
                                 required: true,
                                 pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/
@@ -39,7 +39,6 @@ const EmailForm = (props) => {
                         Save changes
                     </Button>
                     </ListItem>
-
                 </List>
             </form>
         </Container>

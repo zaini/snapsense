@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from '@material-ui/core/Button';
-import { Container, List, ListItem, FormControl, InputLabel, Input, FormHelperText } from "@material-ui/core";
+import { Container, List, ListItem, FormControl, FormLabel, Input, FormHelperText } from "@material-ui/core";
 import { useForm } from 'react-hook-form';
 
 
@@ -17,11 +17,12 @@ const PasswordForm = (props) => {
 
     return (
         <Container>
+            <h3>Change Password</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <List>
                     <ListItem>
                         <FormControl error={Boolean(errors.currentPassword)}>
-                            <InputLabel htmlFor="currentPassword">Current password</InputLabel>
+                            <FormLabel>Current password</FormLabel>
                             <Input id="currentPassword" name="currentPassword" type={passwordVisible ? "text" : "password"} />
                             {/* <i onClick={togglePasswordVisiblity}>{eye}</i>{" "} */}
                         </FormControl>
@@ -29,7 +30,7 @@ const PasswordForm = (props) => {
 
                     <ListItem>
                         <FormControl error={Boolean(errors.newPassword)}>
-                            <InputLabel htmlFor="newPassword">New password</InputLabel>
+                            <FormLabel>New password</FormLabel>
                             <Input id="newPassword" name="newPassword" type={passwordVisible ? "text" : "password"} inputRef={register({
                                 required: true
                                 // minLength: 5,
@@ -51,7 +52,7 @@ const PasswordForm = (props) => {
 
                     <ListItem>
                         <FormControl error={Boolean(errors.reEnterPassword)}>
-                            <InputLabel htmlFor="reEnterPassword">Re-enter password</InputLabel>
+                            <FormLabel>Re-enter password</FormLabel>
                             <Input id="reEnterPassword" name="reEnterPassword" type={passwordVisible ? "text" : "password"} inputRef={register({
                                 required: true
                             })} />
@@ -64,14 +65,14 @@ const PasswordForm = (props) => {
                     </ListItem>
 
                     {/* <ListItem>
-                            <TextField
-                                variant="outlined"
-                                id="checkPassword"
-                                name="checkPassword"
-                                label="Re-enter new password"
-                                type={passwordVisible ? "text" : "password"}
-                            />
-                        </ListItem> */}
+                        <TextField
+                            variant="outlined"
+                            id="checkPassword"
+                            name="checkPassword"
+                            label="Re-enter new password"
+                            type={passwordVisible ? "text" : "password"}
+                        />
+                    </ListItem> */}
 
                     <ListItem><Button
                         type="submit"
