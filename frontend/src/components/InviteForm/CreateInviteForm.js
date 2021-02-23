@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Box,
   FormControl,
@@ -12,10 +11,9 @@ import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import Error from "../Error";
 import CopyLink from "../CopyLink";
-require("dotenv").config();
 
 // TODO move this to env
-const URL_PREFIX = "http://localhost:3000/";
+const URL_PREFIX = "http://localhost:3000";
 
 // TODO add validation for email before submitting
 const CreateInviteForm = () => {
