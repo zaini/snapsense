@@ -87,19 +87,6 @@ module.exports = gql`
       password: String!
       hospital_id: ID!
     ): Admin
-    createDoctor(
-      fname: String!
-      lname: String!
-      email: String!
-      password: String!
-      admin_id: ID!
-    ): Doctor
-    createPatient(
-      fname: String!
-      lname: String!
-      email: String!
-      password: String!
-    ): Patient
     createSubmission(
       patient_id: ID!
       doctor_id: ID!

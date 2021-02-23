@@ -11,13 +11,5 @@ module.exports = {
       }
     },
   },
-  Mutation: {
-    createDoctor: async (_, user_details) => {
-      const doctor = await new Doctor({
-        ...user_details,
-      }).save();
-
-      return { ...doctor.dataValues };
-    },
-  },
+  Mutation: {},
 };

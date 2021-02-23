@@ -14,13 +14,6 @@ module.exports = {
     },
   },
   Mutation: {
-    createPatient: async (_, user_details) => {
-      const patient = await new Patient({
-        ...user_details,
-      }).save();
-
-      return { ...patient.dataValues };
-    },
     addPatientToDoctor: async (_, { patient_email, doctor_email }) => {
       const doctor = await Doctor.findOne({ where: { email: doctor_email } });
       const patient = await Patient.findOne({

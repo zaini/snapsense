@@ -25,12 +25,13 @@ const InvitePage = (props) => {
       newAcccountEmail: "jane@doemail.com",
       accountType: "PATIENT",
       accountExists: false,
+      invitationToken: token_id,
     };
     setInvitation(invite);
 
     // check if the newAccountEmail already has an account.
     // would be done by a GraphQL query
-    const accountExists = true;
+    const accountExists = false;
     if (accountExists) {
       setInvitation({ ...invite, accountExists: true });
     }
