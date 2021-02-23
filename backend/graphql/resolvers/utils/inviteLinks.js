@@ -98,6 +98,12 @@ module.exports = {
             throw new ApolloError("Invalid user", 400);
           }
 
+          //Check for NHS email
+          const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@nhs.co.uk$/;
+          if (!re.test(String(email).trim())) {
+            throw new UserInputError("Only NHS email recipients allowed");
+          }
+
           // Check if doctor exists
           doctor = await Doctor.findOne({ where: { email } });
           if (doctor) {
