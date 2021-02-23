@@ -15,7 +15,7 @@ import gql from "graphql-tag";
 import { AuthContext } from "../context/auth";
 import { useHistory } from "react-router-dom";
 
-const LoginForm = () => {
+const LoginForm = ({ accountType }) => {
   const history = useHistory();
   const context = useContext(AuthContext);
   const [values, setValues] = useState({});
@@ -37,12 +37,12 @@ const LoginForm = () => {
 
   const onSubmit = async ({ email, password }) => {
     console.log("submitting again");
-    setValues({ email, password, account_type: "ADMIN" });
+    setValues({ email, password, account_type: accountType });
     const res = await login();
   };
 
   return (
-    <Box p="7" borderWidth="1px" borderRadius="lg">
+    <Box>
       <Error errors={errors} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl id="email" isRequired>

@@ -1,6 +1,5 @@
 import { useState, useContext } from "react";
-import { Link } from "react-router-dom";
-import { Grid } from "@material-ui/core";
+import { Grid, Box, Center, Container } from "@chakra-ui/react";
 import LoginForm from "../components/LoginForm";
 import AccountTypeSelector from "../components/AccountTypeSelector";
 import { AuthContext } from "../context/auth";
@@ -8,7 +7,7 @@ import { AuthContext } from "../context/auth";
 const LoginPage = (props) => {
   const { user } = useContext(AuthContext);
 
-  const [accountType, setAccountType] = useState("patient");
+  const [accountType, setAccountType] = useState("PATIENT");
 
   const onAccountTypeChange = (e) => {
     setAccountType(e.target.value);
@@ -19,24 +18,30 @@ const LoginPage = (props) => {
   }
 
   return (
-    <Grid container justify="center" direction="column" alignItems="center">
-      <h1>Choose Account Type</h1>
+    <Container p="7" borderWidth="1px" borderRadius="lg" mt="20">
+      <Grid
+        container
+        justify="center"
+        direction="column"
+        alignItems="center"
+        textAlign="center"
+      >
+        <h1>Choose Account Type</h1>
 
-      <AccountTypeSelector
-        onAccountTypeChange={onAccountTypeChange}
-        accountType={accountType}
-      />
+        <AccountTypeSelector
+          onAccountTypeChange={onAccountTypeChange}
+          accountType={accountType}
+        />
 
-      <h4>
-        Hello {accountType}! Please fill out the form below to get started
-      </h4>
+        <h4>
+          Hello {accountType}! Please fill out the form below to get started
+        </h4>
 
-      <LoginForm />
+        <br />
 
-      <p>
-        No account? <Link to={"/login"}>Sign up</Link>
-      </p>
-    </Grid>
+        <LoginForm accountType={accountType} />
+      </Grid>
+    </Container>
   );
 };
 

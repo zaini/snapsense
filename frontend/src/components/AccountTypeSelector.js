@@ -1,19 +1,16 @@
 import { Radio, RadioGroup, FormControlLabel } from "@material-ui/core";
-import './AccountTypeSelector.css';
+import "./AccountTypeSelector.css";
 
 const LoginForm = ({ accountType, onAccountTypeChange }) => {
   return (
     <RadioGroup value={accountType} onChange={onAccountTypeChange}>
       <FormControlLabel
-        value="patient"
+        value="PATIENT"
         control={<Radio />}
         label="🤒 Patient"
       />
-      <FormControlLabel   
-        value="doctor" 
-        control={<Radio />} 
-        label="👩‍⚕️ Doctor" />
-      
+      <FormControlLabel value="DOCTOR" control={<Radio />} label="👩‍⚕️ Doctor" />
+      <FormControlLabel value="ADMIN" control={<Radio />} label="🤖 Admin" />
     </RadioGroup>
 
     // <div class="main-container">

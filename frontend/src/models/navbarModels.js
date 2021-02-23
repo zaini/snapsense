@@ -43,7 +43,7 @@ export const headerToRoute = {
   History: "/upload_list",
   "Upload report": "/upload",
   "Latest uploads": "/latest_list",
-  "Log out": "/",
+  "Log out": "/logout",
 };
 
 export const navbarIcons = {
