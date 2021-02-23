@@ -1,11 +1,14 @@
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../context/auth";
 
-const LogoutPage = () => {
+const LogoutPage = (props) => {
   const { logout } = useContext(AuthContext);
 
   useEffect(() => {
-    logout();
+    (async () => {
+      await logout();
+      props.history.push("/");
+    })();
   }, []);
 
   return <p>Logging you out...</p>;

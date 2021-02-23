@@ -52,7 +52,12 @@ const LoginForm = () => {
         <br />
         <FormControl id="password" isRequired>
           <FormLabel htmlFor="password">Password</FormLabel>
-          <Input name="password" placeholder="Password" ref={register} />
+          <Input
+            type="password"
+            name="password"
+            placeholder="Password"
+            ref={register}
+          />
         </FormControl>
         <br />
         <Center>
