@@ -2,7 +2,7 @@ const argon2 = require("argon2");
 const { UserInputError, ApolloError } = require("apollo-server");
 const { verify } = require("jsonwebtoken");
 require("dotenv").config();
-
+const { ValidationError } = require("sequelize");
 const { createAccessToken } = require("../utils/authTokens");
 const { Admin, Doctor, Patient } = require("../../../models/index");
 const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
@@ -27,7 +27,6 @@ module.exports = {
         invitationToken,
         ACCESS_TOKEN_SECRET_KEY
       );
-      const hashedPassword = await argon2.hash(password);
       let inviter, invited, user;
 
       switch (accountType) {
@@ -37,7 +36,7 @@ module.exports = {
           user = new Doctor({
             fname,
             lname,
-            password: hashedPassword,
+            password,
             email: newAccountEmail,
             admin_id: inviter.getDataValue("id"),
           });
@@ -49,7 +48,7 @@ module.exports = {
           user = new Patient({
             fname,
             lname,
-            password: hashedPassword,
+            password,
             email: newAccountEmail,
           });
           break;
@@ -61,7 +60,17 @@ module.exports = {
 
       const valid = await isInvitationValid(inviter, invited);
       if (valid) {
-        await user.save();
+        console.log(user);
+        try {
+          await user.save();  
+        } catch (error) {
+          if(error instanceof ValidationError){
+            throw new UserInputError(error);
+          }else{
+            throw error;
+          }
+        }
+        
         if (user instanceof Patient) {
           // This is the only many to many relationship that requires this constraint, so checking instanceof is fine
           await inviter.addPatients(user);
