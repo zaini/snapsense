@@ -17,7 +17,6 @@ const PasswordForm = (props) => {
 
     return (
         <Container>
-            <h3>Change Password</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <List>
                     <ListItem>
@@ -74,18 +73,18 @@ const PasswordForm = (props) => {
                         />
                     </ListItem> */}
 
-                    <ListItem><Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                    >
-                        Save changes
+                    <ListItem>
+                        <Button
+                            type="submit"
+                            color="primary"
+                            variant="contained"
+                        >
+                            Save changes
                     </Button>
                     </ListItem>
 
                 </List>
             </form>
-
         </Container>
     );
 };

@@ -11,7 +11,6 @@ const EmailForm = (props) => {
 
     return (
         <Container>
-            <h3>Change Email</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <List>
                     <ListItem>
@@ -31,14 +30,17 @@ const EmailForm = (props) => {
                             </FormHelperText>
                         </FormControl>
                     </ListItem>
-                    <ListItem><Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                    >
-                        Save changes
+
+                    <ListItem>
+                        <Button
+                            type="submit"
+                            color="primary"
+                            variant="contained"
+                        >
+                            Save changes
                     </Button>
                     </ListItem>
+
                 </List>
             </form>
         </Container>
