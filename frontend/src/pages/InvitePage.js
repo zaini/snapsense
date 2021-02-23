@@ -25,6 +25,7 @@ const InvitePage = (props) => {
       newAcccountEmail: "jane@doemail.com",
       accountType: "PATIENT",
       accountExists: false,
+      invitationToken: token_id,
     };
     setInvitation(invite);
 

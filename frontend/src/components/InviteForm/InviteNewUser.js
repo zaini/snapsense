@@ -30,10 +30,11 @@ const InviteNewUser = ({ invitation }) => {
           fname: first_name,
           lname: last_name,
           password,
-          email: invitation.email,
+          invitationToken: invitation.invitationToken,
         },
-      });
-      console.log(data);
+      })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
     } else {
       setError("password", {
         type: "manual",
@@ -101,7 +102,17 @@ const InviteNewUser = ({ invitation }) => {
 export default InviteNewUser;
 
 const REGISTER_USER = gql`
-  mutation invite_user($email: String!) {
-    inviteUser(email: $email)
+  mutation register(
+    $fname: String!
+    $lname: String!
+    $password: String!
+    $invitationToken: String!
+  ) {
+    register(
+      fname: $fname
+      lname: $lname
+      password: $password
+      invitationToken: $invitationToken
+    )
   }
 `;
