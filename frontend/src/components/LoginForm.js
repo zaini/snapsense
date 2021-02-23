@@ -1,19 +1,26 @@
 import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import Error from "../components/Error";
-import { Button, Input, InputAdornment } from "@material-ui/core";
-import { MailOutline, LockOutlined } from "@material-ui/icons";
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Center,
+  FormErrorMessage,
+} from "@chakra-ui/react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { AuthContext } from "../context/auth";
 import { useHistory } from "react-router-dom";
 
-const LoginForm = (props) => {
+const LoginForm = () => {
   const history = useHistory();
   const context = useContext(AuthContext);
   const [values, setValues] = useState({});
 
-  const { register, handleSubmit, setError, errors } = useForm();
+  const { register, handleSubmit, errors, setError, formState } = useForm();
 
   const [login, { loading }] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData } }) {
@@ -21,52 +28,45 @@ const LoginForm = (props) => {
       history.push("/");
     },
     onError(err) {
-      console.log(err);
-      setError("error", { message: err.graphQLErrors[0].message });
+      const message = err.graphQLErrors[0].message;
+      // We have to assign this to a field in the form for it to let us resubmit after an error
+      setError("email", { type: "manual", message });
     },
     variables: values,
   });
 
   const onSubmit = async ({ email, password }) => {
+    console.log("submitting again");
     setValues({ email, password, account_type: "ADMIN" });
     const res = await login();
-    console.log(res);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <Box p="7" borderWidth="1px" borderRadius="lg">
       <Error errors={errors} />
-      <br />
-      <input
-        type="text"
-        placeholder="Email"
-        name="email"
-        ref={register({ required: true, pattern: /^\S+@\S+$/i })}
-        startAdornment={
-          <InputAdornment position="start">
-            <MailOutline />
-          </InputAdornment>
-        }
-      />
-      <br />
-      <br />
-      <input
-        type="password"
-        placeholder="Password"
-        name="password"
-        ref={register({ required: true })}
-        startAdornment={
-          <InputAdornment position="start">
-            <LockOutlined />
-          </InputAdornment>
-        }
-      />
-      <br />
-      <br />
-      <Button name="submit" variant="contained" color="primary" type="submit">
-        Submit
-      </Button>
-    </form>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FormControl id="email" isRequired>
+          <FormLabel htmlFor="email">Email</FormLabel>
+          <Input name="email" placeholder="Email" ref={register} />
+        </FormControl>
+        <br />
+        <FormControl id="password" isRequired>
+          <FormLabel htmlFor="password">Password</FormLabel>
+          <Input name="password" placeholder="Password" ref={register} />
+        </FormControl>
+        <br />
+        <Center>
+          <Button
+            mt={4}
+            colorScheme="blue"
+            type="submit"
+            isLoading={formState.isSubmitting}
+          >
+            Login
+          </Button>
+        </Center>
+      </form>
+    </Box>
   );
 };
 
