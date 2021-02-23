@@ -1,5 +1,4 @@
 const { ApolloError } = require("apollo-server");
-const argon2 = require("argon2");
 
 const { Doctor, Patient } = require("../../models/index.js");
 
@@ -16,12 +15,8 @@ module.exports = {
   },
   Mutation: {
     createPatient: async (_, user_details) => {
-      const hashedPassword = await argon2.hash(user_details.password);
-
       const patient = await new Patient({
         ...user_details,
-        password: hashedPassword,
-        createdAt: new Date(),
       }).save();
 
       return { ...patient.dataValues };
