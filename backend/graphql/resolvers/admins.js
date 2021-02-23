@@ -1,5 +1,4 @@
 const { Admin } = require("../../models/index.js");
-const argon2 = require("argon2");
 
 module.exports = {
   Query: {
@@ -14,12 +13,8 @@ module.exports = {
   },
   Mutation: {
     createAdmin: async (_, user_details) => {
-      const hashedPassword = await argon2.hash(user_details.password);
-      
       const admin = await new Admin({
         ...user_details,
-        password: hashedPassword,
-        createdAt: new Date(),
       }).save();
 
       return { ...admin.dataValues };
