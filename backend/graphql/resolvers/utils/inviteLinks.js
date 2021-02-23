@@ -114,7 +114,7 @@ module.exports = {
           accountType = "PATIENT";
 
           // Check if JWT doctor exists
-          doctor = await Doctor.findOne(user.id);
+          doctor = await Doctor.findByPk(user.id);
           if (!doctor) {
             throw new ApolloError("Invalid user", 400);
           }
