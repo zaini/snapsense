@@ -26,7 +26,9 @@ const CreateInviteForm = () => {
     if (email === repeat_email) {
       // probably have to await this
       console.log(email);
-      inviteUser({ variables: { email: email } });
+      inviteUser({ variables: { email: email } })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
       console.log(data);
     } else {
       setError("email", {
