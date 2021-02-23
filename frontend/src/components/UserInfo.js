@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import { Container, List, ListItem, ListItemText, Grid, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
+import { Box, Container, List, ListItem, ListItemText, Grid, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
 import PasswordForm from "../components/PasswordForm.js";
 import EmailForm from "../components/EmailForm.js";
 
@@ -29,40 +29,42 @@ const UserInfo = (props) => {
   }
 
   return (
-    <Container>
-      <Container className="UserInfo">
-        <h1>Your information</h1>
-        <Paper>
-          <Grid container direction="row" alignItems="center" justify="center">
-            <Grid item xs={12}>
-              <List>
-                <ListItem>
-                  <ListItemText
-                    primary="First name"
-                    secondary={props.firstName}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemText
-                    primary="Last name"
-                    secondary={props.lastName}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemText
-                    primary="Email"
-                    secondary={props.email}
-                  />
-                </ListItem>
-              </List>
-            </Grid>
-          </Grid>
-        </Paper>
 
-        <Grid container direction="row" alignItems="center">
-          <List>
-            <ListItem>
-              <Button color="primary" onClick={handleClickOpen}>
+    <Container className="UserInfo">
+      <h1>Your information</h1>
+      <List>
+
+          <Paper>
+            <Grid container direction="row" alignItems="center" justify="center">
+              <Grid item xs={12}>
+                <List>
+                  <ListItem>
+                    <ListItemText
+                      primary="First name"
+                      secondary={props.firstName}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary="Last name"
+                      secondary={props.lastName}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary="Email"
+                      secondary={props.email}
+                    />
+                  </ListItem>
+                </List>
+              </Grid>
+            </Grid>
+          </Paper>
+        
+        <ListItem>
+          <Grid container direction="row" alignContent='space-around' alignItems="center" justify="center">
+            <Grid item>
+              <Button onClick={handleClickOpen} color="primary">
                 Delete account
       </Button>
               <Dialog
@@ -86,39 +88,45 @@ const UserInfo = (props) => {
           </Button>
                 </DialogActions>
               </Dialog>
-            </ListItem>
-          </List>
+            </Grid>
 
-          <Button onClick={handlePasswordForm} style={{ minWidth: '170px' }} color="primary">
-            Change password
+            <Grid item>
+              <Button onClick={handlePasswordForm} color="primary">
+                Change password
         </Button>
+            </Grid>
 
-          <Button onClick={handleEmailForm} style={{ minWidth: '170px' }} color="primary">
-            Change email
+            <Grid item>
+              <Button onClick={handleEmailForm} color="primary">
+                Change email
         </Button>
-        </Grid>
-      </Container >
+            </Grid>
+          </Grid>
+        </ListItem>
+        
+        <ListItem>
+          <Grid container>
+            <Grid item xs={6} >
+              {pwVisible === 'true' && (
+                <Container>
 
-      <Grid container>
-        <Grid item xs={6}>
-          {pwVisible === 'true' && (
-            <Container>
-              <h1>Change Password</h1>
-              <PasswordForm />
-            </Container>
-          )}
-        </Grid>
-        <Grid item xs={6}>
-          {emailVisible === 'true' && (
-            <Container>
-              <h1>Change Email</h1>
-              <EmailForm />
-            </Container>
-          )}
-        </Grid>
-      </Grid>
+                  <PasswordForm />
+                </Container>
+              )}
+            </Grid>
+            <Grid item xs={6}>
+              {emailVisible === 'true' && (
+                <Container>
 
+                  <EmailForm />
+                </Container>
+              )}
+            </Grid>
+          </Grid>
+        </ListItem>
+      </List>
     </Container >
+
   );
 }
 
