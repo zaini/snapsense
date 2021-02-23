@@ -31,8 +31,8 @@ module.exports = (sequelize, DataTypes) => {
             if (!ModelValidator.isName(value)) {
               throw new Error("Invalid name");
             }
-          }
-        }
+          },
+        },
       },
       lname: {
         type: DataTypes.STRING,
@@ -42,8 +42,8 @@ module.exports = (sequelize, DataTypes) => {
             if (!ModelValidator.isName(value)) {
               throw new Error("Invalid name");
             }
-          }
-        }
+          },
+        },
       },
       email: {
         type: DataTypes.STRING,
@@ -54,24 +54,24 @@ module.exports = (sequelize, DataTypes) => {
             if (!ModelValidator.isEmail(value, true)) {
               throw new Error("Invalid email address");
             }
-          }
-        }
+          },
+        },
       },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isPassword(value) {
-            if (!ModelValidator.isPassword(value)) {
+          isNotEmpty(value) {
+            if (ModelValidator.isEmpty(value)) {
               throw new Error("Invalid password");
             }
-          }
-        }
+          },
+        },
       },
       admin_id: {
         type: DataTypes.INTEGER,
-        allowNull: false  
-      }
+        allowNull: false,
+      },
     },
     {
       sequelize,
