@@ -2,6 +2,7 @@ const AWS = require("aws-sdk");
 const { v4: uuidv4 } = require("uuid");
 require("dotenv").config();
 const col = require("./loggingFunc");
+const { ApolloError } = require("apollo-server");
 
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_ID,
@@ -27,6 +28,24 @@ const prefix = uuidv4();
 const handleFileUpload = async (file) => {
   const { createReadStream, filename } = await file;
   const extension = filename.split(".").pop();
+  const extensionsAllowed = [
+    "png",
+    "jpg",
+    "jpeg",
+    "gif",
+    "tiff",
+    "PNG",
+    "JPG",
+    "JPEG",
+    "GIF",
+    "TIFF",
+  ];
+  if (!extensionsAllowed.includes(extension)) {
+    throw new ApolloError(
+      "Invalid File Uploaded, only JPGs, JPEGs, PNGs and TIFFs are allowed",
+      400
+    );
+  }
 
   return new Promise((resolve, reject) => {
     s3.upload(
