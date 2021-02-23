@@ -9,7 +9,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 
-const InvitePatientNew = ({ invitation }) => {
+const InviteNewUser = ({ invitation }) => {
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => console.log(data);
   console.log(errors);
@@ -53,4 +53,4 @@ const InvitePatientNew = ({ invitation }) => {
   );
 };
 
-export default InvitePatientNew;
+export default InviteNewUser;
