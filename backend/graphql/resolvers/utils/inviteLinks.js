@@ -84,7 +84,7 @@ module.exports = {
       // Get the user and their email from the authorization header token
 
       const user = isAuth(context);
-      const userEmail = user.dataValues.email;
+      const userEmail = user.email;
 
       let accountType, doctor;
       let accountExists = false;
@@ -93,7 +93,7 @@ module.exports = {
         case "ADMIN":
           accountType = "DOCTOR";
           // Check if JWT admin exists
-          const admin = await Admin.findOne(user.id);
+          const admin = await Admin.findByPk(user.id);
           if (!admin) {
             throw new ApolloError("Invalid user", 400);
           }

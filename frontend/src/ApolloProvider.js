@@ -15,8 +15,18 @@ const backendLink = createHttpLink({
 
 // TODO: Once login is setup, use setContext to create an auth context
 
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("jwtToken");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
 const client = new ApolloClient({
-  link: backendLink,
+  link: authLink.concat(backendLink),
   cache: new InMemoryCache(),
   connectToDevTools: true,
 });
