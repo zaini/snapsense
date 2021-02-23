@@ -62,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isNotEmpty(value) {
             if (ModelValidator.isEmpty(value)) {
-              throw new Error("Invalid email address");
+              throw new Error("Invalid password");
             }
           },
         },
