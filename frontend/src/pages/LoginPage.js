@@ -5,7 +5,7 @@ import LoginForm from "../components/LoginForm";
 import AccountTypeSelector from "../components/AccountTypeSelector";
 import { AuthContext } from "../context/auth";
 
-const LoginPage = () => {
+const LoginPage = (props) => {
   const { user } = useContext(AuthContext);
 
   const [accountType, setAccountType] = useState("patient");
@@ -15,7 +15,7 @@ const LoginPage = () => {
   };
 
   if (user) {
-    return <p>youre already logged in</p>;
+    props.history.push("/");
   }
 
   return (
