@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Box,
   FormControl,
@@ -9,6 +10,8 @@ import {
 import { useForm } from "react-hook-form";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
+import { useHistory } from "react-router-dom";
+
 import Error from "../Error";
 import CopyLink from "../CopyLink";
 
@@ -17,19 +20,36 @@ const URL_PREFIX = "http://localhost:3000";
 
 // TODO add validation for email before submitting
 const CreateInviteForm = () => {
-  const { register, handleSubmit, errors, setError, formState } = useForm();
+  const history = useHistory();
 
-  const [inviteUser, { data, loading }] = useMutation(INVITE_USER);
+  const {
+    register,
+    handleSubmit,
+    errors,
+    setError,
+    formState,
+    clearErrors,
+  } = useForm();
+
+  const [inviteLink, setInviteLink] = useState("");
+
+  const [inviteUser, { loading }] = useMutation(INVITE_USER, {
+    update(_, { data: { inviteUser: invitationToken } }) {
+      setInviteLink(invitationToken);
+      history.push("/login");
+    },
+    onError(err) {
+      setError("graphql", {
+        type: "manual",
+        message: err.graphQLErrors[0].message,
+      });
+    },
+  });
 
   const onSubmit = async ({ email, repeat_email }) => {
-    console.log("submitting again");
+    clearErrors();
     if (email === repeat_email) {
-      // probably have to await this
-      console.log(email);
-      inviteUser({ variables: { email: email } })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
-      console.log(data);
+      inviteUser({ variables: { email: email } });
     } else {
       setError("email", {
         type: "manual",
@@ -67,8 +87,8 @@ const CreateInviteForm = () => {
           </Button>
         </Center>
       </form>
-      {data ? (
-        <CopyLink link={URL_PREFIX + "/invite/" + data.inviteUser} />
+      {inviteLink ? (
+        <CopyLink link={URL_PREFIX + "/invite/" + inviteLink} />
       ) : (
         ""
       )}
