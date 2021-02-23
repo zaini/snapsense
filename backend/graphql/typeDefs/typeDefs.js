@@ -63,7 +63,16 @@ module.exports = gql`
     createdAt: String!
   }
 
+  type S3Object {
+    ETag: String
+    Location: String!
+    Key: String!
+    Bucket: String!
+  }
+
   type File {
+    id: ID!
+    path: String!
     filename: String!
     mimetype: String!
     encoding: String!
@@ -98,8 +107,8 @@ module.exports = gql`
     ): Submission
 
     # TODO Image Mutations
-    singleUpload(file: Upload!): File!
-    singleUploadStream(file: Upload!): File!
+    # singleUpload(file: Upload!): File!
+    singleUploadStream(file: Upload!): S3Object
 
     # TODO jwt stuff
     register(
@@ -108,6 +117,7 @@ module.exports = gql`
       password: String!
       invitationToken: String!
     ): Boolean
+
     login(
       email: String!
       password: String!
