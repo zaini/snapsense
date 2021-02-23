@@ -1,5 +1,4 @@
 const { ApolloError } = require("apollo-server");
-const argon2 = require("argon2");
 
 const { Doctor, Patient } = require("../../models/index.js");
 
