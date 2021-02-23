@@ -4,9 +4,11 @@ import { Container } from "@chakra-ui/react";
 const Error = ({ errors }) => {
   return (
     <Container>
-      {Object.keys(errors).map((key, i) => {
-        return <p>{errors[key].message}</p>;
-      })}
+      <ul>
+        {Object.keys(errors).map((key, i) => {
+          return <li key={i}>{errors[key].message}</li>;
+        })}
+      </ul>
     </Container>
   );
 };
