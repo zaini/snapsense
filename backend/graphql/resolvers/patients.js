@@ -15,17 +15,6 @@ module.exports = {
     },
   },
   Mutation: {
-    createPatient: async (_, user_details) => {
-      const hashedPassword = await argon2.hash(user_details.password);
-
-      const patient = await new Patient({
-        ...user_details,
-        password: hashedPassword,
-        createdAt: new Date(),
-      }).save();
-
-      return { ...patient.dataValues };
-    },
     addPatientToDoctor: async (_, { patient_email, doctor_email }) => {
       const doctor = await Doctor.findOne({ where: { email: doctor_email } });
       const patient = await Patient.findOne({
