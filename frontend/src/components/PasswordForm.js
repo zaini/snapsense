@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from '@material-ui/core/Button';
-import { Container, List, ListItem, FormControl, FormLabel, Input, FormHelperText } from "@material-ui/core";
+import { Container, List, ListItem, FormControl, FormLabel, Input, FormHelperText, IconButton, InputAdornment } from "@material-ui/core";
 import { useForm } from 'react-hook-form';
 
 
@@ -22,7 +22,21 @@ const PasswordForm = (props) => {
                     <ListItem>
                         <FormControl error={Boolean(errors.currentPassword)}>
                             <FormLabel>Current password</FormLabel>
-                            <Input id="currentPassword" name="currentPassword" type={passwordVisible ? "text" : "password"} />
+                            <Input id="currentPassword"
+                                name="currentPassword"
+                                type={passwordVisible ? "text" : "password"}
+                                // endAdornment={
+                                //     <InputAdornment position="end">
+                                //         <IconButton
+                                //             aria-label="toggle password visibility"
+                                //             onClick={togglePasswordVisiblity}
+                                //         >
+                                //             {passwordVisible ? "Show" : "Hide"}
+                                //         </IconButton>
+                                //     </InputAdornment>
+                                // }
+                            />
+
                             {/* <i onClick={togglePasswordVisiblity}>{eye}</i>{" "} */}
                         </FormControl>
                     </ListItem>
