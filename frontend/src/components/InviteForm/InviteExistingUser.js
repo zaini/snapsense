@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { Box, Button, Center } from "@chakra-ui/react";
 import { AuthContext } from "../../context/auth";
 import { useHistory } from "react-router-dom";
-import LoginPage from "../../pages/LoginPage";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import LoginFormWrapper from "../LoginFormWrapper";
@@ -61,6 +60,8 @@ const InvitePatientExists = ({ invitation }) => {
       </Box>
     );
   } else {
+    // TODO recursion occurs here if user is logged in...
+    console.log("user:", user);
     if (user) {
       logout();
     }
