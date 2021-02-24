@@ -28,7 +28,7 @@ export const headerToRoute = {
   Patients: "/patient_list",
   "Invite patient": "/invite",
   "Invite doctor": "/invite",
-  History: "/patientPersonalLog",
+  History: "/logs",
   "Upload report": "/upload",
   "Latest uploads": "/latest_list",
   "Log out": "/",
