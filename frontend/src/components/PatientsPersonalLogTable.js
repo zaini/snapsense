@@ -7,6 +7,7 @@ import { Link } from "react-router-dom"
 //TODO: Update the link to the page which displays the details of the upload
 const PatientsPersonalLogTable = ({ data }) => {
   const [cols] = useState([
+    { field: "id", headerName: "ID", width: 80 },
     { field: "date", headerName: "Date submitted", widht: 160},
     { field: "subType", headerName: "Type of submission", width: 160},
     { renderCell: function () {

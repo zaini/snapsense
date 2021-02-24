@@ -9,10 +9,10 @@ const PatientsPersonalLogPage = () => {
   const [patientName] = useState("Bob");
 
   const [rows] = useState([
-    { date: "2020-02-14", subType: "Photo"},
-    { date: "2021-01-24", subType: "Photo"},
-    { date: "2021-01-27", subType: "Photo"},
-    { date: "2021-02-20", subType: "Photo"},
+    { id: 1, date: "2020-02-14", subType: "Photo"},
+    { id: 2, date: "2021-01-24", subType: "Photo"},
+    { id: 3, date: "2021-01-27", subType: "Photo"},
+    { id: 4, date: "2021-02-20", subType: "Photo"},
     
   ]);
 
