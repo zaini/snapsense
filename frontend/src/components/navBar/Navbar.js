@@ -34,7 +34,7 @@ function Navbar() {
   useEffect(() => {
     setOpen(false);
   }, []);
-  const [accountType, setAccountType] = useState("admin");
+  const [accountType, setAccountType] = useState("patient");
   const [isLoggedIn, setLogedStatus] = useState(true);
   //const isLoggedIn = window.localStorage.getItem("authUser") ? true : false;
 
