@@ -102,6 +102,7 @@ module.exports = gql`
       fname: String!
       lname: String!
       password: String!
+      passwordConfirmation: String!
       invitationToken: String!
     ): Boolean
 

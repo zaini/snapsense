@@ -23,7 +23,7 @@ module.exports = {
       if (doctor) {
         if (patient) {
           await doctor.addPatient(patient);
-          await patient.addPatient(doctor);
+          await patient.addDoctor(doctor);
           return true;
         }
         throw new ApolloError("Invalid patient", 400);
