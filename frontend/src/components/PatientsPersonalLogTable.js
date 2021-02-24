@@ -19,7 +19,7 @@ const PatientsPersonalLogTable = ({ data }) => {
   ]);
   return (
     <>
-      <Box height="85vh" width="100%">
+      <Box height="73vh" width="100%">
         <DataGrid columns={cols} rows={data} autoPageSize />
       </Box>
     </>
