@@ -27,7 +27,7 @@ function App() {
             </>
           </Route>
           <Route exact path="/invite/:token_id" component={InvitePage} />
-          <Route exact path="/patientPersonalLog" component={PatientsPersonalLogPage}/>
+          <Route exact path="/logs" component={PatientsPersonalLogPage}/>
         </Switch>
       </div>
     </Router>
