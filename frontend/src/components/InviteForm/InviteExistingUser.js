@@ -23,7 +23,7 @@ const InvitePatientExists = ({ invitation }) => {
   if (
     user &&
     user.accountType === "PATIENT" &&
-    user.email === invitation.newAcccountEmail
+    user.email === invitation.newAccountEmail
   ) {
     return (
       <Box p="7" borderWidth="1px" borderRadius="lg">
@@ -40,10 +40,20 @@ const InvitePatientExists = ({ invitation }) => {
           alignItems="center"
           textAlign="center"
         >
-          <Button mt={4} mr={4} colorScheme="blue" type="submit">
-            Accept Invite
+          <Button
+            mt={4}
+            mr={4}
+            colorScheme="blue"
+            onClick={() => addRelation()}
+          >
+            Accept
           </Button>
-          <Button mt={4} colorScheme="red" type="submit">
+          <Button
+            mt={4}
+            colorScheme="red"
+            type="submit"
+            onClick={() => history.push("/")}
+          >
             Decline Invite
           </Button>
         </Box>
@@ -53,7 +63,12 @@ const InvitePatientExists = ({ invitation }) => {
     if (user) {
       logout();
     }
-    return <LoginPage />;
+    return (
+      <>
+        {invitation.newAccountEmail}
+        <LoginPage />
+      </>
+    );
   }
 };
 
