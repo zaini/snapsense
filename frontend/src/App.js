@@ -21,12 +21,12 @@ function App() {
         <Switch>
           <Route exact path="/">
             <LoginPage />
-            <>
-              <Footer />
-            </>
           </Route>
           <Route exact path="/invite/:token_id" component={InvitePage} />
         </Switch>
+      </div>
+      <div>
+        <Footer />
       </div>
     </Router>
   );
