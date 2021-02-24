@@ -13,10 +13,8 @@ import {
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { AuthContext } from "../context/auth";
-import { useHistory } from "react-router-dom";
 
 const LoginForm = ({ accountType }) => {
-  const history = useHistory();
   const context = useContext(AuthContext);
   const [values, setValues] = useState({});
 
@@ -25,7 +23,6 @@ const LoginForm = ({ accountType }) => {
   const [login, { loading }] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData } }) {
       context.login(userData);
-      history.push("/");
     },
     onError(err) {
       const message = err.graphQLErrors[0].message;
