@@ -27,12 +27,7 @@ const InviteNewUser = ({ invitation }) => {
     },
   });
 
-  const onSubmit = ({
-    first_name,
-    last_name,
-    password,
-    repeat_password,
-  }) => {
+  const onSubmit = ({ first_name, last_name, password, repeat_password }) => {
     console.log("submitting again");
     if (password === repeat_password) {
       registerUser({
@@ -43,7 +38,7 @@ const InviteNewUser = ({ invitation }) => {
           passwordConfirmation: repeat_password,
           invitationToken: invitation.invitationToken,
         },
-      })
+      });
     } else {
       setError("password", {
         type: "manual",

@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Box,
   FormControl,
@@ -5,7 +6,6 @@ import {
   Input,
   Button,
   Center,
-  Spinner
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import gql from "graphql-tag";
@@ -18,8 +18,6 @@ const URL_PREFIX = "http://localhost:3000";
 
 // TODO add validation for email before submitting
 const CreateInviteForm = () => {
-  const history = useHistory();
-
   const {
     register,
     handleSubmit,
@@ -32,8 +30,8 @@ const CreateInviteForm = () => {
   const [invitationToken, setInvitationToken] = useState("");
 
   const [inviteUser, { loading }] = useMutation(INVITE_USER, {
-    onCompleted({ inviteUser: invitationToken }){
-      setInvitationToken(invitationToken)
+    onCompleted({ inviteUser: invitationToken }) {
+      setInvitationToken(invitationToken);
     },
     onError(err) {
       setError("graphql", {
@@ -56,7 +54,7 @@ const CreateInviteForm = () => {
       });
     }
   };
-  return  (
+  return (
     <Box p="7" borderWidth="1px" borderRadius="lg">
       <Error errors={errors} />
       <form onSubmit={handleSubmit(onSubmit)}>

@@ -11,13 +11,13 @@ const InvitePatientExists = ({ invitation }) => {
 
   const [addRelation, { loading }] = useMutation(ADD_PATIENT_TO_DOCTOR, {
     onCompleted(data) {
-      console.log(data)
+      console.log(data);
     },
     variables: {
       patient_email: invitation.newAccountEmail,
-      doctor_email: invitation.inviterEmail
-    }
-  })
+      doctor_email: invitation.inviterEmail,
+    },
+  });
   return (
     <Box p="7" borderWidth="1px" borderRadius="lg">
       <h1>
@@ -67,7 +67,10 @@ const InvitePatientExists = ({ invitation }) => {
 export default InvitePatientExists;
 
 const ADD_PATIENT_TO_DOCTOR = gql`
-  mutation addPatientToDoctor($patient_email: String! $doctor_email: String!) {
-    addPatientToDoctor(patient_email: $patient_email doctor_email: $doctor_email)
+  mutation addPatientToDoctor($patient_email: String!, $doctor_email: String!) {
+    addPatientToDoctor(
+      patient_email: $patient_email
+      doctor_email: $doctor_email
+    )
   }
-`
+`;
