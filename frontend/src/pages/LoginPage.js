@@ -13,10 +13,6 @@ const LoginPage = (props) => {
     setAccountType(e.target.value);
   };
 
-  if (user) {
-    props.history.push("/");
-  }
-
   return (
     <Container p="7" borderWidth="1px" borderRadius="lg" mt="20">
       <Grid
