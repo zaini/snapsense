@@ -1,8 +1,9 @@
 const argon2 = require("argon2");
 const { UserInputError, ApolloError } = require("apollo-server");
 const { verify } = require("jsonwebtoken");
-require("dotenv").config();
 const { ValidationError } = require("sequelize");
+require("dotenv").config();
+
 const { createAccessToken } = require("../utils/authTokens");
 const { Admin, Doctor, Patient } = require("../../../models/index");
 const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
@@ -22,11 +23,16 @@ module.exports = {
   Query: {},
   Mutation: {
     register: async (_, user_details) => {
-      const { fname, lname, password, invitationToken } = user_details;
+      const { fname, lname, password, passwordConfirmation, invitationToken } = user_details;
       const { inviterEmail, newAccountEmail, accountType } = verify(
         invitationToken,
         ACCESS_TOKEN_SECRET_KEY
       );
+
+      if (password !== passwordConfirmation) {
+        throw new UserInputError("Password and password confirmation must match!");
+      }
+
       let inviter, invited, user;
 
       switch (accountType) {

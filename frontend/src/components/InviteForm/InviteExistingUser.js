@@ -3,10 +3,22 @@ import { Box, Button, Center } from "@chakra-ui/react";
 import { AuthContext } from "../../context/auth";
 import { useHistory } from "react-router-dom";
 import LoginPage from "../../pages/LoginPage";
+import { useMutation } from "@apollo/react-hooks";
+import gql from "graphql-tag";
 
 const InvitePatientExists = ({ invitation }) => {
   const history = useHistory();
   const { user, logout } = useContext(AuthContext);
+
+  const [addRelation, { loading }] = useMutation(ADD_PATIENT_TO_DOCTOR, {
+    onCompleted(data) {
+      console.log(data);
+    },
+    variables: {
+      patient_email: invitation.newAccountEmail,
+      doctor_email: invitation.inviterEmail,
+    },
+  });
 
   if (
     user &&
@@ -18,7 +30,7 @@ const InvitePatientExists = ({ invitation }) => {
         <h1>
           You've been invited by {invitation.inviterEmail} to join their clinic.
           You already have an account so you will be added to this clinician's
-          patients list if you accept.
+          patients list.
         </h1>
         <br />
         <Box
@@ -46,3 +58,12 @@ const InvitePatientExists = ({ invitation }) => {
 };
 
 export default InvitePatientExists;
+
+const ADD_PATIENT_TO_DOCTOR = gql`
+  mutation addPatientToDoctor($patient_email: String!, $doctor_email: String!) {
+    addPatientToDoctor(
+      patient_email: $patient_email
+      doctor_email: $doctor_email
+    )
+  }
+`;
