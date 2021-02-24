@@ -10,6 +10,8 @@ import {
 import { useForm } from "react-hook-form";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
+import { useHistory } from "react-router-dom";
+
 import Error from "../Error";
 import CopyLink from "../CopyLink";
 
