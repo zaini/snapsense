@@ -1,4 +1,4 @@
-import { Container } from "@chakra-ui/react";
+import { Alert, AlertIcon, Container } from "@chakra-ui/react";
 
 // TODO make errors look nicer
 const Error = ({ errors }) => {
@@ -6,7 +6,12 @@ const Error = ({ errors }) => {
     <Container>
       <ul>
         {Object.keys(errors).map((key, i) => {
-          return <li key={i}>{errors[key].message}</li>;
+          return (
+            <Alert status="error" borderRadius="50px" key={i}>
+              <AlertIcon />
+              {errors[key].message}
+            </Alert>
+          );
         })}
       </ul>
     </Container>

@@ -20,8 +20,6 @@ const URL_PREFIX = "http://localhost:3000";
 
 // TODO add validation for email before submitting
 const CreateInviteForm = () => {
-  const history = useHistory();
-
   const {
     register,
     handleSubmit,
@@ -31,24 +29,25 @@ const CreateInviteForm = () => {
     clearErrors,
   } = useForm();
 
-  const [inviteLink, setInviteLink] = useState("");
+  const [invitationToken, setInvitationToken] = useState("");
 
   const [inviteUser, { loading }] = useMutation(INVITE_USER, {
-    update(_, { data: { inviteUser: invitationToken } }) {
-      setInviteLink(invitationToken);
-      history.push("/login");
+    onCompleted({ inviteUser: invitationToken }) {
+      setInvitationToken(invitationToken);
     },
     onError(err) {
       setError("graphql", {
         type: "manual",
         message: err.graphQLErrors[0].message,
       });
+      setInvitationToken("");
     },
   });
 
-  const onSubmit = async ({ email, repeat_email }) => {
+  const onSubmit = ({ email, repeat_email }) => {
     clearErrors();
     if (email === repeat_email) {
+      // probably have to await this
       inviteUser({ variables: { email: email } });
     } else {
       setError("email", {
@@ -57,7 +56,6 @@ const CreateInviteForm = () => {
       });
     }
   };
-
   return (
     <Box p="7" borderWidth="1px" borderRadius="lg">
       <Error errors={errors} />
@@ -87,8 +85,8 @@ const CreateInviteForm = () => {
           </Button>
         </Center>
       </form>
-      {inviteLink ? (
-        <CopyLink link={URL_PREFIX + "/invite/" + inviteLink} />
+      {invitationToken ? (
+        <CopyLink link={URL_PREFIX + "/invite/" + invitationToken} />
       ) : (
         ""
       )}
@@ -99,7 +97,7 @@ const CreateInviteForm = () => {
 export default CreateInviteForm;
 
 const INVITE_USER = gql`
-  mutation invite_user($email: String!) {
+  mutation inviteUser($email: String!) {
     inviteUser(email: $email)
   }
 `;
