@@ -12,13 +12,12 @@ const PatientsPersonalLogPage = () => {
     { id: 1, date: "2020-02-14", subType: "Photo"},
     { id: 2, date: "2021-01-24", subType: "Photo"},
     { id: 3, date: "2021-01-27", subType: "Photo"},
-    { id: 4, date: "2021-02-20", subType: "Photo"},
-    
+    { id: 4, date: "2021-02-20", subType: "Photo"},  
   ]);
 
   return (
     <Container>
-      <h1>Your history of uploads, {patientName}</h1>
+      <h1 style={{textAlign: "center", fontSize: "3vh", fontWeight: "bold" }}>Your history of uploads, {patientName}</h1>
       <PatientsPersonalLogTable data={rows} />
     </Container>
   );

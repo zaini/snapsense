@@ -7,19 +7,19 @@ import { Link } from "react-router-dom"
 //TODO: Update the link to the page which displays the details of the upload
 const PatientsPersonalLogTable = ({ data }) => {
   const [cols] = useState([
-    { field: "id", headerName: "ID", width: 80 },
-    { field: "date", headerName: "Date submitted", widht: 160},
-    { field: "subType", headerName: "Type of submission", width: 160},
+    { field: "id", headerName: "ID", hide: true, width: 80 },
+    { field: "date", headerName: "Date submitted", width: 150},
+    { field: "subType", headerName: "Type", width: 90},
     { field: "Action",
       headerName: "Action",
-      width: 160,renderCell: function () {
+      width: 100,renderCell: function () {
       return (<Button value={data} to="/" renderAs={Link} variant="contained" color="secondary">View</Button>);
     }}
   ]);
   return (
     <>
-      <Box height="450px" width="50%">
-        <DataGrid columns={cols} rows={data} pageSize={4} />
+      <Box height="85vh" width="100%">
+        <DataGrid columns={cols} rows={data} autoPageSize />
       </Box>
     </>
   );
