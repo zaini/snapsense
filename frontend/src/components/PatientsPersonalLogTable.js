@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import { Box } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
-
+import { Link } from "react-router-dom"
 // Component which shows the patients history of uploads
 //TODO: Update the link to the page which displays the details of the upload
 const PatientsPersonalLogTable = ({ data }) => {

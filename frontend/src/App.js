@@ -8,6 +8,7 @@ import Profile from "./pages/Profile.js";
 import LoginPage from "./pages/LoginPage.js";
 import Navbar from "./components/navBar/Navbar.js";
 import InvitePage from "./pages/InvitePage.js";
+import PatientsPersonalLogPage from "./pages/PatientsPersonalLogPage.js";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             </>
           </Route>
           <Route exact path="/invite/:token_id" component={InvitePage} />
+          <Route exact path="/patientPersonalLog" component={PatientsPersonalLogPage}/>
         </Switch>
       </div>
     </Router>
