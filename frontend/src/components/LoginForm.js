@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
-import Error from "../components/Error";
+import { useHistory } from "react-router-dom";
 import {
   Box,
   FormControl,
@@ -8,13 +8,14 @@ import {
   Input,
   Button,
   Center,
-  FormErrorMessage,
 } from "@chakra-ui/react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { AuthContext } from "../context/auth";
+import Error from "../components/Error";
 
-const LoginForm = ({ accountType }) => {
+const LoginForm = ({ accountType, redirect }) => {
+  const history = useHistory();
   const context = useContext(AuthContext);
   const [values, setValues] = useState({});
 
@@ -23,6 +24,9 @@ const LoginForm = ({ accountType }) => {
   const [login, { loading }] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData } }) {
       context.login(userData);
+      if (redirect) {
+        history.push(redirect);
+      }
     },
     onError(err) {
       const message = err.graphQLErrors[0].message;

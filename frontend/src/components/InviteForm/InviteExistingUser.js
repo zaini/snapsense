@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import LoginPage from "../../pages/LoginPage";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
+import LoginFormWrapper from "../LoginFormWrapper";
 
 const InvitePatientExists = ({ invitation }) => {
   const history = useHistory();
@@ -12,7 +13,7 @@ const InvitePatientExists = ({ invitation }) => {
 
   const [addRelation, { loading }] = useMutation(ADD_PATIENT_TO_DOCTOR, {
     onCompleted(data) {
-      console.log(data);
+      history.push("/");
     },
     variables: {
       patient_email: invitation.newAccountEmail,
@@ -63,12 +64,7 @@ const InvitePatientExists = ({ invitation }) => {
     if (user) {
       logout();
     }
-    return (
-      <>
-        {invitation.newAccountEmail}
-        <LoginPage />
-      </>
-    );
+    return <LoginFormWrapper />;
   }
 };
 
