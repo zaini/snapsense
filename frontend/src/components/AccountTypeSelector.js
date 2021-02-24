@@ -1,7 +1,7 @@
 import { Radio, RadioGroup, FormControlLabel } from "@material-ui/core";
 import "./AccountTypeSelector.css";
 
-const LoginForm = ({ accountType, onAccountTypeChange }) => {
+const AccountTypeSelector = ({ accountType, onAccountTypeChange }) => {
   return (
     <RadioGroup value={accountType} onChange={onAccountTypeChange}>
       <FormControlLabel
@@ -50,4 +50,4 @@ const LoginForm = ({ accountType, onAccountTypeChange }) => {
   );
 };
 
-export default LoginForm;
+export default AccountTypeSelector;
