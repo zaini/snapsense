@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { Box, Button, Center } from "@chakra-ui/react";
+import { useContext, useEffect } from "react";
+import { Box, Button, Center, Heading } from "@chakra-ui/react";
 import { AuthContext } from "../../context/auth";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
@@ -19,6 +19,18 @@ const InvitePatientExists = ({ invitation }) => {
       doctor_email: invitation.inviterEmail,
     },
   });
+
+  useEffect(() => {
+    if (
+      user &&
+      !(
+        user.accountType === "PATIENT" &&
+        user.email === invitation.newAccountEmail
+      )
+    ) {
+      logout();
+    }
+  }, []);
 
   if (
     user &&
@@ -60,12 +72,14 @@ const InvitePatientExists = ({ invitation }) => {
       </Box>
     );
   } else {
-    // TODO recursion occurs here if user is logged in...
-    console.log("user:", user);
-    if (user) {
-      logout();
-    }
-    return <LoginFormWrapper />;
+    return (
+      <>
+        <Center>
+          <Heading>Login to View Invite</Heading>
+        </Center>
+        <LoginFormWrapper />
+      </>
+    );
   }
 };
 
