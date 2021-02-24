@@ -10,9 +10,11 @@ const PatientsPersonalLogTable = ({ data }) => {
     { field: "id", headerName: "ID", width: 80 },
     { field: "date", headerName: "Date submitted", widht: 160},
     { field: "subType", headerName: "Type of submission", width: 160},
-    { renderCell: function () {
-      return (<Button to="/" value={data} renderAs={Link} variant="contained" color="secondary">View</Button>);
-    }},
+    { field: "Action",
+      headerName: "Action",
+      width: 160,renderCell: function () {
+      return (<Button value={data} to="/" renderAs={Link} variant="contained" color="secondary">View</Button>);
+    }}
   ]);
   return (
     <>
