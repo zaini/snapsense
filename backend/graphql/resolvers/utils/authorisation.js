@@ -23,14 +23,22 @@ module.exports = {
   Query: {},
   Mutation: {
     register: async (_, user_details) => {
-      const { fname, lname, password, passwordConfirmation, invitationToken } = user_details;
+      const {
+        fname,
+        lname,
+        password,
+        passwordConfirmation,
+        invitationToken,
+      } = user_details;
       const { inviterEmail, newAccountEmail, accountType } = verify(
         invitationToken,
         ACCESS_TOKEN_SECRET_KEY
       );
 
       if (password !== passwordConfirmation) {
-        throw new UserInputError("Password and password confirmation must match!");
+        throw new UserInputError(
+          "Password and password confirmation must match!"
+        );
       }
 
       let inviter, invited, user;
@@ -70,15 +78,15 @@ module.exports = {
       if (valid) {
         console.log(user);
         try {
-          await user.save();  
+          await user.save();
         } catch (error) {
-          if(error instanceof ValidationError){
+          if (error instanceof ValidationError) {
             throw new UserInputError(error);
-          }else{
+          } else {
             throw error;
           }
         }
-        
+
         if (user instanceof Patient) {
           // This is the only many to many relationship that requires this constraint, so checking instanceof is fine
           await inviter.addPatients(user);
