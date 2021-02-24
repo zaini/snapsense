@@ -12,8 +12,9 @@ const PatientsPersonalLogTable = ({ data }) => {
     { field: "subType", headerName: "Type", width: 90},
     { field: "Action",
       headerName: "Action",
-      width: 100,renderCell: function () {
-      return (<Button value={data} to="/" renderAs={Link} variant="contained" color="secondary">View</Button>);
+      width: 100,
+      renderCell: function () {
+      return (<Button value={data} variant="contained" color="secondary"><Link to ='/' >View</Link></Button>);
     }}
   ]);
   return (
