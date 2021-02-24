@@ -8,7 +8,7 @@ import { Link } from "react-router-dom"
 const PatientsPersonalLogTable = ({ data }) => {
   const [cols] = useState([
     { field: "id", headerName: "ID", hide: true, width: 80 },
-    { field: "date", headerName: "Date submitted", width: 150},
+    { field: "date", headerName: "Date submitted", width: 150, type: 'date'},
     { field: "subType", headerName: "Type", width: 90},
     { field: "Action",
       headerName: "Action",
