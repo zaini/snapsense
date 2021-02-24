@@ -5,6 +5,7 @@ import {
   Input,
   Button,
   Center,
+  Spinner
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import gql from "graphql-tag";
@@ -17,19 +18,37 @@ const URL_PREFIX = "http://localhost:3000";
 
 // TODO add validation for email before submitting
 const CreateInviteForm = () => {
-  const { register, handleSubmit, errors, setError, formState } = useForm();
+  const history = useHistory();
 
-  const [inviteUser, { data, loading }] = useMutation(INVITE_USER);
+  const {
+    register,
+    handleSubmit,
+    errors,
+    setError,
+    formState,
+    clearErrors,
+  } = useForm();
 
-  const onSubmit = async ({ email, repeat_email }) => {
-    console.log("submitting again");
+  const [invitationToken, setInvitationToken] = useState("");
+
+  const [inviteUser, { loading }] = useMutation(INVITE_USER, {
+    onCompleted({ inviteUser: invitationToken }){
+      setInvitationToken(invitationToken)
+    },
+    onError(err) {
+      setError("graphql", {
+        type: "manual",
+        message: err.graphQLErrors[0].message,
+      });
+      setInvitationToken("");
+    },
+  });
+
+  const onSubmit = ({ email, repeat_email }) => {
+    clearErrors();
     if (email === repeat_email) {
       // probably have to await this
-      console.log(email);
-      inviteUser({ variables: { email: email } })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
-      console.log(data);
+      inviteUser({ variables: { email: email } });
     } else {
       setError("email", {
         type: "manual",
@@ -37,8 +56,7 @@ const CreateInviteForm = () => {
       });
     }
   };
-
-  return (
+  return  (
     <Box p="7" borderWidth="1px" borderRadius="lg">
       <Error errors={errors} />
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -67,8 +85,8 @@ const CreateInviteForm = () => {
           </Button>
         </Center>
       </form>
-      {data ? (
-        <CopyLink link={URL_PREFIX + "/invite/" + data.inviteUser} />
+      {invitationToken ? (
+        <CopyLink link={URL_PREFIX + "/invite/" + invitationToken} />
       ) : (
         ""
       )}
@@ -79,7 +97,7 @@ const CreateInviteForm = () => {
 export default CreateInviteForm;
 
 const INVITE_USER = gql`
-  mutation invite_user($email: String!) {
+  mutation inviteUser($email: String!) {
     inviteUser(email: $email)
   }
 `;

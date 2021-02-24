@@ -15,9 +15,19 @@ import Error from "../Error";
 const InviteNewUser = ({ invitation }) => {
   const { register, handleSubmit, errors, setError, formState } = useForm();
 
-  const [registerUser, { data, loading }] = useMutation(REGISTER_USER);
+  const [registerUser, { data, loading }] = useMutation(REGISTER_USER, {
+    onCompleted(res) {
+      console.log(res);
+    },
+    onError(err) {
+      setError("graphql", {
+        type: "manual",
+        message: err.graphQLErrors[0].message,
+      });
+    },
+  });
 
-  const onSubmit = async ({
+  const onSubmit = ({
     first_name,
     last_name,
     password,
@@ -30,11 +40,10 @@ const InviteNewUser = ({ invitation }) => {
           fname: first_name,
           lname: last_name,
           password,
+          passwordConfirmation: repeat_password,
           invitationToken: invitation.invitationToken,
         },
       })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
     } else {
       setError("password", {
         type: "manual",
@@ -76,7 +85,7 @@ const InviteNewUser = ({ invitation }) => {
         </FormControl>
         <br />
         <FormControl id="repeat_password" isRequired>
-          <FormLabel htmlFor="repeat_email">Repeat Password</FormLabel>
+          <FormLabel htmlFor="repeat_password">Repeat Password</FormLabel>
           <Input
             type="password"
             placeholder="Repeat password"
@@ -106,12 +115,14 @@ const REGISTER_USER = gql`
     $fname: String!
     $lname: String!
     $password: String!
+    $passwordConfirmation: String!
     $invitationToken: String!
   ) {
     register(
       fname: $fname
       lname: $lname
       password: $password
+      passwordConfirmation: $passwordConfirmation
       invitationToken: $invitationToken
     )
   }
