@@ -23,10 +23,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isCorrectLength(value) {
-            if (ModelValidator.isLong(value, 75) || ModelValidator.isShort(value, 10)) {
+            if (
+              ModelValidator.isLong(value, 75) ||
+              ModelValidator.isShort(value, 10)
+            ) {
               throw new Error("Invalid name");
             }
-          }
+          },
         },
       },
       contact_email: {

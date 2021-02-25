@@ -1,5 +1,5 @@
 "use strict";
-const { Model,ValidationError } = require("sequelize");
+const { Model, ValidationError } = require("sequelize");
 const { Validator } = require("../utils/validator");
 const argon2 = require("argon2");
 
@@ -32,8 +32,8 @@ module.exports = (sequelize, DataTypes) => {
             if (!ModelValidator.isName(value)) {
               throw new ValidationError("Invalid name");
             }
-          }
-        }
+          },
+        },
       },
       lname: {
         type: DataTypes.STRING,
@@ -43,8 +43,8 @@ module.exports = (sequelize, DataTypes) => {
             if (!ModelValidator.isName(value)) {
               throw new ValidationError("Invalid name");
             }
-          }
-        }
+          },
+        },
       },
       email: {
         type: DataTypes.STRING,
@@ -53,10 +53,12 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isEmail(value) {
             if (!ModelValidator.isEmail(value, true)) {
-              throw new ValidationError("Invalid email address. Make sure this is an NHS assigned email");
+              throw new ValidationError(
+                "Invalid email address. Make sure this is an NHS assigned email"
+              );
             }
-          }
-        }
+          },
+        },
       },
       password: {
         type: DataTypes.STRING,
@@ -66,20 +68,20 @@ module.exports = (sequelize, DataTypes) => {
             if (!ModelValidator.isPassword(value)) {
               throw new ValidationError("Invalid password");
             }
-          }
-        }
+          },
+        },
       },
       admin_id: {
         type: DataTypes.INTEGER,
-        allowNull: false  
-      }
+        allowNull: false,
+      },
     },
     {
       sequelize,
       modelName: "Doctor",
     }
   );
-  Doctor.beforeSave(async user => {
+  Doctor.beforeSave(async (user) => {
     user.password = await argon2.hash(user.password);
   });
 
