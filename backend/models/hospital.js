@@ -1,5 +1,5 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, ValidationError } = require("sequelize");
 const { Validator } = require("../utils/validator");
 
 const ModelValidator = Validator();
@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
               ModelValidator.isLong(value, 75) ||
               ModelValidator.isShort(value, 10)
             ) {
-              throw new Error("Invalid name");
+              throw new ValidationError("Invalid name");
             }
           },
         },
@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isEmail(value) {
             if (!ModelValidator.isEmail(value)) {
-              throw new Error("Invalid email address");
+              throw new ValidationError("Invalid email address");
             }
           },
         },

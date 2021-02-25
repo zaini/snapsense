@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isName(value) {
             if (!ModelValidator.isName(value)) {
-              throw new Error("Invalid name");
+              throw new ValidationError("Invalid name");
             }
           },
         },
@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isName(value) {
             if (!ModelValidator.isName(value)) {
-              throw new Error("Invalid name");
+              throw new ValidationError("Invalid name");
             }
           },
         },
@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isEmail(value) {
             if (!ModelValidator.isEmail(value)) {
-              throw new Error("Invalid email address");
+              throw new ValidationError("Invalid email address");
             }
           },
         },
@@ -63,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isPassword(value) {
             if (!ModelValidator.isPassword(value)) {
-              throw new Error("Invalid password");
+              throw new ValidationError("Invalid password");
             }
           },
         },
