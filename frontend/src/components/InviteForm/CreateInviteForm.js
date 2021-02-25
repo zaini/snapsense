@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
 import {
   Box,
   FormControl,
@@ -7,18 +10,12 @@ import {
   Button,
   Center,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
-import gql from "graphql-tag";
-import { useMutation } from "@apollo/react-hooks";
-import { useHistory } from "react-router-dom";
 
 import Error from "../Error";
 import CopyLink from "../CopyLink";
 
-// TODO move this to env
-const URL_PREFIX = "http://localhost:3000";
+const URL_PREFIX = process.env.REACT_APP_FRONTEND_URL_PREFIX || "http://localhost:3000";
 
-// TODO add validation for email before submitting
 const CreateInviteForm = () => {
   const {
     register,
@@ -58,6 +55,7 @@ const CreateInviteForm = () => {
   };
   return (
     <Box p="7" borderWidth="1px" borderRadius="lg">
+      {URL_PREFIX}
       <Error errors={errors} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl id="email" isRequired>
