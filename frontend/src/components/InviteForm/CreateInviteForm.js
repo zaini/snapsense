@@ -55,7 +55,6 @@ const CreateInviteForm = () => {
   };
   return (
     <Box p="7" borderWidth="1px" borderRadius="lg">
-      {URL_PREFIX}
       <Error errors={errors} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl id="email" isRequired>
