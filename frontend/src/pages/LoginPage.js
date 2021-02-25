@@ -1,13 +1,7 @@
-import React from "react";
-import LoginForm from "../components/LoginForm";
+import LoginFormWrapper from "../components/LoginFormWrapper";
 
 const LoginPage = () => {
-  return (
-    <div>
-      <h1>Login Here</h1>
-      <LoginForm name="test"/>
-    </div>
-  );
+  return <LoginFormWrapper redirect="/" />;
 };
 
 export default LoginPage;
