@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 
+//component to show all the doctors from a hospital the admin is from
 const AllDoctorsTable = ({ data }) => {
   const [cols] = useState([
-    { field: 'id', headerName: 'ID', width: 90 },
-    { field: 'firstName', headerName: 'Name', width: 150 },
-    { field: 'lastName', headerName: 'Surname', width: 150 },
+    { field: 'id', headerName: 'ID', width: 80 },
+    { field: 'firstName', headerName: 'Name', width: 150, sortable: true},
+    { field: 'lastName', headerName: 'Surname', width: 150, sortable: true },
   ]);
 
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
-      <DataGrid rows={data} columns={cols} pageSize={5} />
-    </div>
+    <Box height="73vh" width="100%">
+      <DataGrid rows={data} columns={cols} autoPageSize />
+    </Box>
   );
 };
 

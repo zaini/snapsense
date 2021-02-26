@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Container } from "@material-ui/core";
-import AllDoctorsTable from "../components/Tables/AllDoctorsTable";
+import AllPatientsTable from "../components/Tables/AllPatientsTable";
 
-// Page for showing the logs of all the doctors from the hospital the admin is from
-const AllDoctorsPage = () => {
+// Page for showing the logs of all the patients from the hospital the admin is from
+const AllPatientsPage = () => {
   const [hospitalName] = useState("Guy's Hospital");
 
   const [rows] = useState([
@@ -20,10 +20,10 @@ const AllDoctorsPage = () => {
 
     return (
       <Container>
-        <h1 style={{textAlign: "center", fontSize: "3vh", fontWeight: "bold" }}> Doctors from {hospitalName} </h1>
-        <AllDoctorsTable data={rows} />
+        <h1 style={{textAlign: "center", fontSize: "3vh", fontWeight: "bold" }}> Patients from {hospitalName} </h1>
+        <AllPatientsTable data={rows} />
       </Container>
     );
 };
 
-export default AllDoctorsPage;
+export default AllPatientsPage;
