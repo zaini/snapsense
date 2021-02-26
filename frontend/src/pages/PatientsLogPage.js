@@ -17,11 +17,13 @@ const PatientsLogPage = () => {
     { id: 6, firstName: "Foot", lastName: "Man" },
     { id: 7, firstName: "Dia", lastName: "Beetus" },
     { id: 8, firstName: "Ali", lastName: "Baba" },
+    { id: 9, firstName: "Hana", lastName: "Chokler" },
+    { id: 10, firstName: "Michael", lastName: "Kolling" },
   ]);
 
   return (
     <Container>
-      <h1>Patients Log for {doctorName}</h1>
+      <h1 style={{textAlign: "center", fontSize: "3vh", fontWeight: "bold" }}>Patients Log for {doctorName}</h1>
       <PatientsLogTable data={rows} />
     </Container>
   );

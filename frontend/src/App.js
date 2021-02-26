@@ -36,7 +36,7 @@ function App() {
           <Route path="/login">
             <LoginPage />
           </Route>
-          <Route path="/patients_logs">
+          <Route path="/patients">
             <PatientsLogPage />
           </Route>
         </Switch>
