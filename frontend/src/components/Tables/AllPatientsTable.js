@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { DataGrid } from "@material-ui/data-grid";
-import Button from '@material-ui/core/Button';
-import { Link } from "react-router-dom";
+import Box from '@material-ui/core/Box';
 
 //component to show all the patients from a hospital the admin is from
 const AllPatientsTable = ({ data }) => {
@@ -13,10 +12,10 @@ const AllPatientsTable = ({ data }) => {
 
 
   return (
-    <Box height="73vh" width="100%">
-      <DataGrid rows={data} columns={cols} autoPageSize />
+    <Box style={{ height: 600, width: '50%' }}>
+      <DataGrid rows={data} columns={cols} pageSize={9} />
     </Box>
-  );
+  )
 };
 
 export default AllPatientsTable;
