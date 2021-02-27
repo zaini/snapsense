@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { Container, List, ListItem, ListItemText, Grid, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
@@ -10,23 +10,9 @@ const UserInfo = (props) => {
   const [pwVisible, setPasswordFormVisible] = useState(false)
   const [emailVisible, setEmailFormVisible] = useState(false)
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
   const handleClose = () => {
     setOpen(false);
   };
-
-  const handlePasswordForm = () => {
-    if (pwVisible === 'true') setPasswordFormVisible('false')
-    else setPasswordFormVisible('true')
-  }
-
-  const handleEmailForm = () => {
-    if (emailVisible === 'true') setEmailFormVisible('false')
-    else setEmailFormVisible('true')
-  }
 
   return (
 
@@ -65,12 +51,18 @@ const UserInfo = (props) => {
         <ListItem>
           <Grid container direction="row" alignContent='space-around' alignItems="center">
             <Grid item>
-              <Button onClick={handlePasswordForm} color="primary">
+              <Button onClick={() => {
+                if (pwVisible === 'true') setPasswordFormVisible('false')
+                else setPasswordFormVisible('true')
+              }} color="primary">
                 Change password
         </Button>
             </Grid>
             <Grid item>
-              <Button onClick={handleEmailForm} color="primary">
+              <Button onClick={() => {
+                if (emailVisible === 'true') setEmailFormVisible('false')
+                else setEmailFormVisible('true')
+              }} color="primary">
                 Change email
         </Button>
             </Grid>
@@ -97,7 +89,7 @@ const UserInfo = (props) => {
         )}
 
         <ListItem>
-          <Button onClick={handleClickOpen} color="primary">
+          <Button onClick={() => {setOpen(true)}} color="primary">
             Delete account
       </Button>
           <Dialog
