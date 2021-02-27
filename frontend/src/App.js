@@ -36,9 +36,7 @@ function App() {
           <Route path="/login">
             <LoginPage />
           </Route>
-          <Route path="/patients">
-            <PatientsLogPage />
-          </Route>
+          <Route exact path="/patients" component={PatientsLogPage} />
         </Switch>
       </div>
     </Router>
