@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { Container, List, ListItem, ListItemText, Grid, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
@@ -6,9 +6,9 @@ import PasswordForm from "../components/PasswordForm.js";
 import EmailForm from "../components/EmailForm.js";
 
 const UserInfo = (props) => {
-  const [open, setOpen] = React.useState(false);
-  const [pwVisible, setPasswordFormVisible] = React.useState(false)
-  const [emailVisible, setEmailFormVisible] = React.useState(false)
+  const [open, setOpen] = useState(false);
+  const [pwVisible, setPasswordFormVisible] = useState(false)
+  const [emailVisible, setEmailFormVisible] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true);
