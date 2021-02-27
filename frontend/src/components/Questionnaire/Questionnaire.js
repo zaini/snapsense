@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import quizQuestions from '../../api/quizQuestions';
+import {Button} from "@chakra-ui/react";
+import {ArrowForwardIcon, ArrowBackIcon} from '@chakra-ui/icons';
 import Quiz from './QuestionBox';
 
 
@@ -89,16 +91,20 @@ class Questionnaire extends Component {
         onButtonNext={this.onButtonNext}
         />
         <br/>
-        <div className='center'>
-          <div className='form center pa4 br3 shadow-3'>
-            <div className='grow'>
-              <button onClick={this.onButtonBack}>Back</button>
-              <button onClick={this.onButtonNext} style={{marginRight:'90px'}} >Next</button>
-              <button>Submit</button>
-            </div>
-          </div>
+        <center>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div style={{width:'500px', height:'auto'}}>
+          <Button onClick={this.onButtonBack} leftIcon={<ArrowBackIcon />} colorScheme = "blue" >Back</Button>
+          <Button onClick={this.onButtonNext} rightIcon={<ArrowForwardIcon />}>Next</Button>
+          <Button >Submit</Button>
         </div>
+        </div>
+        </center>
+        <Button colorScheme="green">Button</Button>
+
       </div>
+      
+      
     );
   }
 }

@@ -18,7 +18,7 @@ class ImageUpload extends React.Component {
     render() {
         return (
             <div className='ImageUploader' style={{ display: 'flex', justifyContent: 'center' }}>
-                <div style={{width:'500px', heigh:'auto'}}>
+                <div style={{width:'500px', height:'auto'}}>
                     <ImageUploader
                         withIcon={true}
                         withPreview={true}
