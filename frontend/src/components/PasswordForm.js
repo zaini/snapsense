@@ -5,12 +5,6 @@ import { useForm } from 'react-hook-form';
 
 
 const PasswordForm = (props) => {
-    const [passwordVisible, setPasswordVisible] = useState(false);
-
-    const togglePasswordVisiblity = () => {
-        setPasswordVisible(passwordVisible ? false : true);
-    };
-
     const { register, handleSubmit, errors } = useForm();
     const onSubmit = data => console.log(data);
     console.log(errors);
@@ -24,27 +18,15 @@ const PasswordForm = (props) => {
                             <FormLabel>Current password</FormLabel>
                             <Input id="currentPassword"
                                 name="currentPassword"
-                                type={passwordVisible ? "text" : "password"}
-                                // endAdornment={
-                                //     <InputAdornment position="end">
-                                //         <IconButton
-                                //             aria-label="toggle password visibility"
-                                //             onClick={togglePasswordVisiblity}
-                                //         >
-                                //             {passwordVisible ? "Show" : "Hide"}
-                                //         </IconButton>
-                                //     </InputAdornment>
-                                // }
+                                type="password"
                             />
-
-                            {/* <i onClick={togglePasswordVisiblity}>{eye}</i>{" "} */}
                         </FormControl>
                     </ListItem>
 
                     <ListItem>
                         <FormControl error={Boolean(errors.newPassword)}>
                             <FormLabel>New password</FormLabel>
-                            <Input id="newPassword" name="newPassword" type={passwordVisible ? "text" : "password"} inputRef={register({
+                            <Input id="newPassword" name="newPassword" type="password" inputRef={register({
                                 required: true
                                 // minLength: 5,
                                 // pattern: /^[0-9]+$/
@@ -66,7 +48,7 @@ const PasswordForm = (props) => {
                     <ListItem>
                         <FormControl error={Boolean(errors.reEnterPassword)}>
                             <FormLabel>Re-enter password</FormLabel>
-                            <Input id="reEnterPassword" name="reEnterPassword" type={passwordVisible ? "text" : "password"} inputRef={register({
+                            <Input id="reEnterPassword" name="reEnterPassword" type="password" inputRef={register({
                                 required: true
                             })} />
                             <FormHelperText>
