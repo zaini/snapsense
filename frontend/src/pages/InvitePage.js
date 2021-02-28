@@ -1,40 +1,47 @@
-import { useState, useEffect } from "react";
+import React from "react";
 import InviteForm from "../components/InviteForm/InviteForm";
-import { Container } from "@chakra-ui/react";
+import { Container, Alert, AlertIcon, Spinner } from "@chakra-ui/react";
+import { useQuery } from "@apollo/react-hooks";
+import gql from "graphql-tag";
+import { decode } from "jsonwebtoken";
 
 const InvitePage = (props) => {
-  const [invitation, setInvitation] = useState({
-    inviterEmail: "",
-    newAcccountEmail: "",
-    accountType: "",
-    accountExists: "",
+  const {
+    loading,
+    data: { checkInvitation: invitation } = {},
+    error,
+  } = useQuery(CHECK_INVITATION, {
+    variables: { invitationToken: props.match.params.token_id },
   });
 
-  useEffect(() => {
-    // this will actually be decrypted first
-    const token_id = props.match.params.token_id;
-    // imagine we decrypt the token and get the invitees info
-    const invite = {
-      inviterEmail: "bob@nhs.net",
-      newAcccountEmail: "jane@doemail.com",
-      accountType: "PATIENT",
-      accountExists: false,
-    };
-    setInvitation(invite);
+  let markup;
 
-    // check if the newAccountEmail already has an account.
-    // would be done by a GraphQL query
-    const accountExists = false;
-    if (accountExists) {
-      setInvitation({ ...invite, accountExists: true });
-    }
-  }, []);
-
-  return (
-    <Container pt="20px">
-      <InviteForm invitation={invitation} />
-    </Container>
-  );
+  if (loading) {
+    markup = <Spinner size="xl" />;
+  } else if (error) {
+    markup = (
+      <Alert status="error">
+        <AlertIcon />
+        {error.graphQLErrors[0].message}
+      </Alert>
+    );
+  } else {
+    markup = (
+      <InviteForm
+        invitation={{
+          ...decode(invitation),
+          invitationToken: invitation,
+        }}
+      />
+    );
+  }
+  return <Container pt="20px">{markup}</Container>;
 };
 
 export default InvitePage;
+
+const CHECK_INVITATION = gql`
+  query checkInvitation($invitationToken: String!) {
+    checkInvitation(invitationToken: $invitationToken)
+  }
+`;

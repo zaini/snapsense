@@ -1,7 +1,7 @@
 import React from "react";
-import InvitePatientExists from "./InvitePatientExists";
+import InvitePatientExists from "./InviteExistingUser";
 import InviteDoctorExists from "./InviteDoctorExists";
-import InvitePatientNew from "./InvitePatientNew";
+import InvitePatientNew from "./InviteNewUser";
 
 // TODO move invitation to context instead of props
 
@@ -14,6 +14,7 @@ const InviteForm = ({ invitation }) => {
     }
   }
 
+  // InviteUser
   return <InvitePatientNew invitation={invitation} />;
 };
 

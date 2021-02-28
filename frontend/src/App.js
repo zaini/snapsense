@@ -1,41 +1,34 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-//delete react react and footer to put into diff page
 import React from 'react';
 import Footer from './components/Footer.js';
-import Home from "./pages/Home.js";
-import About from "./pages/About.js";
-import Profile from "./pages/Profile.js";
+import HomePage from "./pages/HomePage.js";
 import LoginPage from "./pages/LoginPage.js";
+import LogoutPage from "./pages/LogoutPage.js";
 import Navbar from "./components/navBar/Navbar.js";
 import InvitePage from "./pages/InvitePage.js";
 import AllDoctorsPage from "./pages/AllDoctorsPage.js";
 import AllPatientsPage from "./pages/AllPatientsPage.js";
 import PatientsPersonalLogPage from "./pages/PatientsPersonalLogPage.js";
 import PatientsLogPage from "./pages/PatientsLogPage.js";
+import CreateInvitePage from "./pages/CreateInvitePage.js";
 
 function App() {
   return (
     <Router>
-      <div>
-        <Navbar />
-      </div>
-      <div>
-        <hr />
-
-        <Switch>
-          <Route exact path="/">
-            <LoginPage />
-          </Route>
-          <Route exact path="/doctors" component={AllDoctorsPage} />
-          <Route exact path="/all_patients" component={AllPatientsPage} />
-          <Route exact path="/invite/:token_id" component={InvitePage} />
-          <Route exact path="/logs" component={PatientsPersonalLogPage}/>
-          <Route exact path="/patients" component={PatientsLogPage}/>
-        </Switch>
-      </div>
-      <div>
-        <Footer />
-      </div>
+      <Navbar />
+      <Switch>
+        <Route exact path="/" component={LoginPage} />
+        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/invite/:token_id" component={InvitePage} />
+        <Route exact path="/invite" component={CreateInvitePage} />
+        <Route exact path="/doctors" component={AllDoctorsPage} />
+        <Route exact path="/all_patients" component={AllPatientsPage} />
+        <Route exact path="/logs" component={PatientsPersonalLogPage}/>
+        <Route exact path="/patients" component={PatientsLogPage}/>
+        {/* We shouldn't have a logout page, ideally the logout function is just called whenever you want to logout I think */}
+        <Route exact path="/logout" component={LogoutPage} />
+      </Switch>
+      <Footer />
     </Router>
   );
 }

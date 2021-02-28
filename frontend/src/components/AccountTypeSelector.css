@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .main-container {
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .main-container h2 {
+    margin: 0 0 50px 0;
+    color:#2b5edf;
+    font-size: 30px;
+    font-family: "Raleway", sans-serif;
+    font-weight: 400;
+  }
+
+  .radio-buttons {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .custom-radio input {
+    display: none;
+  }
+
+  .radio-btn {
+    margin: 10px;
+    width: 180px;
+    height: 200px;
+    border: 3px solid transparent;
+    display: inline-block;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 0 20px #c3c3c367;
+    cursor: pointer;
+  }
+
+  .radio-btn > i {
+    color: #ffffff;
+    background-color: #2b5edf;
+    font-size: 20px;
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%) scale(4);
+    border-radius: 50px;
+    padding: 3px;
+    transition: 0.2s;
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .radio-btn .hobbies-icon {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .radio-btn .hobbies-icon i {
+    color: #2b5edf;
+    line-height: 80px;
+    font-size: 60px;
+  }
+
+  .radio-btn .hobbies-icon h3 {
+    color: #2b5edf;
+    font-family: "Raleway", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .custom-radio input:checked + .radio-btn {
+    border: 3px solid #2b5edf;
+  }
+
+  .custom-radio input:checked + .radio-btn > i {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
