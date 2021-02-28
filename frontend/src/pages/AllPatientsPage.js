@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container } from "@material-ui/core";
-import AllPatientsTable from "../components/Tables/AllPatientsTable";
+import AllDoctorsTable from "../components/Table";
 
 // Page for showing the logs of all the patients from the hospital the admin is from
 const AllPatientsPage = () => {
@@ -18,10 +18,17 @@ const AllPatientsPage = () => {
     { id: 9, lastName: 'Roxie', firstName: 'Harvey' },
   ]);
 
+  const cols = [
+    { field: 'id', headerName: 'ID', width: 80 },
+    { field: 'firstName', headerName: 'Name', width: 150, sortable: true},
+    { field: 'lastName', headerName: 'Surname', width: 150, sortable: true },
+    //{ field: 'action', headerName: 'Action', width: 80 }
+  ];
+
     return (
       <Container>
         <h1 style={{textAlign: "center", fontSize: "3vh", fontWeight: "bold" }}> Patients from {hospitalName} </h1>
-        <AllPatientsTable data={rows} />
+        <AllDoctorsTable data={rows} cols={cols} />
       </Container>
     );
 };
