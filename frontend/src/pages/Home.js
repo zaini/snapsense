@@ -1,7 +1,7 @@
 import React from "react";
 import ImageUpload from "../components/ImageUpload/ImageUpload";
 import Logo from "../components/Logo/Logo";
-import Questionnaire from '../components/Questionnaire/questions';
+import Questionnaire from '../components/Questionnaire/Questions';
 
 
 const Home = () => {
