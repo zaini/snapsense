@@ -11,6 +11,7 @@ import InvitePage from "./pages/InvitePage.js";
 import AllDoctorsPage from "./pages/AllDoctorsPage.js";
 import AllPatientsPage from "./pages/AllPatientsPage.js";
 import PatientsPersonalLogPage from "./pages/PatientsPersonalLogPage.js";
+import PatientsLogPage from "./pages/PatientsLogPage.js";
 
 function App() {
   return (
@@ -26,9 +27,10 @@ function App() {
             <LoginPage />
           </Route>
           <Route exact path="/doctors" component={AllDoctorsPage} />
-          <Route exact path="/patients" component={AllPatientsPage} />
+          <Route exact path="/all_patients" component={AllPatientsPage} />
           <Route exact path="/invite/:token_id" component={InvitePage} />
           <Route exact path="/logs" component={PatientsPersonalLogPage}/>
+          <Route exact path="/patients" component={PatientsLogPage}/>
         </Switch>
       </div>
       <div>
