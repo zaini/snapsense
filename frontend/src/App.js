@@ -10,6 +10,7 @@ import Navbar from "./components/navBar/Navbar.js";
 import InvitePage from "./pages/InvitePage.js";
 import AllDoctorsPage from "./pages/AllDoctorsPage.js";
 import AllPatientsPage from "./pages/AllPatientsPage.js";
+import PatientsPersonalLogPage from "./pages/PatientsPersonalLogPage.js";
 
 function App() {
   return (
@@ -23,14 +24,15 @@ function App() {
         <Switch>
           <Route exact path="/">
             <LoginPage />
-            <>
-              <Footer />
-            </>
           </Route>
           <Route exact path="/doctors" component={AllDoctorsPage} />
           <Route exact path="/patients" component={AllPatientsPage} />
           <Route exact path="/invite/:token_id" component={InvitePage} />
+          <Route exact path="/logs" component={PatientsPersonalLogPage}/>
         </Switch>
+      </div>
+      <div>
+        <Footer />
       </div>
     </Router>
   );
