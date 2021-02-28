@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container } from "@material-ui/core";
-import AllDoctorsTable from "../components/Table";
+import Table from "../components/Table";
 
 // Page for showing the logs of all the doctors from the hospital the admin is from
 const AllDoctorsPage = () => {
@@ -28,7 +28,7 @@ const AllDoctorsPage = () => {
     return (
       <Container>
         <h1 style={{textAlign: "center", fontSize: "3vh", fontWeight: "bold" }}> Doctors from {hospitalName} </h1>
-        <AllDoctorsTable data={rows} cols={cols} />
+        <Table data={rows} cols={cols} />
       </Container>
     );
 };
