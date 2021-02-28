@@ -20,7 +20,6 @@ function App() {
             <Link to="/profile">Profile</Link>
           </li>
         </ul>
-
         <hr />
 
         <Switch>
