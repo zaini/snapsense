@@ -74,7 +74,7 @@ export default function Hero({
           color="primary.800"
           opacity="0.6"
         >
-          No credit card required.
+          Proceed with caution.
         </Text>
       </Stack>
       <Box w={{ base: "80%", sm: "60%", md: "50%" }} mb={{ base: 12, md: 0 }}>
