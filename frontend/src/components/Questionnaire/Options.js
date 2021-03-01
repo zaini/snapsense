@@ -5,7 +5,7 @@ const Options = ({ options, onChangeOption }) => {
   const [value, setValue] = useState();
 
   return (
-    <>
+    <div className='center'>
       <RadioGroup
         onChange={(index) => {
           setValue(index);
@@ -21,7 +21,7 @@ const Options = ({ options, onChangeOption }) => {
           ))}
         </Stack>
       </RadioGroup>
-    </>
+    </div>
   );
 };
 
