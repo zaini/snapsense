@@ -75,7 +75,7 @@ const Questionnaire = () => {
       </Button>
       <Button
         onClick={() => setQuestionNumber(questionNumber + 1)}
-        disabled={questionNumber === questionsObject.length}
+        disabled={questionNumber === questionsObject.length - 1}
       >
         Next
       </Button>
