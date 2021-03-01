@@ -10,9 +10,9 @@ import customTheme from "./utils/theme";
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider theme={customTheme}>
-      <ApolloProvider>
+      {/* <ApolloProvider> */}
         <App />
-      </ApolloProvider>
+      {/* </ApolloProvider> */}
     </ChakraProvider>
   </React.StrictMode>,
   document.getElementById("root")
