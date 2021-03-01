@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import './Questionnaire.css';
 
 export default function Questionnaire() {
+	// Questions will come from backend
 	const questions = [
 		{
-			questionID: 1,
+			questionID: 0,
 			questionText: 'What is the capital of France?',
 			answerOptions: [
 				{ answerText: 'New York'},
@@ -15,7 +16,7 @@ export default function Questionnaire() {
 			],
 		},
 		{
-			questionID: 2,
+			questionID: 1,
 			questionText: 'Who is CEO of Tesla?',
 			answerOptions: [
 				{ answerText: 'Jeff Bezos'},
@@ -25,7 +26,7 @@ export default function Questionnaire() {
 			],
 		},
 		{
-			questionID: 3,
+			questionID: 2,
 			questionText: 'The iPhone was created by which company?',
 			answerOptions: [
 				{ answerText: 'Apple'},
@@ -35,7 +36,7 @@ export default function Questionnaire() {
 			],
 		},
 		{
-			questionID: 4,
+			questionID: 3,
 			questionText: 'How many Harry Potter books are there?',
 			answerOptions: [
 				{ answerText: '1'},
@@ -47,29 +48,25 @@ export default function Questionnaire() {
 	];
 
 	const [currentQuestion, setCurrentQuestion] = useState(0);
-	const [answer, setAnswer] = useState("");
-	
+	const [answer, setAnswer] = useState([-1, -1, -1, -1]);
+	// answer[currentQuestion] = index
+	//const [answers, setAnswers] = useState();
 
 	const handleAnswerOptionClick = (event) => {
-		setAnswer(event.target.value)
+		let temp = answer;
+		temp[currentQuestion] = parseInt(event.target.getAttribute("index"))
+		setAnswer(temp);
+		console.log("You have selected number ", parseInt(event.target.getAttribute("index")))
 	};
 
 	const onClickNext = () => {
 		const nextQuestion = currentQuestion + 1;
-		if (nextQuestion < questions.length) {
-			setCurrentQuestion(nextQuestion);
-		} else {
-			console.log("The end");
-		}
+		nextQuestion < questions.length ? setCurrentQuestion(nextQuestion) : console.log("The end")
 	}
 
 	const onClickBack = () => {
 		const prevQuestion = currentQuestion - 1;
-		if (prevQuestion >= 0) {
-			setCurrentQuestion(prevQuestion);
-		}else{
-			console.log("This is the beginning")
-		}
+		prevQuestion >= 0 ? setCurrentQuestion(prevQuestion) : console.log("This is the beginning")
 	}
 
 	const onClickSubmit = () => {
@@ -90,15 +87,20 @@ export default function Questionnaire() {
               <div className="form-check" key={i} >	
                 <label>
                 <input
+									key={i}
+				  				index={i}
                   type="radio"
                   name="options"
-                  onChange={handleAnswerOptionClick}
+                  onChange={(e) => handleAnswerOptionClick(e)}
+									checked={(answer[currentQuestion] && answer[currentQuestion] === i)}
                 />
-                {answerOption.answerText}
+								
+                {answerOption.answerText} {answer[currentQuestion]} =? {i}
                 </label>
               </div>
             ))}
           </div>
+					{answer.map(el => <p>, {el}, </p>)}
       </div>
 	  <br/>
       <div className='center'>
