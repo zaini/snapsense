@@ -64,7 +64,11 @@ const Questionnaire = () => {
     <Container centerContent>
       <h1>Question Number: {questionNumber + 1}</h1>
       {questionsObject.map((e, i) => (
-        <Box 
+        <Box
+          minW="lg" 
+          borderWidth="1px" 
+          borderRadius="lg" 
+          overflow="hidden"
           padding="4" 
           display={questionNumber === i ? "block" : "none"}>
           <Question 
