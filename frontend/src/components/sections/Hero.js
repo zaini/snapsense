@@ -15,8 +15,6 @@ export default function Hero({
   title,
   subtitle,
   image,
-  ctaLink,
-  ctaText,
   ...rest
 }) {
   return (
@@ -55,27 +53,6 @@ export default function Hero({
         >
           {subtitle}
         </Heading>
-        <Link to={ctaLink}>
-          <Button
-            colorScheme="primary"
-            borderRadius="8px"
-            py="4"
-            px="4"
-            lineHeight="1"
-            size="md"
-          >
-            {ctaText}
-          </Button>
-        </Link>
-        <Text
-          fontSize="xs"
-          mt={2}
-          textAlign="center"
-          color="primary.800"
-          opacity="0.6"
-        >
-          Proceed with caution.
-        </Text>
       </Stack>
       <Box w={{ base: "80%", sm: "60%", md: "50%" }} mb={{ base: 12, md: 0 }}>
         <Image src={image} size="100%" rounded="1rem" shadow="2xl" />
@@ -88,8 +65,6 @@ Hero.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
   image: PropTypes.string,
-  ctaText: PropTypes.string,
-  ctaLink: PropTypes.string,
 };
 
 Hero.defaultProps = {
@@ -97,6 +72,4 @@ Hero.defaultProps = {
   subtitle:
     "This is the subheader section where you describe the basic benefits of your product",
   image: "https://source.unsplash.com/collection/404339/800x600",
-  ctaText: "Create your account now",
-  ctaLink: "/signup",
 };
