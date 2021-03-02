@@ -1,7 +1,14 @@
 import { useState } from "react";
-import { Button, Box, Container, Grid } from "@chakra-ui/react";
+import { Button, 
+  Box, 
+  Container, 
+  Grid, 
+  Divider} from "@chakra-ui/react";
 import Question from "./Question";
-import {ArrowForwardIcon, ArrowBackIcon, CheckIcon} from "@chakra-ui/icons"
+import {
+  ArrowForwardIcon, 
+  ArrowBackIcon, 
+  CheckCircleIcon} from "@chakra-ui/icons"
 
 
 // Questions will come from backend
@@ -61,8 +68,11 @@ const Questionnaire = () => {
   return (
     <div className='center ma'>
     <div className='absolute mt2'>
+    <Divider />
+    <br />
     <Container centerContent>
       <h1>Question Number: {questionNumber + 1}</h1>
+      <br />
       {questionsObject.map((e, i) => (
         <Box
           minW="lg" 
@@ -83,7 +93,8 @@ const Questionnaire = () => {
         gap={1}>
       <Button
         leftIcon = {<ArrowBackIcon/>}
-        colorScheme="teal" variant="solid"
+        colorScheme="teal" 
+        variant="solid"
         onClick={() => setQuestionNumber(questionNumber - 1)}
         disabled={questionNumber === 0}
       >
@@ -92,7 +103,8 @@ const Questionnaire = () => {
       
       <Button
         rightIcon = {<ArrowForwardIcon/>}
-        colorScheme="teal" variant="solid"
+        colorScheme="teal" 
+        variant="solid"
         onClick={() => setQuestionNumber(questionNumber + 1)}
         disabled={questionNumber === questionsObject.length - 1}
       >
@@ -100,8 +112,9 @@ const Questionnaire = () => {
       </Button>
       
       <Button 
-        rightIcon = {<CheckIcon/>}
-        colorScheme="teal" variant="solid"
+        rightIcon = {<CheckCircleIcon/>}
+        colorScheme="teal" 
+        variant="solid"
         disabled={questionNumber !== questionsObject.length - 1}
         onClick={() => console.log(answers)}>Submit</Button>
       </Grid>
