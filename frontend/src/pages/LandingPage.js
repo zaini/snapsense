@@ -10,8 +10,6 @@ export default function Landing() {
         title="Snapsense, welcomes you to the future"
         subtitle="Medical aid at the click of a button. Tele-medicine at its finest."
         image="https://source.unsplash.com/collection/404339/800x600"
-        ctaText="Login Now"
-        ctaLink="/login"
       />
     </LandingLayout>
   );
