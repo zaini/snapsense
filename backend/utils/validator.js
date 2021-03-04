@@ -1,14 +1,14 @@
 module.exports = {
   Validator: () => {
     class validator {
-   
-        static isShort(value, minLength) {
-            return String(value).length < minLength;
-        }
+      
+      static isShort(value, minLength) {
+        return String(value).length < minLength;
+      }
 
-        static isLong(value, maxLength) {
-            return String(value).length > maxLength;
-        }   
+      static isLong(value, maxLength) {
+        return String(value).length > maxLength;
+      }   
 
       static isName(name) {
         /*
@@ -24,12 +24,12 @@ module.exports = {
         /*
             Check if:
                 - Model is not Doctor
-                - if Doctor, email must end with @nhs.co.uk
+                - if Doctor, email must end with @nhs.net
                 - email does not start with special characters
         */
         const re = !isDoctor
             ? /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-            : /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@nhs.co.uk$/;
+            : /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@nhs.net$/;
         return re.test(String(email).trim());
       }
 
