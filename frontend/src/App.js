@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import LandingPage from "./pages/LandingPage.js";
 import DashboardPage from "./pages/DashboardPage.js";
-import ProfilePage from "./pages/ProfilePage";
 import DoctorsPage from "./pages/DoctorsPage";
 import PatientsPage from "./pages/PatientsPage";
 
@@ -35,6 +34,9 @@ import P_AllDoctors from "./pages/PatientPages/AllDoctors";
 import P_ImageUpload from "./pages/PatientPages/ImageUpload";
 import P_PatientHome from "./pages/PatientPages/PatientHome";
 import P_SingleDoctor from "./pages/PatientPages/SingleDoctor";
+
+// Common Pages
+import ProfilePage from "./pages/CommonPages/ProfilePage";
 
 
 const App = () => {
