@@ -3,13 +3,9 @@ import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import ApolloProvider from "./ApolloProvider";
 
-import App from "./App";
-
 ReactDOM.render(
   <React.StrictMode>
-    <ApolloProvider>
-      <App />
-    </ApolloProvider>
+    <ApolloProvider />
   </React.StrictMode>,
   document.getElementById("root")
 );
