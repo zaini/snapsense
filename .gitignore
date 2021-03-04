@@ -1,3 +1,4 @@
 node_modules
-/backend/config/config.json
-/backend/.env
+backend/config
+backend/env
+backend/.env

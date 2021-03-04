@@ -31,19 +31,7 @@ export const navbarLinks = {
   History: <Link to="/upload_list">History</Link>,
   "Upload report": <Link to="/upload">Upload report</Link>,
   "Latest uploads": <Link to="/latest_list">Latest uploads</Link>,
-  "Log out": <Link to="/">Logout</Link>,
-};
-
-export const headerToRoute = {
-  "Account info": "/account_info",
-  Doctors: "/doctor_list",
-  Patients: "/patient_list",
-  "Invite patient": "/invite",
-  "Invite doctor": "/invite",
-  History: "/upload_list",
-  "Upload report": "/upload",
-  "Latest uploads": "/latest_list",
-  "Log out": "/",
+  "Log out": <Link to="/logout">Logout</Link>,
 };
 
 export const navbarIcons = {
