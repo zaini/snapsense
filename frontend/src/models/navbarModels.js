@@ -34,18 +34,6 @@ export const navbarLinks = {
   "Log out": <Link to="/logout">Logout</Link>,
 };
 
-export const headerToRoute = {
-  "Account info": "/account_info",
-  Doctors: "/doctor_list",
-  Patients: "/patient_list",
-  "Invite patient": "/invite",
-  "Invite doctor": "/invite",
-  History: "/upload_list",
-  "Upload report": "/upload",
-  "Latest uploads": "/latest_list",
-  "Log out": "/logout",
-};
-
 export const navbarIcons = {
   "Account info": <AccountBoxIcon />,
   Doctors: <LocalHospitalIcon />,
