@@ -32,8 +32,9 @@ function App() {
           {/* We shouldn't have a logout page, ideally the logout function is just called whenever you want to logout I think */}
           <Route exact path="/logout" component={LogoutPage} />
         </Switch>
+        <Footer />
       </Router>
-      <Footer />
+      
     </>
   );
 }
