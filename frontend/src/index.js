@@ -1,16 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "tachyons";
-import { ChakraProvider } from "@chakra-ui/react";
+import ApolloProvider from "./ApolloProvider";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider>
-      <App />
-    </ChakraProvider>
+    <ApolloProvider />
   </React.StrictMode>,
   document.getElementById("root")
 );

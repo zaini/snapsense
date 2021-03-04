@@ -1,6 +1,6 @@
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import React from 'react';
-import Footer from './components/Footer.js';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React from "react";
+import Footer from "./components/Footer.js";
 import HomePage from "./pages/HomePage.js";
 import LoginPage from "./pages/LoginPage.js";
 import LogoutPage from "./pages/LogoutPage.js";
@@ -20,21 +20,20 @@ function App() {
       <Router>
         <Navbar />
         <Switch>
-          <Route exact path="/" component={LoginPage} />
+          <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/invite/:token_id" component={InvitePage} />
           <Route exact path="/invite" component={CreateInvitePage} />
           <Route exact path="/doctors" component={AllDoctorsPage} />
           <Route exact path="/all_patients" component={AllPatientsPage} />
-          <Route exact path="/logs" component={PatientsPersonalLogPage}/>
-          <Route exact path="/patients" component={PatientsLogPage}/>
-          <Route exact path="/submission" component={SubmissionPage}/>
+          <Route exact path="/logs" component={PatientsPersonalLogPage} />
+          <Route exact path="/patients" component={PatientsLogPage} />
+          <Route exact path="/submission" component={SubmissionPage} />
           {/* We shouldn't have a logout page, ideally the logout function is just called whenever you want to logout I think */}
           <Route exact path="/logout" component={LogoutPage} />
         </Switch>
         <Footer />
       </Router>
-      
     </>
   );
 }
