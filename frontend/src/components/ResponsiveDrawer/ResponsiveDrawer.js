@@ -14,6 +14,15 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import ListItemCustom from "./ListItemCustom";
 
+import {
+  Flex,
+  Box,
+  Container,
+  Stack,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -45,10 +54,14 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+  },
+  innerMainContent: {
+    margin: theme.spacing(2),
+    borderRadius: "20px",
+    backgroundColor: "gray.50",
+    minHeight: "85vh",
   },
 }));
-
 
 function ResponsiveDrawer(props) {
   const { window } = props;
@@ -56,6 +69,18 @@ function ResponsiveDrawer(props) {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
+  let listOne = props.listOne;
+  let listTwo = props.listTwo;
+
+  // TODO: If there is no list fix bug
+  if (!listTwo) {
+    listTwo = [];
+  }
+
+  // TODO: If there is no list fix bug
+  if (!listOne) {
+    listOne = [];
+  }
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -65,22 +90,13 @@ function ResponsiveDrawer(props) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {[
-          ["Patients", "/patients"],
-          ["Uploads", "/uploads"],
-          ["Doctors", "doctors"],
-          ["Hospitals", "/hospitals"],
-        ].map((holder) => (
+        {listOne.map((holder) => (
           <ListItemCustom link={holder[1]} icon="" text={holder[0]} />
         ))}
       </List>
       <Divider />
       <List>
-        {[
-          ["Notifications", "/notifications"],
-          ["Profile", "/profile"],
-          ["Logout", "/logout"],
-        ].map((holder) => (
+        {listTwo.map((holder) => (
           <ListItemCustom link={holder[1]} icon="" text={holder[0]} />
         ))}
       </List>
@@ -105,7 +121,7 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            { props.title }
+            {props.title}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -141,7 +157,22 @@ function ResponsiveDrawer(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {props.children}
+        <Flex className={classes.innerMainContent} bg={"gray.50"}>
+          {props.children}
+        </Flex>
+        <Box bg={"primary.500"} color={"white"}>
+          <Container
+            as={Stack}
+            maxW={"6xl"}
+            py={4}
+            direction={{ base: "column", md: "row" }}
+            spacing={4}
+            justify={{ base: "center", md: "space-between" }}
+            align={{ base: "center", md: "center" }}
+          >
+            <Text>© 2021 Snapsense. All rights reserved</Text>
+          </Container>
+        </Box>
       </main>
     </div>
   );
