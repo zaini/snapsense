@@ -22,28 +22,16 @@ export const navbarOptions = {
 };
 
 //TODO: Change the links to the appropriate pages once created
-export const navbarLinks = {
-  "Account info": <Link to="/account_info">Account info</Link>,
-  Doctors: <Link to="/doctor_list">Doctors</Link>,
-  Patients: <Link to="/patient_list">Patients</Link>,
-  "Invite patient": <Link to="/invite">Invite Patient</Link>,
-  "Invite doctor": <Link to="/invite">Invite Doctor</Link>,
-  History: <Link to="/upload_list">History</Link>,
-  "Upload report": <Link to="/upload">Upload report</Link>,
-  "Latest uploads": <Link to="/latest_list">Latest uploads</Link>,
-  "Log out": <Link to="/logout">Logout</Link>,
-};
-
 export const headerToRoute = {
   "Account info": "/account_info",
   Doctors: "/doctor_list",
   Patients: "/patient_list",
   "Invite patient": "/invite",
   "Invite doctor": "/invite",
-  History: "/upload_list",
+  History: "/logs",
   "Upload report": "/upload",
   "Latest uploads": "/latest_list",
-  "Log out": "/logout",
+  "Log out": "/",
 };
 
 export const navbarIcons = {
