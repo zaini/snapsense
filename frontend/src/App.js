@@ -14,6 +14,7 @@ import CreateInvitePage from "./pages/CreateInvitePage.js";
 import SubmissionPage from "./pages/SubmissionPage.js";
 import "./App.css";
 
+
 function App() {
   return (
     <Router>
