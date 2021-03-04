@@ -20,7 +20,6 @@ import {
   Container,
   Stack,
   Text,
-  useColorModeValue,
 } from "@chakra-ui/react";
 
 const drawerWidth = 240;
