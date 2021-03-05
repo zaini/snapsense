@@ -1,4 +1,5 @@
 const request = require("supertest");
+
 const app = require("../../index");
 
 describe("Patient resolvers", () => {
@@ -17,13 +18,7 @@ describe("Patient resolvers", () => {
     const { body } = response;
     expect(body).toMatchObject({
       data: {
-        getHospitals: [
-          {
-            id: "1",
-            name: "name",
-            contact_email: "email@email.com",
-          }
-        ],
+        getHospitals: [],
       },
     });
     done();
