@@ -8,15 +8,14 @@ import Profile from "../incomplete/Profile";
 const DashboardPage = ({ changeNavbar }) => {
   changeNavbar(false);
   return (
-    <>
-      <DashboardSidebar />
+    <DashboardSidebar>
       <Switch>
         <Route exact path="/dashboard/" component={DashboardHomePage} />
         <Route exact path="/dashboard/submit" component={SubmissionPage} />
         <Route exact path="/dashboard/submissions" component={SubmissionPage} />
         <Route exact path="/dashboard/profile" component={Profile} />
       </Switch>
-    </>
+    </DashboardSidebar>
   );
 };
 

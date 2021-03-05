@@ -9,11 +9,13 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import MenuIcon from "@material-ui/icons/Menu";
+import AppBar from "@material-ui/core/AppBar";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { InfoIcon, PhoneIcon, PlusSquareIcon } from "@chakra-ui/icons";
+import { Flex } from "@chakra-ui/react";
 import { SidebarData } from "./SidebarData";
 import { AuthContext } from "../../context/auth";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const drawerWidth = 250;
 
@@ -24,8 +26,6 @@ const DashboardSidebar = (props) => {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const { user } = useContext(AuthContext);
-
-  console.log(SidebarData);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -115,6 +115,12 @@ const DashboardSidebar = (props) => {
           </Drawer>
         </Hidden>
       </nav>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        <Flex className={classes.innerMainContent} bg={"gray.50"}>
+          {props.children}
+        </Flex>
+      </main>
     </div>
   );
 };
