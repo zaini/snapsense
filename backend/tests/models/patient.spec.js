@@ -1,36 +1,24 @@
-var SequelizeMock = require('sequelize-mock');
+const { Patient } = require("../../models/index");
 
-var dbMock = new SequelizeMock();
+describe("Save a valid patient", () => {
+  it("should save a valid patient", async (done) => {
+    let patient = await new Patient({
+      fname: "John",
+      lname: "Do",
+      email: "johndo@gmail.com",
+      password: "12345ABCDEfghi!",
+    }).save();
 
-var HospitalMock = dbMock.define('hospital', {
-    id: 1,
-    name: "London Hospital",
-    contact_email: "old@outlook.com"
-});
-
-var proxyquire = require('proxyquire');
-
-var myModule = proxyquire('../../models', {
-    'patient': HospitalMock
-});
-
-beforeEach(() => {
-    console.log("STARTED")
-})
-
-afterEach(() => {
-    console.log("FINISHED")
-})
-
-describe('#getUserEmail', () => {
-    it("should return a user's email in NAME <EMAIL> format", async (done) => {
-        const test = await new myModule.Hospital({
-            name: "Saudi Hospital",
-            contact_email: "abc@gmail.com"
-        }).save()
-        const hospital = await myModule.Hospital.findByPk(2);
-        const mail = await hospital.getDataValue('contact_email')
-        expect(mail === 'test@gmail.com');
-        done();
+    patient = await Patient.findOne({
+      where: {
+        email: "johndo@gmail.com",
+      },
     });
+    expect(patient.id).toBe(1);
+    expect(patient.fname).toBe("John");
+    expect(patient.lname).toBe("Do");
+    expect(patient.email).toBe("johndo@gmail.com");
+    expect(patient.email).not.toBe("12345ABCDEfghi!");
+    done();
+  });
 });
