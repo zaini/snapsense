@@ -1,9 +1,10 @@
 import { Container } from "@chakra-ui/layout";
+import { Heading } from "@chakra-ui/react";
 
 const DashboardHomePage = () => {
   return (
     <Container>
-      <h1>Dashboard Home Page</h1>
+      <Heading>Dashboard Page</Heading>
     </Container>
   );
 };

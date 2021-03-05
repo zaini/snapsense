@@ -14,8 +14,8 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
-import PasswordForm from "../components/PasswordForm.js";
-import EmailForm from "../components/EmailForm.js";
+import PasswordForm from "./PasswordForm.js";
+import EmailForm from "./EmailForm.js";
 
 const UserInfo = (props) => {
   const [open, setOpen] = useState(false);

@@ -13,6 +13,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { InfoIcon, PhoneIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import { SidebarData } from "./SidebarData";
 import { AuthContext } from "../../context/auth";
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 250;
 
@@ -36,10 +37,12 @@ const DashboardSidebar = (props) => {
       <Divider />
       <List>
         {SidebarData[user.accountType].map(({ title, path, icon }, i) => (
-          <ListItem button key={i}>
-            <ListItemIcon>{icon}</ListItemIcon>
-            <ListItemText primary={title} />
-          </ListItem>
+          <Link to={path}>
+            <ListItem button key={i}>
+              <ListItemIcon>{icon}</ListItemIcon>
+              <ListItemText primary={title} />
+            </ListItem>
+          </Link>
         ))}
       </List>
       <Divider />

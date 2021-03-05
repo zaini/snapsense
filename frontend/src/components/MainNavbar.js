@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import Logo from "./Logo";
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
-import NavbarMenuItems from "./DashboardMenuItems";
+import NavbarMenuItems from "./NavbarMenuItems";
 
 const Header = () => {
   const [show, setShow] = useState(false);
