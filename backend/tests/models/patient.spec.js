@@ -1,24 +1,25 @@
 const { Patient } = require("../../models/index");
 
-describe("Save a valid patient", () => {
-  it("should save a valid patient", async (done) => {
-    let patient = await new Patient({
-      fname: "John",
-      lname: "Do",
-      email: "johndo@gmail.com",
-      password: "12345ABCDEfghi!",
-    }).save();
+it("should save a valid patient", async (done) => {
+  const patientSave = await new Patient({
+    fname: "John",
+    lname: "Do",
+    email: "johndo@gmail.com",
+    password: "12345ABCDEfghi!",
+  }).save();
 
-    patient = await Patient.findOne({
-      where: {
-        email: "johndo@gmail.com",
-      },
-    });
-    expect(patient.id).toBe(1);
-    expect(patient.fname).toBe("John");
-    expect(patient.lname).toBe("Do");
-    expect(patient.email).toBe("johndo@gmail.com");
-    expect(patient.email).not.toBe("12345ABCDEfghi!");
-    done();
+  const patient = await Patient.findOne({
+    where: {
+      email: "johndo@gmail.com",
+    },
   });
+
+  // Delete times because there is a weird error where the milliseconds are slightly different
+  delete patientSave.dataValues.updatedAt;
+  delete patientSave.dataValues.createdAt;
+  delete patient.dataValues.updatedAt;
+  delete patient.dataValues.createdAt;
+
+  expect(patient.dataValues).toMatchObject(patientSave.dataValues);
+  done();
 });
