@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoute from "./utils/PrivateRoute";
+import LoggedOutRoute from "./utils/LoggedOutRoute";
 import MainNavbar from "./components/MainNavbar";
 
 import LandingPage from "./pages/LandingPage";
@@ -23,9 +24,9 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={LandingPage} />
 
-        <Route exact path="/login" component={LoginPage} />
+        <LoggedOutRoute exact path="/login" component={LoginPage} />
 
-        <PrivateRoute path="/dashboard">
+        <PrivateRoute path="/dashboard" accountTypes={["ADMIN", "DOCTOR", "PATIENT"]}>
           <DashboardPage changeNavbar={setMainNavbarIsVisible} />
         </PrivateRoute>
 
