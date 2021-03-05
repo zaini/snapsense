@@ -1,12 +1,11 @@
-import React from "react";
-import { Box, Flex, Button } from "@chakra-ui/react";
+import { useState } from "react";
+import { Box, Flex } from "@chakra-ui/react";
 import Logo from "../ui/Logo";
 import { CloseIcon, MenuIcon } from "../ui/Icons";
+import NavbarMenuItems from "./NavbarMenuItems";
 
-import MenuItem from "../ui/MenuItem";
-
-const Header = (props) => {
-  const [show, setShow] = React.useState(false);
+const Header = () => {
+  const [show, setShow] = useState(false);
   const toggleMenu = () => setShow(!show);
 
   return (
@@ -41,27 +40,7 @@ const Header = (props) => {
           direction={["column", "row", "row", "row"]}
           pt={[4, 4, 0, 0]}
         >
-          <MenuItem to="/dashboard">Home</MenuItem>
-          <MenuItem to="/invite">Invite </MenuItem>
-          <MenuItem to="/profile">Profile </MenuItem>
-          <MenuItem to="/login" isLast>
-            <Button
-              size="sm"
-              rounded="md"
-              color={["primary.500", "primary.500", "white", "white"]}
-              bg={["white", "white", "primary.500", "primary.500"]}
-              _hover={{
-                bg: [
-                  "primary.100",
-                  "primary.100",
-                  "primary.600",
-                  "primary.600",
-                ],
-              }}
-            >
-              Login
-            </Button>
-          </MenuItem>
+          <NavbarMenuItems />
         </Flex>
       </Box>
     </Flex>

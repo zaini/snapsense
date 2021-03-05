@@ -14,13 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import ListItemCustom from "./ListItemCustom";
 
-import {
-  Flex,
-  Box,
-  Container,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Flex, Box, Container, Stack, Text } from "@chakra-ui/react";
 
 const drawerWidth = 240;
 

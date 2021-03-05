@@ -9,7 +9,7 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 
 const ListItemCustom = (props) => {
   return (
-    <Link style={{textDecoration:"none"}}  href={props.link}>
+    <Link style={{ textDecoration: "none" }} href={props.link}>
       <ListItem button key={props.text}>
         <ListItemIcon>
           <InboxIcon />
