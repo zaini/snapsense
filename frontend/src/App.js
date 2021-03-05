@@ -1,23 +1,22 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import PrivateRoute from "./components/PrivateRoute";
-import Header from "./components/sections/Header";
+import MainNavbar from "./components/MainNavbar";
 
-import LandingPage from "./pages/LandingPage.js";
-import DashboardPage from "./pages/DashboardPage.js";
-import LoginPage from "./pages/LoginPage.js";
-import LogoutPage from "./pages/LogoutPage.js";
-import InvitePage from "./pages/InvitePage.js";
-import CreateInvitePage from "./pages/CreateInvitePage.js";
-import SubmissionPage from "./pages/SubmissionPage.js";
+import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
+import DashboardPage from "./pages/DashboardPage";
+import InvitePage from "./pages/InvitePage";
+import CreateInvitePage from "./pages/CreateInvitePage";
+import SubmissionPage from "./pages/SubmissionPage";
+import LogoutPage from "./pages/LogoutPage";
 
 import "./App.css";
-import UserInfo from "./components/UserInfo";
 
 const App = () => {
   return (
     <Router>
-      <Header />
+      <MainNavbar />
       <Switch>
         <Route exact path="/" component={LandingPage} />
 
@@ -33,8 +32,6 @@ const App = () => {
         <Route exact path="/submission" component={SubmissionPage} />
 
         <Route exact path="/logout" component={LogoutPage} />
-
-        <Route exact path="/profile" component={UserInfo} />
       </Switch>
     </Router>
   );

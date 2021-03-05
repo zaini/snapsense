@@ -1,5 +1,4 @@
-import React from "react";
-import { Link } from "@material-ui/core";
+import { useState } from "react";
 
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,6 +11,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+
 import ListItemCustom from "./ListItemCustom";
 
 import { Flex, Box, Container, Stack, Text } from "@chakra-ui/react";
@@ -60,7 +60,7 @@ function ResponsiveDrawer(props) {
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   let listOne = props.listOne;
   let listTwo = props.listTwo;

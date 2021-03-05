@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Box, Flex } from "@chakra-ui/react";
-import Logo from "../ui/Logo";
-import { CloseIcon, MenuIcon } from "../ui/Icons";
-import NavbarMenuItems from "./NavbarMenuItems";
+import Logo from "./Logo";
+import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
+import NavbarMenuItems from "./DashboardMenuItems";
 
 const Header = () => {
   const [show, setShow] = useState(false);
@@ -27,7 +27,7 @@ const Header = () => {
       </Flex>
 
       <Box display={{ base: "block", md: "none" }} onClick={toggleMenu}>
-        {show ? <CloseIcon /> : <MenuIcon />}
+        {show ? <CloseIcon /> : <HamburgerIcon />}
       </Box>
 
       <Box

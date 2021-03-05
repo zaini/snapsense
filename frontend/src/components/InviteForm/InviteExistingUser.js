@@ -4,7 +4,7 @@ import { AuthContext } from "../../context/auth";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import LoginFormWrapper from "../LoginFormWrapper";
+import LoginFormWrapper from "../Login/LoginFormWrapper";
 
 const InvitePatientExists = ({ invitation }) => {
   const history = useHistory();

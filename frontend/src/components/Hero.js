@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Box, Flex, Image, Heading, Stack } from "@chakra-ui/react";
 
+// Not sure this is
 export default function Hero({ title, subtitle, image, ...rest }) {
   return (
     <Flex

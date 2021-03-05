@@ -1,7 +1,7 @@
 import React from "react";
 
-import Hero from "../components/sections/Hero";
-import LandingLayout from "../components/layouts/LandingLayout";
+import Hero from "../components/Hero";
+import LandingLayout from "../components/LandingLayout";
 
 export default function Landing() {
   return (
