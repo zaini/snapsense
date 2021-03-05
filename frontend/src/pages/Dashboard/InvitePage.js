@@ -1,5 +1,5 @@
 import React from "react";
-import InviteForm from "../components/InviteForm/InviteForm";
+import InviteForm from "../../components/InviteForm/InviteForm";
 import { Container, Alert, AlertIcon, Spinner } from "@chakra-ui/react";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";

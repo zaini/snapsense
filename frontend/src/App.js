@@ -5,10 +5,10 @@ import MainNavbar from "./components/MainNavbar";
 
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
-import DashboardPage from "./pages/DashboardPage";
-import InvitePage from "./pages/InvitePage";
-import CreateInvitePage from "./pages/CreateInvitePage";
-import SubmissionPage from "./pages/SubmissionPage";
+import DashboardPage from "./pages/Dashboard/DashboardPage";
+import InvitePage from "./pages/Dashboard/InvitePage";
+import CreateInvitePage from "./pages/Dashboard/CreateInvitePage";
+import SubmissionPage from "./pages/Dashboard/SubmissionPage";
 import LogoutPage from "./pages/LogoutPage";
 
 import "./App.css";
@@ -22,7 +22,7 @@ const App = () => {
 
         <Route exact path="/login" component={LoginPage} />
 
-        <PrivateRoute exact path="/dashboard">
+        <PrivateRoute path="/dashboard">
           <DashboardPage />
         </PrivateRoute>
 
