@@ -1,6 +1,5 @@
 import React from "react";
 import { Flex } from "@chakra-ui/react";
-import Header from "../sections/Header";
 
 export default function LandingLayout(props) {
   return (
@@ -11,7 +10,6 @@ export default function LandingLayout(props) {
       m="0 auto"
       {...props}
     >
-      <Header />
       {props.children}
     </Flex>
   );

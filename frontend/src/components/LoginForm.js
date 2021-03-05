@@ -1,6 +1,6 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext, useLocation } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import {
   Box,
   FormControl,
@@ -14,19 +14,17 @@ import gql from "graphql-tag";
 import { AuthContext } from "../context/auth";
 import Error from "../components/Error";
 
-const LoginForm = ({ accountType, redirect }) => {
-  const history = useHistory();
+const LoginForm = ({ accountType }) => {
   const context = useContext(AuthContext);
   const [values, setValues] = useState({});
-
+  const { state } = useLocation();
   const { register, handleSubmit, errors, setError, formState } = useForm();
 
   const [login, { loading }] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData } }) {
       context.login(userData);
-      if (redirect) {
-        history.push(redirect);
-      }
+      // https://ui.dev/react-router-v5-protected-routes-authentication/
+      return <Redirect to={state?.from || "/"} />;
     },
     onError(err) {
       const message = err.graphQLErrors[0].message;

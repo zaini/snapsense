@@ -4,12 +4,16 @@ import { AuthContext } from "../context/auth";
 
 const PrivateRoute = ({ component, ...rest }) => {
   const { user } = useContext(AuthContext);
-
+  console.log(user, component);
   return (
     <Route
       {...rest}
-      render={() => {
-        return user ? component : <Redirect to="/login" />;
+      render={({ location }) => {
+        return user ? (
+          component
+        ) : (
+          <Redirect to={{ pathname: "/login", state: { from: location } }} />
+        );
       }}
     ></Route>
   );

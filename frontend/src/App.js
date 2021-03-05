@@ -47,11 +47,12 @@ import P_SingleDoctor from "./pages/PatientPages/SingleDoctor";
 import ProfilePage from "./pages/CommonPages/ProfilePage";
 
 import PrivateRoute from "./components/PrivateRoute";
+import Header from "./components/sections/Header";
 
 const App = () => {
   return (
     <Router>
-      {/* <Navbar /> */}
+      <Header />
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <PrivateRoute exact path="/dashboard" component={DashboardPage} />
