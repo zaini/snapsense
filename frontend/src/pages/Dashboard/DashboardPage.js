@@ -1,12 +1,14 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import DashboardHomePage from "./DashboardHomePage";
 import SubmissionPage from "./SubmissionPage";
-import DashboardNavbar from "../../components/DashboardNavbar";
+import DashboardSidebar from "../../components/DashboardSidebar/DashboardSidebar";
 
-const DashboardPage = () => {
+// Main dashboard, where you can place your routers for each dashboard page
+const DashboardPage = ({ changeNavbar }) => {
+  changeNavbar(false);
   return (
     <>
-      <DashboardNavbar />
+      <DashboardSidebar />
       <Router>
         <Switch>
           <Route exact path="/dashboard/" component={DashboardHomePage} />

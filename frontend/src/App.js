@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import PrivateRoute from "./components/PrivateRoute";
@@ -14,16 +15,18 @@ import LogoutPage from "./pages/LogoutPage";
 import "./App.css";
 
 const App = () => {
+  const [mainNavbarIsVisible, setMainNavbarIsVisible] = useState(true);
   return (
     <Router>
-      <MainNavbar />
+      {mainNavbarIsVisible ? <MainNavbar /> : null}
+
       <Switch>
         <Route exact path="/" component={LandingPage} />
 
         <Route exact path="/login" component={LoginPage} />
 
         <PrivateRoute path="/dashboard">
-          <DashboardPage />
+          <DashboardPage changeNavbar={setMainNavbarIsVisible} />
         </PrivateRoute>
 
         <Route exact path="/invite/:token_id" component={InvitePage} />
