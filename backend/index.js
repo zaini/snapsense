@@ -6,7 +6,6 @@ require("dotenv").config();
 const typeDefs = require("./graphql/typeDefs/typeDefs");
 const resolvers = require("./graphql/resolvers");
 
-const port = process.env.PORT || 5000;
 const app = express();
 
 // GraphQL Apollo Connection

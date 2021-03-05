@@ -4,8 +4,8 @@
   "description": "The backend for SnapSense",
   "main": "index.js",
   "scripts": {
-    "serve": "node index",
-    "start": "nodemon index",
+    "serve": "node server",
+    "start": "nodemon server",
     "test": "jest --config ./tests/jest.config.js --forceExit --detectOpenHandles"
   },
   "author": "",
