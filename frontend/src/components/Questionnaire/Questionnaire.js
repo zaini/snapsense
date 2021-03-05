@@ -67,6 +67,15 @@ const questionsObject = [
       { answerText: "No" },
     ],
   },
+  {
+    questionID: 7,
+    questionText: "Please add any other notes for your clinician (optional):",
+    answerOptions: [
+      { answerText: "Yes" },
+      { answerText: "No" },
+      //TODO: Figure a way to add a text field for this questions instead of Y/N
+    ],
+  },
 ];
 
 const Questionnaire = () => {
