@@ -11,42 +11,60 @@ import {
 const questionsObject = [
   {
     questionID: 0,
-    questionText: "What is the capital of France?",
+    questionText: "In the past 7 days, have you felt unwell?",
     answerOptions: [
-      { answerText: "New York" },
-      { answerText: "London" },
-      { answerText: "Paris" },
-      { answerText: "Dublin" },
+      { answerText: "Yes" },
+      { answerText: "No" },
     ],
   },
   {
     questionID: 1,
-    questionText: "Who is CEO of Tesla?",
+    questionText: "In the past 7 days, have you had a fever (temperature higher than 36C)?",
     answerOptions: [
-      { answerText: "Jeff Bezos" },
-      { answerText: "Elon Musk" },
-      { answerText: "Bill Gates" },
-      { answerText: "Tony Stark" },
+      { answerText: "Yes" },
+      { answerText: "No" },
+     
     ],
   },
   {
     questionID: 2,
-    questionText: "The iPhone was created by which company?",
+    questionText: "In the past 7 days, have you seen redness around your ulcer?",
     answerOptions: [
-      { answerText: "Apple" },
-      { answerText: "Intel" },
-      { answerText: "Amazon" },
-      { answerText: "Microsoft" },
+      { answerText: "Yes" },
+      { answerText: "No" },
     ],
   },
   {
     questionID: 3,
-    questionText: "How many Harry Potter books are there?",
+    questionText: "In the past 7 days, have you seen any puss around your ulcer?",
     answerOptions: [
-      { answerText: "1" },
-      { answerText: "4" },
-      { answerText: "6" },
-      { answerText: "7" },
+      { answerText: "Yes" },
+      { answerText: "No" },
+  
+    ],
+  },
+  {
+    questionID: 4,
+    questionText: "In the past 7 days, has your ulcer been hotter to touch than usual?",
+    answerOptions: [
+      { answerText: "Yes" },
+      { answerText: "No" },
+    ],
+  },
+  {
+    questionID: 5,
+    questionText: "In the past 7 days, has one foot been hotter to touch than the other?",
+    answerOptions: [
+      { answerText: "Yes" },
+      { answerText: "No" },
+    ],
+  },
+  {
+    questionID: 6,
+    questionText: "In the past 7 days, have you noticed any unusual smells from the wound?",
+    answerOptions: [
+      { answerText: "Yes" },
+      { answerText: "No" },
     ],
   },
 ];
