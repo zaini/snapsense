@@ -9,6 +9,7 @@ const {
   Doctor_Patient_Relation,
 } = require("../models/index");
 
+global.beforeEach(() => {
   Admin.destroy({
     where: {},
     truncate: true,
@@ -43,4 +44,4 @@ const {
     where: {},
     truncate: true,
   });
-
+});
