@@ -5,7 +5,6 @@ import AccountTypeSelector from "./AccountTypeSelector";
 
 const LoginFormWrapper = () => {
   const [accountType, setAccountType] = useState("PATIENT");
-
   const onAccountTypeChange = (e) => {
     setAccountType(e.target.value);
   };
