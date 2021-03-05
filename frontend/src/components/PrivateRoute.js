@@ -4,6 +4,8 @@ import { AuthContext } from "../context/auth";
 
 const PrivateRoute = ({ children, ...rest }) => {
   const { user } = useContext(AuthContext);
+  console.log("You are entering a private route. User: ", user);
+  console.log("Showing: ", user ? "child" : "redirect");
 
   return (
     <Route
