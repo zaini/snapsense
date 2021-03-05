@@ -12,6 +12,7 @@ import CreateInvitePage from "./pages/CreateInvitePage.js";
 import SubmissionPage from "./pages/SubmissionPage.js";
 
 import "./App.css";
+import UserInfo from "./components/UserInfo";
 
 const App = () => {
   return (
@@ -32,6 +33,8 @@ const App = () => {
         <Route exact path="/submission" component={SubmissionPage} />
 
         <Route exact path="/logout" component={LogoutPage} />
+
+        <Route exact path="/profile" component={UserInfo} />
       </Switch>
     </Router>
   );

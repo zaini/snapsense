@@ -1,6 +1,6 @@
 import React from "react";
 import ResponsiveDrawer from "../components/ResponsiveDrawer/ResponsiveDrawer";
-import { Box, Text, SimpleGrid, Heading, Stack } from "@chakra-ui/react";
+import { Text, Heading, Stack } from "@chakra-ui/react";
 
 const pageModules = [
   ["Patient", "/patient/home"],
