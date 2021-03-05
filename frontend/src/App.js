@@ -1,11 +1,9 @@
-
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import React from "react";
 import LandingPage from "./pages/LandingPage.js";
 import DashboardPage from "./pages/DashboardPage.js";
 import DoctorsPage from "./pages/DoctorsPage";
 import PatientsPage from "./pages/PatientsPage";
-
 
 import Footer from "./components/Footer.js";
 import HomePage from "./pages/HomePage.js";
@@ -39,7 +37,6 @@ import D_DoctorHome from "./pages/DoctorPages/DoctorHome";
 import D_RecentUploads from "./pages/DoctorPages/RecentUploads";
 import D_SinglePatient from "./pages/DoctorPages/SinglePatient";
 
-
 // Patients
 import P_AllDoctors from "./pages/PatientPages/AllDoctors";
 import P_ImageUpload from "./pages/PatientPages/ImageUpload";
@@ -49,6 +46,7 @@ import P_SingleDoctor from "./pages/PatientPages/SingleDoctor";
 // Common Pages
 import ProfilePage from "./pages/CommonPages/ProfilePage";
 
+import PrivateRoute from "./components/PrivateRoute";
 
 const App = () => {
   return (
@@ -56,27 +54,47 @@ const App = () => {
       {/* <Navbar /> */}
       <Switch>
         <Route exact path="/" component={LandingPage} />
-        <Route exact path="/dashboard" component={DashboardPage} />
-        
+        <PrivateRoute exact path="/dashboard" component={DashboardPage} />
+
         <Route exact path="/sadmin/home" component={SA_SuperAdminHome} />
         <Route exact path="/sadmin/hospitals" component={SA_AllHospitals} />
-        <Route exact path="/sadmin/hospital/:hospital_id" component={SA_SingleHospital} />
+        <Route
+          exact
+          path="/sadmin/hospital/:hospital_id"
+          component={SA_SingleHospital}
+        />
         <Route exact path="/sadmin/admins" component={SA_AllAdmins} />
-        <Route exact path="/sadmin/admin/:admin_id" component={SA_SingleAdmin} />
+        <Route
+          exact
+          path="/sadmin/admin/:admin_id"
+          component={SA_SingleAdmin}
+        />
         <Route exact path="/admin/home" component={A_AdminHome} />
         <Route exact path="/admin/doctors" component={A_AllDoctors} />
-        <Route exact path="/admin/doctor/:doctor_id" component={A_SingleDoctor} />
+        <Route
+          exact
+          path="/admin/doctor/:doctor_id"
+          component={A_SingleDoctor}
+        />
 
         <Route exact path="/doctor/home" component={D_DoctorHome} />
         <Route exact path="/doctor/patients" component={D_AllPatients} />
-        <Route exact path="/doctor/patient/:patient_id" component={D_SinglePatient} />
+        <Route
+          exact
+          path="/doctor/patient/:patient_id"
+          component={D_SinglePatient}
+        />
         <Route exact path="/doctor/uploads" component={D_RecentUploads} />
 
         <Route exact path="/patient/home" component={P_PatientHome} />
         <Route exact path="/patient/doctors" component={P_AllDoctors} />
-        <Route exact path="/patient/doctor/:doctor_id" component={P_SingleDoctor} />
+        <Route
+          exact
+          path="/patient/doctor/:doctor_id"
+          component={P_SingleDoctor}
+        />
         <Route exact path="/patient/uploads" component={P_ImageUpload} />
-                
+
         <Route exact path="/doctors" component={DoctorsPage} />
         <Route exact path="/landing" component={LandingPage} />
         <Route exact path="/profile" component={ProfilePage} />
@@ -91,7 +109,6 @@ const App = () => {
         <Route exact path="/logout" component={LogoutPage} />
       </Switch>
     </Router>
-
   );
 };
 
