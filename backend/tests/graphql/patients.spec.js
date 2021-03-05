@@ -2,10 +2,9 @@ const request = require("supertest");
 
 const app = require("../../index");
 
-describe("Patient resolvers", () => {
-  test("allPatients", async (done) => {
-    const response = await request(app).post("/graphql").send({
-      query: `
+test("allPatients", async (done) => {
+  const response = await request(app).post("/graphql").send({
+    query: `
             query {
                 getHospitals{
                   id
@@ -14,13 +13,12 @@ describe("Patient resolvers", () => {
                 }
               }
             `,
-    });
-    const { body } = response;
-    expect(body).toMatchObject({
-      data: {
-        getHospitals: [],
-      },
-    });
-    done();
   });
+  const { body } = response;
+  expect(body).toMatchObject({
+    data: {
+      getHospitals: [],
+    },
+  });
+  done();
 });
