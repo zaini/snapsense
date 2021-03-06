@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { FaStar } from "react-icons/fa";
-import { useForm } from "react-hook-form";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -16,14 +15,17 @@ const Feedback = () => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(null);
   const [value, setValue] = useState("");
-  const { handleSubmit }  = useForm();
+
+  const handleSubmit = () => {
+    // eventually this will actually just POST the results to the backend.
+    console.log(rating, value);
+  }
 
   const handleInputChange = (e) => {
     let inputValue = e.target.value;
     setValue(inputValue);
   };
   
-
   return (
     <Container p="10" borderWidth="1px" borderRadius="lg" mt="10">
       <Grid
@@ -76,7 +78,7 @@ const Feedback = () => {
             />
             <br />
             <Center>
-              <Button mt={4} colorScheme="blue" rightIcon={<CheckCircleIcon />} onClick={() => handleSubmit(console.log(rating, value))}>
+              <Button mt={4} colorScheme="blue" rightIcon={<CheckCircleIcon />} onClick={() => handleSubmit()}>
                 Submit
               </Button>
             </Center>
