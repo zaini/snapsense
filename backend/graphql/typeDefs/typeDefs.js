@@ -119,6 +119,7 @@ module.exports = gql`
   }
 
   type Query {
+    getPatientsForDoctor: [Patient!]
     getHospitals: [Hospital!]
     getAdmins: [Admin!]
     getDoctors: [Doctor!]

@@ -1,5 +1,8 @@
 const { ApolloError, AuthenticationError } = require("apollo-server");
-const { Doctor, Patient } = require("../../models/index.js");
+const {
+  Doctor,
+  Patient,
+} = require("../../models/index.js");
 const { isAuth } = require("../../utils/isAuth");
 
 module.exports = {
@@ -7,6 +10,24 @@ module.exports = {
     getPatients: async () => {
       try {
         const patients = await Patient.findAll();
+        return patients;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+    getPatientsForDoctor: async (_, {}, context) => {
+      const user = isAuth(context);
+      const { accountType, id } = verify(user, ACCESS_TOKEN_SECRET_KEY);
+
+      if (!(accountType === "DOCTOR")) {
+        throw new AuthenticationError(
+          "You are not logged into the correct account for this feature."
+        );
+      }
+
+      try {
+        const patients = await Patient.findAll({ where: { doctor_id: id } });
+
         return patients;
       } catch (error) {
         throw new Error(error);
