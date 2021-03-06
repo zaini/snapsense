@@ -27,7 +27,7 @@ const Feedback = () => {
   };
   
   return (
-    <Container p="10" borderWidth="20px" borderRadius="lg" mt="10" >
+    <Container p="10" borderWidth="2em" borderRadius="lg" mt="10" >
       <Grid
         container
         justify="center"
