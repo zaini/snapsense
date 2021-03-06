@@ -27,7 +27,7 @@ const Feedback = () => {
   };
   
   return (
-    <Container p="10" borderWidth="1px" borderRadius="lg" mt="10">
+    <Container p="10" borderWidth="20px" borderRadius="lg" mt="10" >
       <Grid
         container
         justify="center"
@@ -36,7 +36,7 @@ const Feedback = () => {
         textAlign="center-left"
       >
         <Text mb="8px">How was your experience in overall? </Text>
-        <Box d="flex">
+        <Box d="flex" >
           {[...Array(5)].map((star, i) => {
             const ratingValue = i + 1;
             return (
@@ -66,7 +66,7 @@ const Feedback = () => {
         </Box>
         <br />
         <br />
-        <Box>
+        <Box >
           <form>
             <Text mb="8px">Did we meet your expectations?</Text>
             <Textarea
