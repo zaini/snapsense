@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { FaStar } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { CheckCircleIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -10,18 +12,20 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-function Feedback() {
+const Feedback = () => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(null);
   const [value, setValue] = useState("");
+  const { handleSubmit }  = useForm();
 
   const handleInputChange = (e) => {
     let inputValue = e.target.value;
     setValue(inputValue);
   };
+  
 
   return (
-    <Container p="10" borderWidth="1px" borderRadius="lg" mt="40">
+    <Container p="10" borderWidth="1px" borderRadius="lg" mt="10">
       <Grid
         container
         justify="center"
@@ -64,14 +68,15 @@ function Feedback() {
           <form>
             <Text mb="8px">Did we meet your expectations?</Text>
             <Textarea
+              isFullWidth= "True"
               value={value}
               onChange={handleInputChange}
-              placeholder="Max 500 words"
+              placeholder = "Enter here"
               size="sm"
             />
             <br />
             <Center>
-              <Button mt={4} colorScheme="blue" type="submit">
+              <Button mt={4} colorScheme="blue" rightIcon={<CheckCircleIcon />} onClick={() => handleSubmit(console.log(rating, value))}>
                 Submit
               </Button>
             </Center>

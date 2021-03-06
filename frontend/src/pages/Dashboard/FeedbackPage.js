@@ -1,7 +1,7 @@
 import Feedback from '../../components/Feedback/Feedback';
 import { SimpleGrid } from "@chakra-ui/react";
 
-const SubmissionPage = () => {
+const FeedbackPage = () => {
   return (
     <SimpleGrid>
       <Feedback />
@@ -9,4 +9,4 @@ const SubmissionPage = () => {
   );
 };
 
-export default SubmissionPage;
+export default FeedbackPage;
