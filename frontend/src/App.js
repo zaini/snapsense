@@ -35,7 +35,10 @@ const App = () => {
         <Route exact path="/invite" component={CreateInvitePage} />
 
         <Route exact path="/submission" component={SubmissionPage} />
-        <Route exact path="/submission/new" component={SubmissionRequest} />
+
+        <PrivateRoute path="/submissions/new" accountTypes={["DOCTOR"]}>
+          <SubmissionRequest />
+        </PrivateRoute>
 
         <Route exact path="/logout" component={LogoutPage} />
       </Switch>
