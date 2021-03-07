@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Container } from "@material-ui/core";
 import Table from "../../components/incomplete/Table";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
@@ -12,7 +11,7 @@ const PatientsLogPage = () => {
   // TODO move state to be fetched on component mount
   const [doctorName] = useState("Dr. Oz");
 
-  const { loading, data, error } = useQuery(GET_PATIENTS);
+  const { loading, data, error } = useQuery(GET_PATIENTS); //change to get patients for doctor?
   if (loading) {
     //add spinner
     return <p>Loading</p>;
@@ -54,6 +53,7 @@ const PatientsLogPage = () => {
 
 export default PatientsLogPage;
 
+//change to get patients for doctor query?
 const GET_PATIENTS = gql`
   query {
     getPatientsForDoctor {
