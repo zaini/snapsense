@@ -12,6 +12,8 @@ import PatientsPersonalLogPage from "./pages/PatientsPersonalLogPage.js";
 import PatientsLogPage from "./pages/PatientsLogPage.js";
 import CreateInvitePage from "./pages/CreateInvitePage.js";
 import SubmissionPage from "./pages/SubmissionPage.js";
+import ProfilePage from "./pages/Profile.js";
+
 import "./App.css";
 
 function App() {
@@ -29,6 +31,7 @@ function App() {
           <Route exact path="/logs" component={PatientsPersonalLogPage} />
           <Route exact path="/patients" component={PatientsLogPage} />
           <Route exact path="/submission" component={SubmissionPage} />
+          <Route exact path="/profile" component={ProfilePage} />
           {/* We shouldn't have a logout page, ideally the logout function is just called whenever you want to logout I think */}
           <Route exact path="/logout" component={LogoutPage} />
         </Switch>
