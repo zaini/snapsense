@@ -12,7 +12,7 @@ import InvitePage from "./pages/Dashboard/InvitePage";
 import CreateInvitePage from "./pages/Dashboard/CreateInvitePage";
 import SubmissionPage from "./pages/Dashboard/SubmissionPage";
 import LogoutPage from "./pages/LogoutPage";
-import SubmissionRequest from "./pages/SubmissionRequest";
+import SubmissionRequestPage from "./pages/SubmissionRequestPage";
 
 import "./App.css";
 
@@ -37,7 +37,7 @@ const App = () => {
         <Route exact path="/submission" component={SubmissionPage} />
 
         <PrivateRoute path="/submissions/new" accountTypes={["DOCTOR"]}>
-          <SubmissionRequest />
+          <SubmissionRequestPage />
         </PrivateRoute>
 
         <Route exact path="/logout" component={LogoutPage} />
