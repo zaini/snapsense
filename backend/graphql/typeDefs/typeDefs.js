@@ -33,7 +33,7 @@ module.exports = gql`
     lname: String!
     email: String!
     password: String!
-    admin_id: ID!
+    hospital_id: ID!
     createdAt: String!
   }
 
@@ -97,7 +97,6 @@ module.exports = gql`
     # singleUpload(file: Upload!): File!
     singleUploadStream(file: Upload!): S3Object
 
-    # TODO jwt stuff
     register(
       fname: String!
       lname: String!
@@ -112,9 +111,8 @@ module.exports = gql`
       account_type: String!
     ): AuthResponse
 
-    # Invitation service
     inviteUser(email: String!): String!
-
+    
     addPatientToDoctor(patient_email: String!, doctor_email: String!): Boolean!
   }
 
