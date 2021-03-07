@@ -2,8 +2,11 @@ const { ApolloError, AuthenticationError } = require("apollo-server");
 const {
   Doctor,
   Patient,
+  Doctor_Patient_Relation,
 } = require("../../models/index.js");
-const { isAuth } = require("../../utils/isAuth");
+const sequelize = require("../../models/index.js");
+const patient = require("../../models/patient.js");
+const isAuth = require("../../utils/isAuth");
 
 module.exports = {
   Query: {
@@ -16,17 +19,18 @@ module.exports = {
       }
     },
     getPatientsForDoctor: async (_, {}, context) => {
+      //TODO: GetPatientsByDoctor
       const user = isAuth(context);
-      const { accountType, id } = verify(user, ACCESS_TOKEN_SECRET_KEY);
 
-      if (!(accountType === "DOCTOR")) {
+      if (!(user.accountType === "DOCTOR")) {
         throw new AuthenticationError(
           "You are not logged into the correct account for this feature."
         );
       }
 
       try {
-        const patients = await Patient.findAll({ where: { doctor_id: id } });
+        const doctor = await Doctor.findOne({ where: { id: user.id } });
+        const patients = await doctor.getPatients();
 
         return patients;
       } catch (error) {

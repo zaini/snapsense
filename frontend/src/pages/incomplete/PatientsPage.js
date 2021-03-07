@@ -21,7 +21,7 @@ const PatientsLogPage = () => {
     return <p>Error</p>;
   } else {
     console.log(data);
-    const rows = data.getPatients;
+    const rows = data.getPatientsForDoctor;
 
     const cols = [
       { field: "_id", hide: true },
@@ -43,12 +43,10 @@ const PatientsLogPage = () => {
     ];
     return (
       <Flex w={"100%"}>
-      <Stack spacing={3} w={"100%"}>
-        <Heading>All Patients</Heading>
-        <Table data={rows} cols={cols} />
-      </Stack>
-        
-        
+        <Stack spacing={3} w={"100%"}>
+          <Heading>All Patients</Heading>
+          <Table data={rows} cols={cols} />
+        </Stack>
       </Flex>
     );
   }
@@ -58,7 +56,7 @@ export default PatientsLogPage;
 
 const GET_PATIENTS = gql`
   query {
-    getPatients {
+    getPatientsForDoctor {
       id
       fname
       lname
