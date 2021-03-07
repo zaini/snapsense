@@ -7,7 +7,7 @@ import { Center } from "@chakra-ui/react"
 const LoginFormWrapper = () => {
   return (
     <Center w="100px">
-
+    
     </Center>
   );
 };

@@ -13,6 +13,9 @@ import PatientsLogPage from "./pages/PatientsLogPage.js";
 import CreateInvitePage from "./pages/CreateInvitePage.js";
 import SubmissionPage from "./pages/SubmissionPage.js";
 import "./App.css";
+import SubmissionViewerPagePatient from "./pages/SubmissionViewerPagePatient.js";
+import SubmissionViewerPageDoctor from "./pages/SubmissionViewerPageDoctor.js";
+
 
 function App() {
   return (
@@ -31,6 +34,8 @@ function App() {
           <Route exact path="/submission" component={SubmissionPage} />
           {/* We shouldn't have a logout page, ideally the logout function is just called whenever you want to logout I think */}
           <Route exact path="/logout" component={LogoutPage} />
+          <Route exact path="/psv" component={SubmissionViewerPagePatient} />
+          <Route exact path="/dsv" component={SubmissionViewerPageDoctor} />
         </Switch>
         <Footer />
       </Router>

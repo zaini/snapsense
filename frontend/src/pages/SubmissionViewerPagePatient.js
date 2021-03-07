@@ -3,14 +3,14 @@ import React from "react";
 import ImageUpload from "../components/ImageUpload/ImageUpload";
 import Questionnaire from "../components/Questionnaire/Questionnaire.js";
 
-const PatientSubmissionViewerPage = () => {
+const SubmissionViewerPagePatient = (props) => {
   return (
     <>
-      <ImageSubmission />
+      {/* <ImageSubmission />
       <br />
-      <QuestionnaireSubmission />
+      <QuestionnaireSubmission /> */}
     </>
   );
 };
 
-export default SubmissionPage;
+export default SubmissionViewerPagePatient;
