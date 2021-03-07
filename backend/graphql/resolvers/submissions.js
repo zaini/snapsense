@@ -16,7 +16,7 @@ module.exports = {
       const user = isAuth(context);
 
       //check that only assigned doctor can view? or just leave the 'patient' here?
-      if (!(user.accountType === "PATIENT" || "DOCTOR")) {
+      if (!(user.accountType === "PATIENT")) {
         throw new AuthenticationError(
           "You are not logged into the correct account for this feature."
         );

@@ -25,7 +25,7 @@ module.exports = {
         //why does getDoctors/getPatients gets those for a specific doctor/hospital? 
         //because that function above doesn't have any filters 
         //also add admin here?
-        const hospital = await Hospital.findOne({ where: { id: user.id} });
+        const hospital = await Hospital.findOne({ where: { id: user.hospital_id} });
         const doctors = await hospital.getDoctors();
 
         return doctors;
