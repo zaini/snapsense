@@ -85,7 +85,7 @@ describe("Admin Model Test", () => {
     done();
   });
 
-  it("should throw an error on empty name", async (done) => {
+  it("should throw an error on empty last name", async (done) => {
     const hospital = await new Hospital({
       name: "Test Hospital",
       contact_email: "test_hospital@mail.com",
@@ -201,7 +201,7 @@ describe("Admin Model Test", () => {
     done();
   });
 
-  it("should throw an error on emtpy password", async (done) => {
+  it("should throw an error on empty password", async (done) => {
     const hospital = await new Hospital({
       name: "Test Hospital",
       contact_email: "test_hospital@mail.com",
@@ -218,7 +218,7 @@ describe("Admin Model Test", () => {
     ).rejects.toThrow();
     done();
   });
-  
+
   it("should throw an error on invalid password syntax", async (done) => {
     const hospital = await new Hospital({
       name: "Test Hospital",
@@ -272,5 +272,5 @@ describe("Admin Model Test", () => {
     ).rejects.toThrow();
     done();
   });
-
+  
 });
