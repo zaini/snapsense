@@ -169,6 +169,32 @@ describe("Doctor Model Test", () => {
     done();
   });
 
+  it("should throw an error on invalid email domain", async (done) => {
+    const hospital = await new Hospital({
+      name: "Test Hospital",
+      contact_email: "test_hospital@mail.com",
+    }).save();
+
+    const admin = await new Admin({
+      fname: "Alex",
+      lname: "Alexovich",
+      email: "alex.alexovich@mail.com",
+      password: "AdminPassword123",
+      hospital_id: hospital.getDataValue("id"),
+    }).save();
+
+    await expect(
+      Doctor.create({
+        fname: "Ivan",
+        lname: "Ivanov",
+        email: "ivan.ivanov@gmail.com",
+        password: "Abradabra123",
+        admin_id: admin.getDataValue("id"),
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
   it("should throw an error on null email", async (done) => {
     const hospital = await new Hospital({
       name: "Test Hospital",
@@ -236,11 +262,11 @@ describe("Doctor Model Test", () => {
     }).save();
 
     const doctor = await new Doctor({
-        fname: "Ivan",
-        lname: "Ivanov",
-        email: "ivan.ivanov@nhs.co.uk",
-        password: "Abradabra123",
-        admin_id: admin.getDataValue("id"),
+      fname: "Ivan",
+      lname: "Ivanov",
+      email: "ivan.ivanov@nhs.co.uk",
+      password: "Abradabra123",
+      admin_id: admin.getDataValue("id"),
     }).save();
 
     await expect(
