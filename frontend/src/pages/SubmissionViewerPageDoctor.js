@@ -1,17 +1,16 @@
 import { Select, Container} from "@chakra-ui/react";
 import { WarningTwoIcon } from '@chakra-ui/icons'
-import { useState } from "react";
+import { React, useState } from "react";
 
 
-import React from "react";
 import ImageUpload from "../components/ImageUpload/ImageUpload";
 import Questionnaire from "../components/Questionnaire/Questionnaire.js";
 
 const SubmissionViewerPageDoctor = () => {
-  // const [value, setValue] = React.useState("")
-  // const handleChange = (e) => {
-  //   setValue(event.target.value)
-  // }
+  const [value, setValue] = React.useState("")
+  const handleChange = (e) => {
+    setValue(event.target.value)
+  }
 
   return (
     <div>
@@ -37,8 +36,8 @@ const SubmissionViewerPageDoctor = () => {
         icon={<WarningTwoIcon />} 
         variant="outline" 
         placeholder="Select a triage option"
-        // onChange={handleChange}
-        // value={value}
+        onChange={handleChange}
+        value={value}
         >
         <option value="high">High risk</option>
         <option value="medium">Medium risk</option>
