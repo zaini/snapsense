@@ -1,15 +1,30 @@
 import { Container } from "@chakra-ui/react";
 import React from "react";
-import ImageUpload from "../components/ImageUpload/ImageUpload";
-import Questionnaire from "../components/Questionnaire/Questionnaire.js";
+import ImageSubmission from "../components/ImageSubmission.js";
 
-const SubmissionViewerPagePatient = (props) => {
+const SubmissionViewerPagePatient = () => {
   return (
-    <>
-      {/* <ImageSubmission />
-      <br />
-      <QuestionnaireSubmission /> */}
-    </>
+    <div>
+    
+    <Container>
+    <br/>
+    <h1>Viewing my submission</h1>
+    <br/>
+    <hr/>
+    <h2>Photos</h2>
+    <br/>
+    <ImageSubmission />
+    <br />
+    <hr/>
+    <h2>Questionnaire</h2>
+    <br/>
+
+      
+      {/* <QuestionnaireSubmission />
+      <br />  */}
+      
+      </Container>
+    </div>
   );
 };
 
