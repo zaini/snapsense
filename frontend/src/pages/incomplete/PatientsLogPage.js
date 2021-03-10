@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Container } from "@material-ui/core";
-import Table from "../components/Table";
-import Button from '@material-ui/core/Button';
-import { Link } from "react-router-dom"
+import Table from "../../components/incomplete/Table";
+import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
 
 // Page for showing the logs of all the patients of the logged in doctor
 const PatientsLogPage = () => {
@@ -26,19 +26,27 @@ const PatientsLogPage = () => {
     { field: "id", headerName: "ID", width: 80 },
     { field: "firstName", headerName: "First name", width: 160 },
     { field: "lastName", headerName: "Last Name", width: 160 },
-    { field: "Action",
+    {
+      field: "Action",
       headerName: "Action",
       width: 100,
       renderCell: function () {
         //TODO: add correct route
-      return (<Button value={rows} variant="contained" color="secondary"><Link to ='/' >View</Link></Button>);
-    }}
+        return (
+          <Button value={rows} variant="contained" color="secondary">
+            <Link to="/">View</Link>
+          </Button>
+        );
+      },
+    },
   ];
 
   return (
     <Container>
-      <h1 style={{textAlign: "center", fontSize: "3vh", fontWeight: "bold" }}>Your history of uploads, {doctorName}</h1>
-      <Table data={rows} cols={cols}/>
+      <h1 style={{ textAlign: "center", fontSize: "3vh", fontWeight: "bold" }}>
+        Your history of uploads, {doctorName}
+      </h1>
+      <Table data={rows} cols={cols} />
     </Container>
   );
 };
