@@ -13,7 +13,7 @@ module.exports = {
     },
 
     //query to get all doctors from admin's hospital 
-    getDoctorsByHospital: async (_, _, context) => { 
+    getDoctorsByHospital: async (_, __, context) => { 
       const user = isAuth(context);
 
       if (!(user.accountType === "ADMIN")) {
