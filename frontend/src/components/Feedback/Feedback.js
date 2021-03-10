@@ -19,15 +19,15 @@ const Feedback = () => {
   const handleSubmit = () => {
     // eventually this will actually just POST the results to the backend.
     console.log(rating, value);
-  }
+  };
 
   const handleInputChange = (e) => {
     let inputValue = e.target.value;
     setValue(inputValue);
   };
-  
+
   return (
-    <Container p="10" borderWidth="2em" borderRadius="lg" mt="10" >
+    <Container p="10" borderWidth="2em" borderRadius="lg" mt="10">
       <Grid
         container
         justify="center"
@@ -36,7 +36,7 @@ const Feedback = () => {
         textAlign="center-left"
       >
         <Text mb="8px">How was your experience in overall? </Text>
-        <Box d="flex" >
+        <Box d="flex">
           {[...Array(5)].map((star, i) => {
             const ratingValue = i + 1;
             return (
@@ -66,19 +66,24 @@ const Feedback = () => {
         </Box>
         <br />
         <br />
-        <Box >
+        <Box>
           <form>
             <Text mb="8px">Did we meet your expectations?</Text>
             <Textarea
-              isFullWidth= "True"
+              isFullWidth="True"
               value={value}
               onChange={handleInputChange}
-              placeholder = "Enter here"
+              placeholder="Enter here"
               size="sm"
             />
             <br />
             <Center>
-              <Button mt={4} colorScheme="blue" rightIcon={<CheckCircleIcon />} onClick={() => handleSubmit()}>
+              <Button
+                mt={4}
+                colorScheme="blue"
+                rightIcon={<CheckCircleIcon />}
+                onClick={() => handleSubmit()}
+              >
                 Submit
               </Button>
             </Center>
@@ -87,6 +92,6 @@ const Feedback = () => {
       </Grid>
     </Container>
   );
-}
+};
 
 export default Feedback;
