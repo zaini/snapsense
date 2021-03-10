@@ -11,15 +11,6 @@ module.exports = {
       patient_id: {
         type: Sequelize.INTEGER
       },
-      doctor_id: {
-        type: Sequelize.INTEGER
-      },
-      deadline: {
-        type: Sequelize.DATE
-      },
-      fulfilled: {
-        type: Sequelize.DATE
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
