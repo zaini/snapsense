@@ -33,7 +33,13 @@ const PatientsLogPage = () => {
         renderCell: function () {
           return (
             <Button value={rows} variant="contained" color="secondary">
-              <Link to="/">View</Link>
+              <Link to="/profile/:id">Account</Link>
+            </Button>,
+            <Button value={rows} variant="contained" color="secondary">
+              <Link to="/submissions/:id">Submissions</Link>
+            </Button>,
+            <Button value={rows} variant="contained" color="secondary">
+              <Link to="/">Request</Link>
             </Button>
           );
         },
@@ -56,7 +62,7 @@ export default PatientsLogPage;
 //change to get patients for doctor query?
 const GET_PATIENTS = gql`
   query {
-    getPatientsForDoctor {
+    getPatientsByDoctor {
       id
       fname
       lname

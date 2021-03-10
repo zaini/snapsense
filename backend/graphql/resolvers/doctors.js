@@ -1,4 +1,5 @@
-const { Doctor } = require("../../models/index.js");
+const { Doctor, Hospital } = require("../../models/index.js");
+const isAuth = require("../../utils/isAuth");
 
 module.exports = {
   Query: {
@@ -12,7 +13,7 @@ module.exports = {
     },
 
     //query to get all doctors from admin's hospital 
-    getDoctorsForHospital: async (_, {}, context) => {
+    getDoctorsByHospital: async (_, _, context) => { 
       const user = isAuth(context);
 
       if (!(user.accountType === "ADMIN")) {
@@ -21,19 +22,15 @@ module.exports = {
         );
       }
 
-      try { //change where: condition to id: user.hospital_id 
-        //why does getDoctors/getPatients gets those for a specific doctor/hospital? 
-        //because that function above doesn't have any filters 
-        //also add admin here?
-        const hospital = await Hospital.findOne({ where: { id: user.hospital_id} });
-        const doctors = await hospital.getDoctors();
+      const {hospital_id} = user;
 
+      try {
+        const doctors = await Doctor.findAll({where: {hospital_id: hospital_id}});
         return doctors;
       } catch (error) {
         throw new Error(error);
       }
     }
-
   },
   Mutation: {},
 };

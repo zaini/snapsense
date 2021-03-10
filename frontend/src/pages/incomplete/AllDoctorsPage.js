@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container } from "@material-ui/core";
-import Table from "../components/Table";
+import Table from "../../components/incomplete/Table";
 
 // Page for showing the logs of all the doctors from the hospital the admin is from
 const AllDoctorsPage = () => {
