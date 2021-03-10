@@ -18,8 +18,7 @@ module.exports = {
         throw new Error(error);
       }
     },
-    getPatientsForDoctor: async (_, {}, context) => {
-      //TODO: GetPatientsByDoctor
+    getPatientsByDoctor: async (_, {}, context) => {
       const user = isAuth(context);
 
       if (!(user.accountType === "DOCTOR")) {

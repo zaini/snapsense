@@ -52,7 +52,7 @@ module.exports = {
             lname,
             password,
             email: newAccountEmail,
-            admin_id: inviter.getDataValue("id"),
+            hospital_id: inviter.getDataValue("hospital_id"),
           });
           break;
 
