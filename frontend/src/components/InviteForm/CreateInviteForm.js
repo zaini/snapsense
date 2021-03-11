@@ -11,10 +11,11 @@ import {
   Center,
 } from "@chakra-ui/react";
 
-import Error from "../Error";
-import CopyLink from "../CopyLink";
+import Error from "../utils/Error";
+import CopyLink from "../utils/CopyLink";
 
-const URL_PREFIX = process.env.REACT_APP_FRONTEND_URL_PREFIX || "http://localhost:3000";
+const URL_PREFIX =
+  process.env.REACT_APP_FRONTEND_URL_PREFIX || "http://localhost:3000";
 
 const CreateInviteForm = () => {
   const {

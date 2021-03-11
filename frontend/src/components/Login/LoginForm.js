@@ -11,7 +11,7 @@ import {
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { AuthContext } from "../../context/auth";
-import Error from "../../components/Error";
+import Error from "../../components/utils/Error";
 import { Redirect, useLocation } from "react-router-dom";
 
 const LoginForm = ({ accountType }) => {

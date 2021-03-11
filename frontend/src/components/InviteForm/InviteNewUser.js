@@ -10,7 +10,7 @@ import {
   Button,
   Center,
 } from "@chakra-ui/react";
-import Error from "../Error";
+import Error from "../utils/Error";
 
 const InviteNewUser = ({ invitation }) => {
   const { register, handleSubmit, errors, setError, formState } = useForm();

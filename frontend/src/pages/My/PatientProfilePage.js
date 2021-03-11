@@ -1,6 +1,5 @@
 import React from "react";
-import UserInfo from "../../components/incomplete/UserInfo";
-import PatientsPersonalLogPage from "../incomplete/PatientsPersonalLogPage";
+import UserInfo from "../../components/UserInfo";
 
 // Shows the information about a specific patient and also their submissions
 const PatientProfilePage = () => {
@@ -12,7 +11,6 @@ const PatientProfilePage = () => {
         email="aaa@email.com"
         password="password"
       />
-      <PatientsPersonalLogPage />
     </>
   );
 };

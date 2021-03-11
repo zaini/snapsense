@@ -16,7 +16,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { InfoIcon, PhoneIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import { Flex } from "@chakra-ui/react";
 import { SidebarData } from "./SidebarData";
-import { AuthContext } from "../../context/auth";
+import { AuthContext } from "../../../context/auth";
 import { Link } from "react-router-dom";
 
 const drawerWidth = 250;

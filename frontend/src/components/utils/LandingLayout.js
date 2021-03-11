@@ -1,7 +1,7 @@
 import React from "react";
 import { Flex } from "@chakra-ui/react";
 
-export default function LandingLayout(props) {
+const LandingLayout = (props) => {
   return (
     <Flex
       direction="column"
@@ -13,4 +13,6 @@ export default function LandingLayout(props) {
       {props.children}
     </Flex>
   );
-}
+};
+
+export default LandingLayout;

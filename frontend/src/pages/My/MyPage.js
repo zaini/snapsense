@@ -2,14 +2,14 @@ import { Switch, Route } from "react-router-dom";
 
 import PrivateRoute from "../../utils/PrivateRoute";
 
-import MySidebar from "../../components/MySidebar/MySidebar";
+import MySidebar from "../../components/utils/MySidebar/MySidebar";
 import PatientsPage from "./PatientsPage";
-import DoctorsPage from "../incomplete/DoctorsPage";
+import DoctorsPage from "./DoctorsPage";
 import MyHomePage from "./MyHomePage";
 import NewSubmissionPage from "./NewSubmissionPage";
 import NewRequestPage from "./NewRequestPage";
-import PatientProfilePage from "../incomplete/PatientProfilePage";
-import RequestsPage from "../incomplete/RequestsPage";
+import PatientProfilePage from "./PatientProfilePage";
+import RequestsPage from "./RequestsPage";
 import NewInvitePage from "./NewInvitePage";
 import ShowSubmissionPage from "./ShowSubmissionPage";
 import SubmissionsPage from "./SubmissionsPage";

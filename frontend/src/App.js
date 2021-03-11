@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import PrivateRoute from "./utils/PrivateRoute";
 import LoggedOutRoute from "./utils/LoggedOutRoute";
-import MainNavbar from "./components/MainNavbar";
+import MainNavbar from "./components/utils/MainNavbar";
 
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";

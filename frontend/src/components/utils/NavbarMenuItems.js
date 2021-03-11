@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import MenuItem from "./MenuItem";
 import { Button } from "@chakra-ui/react";
-import { AuthContext } from "../context/auth";
+import { AuthContext } from "../../context/auth";
 
 const NavbarMenuItems = () => {
   const { user } = useContext(AuthContext);
