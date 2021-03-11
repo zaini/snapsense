@@ -3,6 +3,7 @@ import Button from "@material-ui/core/Button";
 import Table from "../../components/incomplete/Table";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
+import { Container, Alert, AlertIcon, Spinner } from "@chakra-ui/react";
 import { Flex, Heading, Stack } from "@chakra-ui/react";
 
 // Page for showing the logs of all the doctors from the hospital the admin is from
@@ -11,12 +12,18 @@ const AllDoctorsPage = () => {
   const [hospitalName] = useState("Guy's Hospital");
 
   const { loading, data, error } = useQuery(GET_DOCTORS); 
+
+  let markup;
+
   if (loading) {
-    //add spinner
-    return <p>Loading</p>;
+    markup = <Spinner size="xl" />;
   } else if (error) {
-    console.log(error);
-    return <p>Error</p>;
+    markup = (
+      <Alert status="error">
+        <AlertIcon />
+        {error.graphQLErrors[0].message}
+      </Alert>
+    );
   } else {
     const rows = data.getDoctorsByHospital;
 
