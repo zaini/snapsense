@@ -9,6 +9,7 @@ import MyHomePage from "./MyHomePage";
 import NewSubmissionPage from "./NewSubmissionPage";
 import NewRequestPage from "./NewRequestPage";
 import PatientProfilePage from "./PatientProfilePage";
+import ProfilePage from "./ProfilePage";
 import RequestsPage from "./RequestsPage";
 import NewInvitePage from "./NewInvitePage";
 import ShowSubmissionPage from "./ShowSubmissionPage";
@@ -21,6 +22,7 @@ const MyPage = ({ changeNavbar }) => {
     <MySidebar>
       <Switch>
         <Route exact path="/my/" component={MyHomePage} />
+        <Route exact path="/my/profile" component={ProfilePage} />
 
         <PrivateRoute
           exact
