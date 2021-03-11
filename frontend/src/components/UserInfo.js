@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import AuthContext from "../src/context/auth.js";
 import { Container, List, ListItem, ListItemText, Grid, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
 import PasswordFormInDialog from "../components/PasswordFormInDialog.js";
 import EmailFormInDialog from "../components/EmailFormInDialog.js";
 import DeleteAccount from "../components/DeleteAccount.js";
 
 const UserInfo = (props) => {
+  const { user } = useContext(AuthContext)
+  // user.accountType
+
   return (
 
     <Container className="UserInfo">
