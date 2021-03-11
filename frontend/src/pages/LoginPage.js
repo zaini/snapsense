@@ -1,7 +1,7 @@
-import LoginFormWrapper from "../components/LoginFormWrapper";
+import LoginFormWrapper from "../components/Login/LoginFormWrapper";
 
 const LoginPage = () => {
-  return <LoginFormWrapper redirect="/" />;
+  return <LoginFormWrapper />;
 };
 
 export default LoginPage;
