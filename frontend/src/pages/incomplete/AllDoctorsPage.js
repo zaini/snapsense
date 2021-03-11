@@ -1,36 +1,61 @@
 import React, { useState } from "react";
-import { Container } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 import Table from "../../components/incomplete/Table";
+import { useQuery } from "@apollo/react-hooks";
+import gql from "graphql-tag";
+import { Flex, Heading, Stack } from "@chakra-ui/react";
 
 // Page for showing the logs of all the doctors from the hospital the admin is from
+
 const AllDoctorsPage = () => {
   const [hospitalName] = useState("Guy's Hospital");
 
-  const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon'},
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei' },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime' },
-    { id: 4, lastName: 'Stark', firstName: 'Arya' },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys' },
-    { id: 6, lastName: 'Melisandre', firstName: null },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara' },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini' },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey' },
-  ];
+  const { loading, data, error } = useQuery(GET_DOCTORS); 
+  if (loading) {
+    //add spinner
+    return <p>Loading</p>;
+  } else if (error) {
+    console.log(error);
+    return <p>Error</p>;
+  } else {
+    const rows = data.getDoctorsByHospital;
 
-  const cols = [
-    { field: 'id', headerName: 'ID', width: 80 },
-    { field: 'firstName', headerName: 'Name', width: 150, sortable: true},
-    { field: 'lastName', headerName: 'Surname', width: 150, sortable: true },
-  ];
-
-
-    return (
-      <Container>
-        <h1 style={{textAlign: "center", fontSize: "3vh", fontWeight: "bold" }}> Doctors from {hospitalName} </h1>
-        <Table data={rows} cols={cols} />
-      </Container>
+    const cols = [
+      { field: "_id", hide: true },
+      { field: "fname", headerName: "First name", width: 200 },
+      { field: "lname", headerName: "Last Name", width: 200 },
+      {
+        field: "Action",
+        headerName: "Action",
+        width: 200,
+        renderCell: function () {
+          return ( //ADD CORRECT ID
+            <Button value={rows} variant="contained" color="secondary">
+              <Link to="/profile/:id">Account</Link>
+            </Button>
+          );
+        },
+      },
+    ];
+    return ( //add name of the hospital into heading
+      <Flex w={"100%"}>
+        <Stack spacing={3} w={"100%"}> 
+          <Heading>Doctor's for Hospital </Heading>
+          <Table data={rows} cols={cols} />
+        </Stack>
+      </Flex>
     );
+  }
 };
 
 export default AllDoctorsPage;
+
+const GET_DOCTORS = gql`
+  query {
+    getDoctorsByHospital {
+      id
+      fname
+      lname
+    }
+  }
+`;

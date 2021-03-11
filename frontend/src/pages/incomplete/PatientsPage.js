@@ -8,10 +8,10 @@ import { Flex, Heading, Stack } from "@chakra-ui/react";
 
 // Page for showing the logs of all the patients of the logged in doctor
 const PatientsLogPage = () => {
-  // TODO move state to be fetched on component mount
+  //add pull of thr doctor's name
   const [doctorName] = useState("Dr. Oz");
 
-  const { loading, data, error } = useQuery(GET_PATIENTS); //change to get patients for doctor?
+  const { loading, data, error } = useQuery(GET_PATIENTS);
   if (loading) {
     //add spinner
     return <p>Loading</p>;
@@ -19,7 +19,6 @@ const PatientsLogPage = () => {
     console.log(error);
     return <p>Error</p>;
   } else {
-    console.log(data);
     const rows = data.getPatientsForDoctor;
 
     const cols = [
@@ -31,7 +30,7 @@ const PatientsLogPage = () => {
         headerName: "Action",
         width: 200,
         renderCell: function () {
-          return (
+          return ( //ADD CORRECT ID
             <Button value={rows} variant="contained" color="secondary">
               <Link to="/profile/:id">Account</Link>
             </Button>,
@@ -59,7 +58,6 @@ const PatientsLogPage = () => {
 
 export default PatientsLogPage;
 
-//change to get patients for doctor query?
 const GET_PATIENTS = gql`
   query {
     getPatientsByDoctor {
