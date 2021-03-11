@@ -1,6 +1,5 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
 import {
   Box,
   FormControl,
@@ -11,22 +10,19 @@ import {
 } from "@chakra-ui/react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import { AuthContext } from "../context/auth";
-import Error from "../components/Error";
+import { AuthContext } from "../../context/auth";
+import Error from "../../components/Error";
+import { Redirect, useLocation } from "react-router-dom";
 
-const LoginForm = ({ accountType, redirect }) => {
-  const history = useHistory();
+const LoginForm = ({ accountType }) => {
   const context = useContext(AuthContext);
   const [values, setValues] = useState({});
-
   const { register, handleSubmit, errors, setError, formState } = useForm();
+  const { state } = useLocation();
 
   const [login, { loading }] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData } }) {
       context.login(userData);
-      if (redirect) {
-        history.push(redirect);
-      }
     },
     onError(err) {
       const message = err.graphQLErrors[0].message;
@@ -41,6 +37,11 @@ const LoginForm = ({ accountType, redirect }) => {
     setValues({ email, password, account_type: accountType });
     const res = await login();
   };
+
+  if (context.user) {
+    // https://ui.dev/react-router-v5-protected-routes-authentication/
+    return <Redirect to={state?.from || "/"} />;
+  }
 
   return (
     <Box>

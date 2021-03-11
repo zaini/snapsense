@@ -8,6 +8,7 @@ import { setContext } from "apollo-link-context";
 import { ChakraProvider } from "@chakra-ui/react";
 
 import { AuthProvider } from "./context/auth";
+import customTheme from "./utils/theme";
 
 const backendLink = createHttpLink({
   uri: process.env.BACKEND_URL || "http://localhost:5000/graphql",
@@ -35,7 +36,7 @@ export default () => {
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
-        <ChakraProvider>
+        <ChakraProvider theme={customTheme}>
           <App />
         </ChakraProvider>
       </AuthProvider>
