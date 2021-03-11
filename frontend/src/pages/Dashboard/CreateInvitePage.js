@@ -1,5 +1,5 @@
 import { Container } from "@chakra-ui/react";
-import CreateInviteForm from "../components/InviteForm/CreateInviteForm";
+import CreateInviteForm from "../../components/InviteForm/CreateInviteForm";
 
 const CreateInvitePage = () => {
   return (
