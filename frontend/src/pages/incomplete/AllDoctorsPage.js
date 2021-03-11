@@ -39,13 +39,13 @@ const AllDoctorsPage = () => {
         renderCell: function () {
           return ( //ADD CORRECT ID
             <Button value={rows} variant="contained" color="secondary">
-              <Link to="/profile/:id">Account</Link>
+              <Link to="/profile/:">Account</Link>
             </Button>
           );
         },
       },
     ];
-    return ( //add name of the hospital into heading
+    markup = ( 
     <Flex w={"100%"}>
         <Stack spacing={3} w={"100%"}> 
           <Heading>Doctor's for {hospitalName} </Heading>
@@ -54,6 +54,7 @@ const AllDoctorsPage = () => {
       </Flex>
     );
   }
+  return markup
 };
 
 export default AllDoctorsPage;

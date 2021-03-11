@@ -4,20 +4,26 @@ import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
+import { Alert, AlertIcon, Spinner } from "@chakra-ui/react";
 import { Flex, Heading, Stack } from "@chakra-ui/react";
 
 // Page for showing the logs of all the patients of the logged in doctor
 const PatientsLogPage = () => {
   //add pull of thr doctor's name
   const [doctorName] = useState("DoctorName");
+  
+  let markup;
 
   const { loading, data, error } = useQuery(GET_PATIENTS);
   if (loading) {
-    //add spinner
-    return <p>Loading</p>;
+    markup = <Spinner size="xl" />;
   } else if (error) {
-    console.log(error);
-    return <p>Error</p>;
+    markup = (
+    <Alert status="error">
+      <AlertIcon />
+      {error.graphQLErrors[0].message}
+    </Alert>
+    );
   } else {
     const rows = data.getPatientsForDoctor;
 
@@ -45,7 +51,7 @@ const PatientsLogPage = () => {
       },
       { field: "status", headerName: "Flag", width: 150 },
     ];
-    return (
+    markup = (
       <Flex w={"100%"}>
         <Stack spacing={3} w={"100%"}>
           <Heading>All Patients for {doctorName}</Heading>
@@ -54,6 +60,7 @@ const PatientsLogPage = () => {
       </Flex>
     );
   }
+  return markup
 };
 
 export default PatientsLogPage;
