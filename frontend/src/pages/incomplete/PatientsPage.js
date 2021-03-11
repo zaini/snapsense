@@ -9,7 +9,7 @@ import { Flex, Heading, Stack } from "@chakra-ui/react";
 // Page for showing the logs of all the patients of the logged in doctor
 const PatientsLogPage = () => {
   //add pull of thr doctor's name
-  const [doctorName] = useState("Dr. Oz");
+  const [doctorName] = useState("DoctorName");
 
   const { loading, data, error } = useQuery(GET_PATIENTS);
   if (loading) {
@@ -32,10 +32,10 @@ const PatientsLogPage = () => {
         renderCell: function () {
           return ( //ADD CORRECT ID
             <Button value={rows} variant="contained" color="secondary">
-              <Link to="/profile/:id">Account</Link>
+              <Link to="/profile/">Account</Link>
             </Button>,
             <Button value={rows} variant="contained" color="secondary">
-              <Link to="/submissions/:id">Submissions</Link>
+              <Link to="/submissions/">Submissions</Link>
             </Button>,
             <Button value={rows} variant="contained" color="secondary">
               <Link to="/">Request</Link>
@@ -48,7 +48,7 @@ const PatientsLogPage = () => {
     return (
       <Flex w={"100%"}>
         <Stack spacing={3} w={"100%"}>
-          <Heading>All Patients</Heading>
+          <Heading>All Patients for {doctorName}</Heading>
           <Table data={rows} cols={cols} />
         </Stack>
       </Flex>
