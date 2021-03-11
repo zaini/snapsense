@@ -11,7 +11,6 @@ import {
   ModalOverlay,
   ModalHeader,
   ModalCloseButton,
-  Center,
 } from "@chakra-ui/react";
 import Error from "./Error";
 import { useForm } from "react-hook-form";
@@ -37,7 +36,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Change your password</ModalHeader>
+        <ModalHeader>Delete your account</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
           <Error errors={errors} />
@@ -67,11 +66,11 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
         <ModalFooter>
           <Button
             mr={3}
-            colorScheme="blue"
+            colorScheme="red"
             type="submit"
             isLoading={formState.isSubmitting}
           >
-            Change Password
+            Delete account
           </Button>
           <Button onClick={onClose}>Cancel</Button>
         </ModalFooter>
