@@ -7,8 +7,8 @@ import gql from "graphql-tag";
 import { Alert, AlertIcon, Spinner } from "@chakra-ui/react";
 import { Flex, Heading, Stack } from "@chakra-ui/react";
 
-// Page which displays a table of uploads from the patient logged on
-const PatientsPersonalLogPage = () => {
+// patient: view all your submissions
+const SubmissionsPage = () => {
   const [patientName] = useState("Bob");
 
   let markup;
@@ -61,7 +61,7 @@ const PatientsPersonalLogPage = () => {
   return markup;
 };
 
-export default PatientsPersonalLogPage;
+export default SubmissionsPage;
 
 const GET_SUBMISSIONS = gql`
   query {

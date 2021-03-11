@@ -2,7 +2,8 @@ import React from "react";
 import UserInfo from "../../components/incomplete/UserInfo";
 import PatientsPersonalLogPage from "./PatientsPersonalLogPage";
 
-const Profile = () => {
+// Shows the information about a specific patient and also their submissions
+const PatientProfilePage = () => {
   return (
     <>
       <UserInfo
@@ -16,4 +17,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default PatientProfilePage;

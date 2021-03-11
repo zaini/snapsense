@@ -1,13 +1,18 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import MyHomePage from "./MyHomePage";
-import SubmissionPage from "./SubmissionPage";
-import PatientSubmissionsPage from "./PatientSubmissionsPage";
+import { Switch, Route } from "react-router-dom";
+
+import PrivateRoute from "../../utils/PrivateRoute";
+
 import MySidebar from "../../components/MySidebar/MySidebar";
-import Profile from "../incomplete/Profile";
 import PatientsPage from "../incomplete/PatientsPage";
 import DoctorsPage from "../incomplete/DoctorsPage";
-import InvitePage from "./pages/My/InvitePage";
-import CreateInvitePage from "./pages/My/CreateInvitePage";
+import MyHomePage from "./MyHomePage";
+import NewSubmissionPage from "./NewSubmissionPage";
+import NewRequestPage from "./NewRequestPage";
+import PatientProfilePage from "../incomplete/PatientProfilePage";
+import RequestsPage from "../incomplete/RequestsPage";
+import NewInvitePage from "./NewInvitePage";
+import ShowSubmissionPage from "./ShowSubmissionPage";
+import SubmissionsPage from "./SubmissionsPage";
 
 // Main my, where you can place your routers for each my page
 const MyPage = ({ changeNavbar }) => {
@@ -16,33 +21,82 @@ const MyPage = ({ changeNavbar }) => {
     <MySidebar>
       <Switch>
         <Route exact path="/my/" component={MyHomePage} />
-        <Route exact path="/invite/:token_id" component={InvitePage} />
-        <Route exact path="/invites/new" component={CreateInvitePage} />
-        {/* This one is for doctors */}
-        <Route
+
+        <PrivateRoute
           exact
-          path="/my/patients/:id/submissions"
-          component={PatientSubmissionsPage}
-        />
-        {/* <Route
+          path="/my/invites/new"
+          accountTypes={["ADMIN", "DOCTOR"]}
+        >
+          <NewInvitePage />
+        </PrivateRoute>
+
+        <PrivateRoute
           exact
-          path="/my/patients/:id/submissions/new"
-          component={RequestSubmissionPage}
-        /> */}
-        {/* This one is for patients */}
-        {/* <Route
+          path="/my/doctors"
+          accountTypes={["ADMIN", "PATIENT"]}
+        >
+          <DoctorsPage />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/my/patients" accountTypes={["DOCTOR"]}>
+          <PatientsPage />
+        </PrivateRoute>
+
+        <PrivateRoute
           exact
-          path="/my/submissions"
-          component={PatientsPersonalLogPage}
-        /> */}
-        <Route
+          path="/my/patients/show/:patient_id"
+          accountTypes={["DOCTOR"]}
+        >
+          <PatientProfilePage />
+        </PrivateRoute>
+
+        <PrivateRoute
+          exact
+          path="/my/patients/:patient_id/requests"
+          accountTypes={["DOCTOR"]}
+        >
+          <RequestsPage />
+        </PrivateRoute>
+
+        <PrivateRoute
+          exact
+          path="/my/patients/:patient_id/requests/new"
+          accountTypes={["DOCTOR"]}
+        >
+          <NewRequestPage />
+        </PrivateRoute>
+
+        <PrivateRoute
+          exact
+          path="/my/patients/:patient_id/submissions/show/:submission_id"
+          accountTypes={["DOCTOR"]}
+        >
+          <ShowSubmissionPage />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/my/requests" accountTypes={["PATIENT"]}>
+          <RequestsPage />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/my/submissions" accountTypes={["PATIENT"]}>
+          <SubmissionsPage />
+        </PrivateRoute>
+
+        <PrivateRoute
           exact
           path="/my/submissions/new"
-          component={SubmissionPage}
-        />
-        <Route exact path="/my/profile" component={Profile} />
-        <Route exact path="/my/patients" component={PatientsPage} />
-        <Route exact path="/my/doctors" component={DoctorsPage} />
+          accountTypes={["PATIENT"]}
+        >
+          <NewSubmissionPage />
+        </PrivateRoute>
+
+        <PrivateRoute
+          exact
+          path="/my/submissions/show/:submission_id"
+          accountTypes={["PATIENT"]}
+        >
+          <ShowSubmissionPage />
+        </PrivateRoute>
       </Switch>
     </MySidebar>
   );

@@ -8,10 +8,9 @@ import MainNavbar from "./components/MainNavbar";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import MyPage from "./pages/My/MyPage";
-import SubmissionPage from "./pages/My/SubmissionPage";
-import FeedbackPage from "./pages/My/FeedbackPage";
 import LogoutPage from "./pages/LogoutPage";
-import SubmissionRequestPage from "./pages/SubmissionRequestPage";
+import FeedbackPage from "./pages/FeedbackPage";
+import ShowInvitePage from "./pages/ShowInvitePage";
 
 import "./App.css";
 
@@ -25,19 +24,19 @@ const App = () => {
         <Route exact path="/" component={LandingPage} />
 
         <LoggedOutRoute exact path="/login" component={LoginPage} />
+        <Route exact path="/logout" component={LogoutPage} />
+
+        <Route
+          exact
+          path="/invites/show/:token_id"
+          component={ShowInvitePage}
+        />
 
         <PrivateRoute path="/my" accountTypes={["ADMIN", "DOCTOR", "PATIENT"]}>
           <MyPage changeNavbar={setMainNavbarIsVisible} />
         </PrivateRoute>
 
-        <Route exact path="/submission" component={SubmissionPage} />
         <Route exact path="/feedback" component={FeedbackPage} />
-
-        <PrivateRoute path="/submissions/new" accountTypes={["DOCTOR"]}>
-          <SubmissionRequestPage />
-        </PrivateRoute>
-
-        <Route exact path="/logout" component={LogoutPage} />
       </Switch>
     </Router>
   );

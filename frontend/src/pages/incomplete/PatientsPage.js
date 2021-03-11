@@ -7,7 +7,7 @@ import gql from "graphql-tag";
 import { Alert, AlertIcon, Spinner } from "@chakra-ui/react";
 import { Flex, Heading, Stack } from "@chakra-ui/react";
 
-// Page for showing the logs of all the patients of the logged in doctor
+// Shows all the patients that belong to a doctor
 const PatientsLogPage = () => {
   //add pull of thr doctor's name
   const [doctorName] = useState("DoctorName");

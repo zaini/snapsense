@@ -1,11 +1,12 @@
 import React from "react";
-import InviteForm from "../../components/InviteForm/InviteForm";
+import InviteForm from "../components/InviteForm/InviteForm";
 import { Container, Alert, AlertIcon, Spinner } from "@chakra-ui/react";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { decode } from "jsonwebtoken";
 
-const InvitePage = (props) => {
+// This shows a single invitation
+const ShowInvitePage = (props) => {
   const {
     loading,
     data: { checkInvitation: invitation } = {},
@@ -38,7 +39,7 @@ const InvitePage = (props) => {
   return <Container pt="20px">{markup}</Container>;
 };
 
-export default InvitePage;
+export default ShowInvitePage;
 
 const CHECK_INVITATION = gql`
   query checkInvitation($invitationToken: String!) {

@@ -15,7 +15,8 @@ import {
   Radio,
 } from "@chakra-ui/react";
 
-const SubmissionRequest = () => {
+// Form for creating a new request for patients
+const NewRequestPage = () => {
   const { register, handleSubmit, control } = useForm();
 
   const onSubmit = ({ requestType, submissionDate }) => {
@@ -29,7 +30,9 @@ const SubmissionRequest = () => {
 
   return (
     <>
-    <Heading textAlign="center">Submission Request for {patient.name}</Heading>
+      <Heading textAlign="center">
+        Submission Request for {patient.name}
+      </Heading>
       <Container p="7" borderWidth="1px" borderRadius="lg" mt="20">
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormControl isRequired>
@@ -93,4 +96,4 @@ const SubmissionRequest = () => {
   );
 };
 
-export default SubmissionRequest;
+export default NewRequestPage;

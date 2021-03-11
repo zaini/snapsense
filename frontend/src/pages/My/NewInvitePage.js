@@ -1,7 +1,8 @@
 import { Container } from "@chakra-ui/react";
 import CreateInviteForm from "../../components/InviteForm/CreateInviteForm";
 
-const CreateInvitePage = () => {
+// Page to create a new invite
+const NewInvitePage = () => {
   return (
     <Container pt="20px">
       <CreateInviteForm />
@@ -9,4 +10,4 @@ const CreateInvitePage = () => {
   );
 };
 
-export default CreateInvitePage;
+export default NewInvitePage;

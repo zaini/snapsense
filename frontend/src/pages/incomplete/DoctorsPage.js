@@ -7,8 +7,8 @@ import gql from "graphql-tag";
 import { Alert, AlertIcon, Spinner } from "@chakra-ui/react";
 import { Flex, Heading, Stack } from "@chakra-ui/react";
 
-// Page for showing the logs of all the doctors from the hospital the admin is from
-
+// If admin: shows all doctors from the same hospital
+// If patient: shows all doctors that you have
 const AllDoctorsPage = () => {
   const [hospitalName] = useState("Guy's Hospital");
 

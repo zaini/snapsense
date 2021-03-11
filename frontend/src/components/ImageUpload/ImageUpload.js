@@ -1,8 +1,9 @@
 import React from "react";
 import ImageUploader from "react-images-upload";
 
-import {Flex,Box} from "@chakra-ui/react";
+import { Flex, Box } from "@chakra-ui/react";
 
+// TODO change to functional component
 class ImageUpload extends React.Component {
   constructor(props) {
     super(props);
@@ -18,10 +19,7 @@ class ImageUpload extends React.Component {
 
   render() {
     return (
-      <Flex
-        className="ImageUploader"
-        style={{ justifyContent: "center" }}
-      >
+      <Flex className="ImageUploader" style={{ justifyContent: "center" }}>
         <Box w={"100%"} p={"10px"}>
           <ImageUploader
             withIcon={true}
