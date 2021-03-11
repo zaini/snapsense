@@ -31,8 +31,8 @@ This application requires setting up various environment and configuration files
       "dialect": "mysql"
     },
     "test": {
-      "username": "root",
-      "password": null,
+      "username": "test",
+      "password": "test_password",
       "database": "database_test",
       "host": "127.0.0.1",
       "dialect": "mysql"
@@ -59,11 +59,21 @@ AWS_SECRET_ACCESS_KEY = 'YOUR_AWS_SECRET_ACCESS_KEY'
 AWS_REGION = 'e.g. ap-south-1, get this from AWS'
 ```
 
+4. Ensure you have the latest packages installed by running ```npm install``` within both the ```frontend``` and ```backend```
+
 TODO: consider moving all the config and env folders to the root of the project
 
 # Database Instructions
 
 Follow [this guide](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04) or something similar to set up a MySQL database. You may want to create a local test and development server and create the production one on AWS.
+
+To create the databases locally, ensure you have MySQL installed and then do the following:
+
+1. Run ```npx sequelize-cli db:drop``` to remove your old database **(optional)**
+2. Run ```npx sequelize-cli db:create``` to create your database from the specification
+3. Run ```npx sequelize-cli db:migrate``` to run all the migrations and set up the database properly
+
+The database should now work. You will probably want to run the backend and create Hospitals and invite Admins to get started.
 
 TODO Ayan: add more instructions for how to set this up on AWS
 
@@ -77,9 +87,9 @@ TODO consolidate this into a single package.json command later which covers the 
 
 # Testing
 
-You can run the frontend tests by calling ```npm test```.
+You can run the frontend tests by calling ```npm test``` in the frontend.
 
-ADD BACKEND TESTING
+You can run the backend tests by calling ```npm test``` in the backend.
 
 # Deployment
 
