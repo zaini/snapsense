@@ -84,10 +84,8 @@ const CreateInviteForm = () => {
         </Center>
       </form>
       {invitationToken ? (
-        <CopyLink link={URL_PREFIX + "/invite/" + invitationToken} />
-      ) : (
-        ""
-      )}
+        <CopyLink link={URL_PREFIX + "/invites/show/" + invitationToken} />
+      ) : null}
     </Box>
   );
 };
