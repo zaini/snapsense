@@ -123,8 +123,7 @@ module.exports = gql`
     getDoctors: [Doctor!]
     getPatients: [Patient!]
     getDoctorsByHospital: [Doctor!]
-    getSubmissions: [Submission!]
-    getSubmissionsByPatient: [Submission!]
+    getSubmissions(patient_id: Int): [Submission!]
     getImages: [Image!]
     isLoggedIn: String!
     checkInvitation(invitationToken: String!): String!

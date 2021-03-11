@@ -14,18 +14,27 @@ const DashboardPage = ({ changeNavbar }) => {
     <DashboardSidebar>
       <Switch>
         <Route exact path="/dashboard/" component={DashboardHomePage} />
-        <Route exact path="/dashboard/submit" component={SubmissionPage} />
         {/* This one is for doctors */}
         <Route
           exact
           path="/dashboard/patients/:id/submissions"
           component={PatientSubmissionsPage}
         />
+        {/* <Route
+          exact
+          path="/dashboard/patients/:id/submissions/new"
+          component={RequestSubmissionPage}
+        /> */}
         {/* This one is for patients */}
         <Route
           exact
           path="/dashboard/submissions"
           component={PatientSubmissionsPage}
+        />
+        <Route
+          exact
+          path="/dashboard/submissions/new"
+          component={SubmissionPage}
         />
         <Route exact path="/dashboard/profile" component={Profile} />
         <Route exact path="/dashboard/patients" component={PatientsPage} />
