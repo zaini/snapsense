@@ -26,12 +26,12 @@ module.exports = {
         /*
             Check if:
                 - Model is not Doctor
-                - if Doctor, email must end with @nhs.co.uk
+                - if Doctor, email must end with @nhs.net
                 - email does not start with special characters
         */
         const re = !isDoctor
           ? /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-          : /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@nhs.co.uk$/;
+          : /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@nhs.net$/;
         return re.test(String(email).trim());
       }
 

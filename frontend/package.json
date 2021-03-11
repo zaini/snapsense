@@ -24,6 +24,7 @@
     "jsonwebtoken": "^8.5.1",
     "jspdf": "^2.3.1",
     "jspdf-autotable": "^3.5.14",
+    "material-timeline": "^1.0.4",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-copy-to-clipboard": "^5.0.3",
@@ -61,5 +62,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/highlight": "^7.12.13",
+    "babel-plugin-import": "^1.13.3"
   }
 }
