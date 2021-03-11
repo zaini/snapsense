@@ -13,6 +13,7 @@ import CreateInvitePage from "./pages/Dashboard/CreateInvitePage";
 import SubmissionPage from "./pages/Dashboard/SubmissionPage";
 import FeedbackPage from "./pages/Dashboard/FeedbackPage";
 import LogoutPage from "./pages/LogoutPage";
+import SubmissionRequestPage from "./pages/SubmissionRequestPage";
 
 import "./App.css";
 
@@ -39,6 +40,10 @@ const App = () => {
 
         <Route exact path="/submission" component={SubmissionPage} />
         <Route exact path="/feedback" component={FeedbackPage} />
+
+        <PrivateRoute path="/submissions/new" accountTypes={["DOCTOR"]}>
+          <SubmissionRequestPage />
+        </PrivateRoute>
 
         <Route exact path="/logout" component={LogoutPage} />
       </Switch>
