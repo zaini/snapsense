@@ -4,22 +4,27 @@ import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
+import { Alert, AlertIcon, Spinner } from "@chakra-ui/react";
 import { Flex, Heading, Stack } from "@chakra-ui/react";
 
 // Page for showing the logs of all the patients of the logged in doctor
 const PatientsLogPage = () => {
-  // TODO move state to be fetched on component mount
-  const [doctorName] = useState("Dr. Oz");
+  //add pull of thr doctor's name
+  const [doctorName] = useState("DoctorName");
+  
+  let markup;
 
-  const { loading, data, error } = useQuery(GET_PATIENTS); //change to get patients for doctor?
+  const { loading, data, error } = useQuery(GET_PATIENTS);
   if (loading) {
-    //add spinner
-    return <p>Loading</p>;
+    markup = <Spinner size="xl" />;
   } else if (error) {
-    console.log(error);
-    return <p>Error</p>;
+    markup = (
+    <Alert status="error">
+      <AlertIcon />
+      {error.graphQLErrors[0].message}
+    </Alert>
+    );
   } else {
-    console.log(data);
     const rows = data.getPatientsForDoctor;
 
     const cols = [
@@ -31,12 +36,12 @@ const PatientsLogPage = () => {
         headerName: "Action",
         width: 200,
         renderCell: function () {
-          return (
+          return ( //ADD CORRECT ID
             <Button value={rows} variant="contained" color="secondary">
-              <Link to="/profile/:id">Account</Link>
+              <Link to="/profile/">Account</Link>
             </Button>,
             <Button value={rows} variant="contained" color="secondary">
-              <Link to="/submissions/:id">Submissions</Link>
+              <Link to="/submissions/">Submissions</Link>
             </Button>,
             <Button value={rows} variant="contained" color="secondary">
               <Link to="/">Request</Link>
@@ -46,20 +51,20 @@ const PatientsLogPage = () => {
       },
       { field: "status", headerName: "Flag", width: 150 },
     ];
-    return (
+    markup = (
       <Flex w={"100%"}>
         <Stack spacing={3} w={"100%"}>
-          <Heading>All Patients</Heading>
+          <Heading>All Patients for {doctorName}</Heading>
           <Table data={rows} cols={cols} />
         </Stack>
       </Flex>
     );
   }
+  return markup
 };
 
 export default PatientsLogPage;
 
-//change to get patients for doctor query?
 const GET_PATIENTS = gql`
   query {
     getPatientsByDoctor {

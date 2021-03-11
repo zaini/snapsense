@@ -1,5 +1,4 @@
 import React from "react";
-import { Box } from "@material-ui/core";
 import {
   DataGrid,
   GridToolbarContainer,
@@ -16,7 +15,6 @@ function CustomToolbar() {
   );
 }
 
-// Component which shows the patients history of uploads
 //TODO: Update the link to the page which displays the details of the upload
 
 export default function Table({ data, cols }) {

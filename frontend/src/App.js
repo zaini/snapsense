@@ -14,7 +14,6 @@ import SubmissionPage from "./pages/Dashboard/SubmissionPage";
 import FeedbackPage from "./pages/Dashboard/FeedbackPage";
 import LogoutPage from "./pages/LogoutPage";
 
-
 import "./App.css";
 import SubmissionViewerPagePatient from "./pages/SubmissionViewerPagePatient.js";
 import SubmissionViewerPageDoctor from "./pages/SubmissionViewerPageDoctor.js";
@@ -31,7 +30,10 @@ const App = () => {
 
         <LoggedOutRoute exact path="/login" component={LoginPage} />
 
-        <PrivateRoute path="/dashboard" accountTypes={["ADMIN", "DOCTOR", "PATIENT"]}>
+        <PrivateRoute
+          path="/dashboard"
+          accountTypes={["ADMIN", "DOCTOR", "PATIENT"]}
+        >
           <DashboardPage changeNavbar={setMainNavbarIsVisible} />
         </PrivateRoute>
 
