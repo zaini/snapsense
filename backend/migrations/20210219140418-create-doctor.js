@@ -21,7 +21,7 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
-      admin_id: {
+      hospital_id: {
         type: Sequelize.INTEGER
       },
       createdAt: {
