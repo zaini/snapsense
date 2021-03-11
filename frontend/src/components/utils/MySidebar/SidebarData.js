@@ -51,7 +51,7 @@ const PatientSideBarData = [
   },
   {
     title: "View Requests",
-    path: "/my/submissions",
+    path: "/my/requests",
     icon: <CalendarIcon />,
   },
   {
