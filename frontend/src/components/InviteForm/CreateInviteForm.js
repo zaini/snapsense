@@ -13,6 +13,7 @@ import {
 
 import Error from "../utils/Error";
 import CopyLink from "../utils/CopyLink";
+import { Link } from "react-router-dom";
 
 const URL_PREFIX =
   process.env.REACT_APP_FRONTEND_URL_PREFIX || "http://localhost:3000";
@@ -79,7 +80,9 @@ const CreateInviteForm = () => {
             type="submit"
             isLoading={formState.isSubmitting}
           >
-            Send Invite
+            <Link to='/my'>
+              Send Invite
+            </Link>
           </Button>
         </Center>
       </form>
