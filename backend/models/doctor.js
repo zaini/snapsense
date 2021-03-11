@@ -71,7 +71,7 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      admin_id: {
+      hospital_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

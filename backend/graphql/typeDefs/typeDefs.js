@@ -117,11 +117,13 @@ module.exports = gql`
   }
 
   type Query {
+    getPatientsByDoctor: [Patient!]
     getHospitals: [Hospital!]
     getAdmins: [Admin!]
     getDoctors: [Doctor!]
     getPatients: [Patient!]
-    getSubmissions: [Submission!]
+    getDoctorsByHospital: [Doctor!]
+    getSubmissions(patient_id: Int): [Submission!]
     getImages: [Image!]
     isLoggedIn: String!
     checkInvitation(invitationToken: String!): String!
