@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Button, Box, Container, Grid, Divider } from "@chakra-ui/react";
+import {
+  Button,
+  Box,
+  Flex,
+  SimpleGrid,
+  Stack,
+} from "@chakra-ui/react";
 import Question from "./Question";
 import {
   ArrowForwardIcon,
@@ -11,42 +17,69 @@ import {
 const questionsObject = [
   {
     questionID: 0,
-    questionText: "What is the capital of France?",
+    questionText: "In the past 7 days, have you felt unwell?",
     answerOptions: [
-      { answerText: "New York" },
-      { answerText: "London" },
-      { answerText: "Paris" },
-      { answerText: "Dublin" },
+      { answerText: "Yes" },
+      { answerText: "No" },
     ],
   },
   {
     questionID: 1,
-    questionText: "Who is CEO of Tesla?",
+    questionText: "In the past 7 days, have you had a fever (temperature higher than 36C)?",
     answerOptions: [
-      { answerText: "Jeff Bezos" },
-      { answerText: "Elon Musk" },
-      { answerText: "Bill Gates" },
-      { answerText: "Tony Stark" },
+      { answerText: "Yes" },
+      { answerText: "No" },
+     
     ],
   },
   {
     questionID: 2,
-    questionText: "The iPhone was created by which company?",
+    questionText: "In the past 7 days, have you seen redness around your ulcer?",
     answerOptions: [
-      { answerText: "Apple" },
-      { answerText: "Intel" },
-      { answerText: "Amazon" },
-      { answerText: "Microsoft" },
+      { answerText: "Yes" },
+      { answerText: "No" },
     ],
   },
   {
     questionID: 3,
-    questionText: "How many Harry Potter books are there?",
+    questionText: "In the past 7 days, have you seen any puss around your ulcer?",
     answerOptions: [
-      { answerText: "1" },
-      { answerText: "4" },
-      { answerText: "6" },
-      { answerText: "7" },
+      { answerText: "Yes" },
+      { answerText: "No" },
+  
+    ],
+  },
+  {
+    questionID: 4,
+    questionText: "In the past 7 days, has your ulcer been hotter to touch than usual?",
+    answerOptions: [
+      { answerText: "Yes" },
+      { answerText: "No" },
+    ],
+  },
+  {
+    questionID: 5,
+    questionText: "In the past 7 days, has one foot been hotter to touch than the other?",
+    answerOptions: [
+      { answerText: "Yes" },
+      { answerText: "No" },
+    ],
+  },
+  {
+    questionID: 6,
+    questionText: "In the past 7 days, have you noticed any unusual smells from the wound?",
+    answerOptions: [
+      { answerText: "Yes" },
+      { answerText: "No" },
+    ],
+  },
+  {
+    questionID: 7,
+    questionText: "Please add any other notes for your clinician (optional):",
+    answerOptions: [
+      { answerText: "Yes" },
+      { answerText: "No" },
+      //TODO: Figure a way to add a text field for this questions instead of Y/N
     ],
   },
 ];
@@ -62,64 +95,57 @@ const Questionnaire = () => {
   };
 
   return (
-    <div className="center ma">
-      <div className="absolute mt2">
-        <Divider />
-        <br />
-        <Container centerContent>
-          <h1>Question Number: {questionNumber + 1}</h1>
-          <br />
-          {questionsObject.map((e, i) => (
-            <Box
-              minW="lg"
-              borderWidth="1px"
-              borderRadius="lg"
-              overflow="hidden"
-              padding="4"
-              display={questionNumber === i ? "block" : "none"}
-            >
-              <Question
-                question={questionsObject[i]}
-                onChangeOption={onChangeOption}
-              />
-            </Box>
-          ))}
-          <br />
-          <Container textAlign="center">
-            <Button
-              leftIcon={<ArrowBackIcon />}
-              colorScheme="teal"
-              variant="solid"
-              onClick={() => setQuestionNumber(questionNumber - 1)}
-              disabled={questionNumber === 0}
-            >
-              Previous
-            </Button>
+    <Flex>
+      <Stack spacing={3} w={"100%"}>
+        <h1>Question Number: {questionNumber + 1}</h1>
+        {questionsObject.map((e, i) => (
+          <Box
+            borderWidth="1px"
+            borderRadius="lg"
+            overflow="hidden"
+            padding="4"
+            display={questionNumber === i ? "block" : "none"}
+          >
+            <Question
+              question={questionsObject[i]}
+              onChangeOption={onChangeOption}
+            />
+          </Box>
+        ))}
 
-            <Button
-              m="5px"
-              rightIcon={<CheckCircleIcon />}
-              colorScheme="teal"
-              variant="solid"
-              disabled={questionNumber !== questionsObject.length - 1}
-              onClick={() => console.log(answers)}
-            >
-              Submit
-            </Button>
+        <SimpleGrid columns={[3]} spacing={2}>
+          <Button
+            leftIcon={<ArrowBackIcon />}
+            colorScheme="teal"
+            variant="solid"
+            onClick={() => setQuestionNumber(questionNumber - 1)}
+            disabled={questionNumber === 0}
+          >
+            Previous
+          </Button>
 
-            <Button
-              rightIcon={<ArrowForwardIcon />}
-              colorScheme="teal"
-              variant="solid"
-              onClick={() => setQuestionNumber(questionNumber + 1)}
-              disabled={questionNumber === questionsObject.length - 1}
-            >
-              Next
-            </Button>
-          </Container>
-        </Container>
-      </div>
-    </div>
+          <Button
+            rightIcon={<CheckCircleIcon />}
+            colorScheme="teal"
+            variant="solid"
+            disabled={questionNumber !== questionsObject.length - 1}
+            onClick={() => console.log(answers)}
+          >
+            Submit
+          </Button>
+
+          <Button
+            rightIcon={<ArrowForwardIcon />}
+            colorScheme="teal"
+            variant="solid"
+            onClick={() => setQuestionNumber(questionNumber + 1)}
+            disabled={questionNumber === questionsObject.length - 1}
+          >
+            Next
+          </Button>
+        </SimpleGrid>
+      </Stack>
+    </Flex>
   );
 };
 

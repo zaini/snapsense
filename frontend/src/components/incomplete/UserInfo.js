@@ -1,24 +1,34 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import { Container, List, ListItem, ListItemText, Grid, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
-import PasswordForm from "../components/PasswordForm.js";
-import EmailForm from "../components/EmailForm.js";
+import { Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import {
+  Container,
+  List,
+  ListItem,
+  ListItemText,
+  Grid,
+  Paper,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core";
+import PasswordForm from "./PasswordForm.js";
+import EmailForm from "./EmailForm.js";
 
 const UserInfo = (props) => {
   const [open, setOpen] = useState(false);
-  const [pwVisible, setPasswordFormVisible] = useState(false)
-  const [emailVisible, setEmailFormVisible] = useState(false)
+  const [pwVisible, setPasswordFormVisible] = useState(false);
+  const [emailVisible, setEmailFormVisible] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
   };
 
   return (
-
     <Container className="UserInfo">
       <List>
-
         <h1>Your information</h1>
 
         <Paper>
@@ -38,10 +48,7 @@ const UserInfo = (props) => {
                   />
                 </ListItem>
                 <ListItem>
-                  <ListItemText
-                    primary="Email"
-                    secondary={props.email}
-                  />
+                  <ListItemText primary="Email" secondary={props.email} />
                 </ListItem>
               </List>
             </Grid>
@@ -49,28 +56,38 @@ const UserInfo = (props) => {
         </Paper>
 
         <ListItem>
-          <Grid container direction="row" alignContent='space-around' alignItems="center">
+          <Grid
+            container
+            direction="row"
+            alignContent="space-around"
+            alignItems="center"
+          >
             <Grid item>
-              <Button onClick={() => {
-                if (pwVisible === 'true') setPasswordFormVisible('false')
-                else setPasswordFormVisible('true')
-              }} color="primary">
+              <Button
+                onClick={() => {
+                  if (pwVisible === "true") setPasswordFormVisible("false");
+                  else setPasswordFormVisible("true");
+                }}
+                color="primary"
+              >
                 Change password
-        </Button>
+              </Button>
             </Grid>
             <Grid item>
-              <Button onClick={() => {
-                if (emailVisible === 'true') setEmailFormVisible('false')
-                else setEmailFormVisible('true')
-              }} color="primary">
+              <Button
+                onClick={() => {
+                  if (emailVisible === "true") setEmailFormVisible("false");
+                  else setEmailFormVisible("true");
+                }}
+                color="primary"
+              >
                 Change email
-        </Button>
+              </Button>
             </Grid>
           </Grid>
         </ListItem>
 
-
-        {pwVisible === 'true' && (
+        {pwVisible === "true" && (
           <Grid item xs={12}>
             <h2>Change password</h2>
             <Paper>
@@ -79,7 +96,7 @@ const UserInfo = (props) => {
           </Grid>
         )}
 
-        {emailVisible === 'true' && (
+        {emailVisible === "true" && (
           <Grid item xs={12}>
             <h2>Change email</h2>
             <Paper>
@@ -89,36 +106,54 @@ const UserInfo = (props) => {
         )}
 
         <ListItem>
-          <Button onClick={() => {setOpen(true)}} color="primary">
+          <Button
+            onClick={() => {
+              setOpen(true);
+            }}
+            color="primary"
+          >
             Delete account
-      </Button>
+          </Button>
           <Dialog
             open={open}
             onClose={handleClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
-            <DialogTitle id="alert-dialog-title">{"Are you sure you want to delete your account?"}</DialogTitle>
+            <DialogTitle id="alert-dialog-title">
+              {"Are you sure you want to delete your account?"}
+            </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
                 If you delete something will happen, maybe disadvantage you...
-          </DialogContentText>
+              </DialogContentText>
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose} color="primary">
                 Cancel
-          </Button>
-              <Button onClick={handleClose, () => { alert('A request to delete your account has been sent to the admins') }} component={Link} to="/login" color="primary" autoFocus>
+              </Button>
+              <Button
+                onClick={
+                  (handleClose,
+                  () => {
+                    alert(
+                      "A request to delete your account has been sent to the admins"
+                    );
+                  })
+                }
+                component={Link}
+                to="/login"
+                color="primary"
+                autoFocus
+              >
                 Continue
-          </Button>
+              </Button>
             </DialogActions>
           </Dialog>
         </ListItem>
-
       </List>
-    </Container >
-
+    </Container>
   );
-}
+};
 
 export default UserInfo;

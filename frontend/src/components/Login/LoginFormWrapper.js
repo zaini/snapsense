@@ -3,9 +3,8 @@ import { Grid, Container } from "@chakra-ui/react";
 import LoginForm from "./LoginForm";
 import AccountTypeSelector from "./AccountTypeSelector";
 
-const LoginFormWrapper = ({ redirect }) => {
+const LoginFormWrapper = () => {
   const [accountType, setAccountType] = useState("PATIENT");
-
   const onAccountTypeChange = (e) => {
     setAccountType(e.target.value);
   };
@@ -32,7 +31,7 @@ const LoginFormWrapper = ({ redirect }) => {
 
         <br />
 
-        <LoginForm accountType={accountType} redirect={redirect} />
+        <LoginForm accountType={accountType} />
       </Grid>
     </Container>
   );

@@ -1,4 +1,3 @@
-import React from "react";
 import InvitePatientExists from "./InviteExistingUser";
 import InviteDoctorExists from "./InviteDoctorExists";
 import InvitePatientNew from "./InviteNewUser";
