@@ -18,24 +18,36 @@ const PatientsPersonalLogPage = () => {
     markup = <Spinner size="xl" />;
   } else if (error) {
     markup = (
-    <Alert status="error">
-      <AlertIcon />
-      {error.graphQLErrors[0].message}
-    </Alert>
+      <Alert status="error">
+        <AlertIcon />
+        {error.graphQLErrors[0].message}
+      </Alert>
     );
   } else {
     const rows = data.getSubmissionsByPatient;
 
     const cols = [
       { field: "id", hide: true },
-      { field: "fulfilled", headerName: "Date submitted", width: 150, type: 'date', sortable: true},
+      {
+        field: "fulfilled",
+        headerName: "Date submitted",
+        width: 150,
+        type: "date",
+        sortable: true,
+      },
       //{ field: "type", headerName: "Type", width: 90}, WHERE IS TYPE IN DB?
-      { field: "Action",
+      {
+        field: "Action",
         headerName: "Action",
         width: 100,
         renderCell: function () {
-        return (<Button value={rows} variant="contained" color="secondary"><Link to ='/' >View</Link></Button>);
-      }}
+          return (
+            <Button value={rows} variant="contained" color="secondary">
+              <Link to="/">View</Link>
+            </Button>
+          );
+        },
+      },
     ];
     markup = (
       <Flex w={"100%"}>
@@ -46,7 +58,7 @@ const PatientsPersonalLogPage = () => {
       </Flex>
     );
   }
-  return markup 
+  return markup;
 };
 
 export default PatientsPersonalLogPage;
@@ -56,17 +68,15 @@ const GET_SUBMISSIONS = gql`
     getSubmissions {
       id
       fulfilled
-      //type
     }
   }
 `;
 
 const GET_SUBMISSIONS_BY_PATIENT = gql`
-query GetSubmissions($patient_id: String!) {
-  getSubmissions(patient_id: $patient_id){
-    id
-    fulfilled
+  query GetSubmissions($patient_id: String!) {
+    getSubmissions(patient_id: $patient_id) {
+      id
+      fulfilled
+    }
   }
-}
 `;
-

@@ -26,11 +26,11 @@ const DashboardPage = ({ changeNavbar }) => {
           component={RequestSubmissionPage}
         /> */}
         {/* This one is for patients */}
-        <Route
+        {/* <Route
           exact
           path="/dashboard/submissions"
           component={PatientsPersonalLogPage}
-        />
+        /> */}
         <Route
           exact
           path="/dashboard/submissions/new"

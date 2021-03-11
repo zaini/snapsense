@@ -12,8 +12,8 @@ module.exports = {
       }
     },
 
-    //query to get all doctors from admin's hospital 
-    getDoctorsByHospital: async (_, __, context) => { 
+    //query to get all doctors from admin's hospital
+    getDoctorsByHospital: async (_, __, context) => {
       const user = isAuth(context);
 
       if (!(user.accountType === "ADMIN")) {
@@ -22,15 +22,17 @@ module.exports = {
         );
       }
 
-      const {hospital_id} = user;
+      const { hospital_id } = user;
 
       try {
-        const doctors = await Doctor.findAll({where: {hospital_id: hospital_id}});
+        const doctors = await Doctor.findAll({
+          where: { hospital_id: hospital_id },
+        });
         return doctors;
       } catch (error) {
         throw new Error(error);
       }
-    }
+    },
   },
   Mutation: {},
 };

@@ -5,24 +5,21 @@ import ImageSubmission from "../components/ImageSubmission.js";
 const SubmissionViewerPagePatient = () => {
   return (
     <div>
-    
-    <Container>
-    <br/>
-    <h1>Viewing my submission</h1>
-    <br/>
-    <hr/>
-    <h2>Photos</h2>
-    <br/>
-    <ImageSubmission />
-    <br />
-    <hr/>
-    <h2>Questionnaire</h2>
-    <br/>
+      <Container>
+        <br />
+        <h1>Viewing my submission</h1>
+        <br />
+        <hr />
+        <h2>Photos</h2>
+        <br />
+        <ImageSubmission />
+        <br />
+        <hr />
+        <h2>Questionnaire</h2>
+        <br />
 
-      
-      {/* <QuestionnaireSubmission />
+        {/* <QuestionnaireSubmission />
       <br />  */}
-      
       </Container>
     </div>
   );

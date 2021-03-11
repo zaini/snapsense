@@ -4,7 +4,7 @@ import { SimpleGrid } from "@chakra-ui/react";
 
 const SubmissionPage = () => {
   return (
-    <SimpleGrid columns={[1, 1, 1,2]} spacing={2} w={"100%"}>
+    <SimpleGrid columns={[1, 1, 1, 2]} spacing={2} w={"100%"}>
       <ImageUpload />
       <Questionnaire />
     </SimpleGrid>

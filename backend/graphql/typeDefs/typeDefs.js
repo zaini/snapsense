@@ -112,7 +112,7 @@ module.exports = gql`
     ): AuthResponse
 
     inviteUser(email: String!): String!
-    
+
     addPatientToDoctor(patient_email: String!, doctor_email: String!): Boolean!
   }
 

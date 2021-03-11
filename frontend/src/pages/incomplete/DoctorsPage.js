@@ -12,7 +12,7 @@ import { Flex, Heading, Stack } from "@chakra-ui/react";
 const AllDoctorsPage = () => {
   const [hospitalName] = useState("Guy's Hospital");
 
-  const { loading, data, error } = useQuery(GET_DOCTORS); 
+  const { loading, data, error } = useQuery(GET_DOCTORS);
 
   let markup;
 
@@ -32,19 +32,18 @@ const AllDoctorsPage = () => {
       { field: "id", hide: true },
       { field: "fname", headerName: "First name", width: 200 },
       { field: "lname", headerName: "Last Name", width: 200 },
-      { field: "email", headerName: "email", type: 'email',width: 200 },
-
+      { field: "email", headerName: "email", type: "email", width: 200 },
     ];
-    markup = ( 
-    <Flex w={"100%"}>
-        <Stack spacing={3} w={"100%"}> 
+    markup = (
+      <Flex w={"100%"}>
+        <Stack spacing={3} w={"100%"}>
           <Heading>Doctor's for {hospitalName} </Heading>
           <Table data={rows} cols={cols} />
         </Stack>
       </Flex>
     );
   }
-  return markup
+  return markup;
 };
 
 export default AllDoctorsPage;

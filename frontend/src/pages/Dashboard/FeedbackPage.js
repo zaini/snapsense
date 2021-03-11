@@ -1,4 +1,4 @@
-import Feedback from '../../components/Feedback/Feedback';
+import Feedback from "../../components/Feedback/Feedback";
 import { SimpleGrid } from "@chakra-ui/react";
 
 const FeedbackPage = () => {

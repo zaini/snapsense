@@ -2,7 +2,7 @@ module.exports = {
   Validator: () => {
     class validator {
       static isEmpty(value) {
-          return String(value) === "";
+        return String(value) === "";
       }
       static isShort(value, minLength) {
         return String(value).length < minLength;

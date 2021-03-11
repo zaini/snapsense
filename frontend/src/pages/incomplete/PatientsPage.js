@@ -11,7 +11,7 @@ import { Flex, Heading, Stack } from "@chakra-ui/react";
 const PatientsLogPage = () => {
   //add pull of thr doctor's name
   const [doctorName] = useState("DoctorName");
-  
+
   let markup;
 
   const { loading, data, error } = useQuery(GET_PATIENTS);
@@ -19,10 +19,10 @@ const PatientsLogPage = () => {
     markup = <Spinner size="xl" />;
   } else if (error) {
     markup = (
-    <Alert status="error">
-      <AlertIcon />
-      {error.graphQLErrors[0].message}
-    </Alert>
+      <Alert status="error">
+        <AlertIcon />
+        {error.graphQLErrors[0].message}
+      </Alert>
     );
   } else {
     const rows = data.getPatientsForDoctor;
@@ -36,16 +36,23 @@ const PatientsLogPage = () => {
         headerName: "Action",
         width: 200,
         renderCell: function () {
-          return ( //ADD CORRECT ID
-            <Button value={rows} variant="contained" color="secondary">
-              <Link to="/profile/">Account</Link>
-            </Button>,
-            <Button value={rows} variant="contained" color="secondary">
-              <Link to="/submissions/">Submissions</Link>
-            </Button>,
-            <Button value={rows} variant="contained" color="secondary">
-              <Link to="/">Request</Link>
-            </Button>
+          return (
+            //ADD CORRECT ID
+            (
+              <Button value={rows} variant="contained" color="secondary">
+                <Link to="/profile/">Account</Link>
+              </Button>
+            ),
+            (
+              <Button value={rows} variant="contained" color="secondary">
+                <Link to="/submissions/">Submissions</Link>
+              </Button>
+            ),
+            (
+              <Button value={rows} variant="contained" color="secondary">
+                <Link to="/">Request</Link>
+              </Button>
+            )
           );
         },
       },
@@ -60,7 +67,7 @@ const PatientsLogPage = () => {
       </Flex>
     );
   }
-  return markup
+  return markup;
 };
 
 export default PatientsLogPage;

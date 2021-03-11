@@ -15,9 +15,6 @@ import FeedbackPage from "./pages/Dashboard/FeedbackPage";
 import LogoutPage from "./pages/LogoutPage";
 
 import "./App.css";
-import SubmissionViewerPagePatient from "./pages/SubmissionViewerPagePatient.js";
-import SubmissionViewerPageDoctor from "./pages/SubmissionViewerPageDoctor.js";
-
 
 const App = () => {
   const [mainNavbarIsVisible, setMainNavbarIsVisible] = useState(true);
