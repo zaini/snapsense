@@ -6,12 +6,13 @@ import {
   GridFilterToolbarButton,
 } from "@material-ui/data-grid";
 
-function CustomToolbar() {
+// Component which shows the patients history of uploads
+// TODO: Update the link to the page which displays the details of the upload
+const Table = ({ data, cols }) => {
   return (
-    <GridToolbarContainer>
-      <GridColumnsToolbarButton />
-      <GridFilterToolbarButton />
-    </GridToolbarContainer>
+    <Box height="73vh" width="100%">
+      <DataGrid columns={cols} rows={data} autoPageSize />
+    </Box>
   );
 }
 

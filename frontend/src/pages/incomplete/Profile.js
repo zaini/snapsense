@@ -1,5 +1,6 @@
 import React from "react";
 import UserInfo from "../../components/incomplete/UserInfo";
+import PatientsPersonalLogPage from "./PatientsPersonalLogPage";
 
 const Profile = () => {
   return (
@@ -10,6 +11,7 @@ const Profile = () => {
         email="aaa@email.com"
         password="password"
       />
+      <PatientsPersonalLogPage />
     </>
   );
 };
