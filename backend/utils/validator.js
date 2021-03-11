@@ -11,7 +11,7 @@ module.exports = {
       static isLong(value, maxLength) {
         return String(value).length > maxLength;
       }
-
+      
       static isName(name) {
         /*
             Check if:
