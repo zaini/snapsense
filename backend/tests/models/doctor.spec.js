@@ -1,4 +1,4 @@
-const { Hospital, Admin, Doctor } = require("../../models/index");
+const { Hospital, Doctor } = require("../../models/index");
 
 describe("Doctor Model Test", () => {
   it("should save a valid doctor", async (done) => {
@@ -7,25 +7,17 @@ describe("Doctor Model Test", () => {
       contact_email: "test_hospital@mail.com",
     }).save();
 
-    const admin = await new Admin({
-      fname: "Alex",
-      lname: "Alexovich",
-      email: "alex.alexovich@mail.com",
-      password: "AdminPass123",
-      hospital_id: hospital.getDataValue("id"),
-    }).save();
-
     const doctorSave = await new Doctor({
       fname: "Ivan",
       lname: "Ivanov",
-      email: "ivan.ivanov@nhs.co.uk",
+      email: "ivan.ivanov@nhs.net",
       password: "Abradabra123",
-      admin_id: admin.getDataValue("id"),
+      hospital_id: hospital.getDataValue("id"),
     }).save();
 
     const doctor = await Doctor.findOne({
       where: {
-        email: "ivan.ivanov@nhs.co.uk",
+        email: "ivan.ivanov@nhs.net",
       },
     });
 
@@ -45,21 +37,13 @@ describe("Doctor Model Test", () => {
       contact_email: "test_hospital@mail.com",
     }).save();
 
-    const admin = await new Admin({
-      fname: "Alex",
-      lname: "Alexovich",
-      email: "alex.alexovich@mail.com",
-      password: "AdminPassword123",
-      hospital_id: hospital.getDataValue("id"),
-    }).save();
-
     await expect(
       Doctor.create({
         fname: null,
         lname: "Ivanov",
-        email: "ivan.ivanov@nhs.co.uk",
+        email: "ivan.ivanov@nhs.net",
         password: "Abradabra123",
-        admin_id: admin.getDataValue("id"),
+        hospital_id: hospital.getDataValue("id"),
       })
     ).rejects.toThrow();
     done();
@@ -71,21 +55,13 @@ describe("Doctor Model Test", () => {
       contact_email: "test_hospital@mail.com",
     }).save();
 
-    const admin = await new Admin({
-      fname: "Alex",
-      lname: "Alexovich",
-      email: "alex.alexovich@mail.com",
-      password: "AdminPassword123",
-      hospital_id: hospital.getDataValue("id"),
-    }).save();
-
     await expect(
       Doctor.create({
         fname: "Ivan",
         lname: null,
-        email: "ivan.ivanov@nhs.co.uk",
+        email: "ivan.ivanov@nhs.net",
         password: "Abradabra123",
-        admin_id: admin.getDataValue("id"),
+        hospital_id: hospital.getDataValue("id"),
       })
     ).rejects.toThrow();
     done();
@@ -97,21 +73,13 @@ describe("Doctor Model Test", () => {
       contact_email: "test_hospital@mail.com",
     }).save();
 
-    const admin = await new Admin({
-      fname: "Alex",
-      lname: "Alexovich",
-      email: "alex.alexovich@mail.com",
-      password: "AdminPassword123",
-      hospital_id: hospital.getDataValue("id"),
-    }).save();
-
     await expect(
       Doctor.create({
         fname: "",
         lname: "Ivanov",
-        email: "ivan.ivanov@nhs.co.uk",
+        email: "ivan.ivanov@nhs.net",
         password: "Abradabra123",
-        admin_id: admin.getDataValue("id"),
+        hospital_id: hospital.getDataValue("id"),
       })
     ).rejects.toThrow();
     done();
@@ -123,21 +91,13 @@ describe("Doctor Model Test", () => {
       contact_email: "test_hospital@mail.com",
     }).save();
 
-    const admin = await new Admin({
-      fname: "Alex",
-      lname: "Alexovich",
-      email: "alex.alexovich@mail.com",
-      password: "AdminPassword123",
-      hospital_id: hospital.getDataValue("id"),
-    }).save();
-
     await expect(
       Doctor.create({
         fname: "Ivan",
         lname: "",
-        email: "ivan.ivanov@nhs.co.uk",
+        email: "ivan.ivanov@nhs.net",
         password: "Abradabra123",
-        admin_id: admin.getDataValue("id"),
+        hospital_id: hospital.getDataValue("id"),
       })
     ).rejects.toThrow();
     done();
@@ -149,21 +109,13 @@ describe("Doctor Model Test", () => {
       contact_email: "test_hospital@mail.com",
     }).save();
 
-    const admin = await new Admin({
-      fname: "Alex",
-      lname: "Alexovich",
-      email: "alex.alexovich@mail.com",
-      password: "AdminPassword123",
-      hospital_id: hospital.getDataValue("id"),
-    }).save();
-
     await expect(
       Doctor.create({
         fname: "Ivan",
         lname: "Ivanov",
         email: "hasgjdhags",
         password: "Abradabra123",
-        admin_id: admin.getDataValue("id"),
+        hospital_id: hospital.getDataValue("id"),
       })
     ).rejects.toThrow();
     done();
@@ -175,21 +127,13 @@ describe("Doctor Model Test", () => {
       contact_email: "test_hospital@mail.com",
     }).save();
 
-    const admin = await new Admin({
-      fname: "Alex",
-      lname: "Alexovich",
-      email: "alex.alexovich@mail.com",
-      password: "AdminPassword123",
-      hospital_id: hospital.getDataValue("id"),
-    }).save();
-
     await expect(
       Doctor.create({
         fname: "Ivan",
         lname: "Ivanov",
         email: "ivan.ivanov@gmail.com",
         password: "Abradabra123",
-        admin_id: admin.getDataValue("id"),
+        hospital_id: hospital.getDataValue("id"),
       })
     ).rejects.toThrow();
     done();
@@ -201,21 +145,13 @@ describe("Doctor Model Test", () => {
       contact_email: "test_hospital@mail.com",
     }).save();
 
-    const admin = await new Admin({
-      fname: "Alex",
-      lname: "Alexovich",
-      email: "alex.alexovich@mail.com",
-      password: "AdminPassword123",
-      hospital_id: hospital.getDataValue("id"),
-    }).save();
-
     await expect(
       Doctor.create({
         fname: "Ivan",
         lname: "Ivanov",
         email: null,
         password: "Abradabra123",
-        admin_id: admin.getDataValue("id"),
+        hospital_id: hospital.getDataValue("id"),
       })
     ).rejects.toThrow();
     done();
@@ -227,21 +163,13 @@ describe("Doctor Model Test", () => {
       contact_email: "test_hospital@mail.com",
     }).save();
 
-    const admin = await new Admin({
-      fname: "Alex",
-      lname: "Alexovich",
-      email: "alex.alexovich@mail.com",
-      password: "AdminPassword123",
-      hospital_id: hospital.getDataValue("id"),
-    }).save();
-
     await expect(
       Doctor.create({
         fname: "Ivan",
         lname: "Ivanov",
         email: "",
         password: "Abradabra123",
-        admin_id: admin.getDataValue("id"),
+        hospital_id: hospital.getDataValue("id"),
       })
     ).rejects.toThrow();
     done();
@@ -253,29 +181,21 @@ describe("Doctor Model Test", () => {
       contact_email: "test_hospital@mail.com",
     }).save();
 
-    const admin = await new Admin({
-      fname: "Alex",
-      lname: "Alexovich",
-      email: "alex.alexovich@mail.com",
-      password: "AdminPassword123",
-      hospital_id: hospital.getDataValue("id"),
-    }).save();
-
     const doctor = await new Doctor({
       fname: "Ivan",
       lname: "Ivanov",
-      email: "ivan.ivanov@nhs.co.uk",
+      email: "ivan.ivanov@nhs.net",
       password: "Abradabra123",
-      admin_id: admin.getDataValue("id"),
+      hospital_id: hospital.getDataValue("id"),
     }).save();
 
     await expect(
       Doctor.create({
         fname: "Ivan",
         lname: "Ivanov",
-        email: "ivan.ivanov@nhs.co.uk",
+        email: "ivan.ivanov@nhs.net",
         password: "Abradabra123",
-        admin_id: admin.getDataValue("id"),
+        hospital_id: hospital.getDataValue("id"),
       })
     ).rejects.toThrow();
     done();
@@ -287,21 +207,13 @@ describe("Doctor Model Test", () => {
       contact_email: "test_hospital@mail.com",
     }).save();
 
-    const admin = await new Admin({
-      fname: "Alex",
-      lname: "Alexovich",
-      email: "alex.alexovich@mail.com",
-      password: "AdminPassword123",
-      hospital_id: hospital.getDataValue("id"),
-    }).save();
-
     await expect(
       Doctor.create({
         fname: "Ivan",
         lname: "Ivanov",
-        email: "ivan.ivanov@nhs.co.uk",
+        email: "ivan.ivanov@nhs.net",
         password: null,
-        admin_id: admin.getDataValue("id"),
+        hospital_id: hospital.getDataValue("id"),
       })
     ).rejects.toThrow();
     done();
@@ -313,21 +225,13 @@ describe("Doctor Model Test", () => {
       contact_email: "test_hospital@mail.com",
     }).save();
 
-    const admin = await new Admin({
-      fname: "Alex",
-      lname: "Alexovich",
-      email: "alex.alexovich@mail.com",
-      password: "AdminPassword123",
-      hospital_id: hospital.getDataValue("id"),
-    }).save();
-
     await expect(
       Doctor.create({
         fname: "Ivan",
         lname: "Ivanov",
-        email: "ivan.ivanov@nhs.co.uk",
+        email: "ivan.ivanov@nhs.net",
         password: "",
-        admin_id: admin.getDataValue("id"),
+        hospital_id: hospital.getDataValue("id"),
       })
     ).rejects.toThrow();
     done();
@@ -339,21 +243,13 @@ describe("Doctor Model Test", () => {
       contact_email: "test_hospital@mail.com",
     }).save();
 
-    const admin = await new Admin({
-      fname: "Alex",
-      lname: "Alexovich",
-      email: "alex.alexovich@mail.com",
-      password: "AdminPassword123",
-      hospital_id: hospital.getDataValue("id"),
-    }).save();
-
     await expect(
       Doctor.create({
         fname: "Ivan",
         lname: "Ivanov",
-        email: "ivan.ivanov@nhs.co.uk",
+        email: "ivan.ivanov@nhs.net",
         password: "lowecaseonlypassword",
-        admin_id: admin.getDataValue("id"),
+        hospital_id: hospital.getDataValue("id"),
       })
     ).rejects.toThrow();
     done();
@@ -365,21 +261,13 @@ describe("Doctor Model Test", () => {
       contact_email: "test_hospital@mail.com",
     }).save();
 
-    const admin = await new Admin({
-      fname: "Alex",
-      lname: "Alexovich",
-      email: "alex.alexovich@mail.com",
-      password: "AdminPassword123",
-      hospital_id: hospital.getDataValue("id"),
-    }).save();
-
     await expect(
       Doctor.create({
         fname: "Ivan",
         lname: "Ivanov",
-        email: "ivan.ivanov@nhs.co.uk",
+        email: "ivan.ivanov@nhs.net",
         password: "Shrt1",
-        admin_id: admin.getDataValue("id"),
+        hospital_id: hospital.getDataValue("id"),
       })
     ).rejects.toThrow();
     done();
@@ -391,21 +279,13 @@ describe("Doctor Model Test", () => {
       contact_email: "test_hospital@mail.com",
     }).save();
 
-    const admin = await new Admin({
-      fname: "Alex",
-      lname: "Alexovich",
-      email: "alex.alexovich@mail.com",
-      password: "AdminPassword123",
-      hospital_id: hospital.getDataValue("id"),
-    }).save();
-
     await expect(
       Doctor.create({
         fname: "Ivan",
         lname: "Ivanov",
-        email: "ivan.ivanov@nhs.co.uk",
+        email: "ivan.ivanov@nhs.net",
         password: "Iamtryingtomakeaverylongpasswordwithdigits123456",
-        admin_id: admin.getDataValue("id"),
+        hospital_id: hospital.getDataValue("id"),
       })
     ).rejects.toThrow();
     done();
