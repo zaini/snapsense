@@ -1,7 +1,7 @@
 const { Hospital } = require("../../models/index");
 
 describe("Hospital Model Test", () => {
-  it("should save a valid doctor", async (done) => {
+  it("should save a valid hospital", async (done) => {
     const hospitalSave = await new Hospital({
       name: "Test Hospital",
       contact_email: "test_hospital@mail.com",
