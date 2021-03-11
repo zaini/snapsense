@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import PrivateRoute from "../../utils/PrivateRoute";
 
 import MySidebar from "../../components/MySidebar/MySidebar";
-import PatientsPage from "../incomplete/PatientsPage";
+import PatientsPage from "./PatientsPage";
 import DoctorsPage from "../incomplete/DoctorsPage";
 import MyHomePage from "./MyHomePage";
 import NewSubmissionPage from "./NewSubmissionPage";

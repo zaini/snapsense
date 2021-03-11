@@ -1,6 +1,6 @@
 import React from "react";
 import UserInfo from "../../components/incomplete/UserInfo";
-import PatientsPersonalLogPage from "./PatientsPersonalLogPage";
+import PatientsPersonalLogPage from "../incomplete/PatientsPersonalLogPage";
 
 // Shows the information about a specific patient and also their submissions
 const PatientProfilePage = () => {
