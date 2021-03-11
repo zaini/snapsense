@@ -24,7 +24,7 @@ const SubmissionsPage = () => {
       </Alert>
     );
   } else {
-    const rows = data.getSubmissionsByPatient;
+    const rows = data.getSubmissionsByPatient || [];
 
     const cols = [
       { field: "id", hide: true },
