@@ -22,7 +22,7 @@ import { Link } from "react-router-dom";
 const drawerWidth = 250;
 
 // When resizing the main content can go behind the sidebar. Someone should fix that.
-const DashboardSidebar = (props) => {
+const MySidebar = (props) => {
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -175,4 +175,4 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default DashboardSidebar;
+export default MySidebar;

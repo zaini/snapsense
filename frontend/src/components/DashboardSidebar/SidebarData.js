@@ -10,12 +10,12 @@ import {
 const AdminSideBarData = [
   {
     title: "Home",
-    path: "/dashboard",
+    path: "/my",
     icon: <StarIcon />,
   },
   {
     title: "View Doctors",
-    path: "/dashboard/doctors",
+    path: "/my/doctors",
     icon: <CloseIcon />,
   },
 ];
@@ -23,22 +23,22 @@ const AdminSideBarData = [
 const DoctorSideBarData = [
   {
     title: "Home",
-    path: "/dashboard",
+    path: "/my",
     icon: <StarIcon />,
   },
   {
     title: "View Submissions",
-    path: "/dashboard/submissions",
+    path: "/my/submissions",
     icon: <DownloadIcon />,
   },
   {
     title: "View Patients",
-    path: "/dashboard/patients",
+    path: "/my/patients",
     icon: <CloseIcon />,
   },
   {
     title: "Request Patient Submission",
-    path: "/dashboard/request",
+    path: "/my/request",
     icon: <CalendarIcon />,
   },
 ];
@@ -46,27 +46,27 @@ const DoctorSideBarData = [
 const PatientSideBarData = [
   {
     title: "Home",
-    path: "/dashboard",
+    path: "/my",
     icon: <StarIcon />,
   },
   {
     title: "View Requests",
-    path: "/dashboard/submissions",
+    path: "/my/submissions",
     icon: <CalendarIcon />,
   },
   {
     title: "Submissions",
-    path: "/dashboard/submissions",
+    path: "/my/submissions",
     icon: <CloseIcon />,
   },
   {
     title: "Submit",
-    path: "/dashboard/submit",
+    path: "/my/submit",
     icon: <DownloadIcon />,
   },
   {
     title: "Profile",
-    path: "/dashboard/profile",
+    path: "/my/profile",
     icon: <CloseIcon />,
   },
 ];

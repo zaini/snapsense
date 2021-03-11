@@ -1,12 +1,12 @@
 import { Container } from "@chakra-ui/layout";
 import { Heading } from "@chakra-ui/react";
 
-const DashboardHomePage = () => {
+const MyHomePage = () => {
   return (
     <Container>
-      <Heading>Dashboard Page</Heading>
+      <Heading>My Page</Heading>
     </Container>
   );
 };
 
-export default DashboardHomePage;
+export default MyHomePage;

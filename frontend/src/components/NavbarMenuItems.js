@@ -12,7 +12,7 @@ const NavbarMenuItems = () => {
       case "ADMIN":
         return (
           <>
-            <MenuItem to="/dashboard">Dashboard</MenuItem>
+            <MenuItem to="/my">My</MenuItem>
             <MenuItem to="/contact">Contact Us</MenuItem>
             <MenuItem to="/logout" isLast>
               <Button
@@ -37,7 +37,7 @@ const NavbarMenuItems = () => {
       case "DOCTOR":
         return (
           <>
-            <MenuItem to="/dashboard">Dashboard</MenuItem>
+            <MenuItem to="/my">My</MenuItem>
             <MenuItem to="/contact">Contact Us</MenuItem>
             <MenuItem to="/logout" isLast>
               <Button
@@ -62,7 +62,7 @@ const NavbarMenuItems = () => {
       case "PATIENT":
         return (
           <>
-            <MenuItem to="/dashboard">Dashboard</MenuItem>
+            <MenuItem to="/my">My</MenuItem>
             <MenuItem to="/contact">Contact Us</MenuItem>
             <MenuItem to="/logout" isLast>
               <Button
