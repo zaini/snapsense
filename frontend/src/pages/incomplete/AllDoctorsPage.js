@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Table from "../../components/incomplete/Table";
 import { useQuery } from "@apollo/react-hooks";
+import { Link } from "react-router-dom";
 import gql from "graphql-tag";
-import { Container, Alert, AlertIcon, Spinner } from "@chakra-ui/react";
+import { Alert, AlertIcon, Spinner } from "@chakra-ui/react";
 import { Flex, Heading, Stack } from "@chakra-ui/react";
 
 // Page for showing the logs of all the doctors from the hospital the admin is from
@@ -45,9 +46,9 @@ const AllDoctorsPage = () => {
       },
     ];
     return ( //add name of the hospital into heading
-      <Flex w={"100%"}>
+    <Flex w={"100%"}>
         <Stack spacing={3} w={"100%"}> 
-          <Heading>Doctor's for Hospital </Heading>
+          <Heading>Doctor's for {hospitalName} </Heading>
           <Table data={rows} cols={cols} />
         </Stack>
       </Flex>
