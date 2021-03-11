@@ -35,7 +35,7 @@ const App = () => {
         </PrivateRoute>
 
         <Route exact path="/invite/:token_id" component={InvitePage} />
-        <Route exact path="/invite" component={CreateInvitePage} />
+        <Route exact path="/invite/new" component={CreateInvitePage} />
 
         <Route exact path="/submission" component={SubmissionPage} />
         <Route exact path="/feedback" component={FeedbackPage} />
