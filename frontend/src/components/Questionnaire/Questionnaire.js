@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Button, Box, Container, Grid, Divider } from "@chakra-ui/react";
+import {
+  Button,
+  Box,
+  Flex,
+  SimpleGrid,
+  Stack,
+} from "@chakra-ui/react";
 import Question from "./Question";
 import {
   ArrowForwardIcon,
@@ -62,64 +68,57 @@ const Questionnaire = () => {
   };
 
   return (
-    <div className="center ma">
-      <div className="absolute mt2">
-        <Divider />
-        <br />
-        <Container centerContent>
-          <h1>Question Number: {questionNumber + 1}</h1>
-          <br />
-          {questionsObject.map((e, i) => (
-            <Box
-              minW="lg"
-              borderWidth="1px"
-              borderRadius="lg"
-              overflow="hidden"
-              padding="4"
-              display={questionNumber === i ? "block" : "none"}
-            >
-              <Question
-                question={questionsObject[i]}
-                onChangeOption={onChangeOption}
-              />
-            </Box>
-          ))}
-          <br />
-          <Container textAlign="center">
-            <Button
-              leftIcon={<ArrowBackIcon />}
-              colorScheme="teal"
-              variant="solid"
-              onClick={() => setQuestionNumber(questionNumber - 1)}
-              disabled={questionNumber === 0}
-            >
-              Previous
-            </Button>
+    <Flex>
+      <Stack spacing={3} w={"100%"}>
+        <h1>Question Number: {questionNumber + 1}</h1>
+        {questionsObject.map((e, i) => (
+          <Box
+            borderWidth="1px"
+            borderRadius="lg"
+            overflow="hidden"
+            padding="4"
+            display={questionNumber === i ? "block" : "none"}
+          >
+            <Question
+              question={questionsObject[i]}
+              onChangeOption={onChangeOption}
+            />
+          </Box>
+        ))}
 
-            <Button
-              m="5px"
-              rightIcon={<CheckCircleIcon />}
-              colorScheme="teal"
-              variant="solid"
-              disabled={questionNumber !== questionsObject.length - 1}
-              onClick={() => console.log(answers)}
-            >
-              Submit
-            </Button>
+        <SimpleGrid columns={[3]} spacing={2}>
+          <Button
+            leftIcon={<ArrowBackIcon />}
+            colorScheme="teal"
+            variant="solid"
+            onClick={() => setQuestionNumber(questionNumber - 1)}
+            disabled={questionNumber === 0}
+          >
+            Previous
+          </Button>
 
-            <Button
-              rightIcon={<ArrowForwardIcon />}
-              colorScheme="teal"
-              variant="solid"
-              onClick={() => setQuestionNumber(questionNumber + 1)}
-              disabled={questionNumber === questionsObject.length - 1}
-            >
-              Next
-            </Button>
-          </Container>
-        </Container>
-      </div>
-    </div>
+          <Button
+            rightIcon={<CheckCircleIcon />}
+            colorScheme="teal"
+            variant="solid"
+            disabled={questionNumber !== questionsObject.length - 1}
+            onClick={() => console.log(answers)}
+          >
+            Submit
+          </Button>
+
+          <Button
+            rightIcon={<ArrowForwardIcon />}
+            colorScheme="teal"
+            variant="solid"
+            onClick={() => setQuestionNumber(questionNumber + 1)}
+            disabled={questionNumber === questionsObject.length - 1}
+          >
+            Next
+          </Button>
+        </SimpleGrid>
+      </Stack>
+    </Flex>
   );
 };
 

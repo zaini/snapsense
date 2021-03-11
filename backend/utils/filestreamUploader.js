@@ -1,8 +1,10 @@
 const AWS = require("aws-sdk");
 const { v4: uuidv4 } = require("uuid");
-require("dotenv").config();
-const col = require("./loggingFunc");
 const { ApolloError } = require("apollo-server");
+require("dotenv").config();
+
+const col = require("./loggingFunc");
+const { Image } = require("../models/index");
 
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_ID,

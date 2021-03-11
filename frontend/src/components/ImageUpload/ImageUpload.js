@@ -1,6 +1,8 @@
 import React from "react";
 import ImageUploader from "react-images-upload";
 
+import {Flex,Box} from "@chakra-ui/react";
+
 class ImageUpload extends React.Component {
   constructor(props) {
     super(props);
@@ -16,11 +18,11 @@ class ImageUpload extends React.Component {
 
   render() {
     return (
-      <div
+      <Flex
         className="ImageUploader"
-        style={{ display: "flex", justifyContent: "center" }}
+        style={{ justifyContent: "center" }}
       >
-        <div style={{ width: "500px", heigh: "auto" }}>
+        <Box w={"100%"} p={"10px"}>
           <ImageUploader
             withIcon={true}
             withPreview={true}
@@ -29,8 +31,8 @@ class ImageUpload extends React.Component {
             imgExtension={[".jpg", ".gif", ".png", ".gif"]}
             maxFileSize={5242880}
           />
-        </div>
-      </div>
+        </Box>
+      </Flex>
     );
   }
 }
