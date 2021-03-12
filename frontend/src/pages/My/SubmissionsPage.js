@@ -45,7 +45,7 @@ const SubmissionsPage = () => {
         width: 100,
         renderCell: function () {
           return (
-            <Button value={rows} variant="contained" color="secondary">
+            <Button value={rows} variant="contained" color="primary">
               <Link to="/">View</Link>
             </Button>
           );
