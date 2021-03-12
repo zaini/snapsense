@@ -42,7 +42,7 @@ module.exports = gql`
     fname: String!
     lname: String!
     email: String!
-    password: String!
+    password: String
     createdAt: String!
   }
 
@@ -93,6 +93,8 @@ module.exports = gql`
       deadline: String
     ): Submission
 
+    createRequest(request_type: Int!, deadline: String!, patient_id: ID!): Boolean!
+
     # TODO Image Mutations
     # singleUpload(file: Upload!): File!
     singleUploadStream(file: Upload!): S3Object
@@ -127,5 +129,6 @@ module.exports = gql`
     getImages: [Image!]
     isLoggedIn: String!
     checkInvitation(invitationToken: String!): String!
+    getPatientByDoctor(patient_id: ID!): Patient!
   }
 `;
