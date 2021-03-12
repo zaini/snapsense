@@ -6,10 +6,13 @@ import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { Alert, AlertIcon, Spinner } from "@chakra-ui/react";
 import { Flex, Heading, Stack } from "@chakra-ui/react";
+import { Switch, FormLabel } from "@chakra-ui/react";
+import PatientsPersonalLogTimeline from "../../components/PatientsPersonalLogTimeline";
 
 // patient: view all your submissions
 const SubmissionsPage = () => {
   const [patientName] = useState("Bob");
+  const [viewTimeline, setViewTimeline] = useState(false);
 
   let markup;
 
@@ -58,7 +61,25 @@ const SubmissionsPage = () => {
       </Flex>
     );
   }
-  return markup;
+  //return markup;
+
+  return (
+    <>
+      <FormLabel htmlFor="toggle" mb="0">
+        Enable timeline view?
+      </FormLabel>
+      <Switch
+        id="toggle"
+        size="md"
+        onChange={() => setViewTimeline(!viewTimeline)}
+      />
+      {viewTimeline ? (
+        <PatientsPersonalLogTimeline />
+      ) : (
+        markup
+      )}
+    </>
+  );
 };
 
 export default SubmissionsPage;
