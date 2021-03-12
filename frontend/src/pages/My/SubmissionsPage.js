@@ -74,7 +74,9 @@ const SubmissionsPage = () => {
         onChange={() => setViewTimeline(!viewTimeline)}
       />
       {viewTimeline ? (
-        <PatientsPersonalLogTimeline />
+        <PatientsPersonalLogTimeline
+          rows={data.getSubmissionsByPatient || []}
+        />
       ) : (
         markup
       )}
