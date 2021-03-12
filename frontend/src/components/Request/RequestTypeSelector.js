@@ -17,15 +17,15 @@ const RequestTypeSelector = ({ patient, register }) => {
         </FormLabel>
       </Center>
       <Center>
-        <RadioGroup defaultValue="both">
+        <RadioGroup defaultValue="3">
           <HStack spacing="24px">
-            <Radio ref={register} name="requestType" value="image">
+            <Radio ref={register} name="requestType" value="1">
               Image
             </Radio>
-            <Radio ref={register} name="requestType" value="questionnaire">
+            <Radio ref={register} name="requestType" value="2">
               Questionnaire
             </Radio>
-            <Radio ref={register} name="requestType" value="both">
+            <Radio ref={register} name="requestType" value="3">
               Both
             </Radio>
           </HStack>
