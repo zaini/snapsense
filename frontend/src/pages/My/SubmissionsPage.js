@@ -32,7 +32,7 @@ const SubmissionsPage = () => {
     const cols = [
       { field: "id", hide: true },
       {
-        field: "fulfilled",
+        field: "createdAt",
         headerName: "Date submitted",
         width: 150,
         type: "date",
@@ -97,7 +97,7 @@ const GET_SUBMISSIONS = gql`
   query {
     getSubmissions {
       id
-      fulfilled
+      createdAt
     }
   }
 `;
@@ -106,7 +106,7 @@ const GET_SUBMISSIONS_BY_PATIENT = gql`
   query GetSubmissions($patient_id: String!) {
     getSubmissions(patient_id: $patient_id) {
       id
-      fulfilled
+      createdAt
     }
   }
 `;
