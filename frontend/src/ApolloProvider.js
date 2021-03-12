@@ -14,8 +14,6 @@ const backendLink = createHttpLink({
   uri: process.env.BACKEND_URL || "http://localhost:5000/graphql",
 });
 
-// TODO: Once login is setup, use setContext to create an auth context
-
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("jwtToken");
   return {
