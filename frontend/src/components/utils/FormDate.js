@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 const FormDate = ({ control }) => {
   return (
     <Controller
-      defaultValue={Date.now()}
+      defaultValue={new Date()}
       name="submissionDate"
       control={control}
       render={({ onChange, value, ref }) => (
@@ -14,7 +14,7 @@ const FormDate = ({ control }) => {
           selected={value}
           onChange={onChange}
           inputRef={ref}
-          minDate={Date.now()}
+          minDate={new Date()}
           inline
           showTimeInput
         />
