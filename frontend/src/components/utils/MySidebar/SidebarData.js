@@ -1,22 +1,34 @@
 import {
-  CalendarIcon,
-  CloseIcon,
-  DownloadIcon,
-  StarIcon,
-} from "@chakra-ui/icons";
-
-// TODO add nicer icons
+  AccountBox,
+  Contacts,
+  ContactMail,
+  Home,
+  ContactPhone,
+  ListAlt,
+  AddToPhotos,
+  Event,
+} from "@material-ui/icons";
 
 const AdminSideBarData = [
   {
     title: "Home",
     path: "/my",
-    icon: <StarIcon />,
+    icon: <Home />,
+  },
+  {
+    title: "Invite Doctors",
+    path: "/my/invites/new",
+    icon: <ContactMail />,
   },
   {
     title: "View Doctors",
     path: "/my/doctors",
-    icon: <CloseIcon />,
+    icon: <Contacts />,
+  },
+  {
+    title: "My Profile",
+    path: "/my/profile",
+    icon: <AccountBox />,
   },
 ];
 
@@ -24,22 +36,27 @@ const DoctorSideBarData = [
   {
     title: "Home",
     path: "/my",
-    icon: <StarIcon />,
+    icon: <Home />,
   },
   {
-    title: "View Submissions",
-    path: "/my/submissions",
-    icon: <DownloadIcon />,
+    title: "Invite Patients",
+    path: "/my/invites/new",
+    icon: <ContactMail />,
   },
   {
     title: "View Patients",
     path: "/my/patients",
-    icon: <CloseIcon />,
+    icon: <Contacts />,
   },
   {
-    title: "Request Patient Submission",
-    path: "/my/request",
-    icon: <CalendarIcon />,
+    title: "Make Submissions Request",
+    path: "/my/patients/:patient_id/requests/new",
+    icon: <ContactPhone />,
+  },
+  {
+    title: "My Profile",
+    path: "/my/profile",
+    icon: <AccountBox />,
   },
 ];
 
@@ -47,27 +64,32 @@ const PatientSideBarData = [
   {
     title: "Home",
     path: "/my",
-    icon: <StarIcon />,
+    icon: <Home />,
   },
   {
-    title: "View Requests",
-    path: "/my/requests",
-    icon: <CalendarIcon />,
-  },
-  {
-    title: "Submissions",
+    title: "View My Submissions",
     path: "/my/submissions",
-    icon: <CloseIcon />,
+    icon: <ListAlt />,
   },
   {
-    title: "Submit",
+    title: "Create New Submission",
     path: "/my/submissions/new",
-    icon: <DownloadIcon />,
+    icon: <AddToPhotos />,
   },
   {
-    title: "Profile",
+    title: "View My Requests",
+    path: "/my/requests",
+    icon: <Event />,
+  },
+  {
+    title: "My Doctors",
+    path: "/my/doctors",
+    icon: <Contacts />,
+  },
+  {
+    title: "My Profile",
     path: "/my/profile",
-    icon: <CloseIcon />,
+    icon: <AccountBox />,
   },
 ];
 

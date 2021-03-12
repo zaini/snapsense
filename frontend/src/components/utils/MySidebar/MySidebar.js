@@ -49,24 +49,32 @@ const MySidebar = (props) => {
       </List>
       <Divider />
       <List>
-        <ListItem button>
-          <ListItemIcon>
-            <PlusSquareIcon />
-          </ListItemIcon>
-          <ListItemText primary={"Logout"} />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <PhoneIcon />
-          </ListItemIcon>
-          <ListItemText primary={"Contact"} />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <InfoIcon />
-          </ListItemIcon>
-          <ListItemText primary={"About Us"} />
-        </ListItem>
+        <Link to={"/logout"}>
+          <ListItem button>
+            <ListItemIcon>
+              <PlusSquareIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Logout"} />
+          </ListItem>
+        </Link>
+        
+        <Link to={"/contact"}>
+          <ListItem button>
+            <ListItemIcon>
+              <PhoneIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Contact"} />
+          </ListItem>
+        </Link>
+
+        <Link to={"/about"}>
+          <ListItem button>
+            <ListItemIcon>
+              <InfoIcon />
+            </ListItemIcon>
+            <ListItemText primary={"About Us"} />
+          </ListItem>
+        </Link>
       </List>
     </div>
   );
