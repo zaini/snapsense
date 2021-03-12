@@ -6,13 +6,12 @@ import { AuthContext } from "../../context/auth";
 const NavbarMenuItems = () => {
   const { user } = useContext(AuthContext);
 
-  // Right now the navbar for admin, doctor and patient are all identical, but it's possible they could be different in the future
   if (user) {
     switch (user.accountType) {
       case "ADMIN":
         return (
           <>
-            <MenuItem to="/my">My</MenuItem>
+            <MenuItem to="/my">My Dashboard</MenuItem>
             <MenuItem to="/contact">Contact Us</MenuItem>
             <MenuItem to="/logout" isLast>
               <Button
@@ -37,7 +36,7 @@ const NavbarMenuItems = () => {
       case "DOCTOR":
         return (
           <>
-            <MenuItem to="/my">My</MenuItem>
+            <MenuItem to="/my">My Dashboard</MenuItem>
             <MenuItem to="/contact">Contact Us</MenuItem>
             <MenuItem to="/logout" isLast>
               <Button
@@ -62,7 +61,7 @@ const NavbarMenuItems = () => {
       case "PATIENT":
         return (
           <>
-            <MenuItem to="/my">My</MenuItem>
+            <MenuItem to="/my">My Dashboard</MenuItem>
             <MenuItem to="/contact">Contact Us</MenuItem>
             <MenuItem to="/logout" isLast>
               <Button
