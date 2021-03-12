@@ -65,6 +65,7 @@ const SubmissionsPage = () => {
 
   return (
     <>
+    <div>
       <FormLabel htmlFor="toggle" mb="0">
         Enable timeline view?
       </FormLabel>
@@ -73,13 +74,19 @@ const SubmissionsPage = () => {
         size="md"
         onChange={() => setViewTimeline(!viewTimeline)}
       />
-      {viewTimeline ? (
-        <PatientsPersonalLogTimeline
-          rows={data.getSubmissionsByPatient || []}
-        />
-      ) : (
-        markup
-      )}
+      <div>
+        {viewTimeline ? (
+          <PatientsPersonalLogTimeline
+            rows={data.getSubmissionsByPatient || []}
+          />
+        ) : (
+          markup
+        )}
+      </div>
+    </div>
+    <div>
+      {/* TODO: Could have the download as PDF button here */}
+    </div>
     </>
   );
 };
