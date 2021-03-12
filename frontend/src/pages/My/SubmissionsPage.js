@@ -61,7 +61,6 @@ const SubmissionsPage = () => {
       </Flex>
     );
   }
-  //return markup;
 
   return (
     <>
