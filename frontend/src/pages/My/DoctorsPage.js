@@ -1,50 +1,103 @@
-import { Heading } from "@chakra-ui/layout";
-import React from "react";
+import { useContext } from "react";
+import { useQuery } from "@apollo/react-hooks";
+import gql from "graphql-tag";
 import Table from "../../components/incomplete/Table";
-import { Container } from "@material-ui/core";
+import { Center, Heading } from "@chakra-ui/layout";
+import { Alert, AlertIcon, Spinner } from "@chakra-ui/react";
+import { AuthContext } from "../../context/auth";
 
 // If admin: shows all doctors from the same hospital
 // If patient: shows all doctors that you have
 const DoctorsPage = () => {
-  const cols = [
-    {
-      field: "id",
-      type: "number",
-      headerName: "ID",
-      sortable: true,
-      flex: 0.3,
-    },
-    {
-      field: "fname",
-      headerName: "First Name",
-      sortable: true,
-      flex: 1,
-    },
-    {
-      field: "lname",
-      headerName: "Last Name",
-      sortable: true,
-      flex: 1,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      sortable: true,
-      flex: 2,
-    },
-  ];
+  const { user } = useContext(AuthContext);
+  const { accountType } = user;
+  const QUERY =
+    accountType === "PATIENT" ? GET_DOCTORS_AS_PATIENT : GET_DOCTORS_AS_ADMIN;
 
-  const data = [
-    { id: 2, fname: "firstname", lname: "lastname", email: "email@email.com" },
-  ];
+  const { loading, data, error } = useQuery(QUERY);
+
+  let markup;
+
+  if (loading) {
+    markup = (
+      <Center>
+        <Spinner size="xl" />
+      </Center>
+    );
+  } else if (error) {
+    markup = (
+      <Alert status="error">
+        <AlertIcon />
+        {error.graphQLErrors[0].message}
+      </Alert>
+    );
+  } else {
+    let data_rows =
+      accountType === "PATIENT"
+        ? data.getDoctorsByPatient
+        : data.getDoctorsByAdmin;
+    markup = <Table data={data_rows} cols={cols} />;
+  }
 
   return (
-    <Container>
-      <Heading>My Doctors</Heading>
+    <>
+      <Center>
+        <Heading>My Doctors</Heading>
+      </Center>
       <br />
-      <Table data={data} cols={cols} />
-    </Container>
+      {markup}
+    </>
   );
 };
 
 export default DoctorsPage;
+
+const GET_DOCTORS_AS_PATIENT = gql`
+  query {
+    getDoctorsByPatient {
+      id
+      fname
+      lname
+      email
+    }
+  }
+`;
+
+const GET_DOCTORS_AS_ADMIN = gql`
+  query {
+    getDoctorsByAdmin {
+      id
+      fname
+      lname
+      email
+    }
+  }
+`;
+
+const cols = [
+  {
+    field: "id",
+    type: "number",
+    headerName: "ID",
+    sortable: true,
+    flex: 0.3,
+  },
+  {
+    field: "fname",
+    headerName: "First Name",
+    sortable: true,
+    flex: 1,
+  },
+  {
+    field: "lname",
+    headerName: "Last Name",
+    sortable: true,
+    flex: 1,
+  },
+  {
+    field: "email",
+    headerName: "Email",
+    sortable: true,
+    flex: 2,
+  },
+];
