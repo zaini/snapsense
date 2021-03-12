@@ -57,7 +57,7 @@ const MySidebar = (props) => {
             <ListItemText primary={"Logout"} />
           </ListItem>
         </Link>
-        
+
         <Link to={"/contact"}>
           <ListItem button>
             <ListItemIcon>
@@ -86,7 +86,7 @@ const MySidebar = (props) => {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar back style={{ background: "#9C3848" }}>
+        <Toolbar back style={{ background: "primary.500" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
