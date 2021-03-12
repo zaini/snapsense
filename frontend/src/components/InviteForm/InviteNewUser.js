@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import gql from "graphql-tag";
+import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import {
   Box,
@@ -14,10 +15,12 @@ import Error from "../utils/Error";
 
 const InviteNewUser = ({ invitation }) => {
   const { register, handleSubmit, errors, setError, formState } = useForm();
+  const history = useHistory();
 
   const [registerUser, { data, loading }] = useMutation(REGISTER_USER, {
     onCompleted(res) {
       console.log(res);
+      history.push("/login");
     },
     onError(err) {
       setError("graphql", {
