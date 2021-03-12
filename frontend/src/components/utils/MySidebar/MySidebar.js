@@ -14,7 +14,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { InfoIcon, PhoneIcon, PlusSquareIcon } from "@chakra-ui/icons";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Box } from "@chakra-ui/react";
 import { SidebarData } from "./SidebarData";
 import { AuthContext } from "../../../context/auth";
 import { Link } from "react-router-dom";
@@ -142,9 +142,7 @@ const MySidebar = (props) => {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Flex className={classes.innerMainContent} bg={"gray.50"}>
-          {props.children}
-        </Flex>
+        <Box>{props.children}</Box>
       </main>
     </div>
   );
