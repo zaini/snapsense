@@ -61,7 +61,7 @@ const PatientSideBarData = [
   },
   {
     title: "Submit",
-    path: "/my/submit",
+    path: "/my/submissions/new",
     icon: <DownloadIcon />,
   },
   {
