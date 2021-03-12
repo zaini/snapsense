@@ -78,7 +78,7 @@ const NewRequestPage = () => {
       return (
         <Alert status="error" borderRadius="50px" mb={4} textAlign="center">
           <AlertIcon />
-          Sorry, something went wrong. Please try again!
+          Invalid Patient!
         </Alert>
       );
     }
