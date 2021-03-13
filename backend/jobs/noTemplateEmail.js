@@ -61,17 +61,14 @@ const { ScheduledEmail } = require("../models/index.js");
       });
     }
 
-    // query database results for emails not sent
-    // and iterate over them with concurrency
     await pMap(emailsFetched, mapper, { concurrency });
-
-    // signal to parent that the job is done
-    if (parentPort) parentPort.postMessage("done");
-    else process.exit(0);
+  } else {
+    console.log("___________No Emails___________");
   }
 
-  parentPort.postMessage("done");
+  // signal to parent that the job is done
+  if (parentPort) parentPort.postMessage("done");
+  else process.exit(0);
 
-  //   Fetch 50 MAX emails that are not sent yet,
-  //   Set their stattus to sending
+
 })();
