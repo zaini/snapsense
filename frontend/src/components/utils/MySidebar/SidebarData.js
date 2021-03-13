@@ -9,6 +9,8 @@ import {
   Event,
 } from "@material-ui/icons";
 
+// TODO update icons
+
 const AdminSideBarData = [
   {
     title: "Home",
@@ -49,8 +51,13 @@ const DoctorSideBarData = [
     icon: <Contacts />,
   },
   {
-    title: "Make Submissions Request",
-    path: "/my/patients/:patient_id/requests/new",
+    title: "Review Patients",
+    path: "/my/submissions/review",
+    icon: <ContactPhone />,
+  },
+  {
+    title: "View All Submission",
+    path: "/my/submissions/",
     icon: <ContactPhone />,
   },
   {
