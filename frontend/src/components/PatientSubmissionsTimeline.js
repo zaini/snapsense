@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 //The rows will be an array of the submissions by the patient
 //passed from the submissions page
 
-const PatientsPersonalLogTimeline = ({ rows }) => {
+const PatientSubmissionsTimeline = ({ rows }) => {
   const classes = useStyles();
 
   if (rows.length === 0) {
@@ -78,4 +78,4 @@ const PatientsPersonalLogTimeline = ({ rows }) => {
   }
 };
 
-export default PatientsPersonalLogTimeline;
+export default PatientSubmissionsTimeline;

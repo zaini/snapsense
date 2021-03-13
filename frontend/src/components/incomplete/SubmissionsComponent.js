@@ -11,7 +11,7 @@ import { ViewIcon } from "@chakra-ui/icons";
 import { useQuery } from "@apollo/react-hooks";
 import { Stack } from "@chakra-ui/react";
 import { Switch, FormLabel } from "@chakra-ui/react";
-import PatientsPersonalLogTimeline from "../../components/PatientsPersonalLogTimeline";
+import PatientSubmissionsTimeline from "../../components/PatientSubmissionsTimeline";
 
 const SubmissionsComponent = ({ account_type, patient_id }) => {
   const [viewTimeline, setViewTimeline] = useState(false);
@@ -58,7 +58,7 @@ const SubmissionsComponent = ({ account_type, patient_id }) => {
         />
         <div>
           {viewTimeline ? (
-            <PatientsPersonalLogTimeline rows={data_rows || []} />
+            <PatientSubmissionsTimeline rows={data_rows || []} />
           ) : (
             markup
           )}
