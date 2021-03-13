@@ -10,8 +10,6 @@ import TimelineDot from '@material-ui/lab/TimelineDot';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import DescriptionIcon from '@material-ui/icons/Description';
-import { Button } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -54,7 +52,7 @@ const PatientsPersonalLogTimeline = ({rows}) => {
             <TimelineItem>
             <TimelineOppositeContent>
               <Typography variant="body2" color="textSecondary">
-                {row[index-1].createdAt}
+                {row[index].createdAt}
               </Typography>
             </TimelineOppositeContent>
             <TimelineSeparator>
@@ -68,15 +66,9 @@ const PatientsPersonalLogTimeline = ({rows}) => {
                 <Typography variant="h6" component="h1" align="center">
                   Submission {index}
                 </Typography>
-                {/* TODO: Add image from real data */}
+                {/* TODO: Add image/questionnaire answers from real data */}
                 <Typography>
-                  Image
-                </Typography>
-                {/* TODO: Update link to view the details of submission */}
-                <Typography align="center">
-                  <Button>
-                    <Link to="/">View</Link>
-                  </Button>
+                  Image/questionnaire
                 </Typography>
               </Paper>
             </TimelineContent>
