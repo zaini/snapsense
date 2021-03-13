@@ -83,7 +83,7 @@ const GET_REQUESTS_AS_PATIENT = gql`
 
 const GET_REQUESTS_AS_DOCTOR = gql`
   query {
-    getRequestsAsPatient {
+    getRequestsAsDoctor {
       id
       type
       deadline
