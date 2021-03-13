@@ -9,7 +9,7 @@ import { Center} from "@chakra-ui/layout";
 //import { AuthContext } from "../../context/auth";
 import { ViewIcon } from "@chakra-ui/icons";
 import { useQuery } from "@apollo/react-hooks";
-import { Flex, Heading, Stack } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import { Switch, FormLabel } from "@chakra-ui/react";
 import PatientsPersonalLogTimeline from "../../components/PatientsPersonalLogTimeline";
 
