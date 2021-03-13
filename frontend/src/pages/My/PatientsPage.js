@@ -27,7 +27,7 @@ const PatientsPage = () => {
     );
   } else {
     console.log(data);
-    markup = <Table data={data.getPatientsByDoctor} cols={cols} />;
+    markup = <Table data={data.getPatientsAsDoctor} cols={cols} />;
   }
 
   return (
@@ -45,7 +45,7 @@ export default PatientsPage;
 
 const GET_PATIENTS_AS_DOCTOR = gql`
   query {
-    getPatientsByDoctor {
+    getPatientsAsDoctor {
       id
       fname
       lname
@@ -80,7 +80,7 @@ const cols = [
       let id = row.id;
       return (
         <Stack direction="row" spacing={4}>
-          <Link to={`/my/patients/${id}`}>
+          <Link to={`/my/patients/show/${id}`}>
             <Button leftIcon={<ViewIcon />} colorScheme="blue">
               View
             </Button>

@@ -34,8 +34,8 @@ const DoctorsPage = () => {
   } else {
     let data_rows =
       accountType === "PATIENT"
-        ? data.getDoctorsByPatient
-        : data.getDoctorsByAdmin;
+        ? data.getDoctorsAsPatient
+        : data.getDoctorsAsAdmin;
     markup = <Table data={data_rows} cols={cols} />;
   }
 
@@ -54,7 +54,7 @@ export default DoctorsPage;
 
 const GET_DOCTORS_AS_PATIENT = gql`
   query {
-    getDoctorsByPatient {
+    getDoctorsAsPatient {
       id
       fname
       lname
@@ -65,7 +65,7 @@ const GET_DOCTORS_AS_PATIENT = gql`
 
 const GET_DOCTORS_AS_ADMIN = gql`
   query {
-    getDoctorsByAdmin {
+    getDoctorsAsAdmin {
       id
       fname
       lname
