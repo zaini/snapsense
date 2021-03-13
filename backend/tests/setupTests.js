@@ -9,39 +9,39 @@ const {
   Doctor_Patient_Relation,
 } = require("../models/index");
 
-global.beforeEach(() => {
-  Admin.destroy({
+global.beforeEach(async () => {
+  await Hospital.destroy({
     where: {},
-    truncate: true,
+    truncate: { cascade: true },
   });
 
-  Doctor.destroy({
+  await Admin.destroy({
     where: {},
-    truncate: true,
+    truncate: { cascade: true },
   });
 
-  Patient.destroy({
+  await Doctor.destroy({
     where: {},
-    truncate: true,
+    truncate: { cascade: true },
   });
 
-  Submission.destroy({
+  await Patient.destroy({
     where: {},
-    truncate: true,
+    truncate: { cascade: true },
   });
 
-  Image.destroy({
+  await Submission.destroy({
     where: {},
-    truncate: true,
+    truncate: { cascade: true },
   });
 
-  Hospital.destroy({
+  await Image.destroy({
     where: {},
-    truncate: true,
+    truncate: { cascade: true },
   });
 
-  Doctor_Patient_Relation.destroy({
+  await Doctor_Patient_Relation.destroy({
     where: {},
-    truncate: true,
+    truncate: { cascade: true },
   });
 });

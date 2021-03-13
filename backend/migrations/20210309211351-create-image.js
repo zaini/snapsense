@@ -15,7 +15,14 @@ module.exports = {
         type: Sequelize.STRING
       },
       submission_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        references: {
+          model: "Submissions",
+          key: "id",
+          as: "submission_id"
+        }
       },
       createdAt: {
         allowNull: false,

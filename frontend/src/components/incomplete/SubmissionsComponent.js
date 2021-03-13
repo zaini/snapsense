@@ -1,16 +1,21 @@
+import React, { useState } from 'react';
 import Table from "./Table";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
-import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { Alert, AlertIcon, Spinner } from "@chakra-ui/react";
-import { Flex, Stack } from "@chakra-ui/react";
 //import { useContext } from "react";
-import { Center, Heading } from "@chakra-ui/layout";
+import { Center} from "@chakra-ui/layout";
 //import { AuthContext } from "../../context/auth";
 import { ViewIcon } from "@chakra-ui/icons";
+import { useQuery } from "@apollo/react-hooks";
+import { Stack } from "@chakra-ui/react";
+import { Switch, FormLabel } from "@chakra-ui/react";
+import PatientsPersonalLogTimeline from "../../components/PatientsPersonalLogTimeline";
 
 const SubmissionsComponent = ({ account_type, patient_id }) => {
+
+  const [viewTimeline, setViewTimeline] = useState(false);
   
   const QUERY =
     account_type === "PATIENT" ? GET_SUBMISSIONS : GET_SUBMISSIONS_BY_PATIENT;
@@ -34,7 +39,7 @@ const SubmissionsComponent = ({ account_type, patient_id }) => {
       </Alert>
     );
   } else {
-    let data_rows =
+    var data_rows =
       account_type === "PATIENT"
         ? data.getSubmissions
         : data.getSubmissions({variables: {patient_id: patient_id}}) // check if it is correct at the bottom? with the pass id);
@@ -42,13 +47,30 @@ const SubmissionsComponent = ({ account_type, patient_id }) => {
   }
 
   return (
-    <>
-      <Center>
-        <Heading>Submissions History</Heading>
-      </Center>
-      <br />
-      {markup}
-    </>
+    <div style={{width: "100%"}}>
+    <div>
+      <FormLabel htmlFor="toggle" mb="0">
+        Enable timeline view?
+      </FormLabel>
+      <Switch
+        id="toggle"
+        size="md"
+        onChange={() => setViewTimeline(!viewTimeline)}
+      />
+      <div>
+        {viewTimeline ? (
+          <PatientsPersonalLogTimeline
+            rows={data_rows || []}
+          />
+        ) : (
+          markup
+        )}
+      </div>
+    </div>
+    <div>
+      {/* TODO: Could have the download as PDF button here */}
+    </div>
+    </div>
   );
 };
 
