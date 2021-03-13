@@ -34,11 +34,7 @@ const MyPage = ({ changeNavbar }) => {
 
         <PrivateRoute exact path="/my/patients" accountTypes={["DOCTOR"]}>
           <PatientsPage />
-        </PrivateRoute>
-
-        <PrivateRoute exact path="/my/patients/:patient_id" accountTypes={["DOCTOR"]}>
-          <PatientProfilePage />
-        </PrivateRoute>        
+        </PrivateRoute>       
 
         <PrivateRoute exact path="/my/patients/show/:patient_id" accountTypes={["DOCTOR"]}>
           <PatientProfilePage />
@@ -60,7 +56,7 @@ const MyPage = ({ changeNavbar }) => {
           <RequestsPage />
         </PrivateRoute>
 
-        <PrivateRoute exact path="/my/submissions" accountTypes={["PATIENT"]}>
+        <PrivateRoute exact path="/my/submissions" accountTypes={["PATIENT", "DOCTOR"]}>
           <SubmissionsPage />
         </PrivateRoute>
 
