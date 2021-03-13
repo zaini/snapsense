@@ -24,8 +24,8 @@ const NewRequestPage = () => {
 
   // Perform the query that gets the patient using the id supplied in the query param
   // Only return the patient of they exist and belong to the doctor
-  const { loading, data: { getPatientByDoctor: patient } = {} } = useQuery(
-    GET_PATIENT_BY_DOCTOR,
+  const { loading, data: { getPatientAsDoctor: patient } = {} } = useQuery(
+    GET_PATIENT_AS_DOCTOR,
     {
       onCompleted(data) {
         // Clear the error
@@ -87,10 +87,9 @@ const NewRequestPage = () => {
 
 export default NewRequestPage;
 
-// Graphql query
-const GET_PATIENT_BY_DOCTOR = gql`
-  query getPatientByDoctor($patient_id: ID!) {
-    getPatientByDoctor(patient_id: $patient_id) {
+const GET_PATIENT_AS_DOCTOR = gql`
+  query getPatientAsDoctor($patient_id: ID!) {
+    getPatientAsDoctor(patient_id: $patient_id) {
       id
       fname
       lname
