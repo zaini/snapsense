@@ -27,10 +27,7 @@ const App = () => {
         <LoggedOutRoute exact path="/login" component={LoginPage} />
         <Route exact path="/logout" component={LogoutPage} />
 
-        <Route
-          exact
-          path="/invites/show/:token_id"
-          component={ShowInvitePage}
+        <Route exact path="/invites/show/:token_id" component={ShowInvitePage}
         />
 
         <PrivateRoute path="/my" accountTypes={["ADMIN", "DOCTOR", "PATIENT"]}>
