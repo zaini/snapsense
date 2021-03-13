@@ -1,10 +1,15 @@
-const { AuthenticationError, UserInputError } = require("apollo-server-core");
+const {
+  AuthenticationError,
+  UserInputError,
+  ApolloError,
+} = require("apollo-server-core");
 
 const {
   Patient,
   Doctor,
   Request,
   Submission,
+  ScheduledEmail,
 } = require("../../models/index.js");
 const isAuth = require("../../utils/isAuth.js");
 
@@ -102,6 +107,39 @@ module.exports = {
       } catch (error) {
         // An error will be thrown if the request is invalid as a result of a user input error
         throw new UserInputError(error);
+      }
+
+      // Try to send an email to the patient about the request
+      // Set email parameters
+      const htmlParams = {
+        doctorEmail: doctor.email,
+        patientEmail: patient.email,
+        type: request_type,
+        deadline: deadline,
+      };
+
+      let jsonHtmlContents = "";
+
+      try {
+        jsonHtmlContents = JSON.stringify(htmlParams);
+      } catch (error) {
+        throw new ApolloError("Invalid User Details for MX Server");
+      }
+      const emailParams = {
+        to: patient.email,
+        subject: "Snapsense Request Reminder",
+        html: jsonHtmlContents,
+        altbody: "Please send the foot !!",
+        template: "request",
+        status: 0,
+      };
+
+      // Insert email params into model
+      try {
+        await ScheduledEmail.create(emailParams);
+      } catch (error) {
+        // MySQL query could not run, throw internal server error
+        throw new ApolloError("Internal MX Server Error", 502);
       }
 
       // Everything was successful so return false
