@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+//The rows will be an array of the submissions by the patient
+//passed from the submissions page
+
 const PatientsPersonalLogTimeline = ({rows}) => {
   const classes = useStyles();
 
