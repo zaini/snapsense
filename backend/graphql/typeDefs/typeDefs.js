@@ -44,21 +44,19 @@ module.exports = gql`
 
   type Submission {
     id: ID!
-    patient_id: ID!
-    doctor_id: ID
+    Doctor: Doctor
+    Patient: Patient
     deadline: String!
-    fulfilled: String!
     createdAt: String!
   }
 
   type Request {
     id: ID!
-    doctor_id: ID!
-    patient_id: ID!
-    submission_id: ID
+    Doctor: Doctor
+    Patient: Patient
+    Submission: Submission
     type: Int!
     deadline: String!
-    fulfilled: String!
   }
 
   type Image {

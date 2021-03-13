@@ -1,15 +1,57 @@
 const { AuthenticationError, UserInputError } = require("apollo-server-core");
 
-const { Patient, Doctor, Request } = require("../../models/index.js");
+const {
+  Patient,
+  Doctor,
+  Request,
+  Submission,
+} = require("../../models/index.js");
 const isAuth = require("../../utils/isAuth.js");
 
 module.exports = {
   Query: {
     getRequestsAsPatient: async (_, __, context) => {
-      return [];
+      const user = isAuth(context);
+
+      if (user.accountType !== "PATIENT") {
+        throw new AuthenticationError(
+          "You are not logged into the correct account for this feature."
+        );
+      }
+
+      const patient = await Patient.findByPk(user.id);
+
+      if (!patient) {
+        throw new UserInputError("Invalid patient");
+      }
+
+      // const requests = await patient.getRequests();
+      const requests = await Request.findAll({
+        where: { patient_id: patient.id },
+        include: [Doctor, Patient, Submission],
+      });
+      return requests || [];
     },
     getRequestsAsDoctor: async (_, __, context) => {
-      return [];
+      const user = isAuth(context);
+
+      if (user.accountType !== "DOCTOR") {
+        throw new AuthenticationError(
+          "You are not logged into the correct account for this feature."
+        );
+      }
+
+      const doctor = await Doctor.findByPk(user.id);
+
+      if (!doctor) {
+        throw new UserInputError("Invalid doctor");
+      }
+
+      const requests = await Request.findAll({
+        where: { doctor_id: doctor.id },
+        include: [Doctor, Patient, Submission],
+      });
+      return requests || [];
     },
   },
   Mutation: {
