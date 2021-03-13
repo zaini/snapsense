@@ -7,7 +7,12 @@ const { verify } = require("jsonwebtoken");
 
 const isAuth = require("../../../utils/isAuth");
 const { createAccessToken } = require("./authTokens");
-const { Admin, Doctor, Patient } = require("../../../models/index");
+const {
+  Admin,
+  Doctor,
+  Patient,
+  ScheduledEmail,
+} = require("../../../models/index");
 require("dotenv").config();
 
 const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
@@ -144,7 +149,6 @@ module.exports = {
       // If doctors sends request to a new patient, and after that patient registers and clicks on the link again, render error page
       // Doctor -> existing patient => frontend sends a backend request creating the relation, then take user to home page
       // If doctor and patient are already related, don't do anything => render home/profile page
-
       const inviteTokenParams = {
         inviterEmail: userEmail,
         newAccountEmail: email,
@@ -153,6 +157,57 @@ module.exports = {
       };
 
       const inviteToken = createAccessToken(inviteTokenParams, "7d");
+
+      const inviteUrl = "http://localhost:3000/invites/show/" + inviteToken;
+
+      const htmlParams = {
+        inviter: userEmail,
+        newAccount: email,
+        url: inviteUrl,
+        by: "",
+        for: "",
+      };
+
+      switch (user.accountType) {
+        case "ADMIN":
+          //Admin is inviting a doctor
+          htmlParams.by = "Admin";
+          htmlParams.for = "Doctor";
+
+          break;
+        case "DOCTOR":
+          //Doctor is inviting a patient
+          htmlParams.by = "Doctor";
+          htmlParams.for = "Patient";
+
+          break;
+        default:
+          throw new ApolloError("Invalid invite request for MX Server", 400);
+          break;
+      }
+
+      let jsonHtmlContents = "";
+
+      try {
+        jsonHtmlContents = JSON.stringify(htmlParams);
+      } catch (error) {
+        throw new ApolloError("Invalid User Details for MX Server");
+      }
+
+      const emailParams = {
+        to: email,
+        subject: "Snapsense Account Invitation",
+        html: jsonHtmlContents,
+        altbody: inviteUrl,
+        template: "invite",
+        status: 0,
+      };
+
+      try {
+        await ScheduledEmail.create(emailParams);
+      } catch (error) {
+        throw new ApolloError("Inter Mail Server Error", 502);
+      }
 
       return inviteToken;
     },
