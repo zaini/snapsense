@@ -31,9 +31,11 @@ const NewRequestForm = ({ patient }) => {
     });
   };
 
+  let markup;
+
   if (loading) {
     // Display a spinner if loading
-    return (
+    markup = (
       <Container p="7" borderRadius="lg" mt="20">
         <Center>
           <Spinner size="xl" />
@@ -42,7 +44,7 @@ const NewRequestForm = ({ patient }) => {
     );
   } else if (error) {
     // Display the error on error
-    return (
+    markup = (
       <Container p="7" borderRadius="lg" mt="20">
         <Error
           errors={[
@@ -55,7 +57,7 @@ const NewRequestForm = ({ patient }) => {
     );
   } else {
     // Display the form
-    return (
+    markup = (
       <form onSubmit={handleSubmit(onSubmit)}>
         {data ? (
           <Alert status="success" borderRadius="50px" mb={4} textAlign="center">
@@ -64,7 +66,7 @@ const NewRequestForm = ({ patient }) => {
             shortly.
           </Alert>
         ) : (
-          <></>
+          null
         )}
         <RequestTypeSelector patient={patient} register={register} />
         <RequestDatePicker control={control} />
@@ -76,6 +78,8 @@ const NewRequestForm = ({ patient }) => {
       </form>
     );
   }
+
+  return markup;
 };
 
 export default NewRequestForm;
