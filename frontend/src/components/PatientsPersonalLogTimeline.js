@@ -20,8 +20,6 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: '6px 16px',
-    height: 'auto',
-    width: 'auto',
   },
   secondaryTail: {
     backgroundColor: theme.palette.secondary.main,
@@ -30,9 +28,8 @@ const useStyles = makeStyles((theme) => ({
 
 const PatientsPersonalLogTimeline = ({rows}) => {
   const classes = useStyles();
-  const temps = [1,2,3,4,5];
 
-  if (temps.length === 0) {
+  if (rows.length === 0) {
     return (
       <Timeline>
           <TimelineItem>
@@ -57,11 +54,11 @@ const PatientsPersonalLogTimeline = ({rows}) => {
     return (
 
       <Timeline>
-          {temps.map((temp, index) => (
+          {rows.map((row, index) => (
             <TimelineItem>
             <TimelineOppositeContent>
               <Typography variant="body2" color="textSecondary">
-                13/03/2021 9:30 am
+                {row[index-1].createdAt}
               </Typography>
             </TimelineOppositeContent>
             <TimelineSeparator>
