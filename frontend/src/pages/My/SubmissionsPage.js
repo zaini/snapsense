@@ -63,7 +63,7 @@ const SubmissionsPage = () => {
   }
 
   return (
-    <>
+    <div style={{width: "100%"}}>
     <div>
       <FormLabel htmlFor="toggle" mb="0">
         Enable timeline view?
@@ -86,7 +86,7 @@ const SubmissionsPage = () => {
     <div>
       {/* TODO: Could have the download as PDF button here */}
     </div>
-    </>
+    </div>
   );
 };
 
