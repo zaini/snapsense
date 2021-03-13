@@ -9,7 +9,14 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       patient_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        references: {
+          model: "Patients",
+          key: "id",
+          as: "patient_id"
+        }
       },
       createdAt: {
         allowNull: false,
