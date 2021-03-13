@@ -7,6 +7,7 @@ import { Alert, AlertIcon, Button, Spinner, Stack } from "@chakra-ui/react";
 import { ViewIcon, CalendarIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/auth";
+import { FiImage, FiList } from "react-icons/fi";
 
 // If patient: shows all requests that have been made in a table
 // If doctor: shows all requests made in a table
@@ -36,6 +37,7 @@ const RequestsPage = () => {
       </Alert>
     );
   } else {
+    console.log(data);
     let data_rows =
       accountType === "PATIENT"
         ? data.getRequestsAsPatient
@@ -60,24 +62,44 @@ const GET_REQUESTS_AS_PATIENT = gql`
   query {
     getRequestsAsPatient {
       id
-      doctor_id
-      submission_id
       type
       deadline
-      fulfilled
+      Submission {
+        id
+      }
+      Patient {
+        fname
+        lname
+        email
+      }
+      Doctor {
+        fname
+        lname
+        email
+      }
     }
   }
 `;
 
 const GET_REQUESTS_AS_DOCTOR = gql`
   query {
-    getRequestsAsDoctor {
+    getRequestsAsPatient {
       id
-      patient_id
-      submission_id
       type
       deadline
-      fulfilled
+      Submission {
+        id
+      }
+      Patient {
+        fname
+        lname
+        email
+      }
+      Doctor {
+        fname
+        lname
+        email
+      }
     }
   }
 `;
@@ -90,37 +112,69 @@ const cols = [
     flex: 0.2,
   },
   {
-    field: "fname",
-    headerName: "First Name",
-    flex: 0.5,
-  },
-  {
-    field: "lname",
-    headerName: "Last Name",
-    flex: 0.5,
-  },
-  {
-    field: "",
-    headerName: "Actions",
-    sortable: false,
-    disableClickEventBubbling: true,
+    field: "doctor",
+    headerName: "Doctor",
+    flex: 0.2,
     renderCell: ({ row }) => {
-      let id = row.id;
+      const doctor = row.Doctor;
+      const { fname, lname, email } = doctor;
       return (
-        <Stack direction="row" spacing={4}>
-          <Link to={`/my/patients/${id}`}>
-            <Button leftIcon={<ViewIcon />} colorScheme="blue">
-              View Profile
-            </Button>
-          </Link>
-          <Link to={`/my/patients/${id}/requests/new`}>
-            <Button leftIcon={<CalendarIcon />} colorScheme="blue">
-              Request Submission
-            </Button>
-          </Link>
-        </Stack>
+        <p>
+          {fname} {lname}
+        </p>
       );
     },
-    flex: 0.7,
+  },
+  {
+    field: "patient",
+    headerName: "Patient",
+    flex: 0.2,
+    renderCell: ({ row }) => {
+      const patient = row.Patient;
+      const { fname, lname, email } = patient;
+      return (
+        <p>
+          {fname} {lname}
+        </p>
+      );
+    },
+  },
+  {
+    field: "submission",
+    headerName: "Submission",
+    flex: 0.2,
+    renderCell: ({ row }) => {
+      const submission = row.Submission;
+      // const { fname, lname, email } = submission;
+      // TODO instead of showing submission ID, show a button to view the actual submission
+      // This button will depend on the account type you are logged in as
+      return <p>{"No Submission Made" || submission.id}</p>;
+    },
+  },
+  {
+    field: "type",
+    headerName: "Type",
+    flex: 0.5,
+    renderCell: ({ row }) => {
+      let type;
+      switch (row.type) {
+        case 1:
+          type = <FiImage />;
+          break;
+        case 2:
+          type = <FiList />;
+          break;
+        case 3:
+          type = (
+            <Stack direction="row" spacing={4}>
+              <FiImage /> <FiList />
+            </Stack>
+          );
+          break;
+        default:
+          break;
+      }
+      return type;
+    },
   },
 ];
