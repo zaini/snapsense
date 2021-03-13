@@ -1,16 +1,14 @@
+import React, { useState } from 'react';
 import Table from "./Table";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import gql from "graphql-tag";
 import { Alert, AlertIcon, Spinner } from "@chakra-ui/react";
 //import { useContext } from "react";
-import { Center, Heading } from "@chakra-ui/layout";
+import { Center} from "@chakra-ui/layout";
 //import { AuthContext } from "../../context/auth";
 import { ViewIcon } from "@chakra-ui/icons";
-import React, { useState } from "react";
-import Table from "../../components/incomplete/Table";
 import { useQuery } from "@apollo/react-hooks";
-import { Alert, AlertIcon, Spinner } from "@chakra-ui/react";
 import { Flex, Heading, Stack } from "@chakra-ui/react";
 import { Switch, FormLabel } from "@chakra-ui/react";
 import PatientsPersonalLogTimeline from "../../components/PatientsPersonalLogTimeline";
@@ -41,7 +39,7 @@ const SubmissionsComponent = ({ account_type, patient_id }) => {
       </Alert>
     );
   } else {
-    let data_rows =
+    var data_rows =
       account_type === "PATIENT"
         ? data.getSubmissions
         : data.getSubmissions({variables: {patient_id: patient_id}}) // check if it is correct at the bottom? with the pass id);
