@@ -24,55 +24,31 @@ const MyPage = ({ changeNavbar }) => {
         <Route exact path="/my/" component={MyHomePage} />
         <Route exact path="/my/profile" component={ProfilePage} />
 
-        <PrivateRoute
-          exact
-          path="/my/invites/new"
-          accountTypes={["ADMIN", "DOCTOR"]}
-        >
+        <PrivateRoute exact path="/my/invites/new" accountTypes={["ADMIN", "DOCTOR"]}>
           <NewInvitePage />
         </PrivateRoute>
 
-        <PrivateRoute
-          exact
-          path="/my/doctors"
-          accountTypes={["ADMIN", "PATIENT"]}
-        >
+        <PrivateRoute exact path="/my/doctors" accountTypes={["ADMIN", "PATIENT"]}>
           <DoctorsPage />
         </PrivateRoute>
 
         <PrivateRoute exact path="/my/patients" accountTypes={["DOCTOR"]}>
           <PatientsPage />
-        </PrivateRoute>
+        </PrivateRoute>       
 
-        <PrivateRoute
-          exact
-          path="/my/patients/show/:patient_id"
-          accountTypes={["DOCTOR"]}
-        >
+        <PrivateRoute exact path="/my/patients/show/:patient_id" accountTypes={["DOCTOR"]}>
           <PatientProfilePage />
         </PrivateRoute>
 
-        <PrivateRoute
-          exact
-          path="/my/patients/:patient_id/requests"
-          accountTypes={["DOCTOR"]}
-        >
+        <PrivateRoute exact path="/my/patients/:patient_id/requests" accountTypes={["DOCTOR"]}>
           <RequestsPage />
         </PrivateRoute>
 
-        <PrivateRoute
-          exact
-          path="/my/patients/:patient_id/requests/new"
-          accountTypes={["DOCTOR"]}
-        >
+        <PrivateRoute exact path="/my/patients/:patient_id/requests/new" accountTypes={["DOCTOR"]}>
           <NewRequestPage />
         </PrivateRoute>
 
-        <PrivateRoute
-          exact
-          path="/my/patients/:patient_id/submissions/show/:submission_id"
-          accountTypes={["DOCTOR"]}
-        >
+        <PrivateRoute exact path="/my/patients/:patient_id/submissions/show/:submission_id" accountTypes={["DOCTOR"]}>
           <ShowSubmissionPage />
         </PrivateRoute>
 

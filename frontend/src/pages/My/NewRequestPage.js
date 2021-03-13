@@ -23,7 +23,7 @@ const NewRequestPage = () => {
   const patientId = params.patient_id;
 
   // Perform the query that gets the patient using the id supplied in the query param
-  // Only return the patient of they exist and belong to the doctor
+  // Only return the patient if they exist and belong to the doctor
   const { loading, data: { getPatientByDoctor: patient } = {} } = useQuery(
     GET_PATIENT_BY_DOCTOR,
     {
