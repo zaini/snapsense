@@ -41,8 +41,17 @@ module.exports = {
           break;
       }
 
-      return submissions;
+      return submissions || [];
     },
+
+    //getSubmissionType
+
+    getSpecificSubmission: async (_, { submission_id: id} , __) => {
+      //account for such submission not existing? null case
+      const submission = await Submission.findByPk(id);
+      return submission;
+    }
+    
   },
   Mutation: {
     createSubmission: async (_, submission_details) => {
