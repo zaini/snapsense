@@ -1,19 +1,19 @@
 import React from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import Timeline from '@material-ui/lab/Timeline';
-import TimelineItem from '@material-ui/lab/TimelineItem';
-import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
-import TimelineConnector from '@material-ui/lab/TimelineConnector';
-import TimelineContent from '@material-ui/lab/TimelineContent';
-import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
-import TimelineDot from '@material-ui/lab/TimelineDot';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import DescriptionIcon from '@material-ui/icons/Description';
+import { makeStyles } from "@material-ui/core/styles";
+import Timeline from "@material-ui/lab/Timeline";
+import TimelineItem from "@material-ui/lab/TimelineItem";
+import TimelineSeparator from "@material-ui/lab/TimelineSeparator";
+import TimelineConnector from "@material-ui/lab/TimelineConnector";
+import TimelineContent from "@material-ui/lab/TimelineContent";
+import TimelineOppositeContent from "@material-ui/lab/TimelineOppositeContent";
+import TimelineDot from "@material-ui/lab/TimelineDot";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import DescriptionIcon from "@material-ui/icons/Description";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    padding: '6px 16px',
+    padding: "6px 16px",
   },
   secondaryTail: {
     backgroundColor: theme.palette.secondary.main,
@@ -23,17 +23,17 @@ const useStyles = makeStyles((theme) => ({
 //The rows will be an array of the submissions by the patient
 //passed from the submissions page
 
-const PatientsPersonalLogTimeline = ({rows}) => {
+const PatientsPersonalLogTimeline = ({ rows }) => {
   const classes = useStyles();
 
   if (rows.length === 0) {
     return (
       <Timeline>
-          <TimelineItem>
+        <TimelineItem>
           <TimelineSeparator>
             <TimelineDot color="primary">
               <DescriptionIcon />
-            </TimelineDot >
+            </TimelineDot>
             <TimelineConnector />
           </TimelineSeparator>
           <TimelineContent>
@@ -45,14 +45,12 @@ const PatientsPersonalLogTimeline = ({rows}) => {
           </TimelineContent>
         </TimelineItem>
       </Timeline>
-    )
-  }
-  else{
+    );
+  } else {
     return (
-
       <Timeline>
-          {rows.map((row, index) => (
-            <TimelineItem>
+        {rows.map((row, index) => (
+          <TimelineItem>
             <TimelineOppositeContent>
               <Typography variant="body2" color="textSecondary">
                 {row[index].createdAt}
@@ -61,7 +59,7 @@ const PatientsPersonalLogTimeline = ({rows}) => {
             <TimelineSeparator>
               <TimelineDot color="primary">
                 <DescriptionIcon />
-              </TimelineDot >
+              </TimelineDot>
               <TimelineConnector />
             </TimelineSeparator>
             <TimelineContent>
@@ -70,13 +68,11 @@ const PatientsPersonalLogTimeline = ({rows}) => {
                   Submission {index}
                 </Typography>
                 {/* TODO: Add image/questionnaire answers from real data */}
-                <Typography>
-                  Image/questionnaire
-                </Typography>
+                <Typography>Image/questionnaire</Typography>
               </Paper>
             </TimelineContent>
           </TimelineItem>
-          ))}
+        ))}
       </Timeline>
     );
   }

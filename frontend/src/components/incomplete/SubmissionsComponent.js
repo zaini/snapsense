@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import Table from "./Table";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import gql from "graphql-tag";
 import { Alert, AlertIcon, Spinner } from "@chakra-ui/react";
 //import { useContext } from "react";
-import { Center} from "@chakra-ui/layout";
+import { Center } from "@chakra-ui/layout";
 //import { AuthContext } from "../../context/auth";
 import { ViewIcon } from "@chakra-ui/icons";
 import { useQuery } from "@apollo/react-hooks";
@@ -14,9 +14,8 @@ import { Switch, FormLabel } from "@chakra-ui/react";
 import PatientsPersonalLogTimeline from "../../components/PatientsPersonalLogTimeline";
 
 const SubmissionsComponent = ({ account_type, patient_id }) => {
-
   const [viewTimeline, setViewTimeline] = useState(false);
-  
+
   const QUERY =
     account_type === "PATIENT" ? GET_SUBMISSIONS : GET_SUBMISSIONS_BY_PATIENT;
 
@@ -42,34 +41,30 @@ const SubmissionsComponent = ({ account_type, patient_id }) => {
     var data_rows =
       account_type === "PATIENT"
         ? data.getSubmissions
-        : data.getSubmissions({variables: {patient_id: patient_id}}) // check if it is correct at the bottom? with the pass id);
+        : data.getSubmissions({ variables: { patient_id: patient_id } }); // check if it is correct at the bottom? with the pass id);
     markup = <Table data={data_rows} cols={cols} />;
   }
 
   return (
-    <div style={{width: "100%"}}>
-    <div>
-      <FormLabel htmlFor="toggle" mb="0">
-        Enable timeline view?
-      </FormLabel>
-      <Switch
-        id="toggle"
-        size="md"
-        onChange={() => setViewTimeline(!viewTimeline)}
-      />
+    <div style={{ width: "100%" }}>
       <div>
-        {viewTimeline ? (
-          <PatientsPersonalLogTimeline
-            rows={data_rows || []}
-          />
-        ) : (
-          markup
-        )}
+        <FormLabel htmlFor="toggle" mb="0">
+          Enable timeline view?
+        </FormLabel>
+        <Switch
+          id="toggle"
+          size="md"
+          onChange={() => setViewTimeline(!viewTimeline)}
+        />
+        <div>
+          {viewTimeline ? (
+            <PatientsPersonalLogTimeline rows={data_rows || []} />
+          ) : (
+            markup
+          )}
+        </div>
       </div>
-    </div>
-    <div>
-      {/* TODO: Could have the download as PDF button here */}
-    </div>
+      <div>{/* TODO: Could have the download as PDF button here */}</div>
     </div>
   );
 };
@@ -101,7 +96,7 @@ const cols = [
     type: "number",
     headerName: "ID",
     flex: 0.3,
-    hide: true, 
+    hide: true,
   },
   {
     field: "createdAt",
@@ -110,8 +105,8 @@ const cols = [
     sortable: true,
     flex: 1,
   },
-  { 
-    field: "", 
+  {
+    field: "",
     headerName: "Type",
     flex: 1,
   },
@@ -121,12 +116,12 @@ const cols = [
     sortable: false,
     disableClickEventBubbling: true,
     renderCell: ({ row }) => {
-      let id = row.id
+      let id = row.id;
 
       return (
         //would the link be different for doctor?
         <Stack direction="row" spacing={4}>
-          <Link to={`my/submissions/show/${id}`}>   
+          <Link to={`my/submissions/show/${id}`}>
             <Button leftIcon={<ViewIcon />} colorScheme="blue">
               View
             </Button>
