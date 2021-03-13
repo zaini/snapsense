@@ -26,10 +26,11 @@ const SubmissionsComponent = ({ account_type, patient_id }) => {
       </Center>
     );
   } else if (error) {
+    console.log(error);
     markup = (
       <Alert status="error">
         <AlertIcon />
-        {error.graphQLErrors[0].message}
+        {/* {error.graphQLErrors[0].message} */}
       </Alert>
     );
   } else {
