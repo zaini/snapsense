@@ -30,17 +30,12 @@ const useStyles = makeStyles((theme) => ({
 
 const PatientsPersonalLogTimeline = ({rows}) => {
   const classes = useStyles();
-  const temps = [1,2,3,4,5];
+  const temps = [];
 
-  return (
-    <Timeline align="alternate">
-        {temps.map((temp, index) => (
+  if (temps.length === 0) {
+    return (
+      <Timeline align="alternate">
           <TimelineItem>
-          <TimelineOppositeContent>
-            <Typography variant="body2" color="textSecondary">
-              13/03/2021 9:30 am
-            </Typography>
-          </TimelineOppositeContent>
           <TimelineSeparator>
             <TimelineDot color="primary">
               <DescriptionIcon />
@@ -50,16 +45,45 @@ const PatientsPersonalLogTimeline = ({rows}) => {
           <TimelineContent>
             <Paper elevation={3} className={classes.paper}>
               <Typography variant="h6" component="h1" align="center">
-                Submission {index}
+                No submissions have been made yet!
               </Typography>
-              {/* TODO: Update link to view the details of submission */}
-              <Typography align="center"><Button><Link to="/">View</Link></Button></Typography>
             </Paper>
           </TimelineContent>
         </TimelineItem>
-        ))}
-    </Timeline>
-  );
+      </Timeline>
+    )
+  }
+  else{
+    return (
+
+      <Timeline align="alternate">
+          {temps.map((temp, index) => (
+            <TimelineItem>
+            <TimelineOppositeContent>
+              <Typography variant="body2" color="textSecondary">
+                13/03/2021 9:30 am
+              </Typography>
+            </TimelineOppositeContent>
+            <TimelineSeparator>
+              <TimelineDot color="primary">
+                <DescriptionIcon />
+              </TimelineDot >
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>
+              <Paper elevation={3} className={classes.paper}>
+                <Typography variant="h6" component="h1" align="center">
+                  Submission {index}
+                </Typography>
+                {/* TODO: Update link to view the details of submission */}
+                <Typography align="center"><Button><Link to="/">View</Link></Button></Typography>
+              </Paper>
+            </TimelineContent>
+          </TimelineItem>
+          ))}
+      </Timeline>
+    );
+  }
 };
 
 export default PatientsPersonalLogTimeline;
