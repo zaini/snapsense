@@ -11,9 +11,8 @@ const resolvers = require("./graphql/resolvers");
 const bree = new Bree({
   jobs: [
     {
-      // runs `./jobs/email.js` on start and every minute
       name: "noTemplateEmail",
-      interval: "5s",
+      interval: "25s",
     },
   ],
 });
