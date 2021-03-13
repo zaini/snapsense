@@ -1,4 +1,8 @@
-const { ApolloError, AuthenticationError, UserInputError } = require("apollo-server");
+const {
+  ApolloError,
+  AuthenticationError,
+  UserInputError,
+} = require("apollo-server");
 const {
   Doctor,
   Patient,
@@ -20,20 +24,21 @@ module.exports = {
     getPatientsByDoctor: async (_, {}, context) => {
       const user = isAuth(context);
 
-      if (!(user.accountType === "DOCTOR")) {
+      if (user.accountType !== "DOCTOR") {
         throw new AuthenticationError(
           "You are not logged into the correct account for this feature."
         );
       }
 
-      try {
-        const doctor = await Doctor.findOne({ where: { id: user.id } });
-        const patients = await doctor.getPatients();
-
-        return patients;
-      } catch (error) {
-        throw new Error(error);
+      // Get the doctor and make sure they exist
+      const doctor = await Doctor.findByPk(user.id);
+      if (!doctor) {
+        throw new UserInputError("Invalid user!");
       }
+
+      const patients = await doctor.getPatients();
+
+      return patients || [];
     },
     getPatientByDoctor: async (_, { patient_id }, context) => {
       const user = isAuth(context);
