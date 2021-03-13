@@ -159,12 +159,15 @@ const cols = [
       let type;
       switch (row.type) {
         case 1:
+          // Image only
           type = <FiImage />;
           break;
         case 2:
+          // Questionnaire only
           type = <FiList />;
           break;
         case 3:
+          // Both image and questionnaire
           type = (
             <Stack direction="row" spacing={4}>
               <FiImage /> <FiList />
