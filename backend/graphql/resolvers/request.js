@@ -4,7 +4,14 @@ const { Patient, Doctor, Request } = require("../../models/index.js");
 const isAuth = require("../../utils/isAuth.js");
 
 module.exports = {
-  Query: {},
+  Query: {
+    getRequestsAsPatient: async (_, __, context) => {
+      return [];
+    },
+    getRequestsAsDoctor: async (_, __, context) => {
+      return [];
+    },
+  },
   Mutation: {
     createRequest: async (
       _,
