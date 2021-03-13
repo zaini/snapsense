@@ -10,6 +10,10 @@ import TimelineDot from '@material-ui/lab/TimelineDot';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import DescriptionIcon from '@material-ui/icons/Description';
+import { useQuery } from "@apollo/react-hooks";
+import gql from "graphql-tag";
+import { Alert, AlertIcon, Spinner } from "@chakra-ui/react";
+import { Center} from "@chakra-ui/layout";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -20,8 +24,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// This component should take in an array of submissions by the patient
+// passed from the susmissions page
 const PatientsPersonalLogTimeline = ({rows}) => {
   const classes = useStyles();
+
+  const QUERY = GET_IMAGES_BY_PATIENT;
+
+  const { loading, data, error } = useQuery(QUERY);
+  
+  let markup;
+
+  if (loading) {
+    markup = (
+      <Center>
+        <Spinner size="xl" />
+      </Center>
+    );
+  } else if (error) {
+    console.log(error);
+    markup = (
+      <Alert status="error">
+        <AlertIcon />
+        {/* {error.graphQLErrors[0].message} */}
+      </Alert>
+    );
+  } 
 
   if (rows.length === 0) {
     return (
@@ -68,7 +96,8 @@ const PatientsPersonalLogTimeline = ({rows}) => {
                 </Typography>
                 {/* TODO: Add image/questionnaire answers from real data */}
                 <Typography>
-                  Image/questionnaire
+                  {/* {data.getImages({variables: {submission_id: row.id}}).map((subImg, index) (
+                    (<img src=""></img>)))} */}
                 </Typography>
               </Paper>
             </TimelineContent>
@@ -80,3 +109,21 @@ const PatientsPersonalLogTimeline = ({rows}) => {
 };
 
 export default PatientsPersonalLogTimeline;
+
+const GET_IMAGES = gql`
+  query {
+    getImages {
+      id
+      image
+    }
+  }
+`;
+
+const GET_IMAGES_BY_PATIENT = gql`
+  query GetSubmissions($submission_id: String!) {
+    getSubmissions(submission_id: $submission_id) {
+      id
+      image
+    }
+  }
+`;
