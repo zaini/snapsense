@@ -18,11 +18,11 @@ module.exports = {
       },
       html: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       altbody: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       template: {
         type: Sequelize.STRING

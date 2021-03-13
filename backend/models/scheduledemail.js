@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   ScheduledEmail.init({
     to: DataTypes.STRING,
     subject: DataTypes.STRING,
-    html: DataTypes.STRING,
-    altbody: DataTypes.STRING,
+    html: DataTypes.TEXT,
+    altbody: DataTypes.TEXT,
     template: DataTypes.STRING,
     status: DataTypes.INTEGER
   }, {
