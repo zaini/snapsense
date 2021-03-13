@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { AuthContext } from "../context/auth";
+import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import {
@@ -17,8 +16,11 @@ import {
 } from "@chakra-ui/react";
 import CopyLink from "./utils/CopyLink";
 
-const PatientInfo = () => {
-  const { loading, data, error } = useQuery(GET_PATIENT_AS_DOCTOR);
+const PatientInfo = (props) => {
+  const location = useParams();
+  const { loading, data, error } = useQuery(GET_PATIENT_AS_DOCTOR, {
+    variables: { patient_id: location.patient_id },
+  });
 
   let markup;
 
@@ -74,8 +76,8 @@ const PatientInfo = () => {
 export default PatientInfo;
 
 const GET_PATIENT_AS_DOCTOR = gql`
-  query {
-    getPatientByDoctor(patient_id: 1) {
+  query getPatientAsDoctor($patient_id: ID!) {
+    getPatientAsDoctor(patient_id: $patient_id) {
       id
       fname
       lname
