@@ -80,7 +80,7 @@ const cols = [
       let id = row.id;
       return (
         <Stack direction="row" spacing={4}>
-          <Link to={`/my/patients/${id}`}>
+          <Link to={`/my/patients/show/${id}`}>
             <Button leftIcon={<ViewIcon />} colorScheme="blue">
               View Profile
             </Button>

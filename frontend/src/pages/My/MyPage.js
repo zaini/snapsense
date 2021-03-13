@@ -80,7 +80,11 @@ const MyPage = ({ changeNavbar }) => {
           <RequestsPage />
         </PrivateRoute>
 
-        <PrivateRoute exact path="/my/submissions" accountTypes={["PATIENT", "DOCTOR"]}>
+        <PrivateRoute
+          exact
+          path="/my/submissions"
+          accountTypes={["PATIENT", "DOCTOR"]}
+        >
           <SubmissionsPage />
         </PrivateRoute>
 
