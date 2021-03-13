@@ -30,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
 
 const PatientsPersonalLogTimeline = ({rows}) => {
   const classes = useStyles();
-  const temps = [];
+  const temps = [1,2,3,4,5];
 
   if (temps.length === 0) {
     return (
-      <Timeline align="alternate">
+      <Timeline>
           <TimelineItem>
           <TimelineSeparator>
             <TimelineDot color="primary">
@@ -56,7 +56,7 @@ const PatientsPersonalLogTimeline = ({rows}) => {
   else{
     return (
 
-      <Timeline align="alternate">
+      <Timeline>
           {temps.map((temp, index) => (
             <TimelineItem>
             <TimelineOppositeContent>
