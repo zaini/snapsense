@@ -13,10 +13,6 @@ module.exports = gql`
     createdAt: String!
   }
 
-  # TODO move tokens to a 'me' function
-  # The attribute 'token' will be used to determine whether the user is logged
-  # in or not, it represents a JWT token
-
   type Admin {
     id: ID!
     fname: String!
@@ -48,11 +44,19 @@ module.exports = gql`
 
   type Submission {
     id: ID!
-    patient_id: ID!
-    doctor_id: ID
+    Doctor: Doctor
+    Patient: Patient
     deadline: String!
-    fulfilled: String!
     createdAt: String!
+  }
+
+  type Request {
+    id: ID!
+    Doctor: Doctor
+    Patient: Patient
+    Submission: Submission
+    type: Int!
+    deadline: String!
   }
 
   type Image {
@@ -93,7 +97,11 @@ module.exports = gql`
       deadline: String
     ): Submission
 
-    createRequest(request_type: Int!, deadline: String!, patient_id: ID!): Boolean!
+    createRequest(
+      request_type: Int!
+      deadline: String!
+      patient_id: ID!
+    ): Boolean!
 
     # TODO Image Mutations
     # singleUpload(file: Upload!): File!
@@ -119,7 +127,6 @@ module.exports = gql`
   }
 
   type Query {
-    getPatientsByDoctor: [Patient!]
     getHospitals: [Hospital!]
     getAdmins: [Admin!]
     getDoctors: [Doctor!]
@@ -127,9 +134,12 @@ module.exports = gql`
     getDoctorsByAdmin: [Doctor!]
     getDoctorsByPatient: [Doctor!]
     getSubmissions(patient_id: Int): [Submission!]
+    getPatientByDoctor(patient_id: ID!): Patient!
+    getPatientsByDoctor: [Patient!]
+    getRequestsAsPatient: [Request!]
+    getRequestsAsDoctor: [Request!]
     getImages: [Image!]
     isLoggedIn: String!
     checkInvitation(invitationToken: String!): String!
-    getPatientByDoctor(patient_id: ID!): Patient!
   }
 `;
