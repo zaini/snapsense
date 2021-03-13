@@ -72,8 +72,16 @@ const PatientsPersonalLogTimeline = ({rows}) => {
                 <Typography variant="h6" component="h1" align="center">
                   Submission {index}
                 </Typography>
+                {/* TODO: Add image from real data */}
+                <Typography>
+                  Image
+                </Typography>
                 {/* TODO: Update link to view the details of submission */}
-                <Typography align="center"><Button><Link to="/">View</Link></Button></Typography>
+                <Typography align="center">
+                  <Button>
+                    <Link to="/">View</Link>
+                  </Button>
+                </Typography>
               </Paper>
             </TimelineContent>
           </TimelineItem>
