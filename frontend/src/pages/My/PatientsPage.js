@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import Table from "../../components/incomplete/Table";
 import { Center, Heading } from "@chakra-ui/layout";
 import { Alert, AlertIcon, Button, Spinner, Stack } from "@chakra-ui/react";
-import { MdBuild } from "react-icons/md";
+import { ViewIcon, CalendarIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 
 // Shows all the patients that belong to a doctor
@@ -81,10 +81,14 @@ const cols = [
       return (
         <Stack direction="row" spacing={4}>
           <Link to={`/my/patients/${id}`}>
-            <Button leftIcon={<MdBuild />}>View Profile</Button>
+            <Button leftIcon={<ViewIcon />} colorScheme="blue">
+              View Profile
+            </Button>
           </Link>
           <Link to={`/my/patients/${id}/requests/new`}>
-            <Button leftIcon={<MdBuild />}>Request Submission</Button>
+            <Button leftIcon={<CalendarIcon />} colorScheme="blue">
+              Request Submission
+            </Button>
           </Link>
         </Stack>
       );
