@@ -1,11 +1,10 @@
-const { ApolloError, AuthenticationError } = require("apollo-server");
+const { ApolloError, AuthenticationError, UserInputError } = require("apollo-server");
 const {
   Doctor,
   Patient,
   Doctor_Patient_Relation,
 } = require("../../models/index.js");
-const sequelize = require("../../models/index.js");
-const patient = require("../../models/patient.js");
+
 const isAuth = require("../../utils/isAuth");
 
 module.exports = {
