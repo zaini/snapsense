@@ -122,7 +122,8 @@ module.exports = gql`
     getAdmins: [Admin!]
     getDoctors: [Doctor!]
     getPatients: [Patient!]
-    getDoctorsByHospital: [Doctor!]
+    getDoctorsByAdmin: [Doctor!]
+    getDoctorsByPatient: [Doctor!]
     getSubmissions(patient_id: Int): [Submission!]
     getImages: [Image!]
     isLoggedIn: String!
