@@ -1,5 +1,6 @@
-const { UserInputError, AuthenticationError } = require("apollo-server");
-const { Doctor, Hospital, Patient } = require("../../models/index.js");
+const { AuthenticationError, UserInputError } = require("apollo-server-core");
+const { Patient, Doctor, Hospital } = require("../../models/index.js");
+
 const isAuth = require("../../utils/isAuth");
 
 module.exports = {
@@ -32,7 +33,7 @@ module.exports = {
     getDoctorsByPatient: async (_, __, context) => {
       const user = isAuth(context);
 
-      if (!(user.accountType === "PATIENT")) {
+      if (user.accountType !== "PATIENT") {
         throw new AuthenticationError(
           "You are not logged into the correct account for this feature."
         );
