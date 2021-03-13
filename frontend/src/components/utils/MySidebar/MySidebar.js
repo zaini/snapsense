@@ -14,7 +14,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { InfoIcon, PhoneIcon, PlusSquareIcon } from "@chakra-ui/icons";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Box } from "@chakra-ui/react";
 import { SidebarData } from "./SidebarData";
 import { AuthContext } from "../../../context/auth";
 import { Link } from "react-router-dom";
@@ -49,24 +49,32 @@ const MySidebar = (props) => {
       </List>
       <Divider />
       <List>
-        <ListItem button>
-          <ListItemIcon>
-            <PlusSquareIcon />
-          </ListItemIcon>
-          <ListItemText primary={"Logout"} />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <PhoneIcon />
-          </ListItemIcon>
-          <ListItemText primary={"Contact"} />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <InfoIcon />
-          </ListItemIcon>
-          <ListItemText primary={"About Us"} />
-        </ListItem>
+        <Link to={"/logout"}>
+          <ListItem button>
+            <ListItemIcon>
+              <PlusSquareIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Logout"} />
+          </ListItem>
+        </Link>
+
+        <Link to={"/contact"}>
+          <ListItem button>
+            <ListItemIcon>
+              <PhoneIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Contact"} />
+          </ListItem>
+        </Link>
+
+        <Link to={"/about"}>
+          <ListItem button>
+            <ListItemIcon>
+              <InfoIcon />
+            </ListItemIcon>
+            <ListItemText primary={"About Us"} />
+          </ListItem>
+        </Link>
       </List>
     </div>
   );
@@ -78,7 +86,7 @@ const MySidebar = (props) => {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar back style={{ background: "#9C3848" }}>
+        <Toolbar back style={{ background: "primary.500" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -134,9 +142,7 @@ const MySidebar = (props) => {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Flex className={classes.innerMainContent} bg={"gray.50"}>
-          {props.children}
-        </Flex>
+        <Box>{props.children}</Box>
       </main>
     </div>
   );

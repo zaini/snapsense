@@ -26,7 +26,8 @@ const LoginFormWrapper = () => {
         />
 
         <h4>
-          Hello {accountType}! Please fill out the form below to get started
+          Hello {accountType.toLowerCase()}! Please fill out the form below to
+          get started
         </h4>
 
         <br />

@@ -9,10 +9,24 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       doctor_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        references: {
+          model: "Doctors",
+          key: "id",
+          as: "doctor_id"
+        }
       },
       patient_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        references: {
+          model: "Patients",
+          key: "id",
+          as: "patient_id"
+        }
       },
       type: {
         type: Sequelize.INTEGER
@@ -24,7 +38,14 @@ module.exports = {
         type: Sequelize.DATE
       },
       submission_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onUpdate: "CASCADE",
+        onDelete: "SET NULL",
+        references: {
+          model: "Submissions",
+          key: "id",
+          as: "submission_id"
+        }
       },
       createdAt: {
         allowNull: false,

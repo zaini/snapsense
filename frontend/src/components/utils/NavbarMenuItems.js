@@ -2,17 +2,18 @@ import { useContext } from "react";
 import MenuItem from "./MenuItem";
 import { Button } from "@chakra-ui/react";
 import { AuthContext } from "../../context/auth";
+import { decode } from 'jsonwebtoken'
 
 const NavbarMenuItems = () => {
-  const { user } = useContext(AuthContext);
+  let { user } = useContext(AuthContext);
+  user = decode(user) === null ? user : decode(user);
 
-  // Right now the navbar for admin, doctor and patient are all identical, but it's possible they could be different in the future
   if (user) {
     switch (user.accountType) {
       case "ADMIN":
         return (
           <>
-            <MenuItem to="/my">My</MenuItem>
+            <MenuItem to="/my">My Dashboard</MenuItem>
             <MenuItem to="/contact">Contact Us</MenuItem>
             <MenuItem to="/logout" isLast>
               <Button
@@ -37,7 +38,7 @@ const NavbarMenuItems = () => {
       case "DOCTOR":
         return (
           <>
-            <MenuItem to="/my">My</MenuItem>
+            <MenuItem to="/my">My Dashboard</MenuItem>
             <MenuItem to="/contact">Contact Us</MenuItem>
             <MenuItem to="/logout" isLast>
               <Button
@@ -62,7 +63,7 @@ const NavbarMenuItems = () => {
       case "PATIENT":
         return (
           <>
-            <MenuItem to="/my">My</MenuItem>
+            <MenuItem to="/my">My Dashboard</MenuItem>
             <MenuItem to="/contact">Contact Us</MenuItem>
             <MenuItem to="/logout" isLast>
               <Button
