@@ -133,7 +133,7 @@ module.exports = gql`
     getPatients: [Patient!]
     getDoctorsAsAdmin: [Doctor!]
     getDoctorsAsPatient: [Doctor!]
-    getSubmissions(patient_id: Int): [Submission!]
+    getSubmissions(patient_id: ID): [Submission!]
     getPatientAsDoctor(patient_id: ID!): Patient!
     getPatientsAsDoctor: [Patient!]
     getRequestsAsPatient: [Request!]

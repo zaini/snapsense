@@ -9,10 +9,10 @@ import { useQuery } from "@apollo/react-hooks";
 const SubmissionsComponent = () => {
   const location = useParams();
 
-  const patient_id = parseInt(location.patient_id);
+  const patient_id = location.patient_id;
 
   const { loading, data, error } = useQuery(GET_SUBMISSIONS, {
-    variables: { patient_id: isNaN(patient_id) ? -1 : patient_id },
+    variables: { patient_id: patient_id },
   });
 
   let markup;
@@ -41,7 +41,7 @@ const SubmissionsComponent = () => {
 export default SubmissionsComponent;
 
 const GET_SUBMISSIONS = gql`
-  query getSubmissions($patient_id: Int) {
+  query getSubmissions($patient_id: ID) {
     getSubmissions(patient_id: $patient_id) {
       id
       Doctor {
