@@ -12,6 +12,8 @@ const {
   ScheduledEmail,
 } = require("../../models/index.js");
 const isAuth = require("../../utils/isAuth.js");
+const JSONToString = require("../../utils/jsonProvider/string.js");
+const enqueueEmail = require("../../utils/scheduledEmail.js");
 
 module.exports = {
   Query: {
@@ -109,8 +111,7 @@ module.exports = {
         throw new UserInputError(error);
       }
 
-      // Try to send an email to the patient about the request
-      // Set email parameters
+      // Set email parameters for the template
       const htmlParams = {
         doctorEmail: doctor.email,
         patientEmail: patient.email,
@@ -118,29 +119,21 @@ module.exports = {
         deadline: deadline,
       };
 
-      let jsonHtmlContents = "";
+      // convert Json params to String
+      const jsonHtmlContents = JSONToString(htmlParams);
 
-      try {
-        jsonHtmlContents = JSON.stringify(htmlParams);
-      } catch (error) {
-        throw new ApolloError("Invalid User Details for MX Server");
-      }
+      // Set essential email parameters
       const emailParams = {
         to: patient.email,
-        subject: "Snapsense Request Reminder",
+        subject: "Snapsense Submission Request",
         html: jsonHtmlContents,
-        altbody: "Please send the foot !!",
+        altbody: "Please open the snapsense panel and send the desired information to your doctor.",
         template: "request",
         status: 0,
       };
 
-      // Insert email params into model
-      try {
-        await ScheduledEmail.create(emailParams);
-      } catch (error) {
-        // MySQL query could not run, throw internal server error
-        throw new ApolloError("Internal MX Server Error", 502);
-      }
+      // Insert bundled email params into model
+      await enqueueEmail(emailParams);
 
       // Everything was successful so return false
       return true;

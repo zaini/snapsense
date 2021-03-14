@@ -15,6 +15,9 @@ const {
 } = require("../../../models/index");
 require("dotenv").config();
 
+const JSONToString = require("../../../utils/jsonProvider/string.js");
+const enqueueEmail = require("../../../utils/scheduledEmail");
+
 const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
 
 module.exports = {
@@ -158,8 +161,10 @@ module.exports = {
 
       const inviteToken = createAccessToken(inviteTokenParams, "7d");
 
+      // Set invite token URL for attaching in email
       const inviteUrl = "http://localhost:3000/invites/show/" + inviteToken;
 
+      // Set email parameters for the template
       const htmlParams = {
         inviter: userEmail,
         newAccount: email,
@@ -168,6 +173,7 @@ module.exports = {
         for: "",
       };
 
+      // set User specific template params
       switch (user.accountType) {
         case "ADMIN":
           //Admin is inviting a doctor
@@ -186,14 +192,10 @@ module.exports = {
           break;
       }
 
-      let jsonHtmlContents = "";
+      // convert Json html params to String
+      const jsonHtmlContents = JSONToString(htmlParams);
 
-      try {
-        jsonHtmlContents = JSON.stringify(htmlParams);
-      } catch (error) {
-        throw new ApolloError("Invalid User Details for MX Server");
-      }
-
+      // Set essential email parameters
       const emailParams = {
         to: email,
         subject: "Snapsense Account Invitation",
@@ -203,11 +205,8 @@ module.exports = {
         status: 0,
       };
 
-      try {
-        await ScheduledEmail.create(emailParams);
-      } catch (error) {
-        throw new ApolloError("Inter Mail Server Error", 502);
-      }
+      // Insert bundled email params into model
+      await enqueueEmail(emailParams);
 
       return inviteToken;
     },
