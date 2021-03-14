@@ -9,11 +9,11 @@ import { useQuery } from "@apollo/react-hooks";
 const SubmissionsComponent = () => {
   const location = useParams();
 
-  const { loading, data, error } = useQuery(GET_SUBMISSIONS, {
-    variables: { patient_id: location.patient_id },
-  });
+  const patient_id = parseInt(location.patient_id);
 
-  console.log(loading, error, data);
+  const { loading, data, error } = useQuery(GET_SUBMISSIONS, {
+    variables: { patient_id: isNaN(patient_id) ? -1 : patient_id },
+  });
 
   let markup;
 
@@ -27,14 +27,11 @@ const SubmissionsComponent = () => {
     markup = (
       <Alert status="error">
         <AlertIcon />
-        {/* TODO error message should show up here */}
-        {/* {error.graphQLErrors[0].message} */}
+        {error.graphQLErrors[0].message}
       </Alert>
     );
   } else {
-    // let data_rows = data.getSubmissions;
-    let data_rows = [];
-    console.log(data);
+    let data_rows = data.getSubmissions;
     markup = <SubmissionsViewSwitch data={data_rows} />;
   }
 

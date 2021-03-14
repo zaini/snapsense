@@ -10,9 +10,7 @@ import {
   Center,
   Alert,
   AlertIcon,
-  Button,
   Spinner,
-  Stack,
 } from "@chakra-ui/react";
 import CopyLink from "./utils/CopyLink";
 
@@ -38,8 +36,7 @@ const PatientInfo = (props) => {
       </Alert>
     );
   } else {
-    let user = { fname: "bob", lname: "mcbob", email: "bob@email.com" };
-
+    let user = data.getPatientAsDoctor;
     markup = (
       <Container>
         <Center>
@@ -81,6 +78,7 @@ const GET_PATIENT_AS_DOCTOR = gql`
       id
       fname
       lname
+      email
     }
   }
 `;
