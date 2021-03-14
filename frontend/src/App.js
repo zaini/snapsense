@@ -12,6 +12,8 @@ import LogoutPage from "./pages/LogoutPage";
 import FeedbackPage from "./pages/FeedbackPage";
 import ShowInvitePage from "./pages/ShowInvitePage";
 
+import NewSubmissionPage from "./pages/My/NewSubmissionPage";
+
 import "./App.css";
 
 const App = () => {
@@ -22,21 +24,20 @@ const App = () => {
 
       <Switch>
         <Route exact path="/" component={LandingPage} />
-
         <LoggedOutRoute exact path="/login" component={LoginPage} />
         <Route exact path="/logout" component={LogoutPage} />
-
         <Route
           exact
           path="/invites/show/:token_id"
           component={ShowInvitePage}
         />
-
         <PrivateRoute path="/my" accountTypes={["ADMIN", "DOCTOR", "PATIENT"]}>
           <MyPage changeNavbar={setMainNavbarIsVisible} />
         </PrivateRoute>
-
         <Route exact path="/feedback" component={FeedbackPage} />
+        {/* Delete this route below */}
+        <Route exact path="/submission" component={NewSubmissionPage} />
+        {/* */}
       </Switch>
     </Router>
   );
