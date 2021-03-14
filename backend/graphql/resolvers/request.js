@@ -12,7 +12,6 @@ const {
   ScheduledEmail,
 } = require("../../models/index.js");
 const isAuth = require("../../utils/isAuth.js");
-const JSONToString = require("../../utils/jsonProvider/string.js");
 const enqueueEmail = require("../../utils/scheduledEmail.js");
 
 module.exports = {
@@ -119,21 +118,17 @@ module.exports = {
         deadline: deadline,
       };
 
-      // convert Json params to String
-      const jsonHtmlContents = JSONToString(htmlParams);
-
       // Set essential email parameters
       const emailParams = {
         to: patient.email,
         subject: "Snapsense Submission Request",
-        html: jsonHtmlContents,
         altbody: "Please open the snapsense panel and send the desired information to your doctor.",
         template: "request",
         status: 0,
       };
 
       // Insert bundled email params into model
-      await enqueueEmail(emailParams);
+      await enqueueEmail(emailParams,htmlParams);
 
       // Everything was successful so return false
       return true;

@@ -15,7 +15,6 @@ const {
 } = require("../../../models/index");
 require("dotenv").config();
 
-const JSONToString = require("../../../utils/jsonProvider/string.js");
 const enqueueEmail = require("../../../utils/scheduledEmail");
 
 const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
@@ -192,21 +191,17 @@ module.exports = {
           break;
       }
 
-      // convert Json html params to String
-      const jsonHtmlContents = JSONToString(htmlParams);
-
       // Set essential email parameters
       const emailParams = {
         to: email,
         subject: "Snapsense Account Invitation",
-        html: jsonHtmlContents,
         altbody: inviteUrl,
         template: "invite",
         status: 0,
       };
 
       // Insert bundled email params into model
-      await enqueueEmail(emailParams);
+      await enqueueEmail(emailParams,htmlParams);
 
       return inviteToken;
     },

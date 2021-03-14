@@ -1,10 +1,16 @@
 const { ApolloError } = require("apollo-server-core");
 const { ScheduledEmail } = require("../models/index");
+const JSONToString = require("./jsonProvider/string");
 
-const enqueueEmail = async (p) => {
-  if (!p) {
+// Process p-> Parameters for the Scheduled email and h-> HTML Template Content
+const enqueueEmail = async (p, h) => {
+  if (!p || !h) {
     throw new ApolloError("Invalid email parameters", 400);
   }
+
+  const jsonHtmlContents = JSONToString(h);
+  p.html = jsonHtmlContents;
+
   try {
     await ScheduledEmail.create(p);
   } catch (error) {
