@@ -1,12 +1,9 @@
 const { ApolloError } = require("apollo-server");
+const stringToJSON = require("../jsonProvider/parse");
 const { header, footer } = require("./common");
+
 const requestTemplate = (p) => {
-  let obj;
-  try {
-    obj = JSON.parse(p); // this is how you parse a string into JSON
-  } catch (e) {
-    throw new ApolloError("Invalid JSON Parse, MX Template Server");
-  }
+  const obj = stringToJSON(p);
 
   let type = "";
   if (obj.type === 1) {
@@ -18,10 +15,10 @@ const requestTemplate = (p) => {
   }
 
   const deadline = new Date(parseInt(obj.deadline))
-  .toISOString()
-  .slice(0, 19)
-  .replace(/-/g, "/")
-  .replace("T", " ");
+    .toISOString()
+    .slice(0, 19)
+    .replace(/-/g, "/")
+    .replace("T", " ");
 
   const html = `${header}
       <div class="u-row-container" style="padding: 0px;background-color: transparent">
@@ -49,7 +46,7 @@ const requestTemplate = (p) => {
   
                               <h1
                               style="margin: 0px; color: #15578a; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: arial,helvetica,sans-serif; font-size: 22px;">
-                              <strong>Submission Reminder by ${ deadline } !</strong>
+                              <strong>Submission Reminder by ${deadline} !</strong>
                               </h1>
   
                           </td>
@@ -116,7 +113,7 @@ const requestTemplate = (p) => {
   
                               <div style="color: #868990; line-height: 170%; text-align: left; word-wrap: break-word;">
                               <p style="font-size: 14px; line-height: 170%; text-align: center;"><span
-                                  style="font-size: 16px; line-height: 27.2px;">${obj.doctorEmail} would like you to submit: ${ type } by ${ deadline } 
+                                  style="font-size: 16px; line-height: 27.2px;">${obj.doctorEmail} would like you to submit: ${type} by ${deadline} 
                                   on the all new Medical Interface. This email is intended for ${obj.patientEmail}.<br /></span></p>
                               <p style="font-size: 14px; line-height: 170%; text-align: center;">&nbsp;</p>
                               </div>

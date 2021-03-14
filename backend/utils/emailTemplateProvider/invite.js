@@ -1,12 +1,9 @@
 const { ApolloError } = require("apollo-server");
+const stringToJSON = require("../jsonProvider/parse");
 const { header, footer } = require("./common");
+
 const inviteTemplate = (p) => {
-  let obj;
-  try {
-    obj = JSON.parse(p); // this is how you parse a string into JSON
-  } catch (e) {
-    throw new ApolloError("Invalid JSON Parse, MX Template Server");
-  }
+  const obj = stringToJSON(p);
   const html = `${header}
     <div class="u-row-container" style="padding: 0px;background-color: transparent">
         <div class="u-row"
@@ -152,8 +149,8 @@ const inviteTemplate = (p) => {
 
                             <div style="color: #868990; line-height: 170%; text-align: left; word-wrap: break-word;">
                             <p style="font-size: 14px; line-height: 170%; text-align: center;"><span
-                                style="font-size: 16px; line-height: 27.2px;">${obj.inviter} (${ obj.by }) would like to invite
-                                you to the all new Medical Interface. This email is intended for ${obj.newAccount} (${ obj.for }).<br /></span></p>
+                                style="font-size: 16px; line-height: 27.2px;">${obj.inviter} (${obj.by}) would like to invite
+                                you to the all new Medical Interface. This email is intended for ${obj.newAccount} (${obj.for}).<br /></span></p>
                             <p style="font-size: 14px; line-height: 170%; text-align: center;">&nbsp;</p>
                             </div>
 
