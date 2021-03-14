@@ -25,13 +25,11 @@ module.exports = {
             }
 
             if (await doctor.hasPatient(patient)) {
-              console.log("RETURNING doctor's specific patients submissions");
               submissions = await patient.getSubmissions();
             } else {
               throw new UserInputError("This patient does not belong to you.");
             }
           } else {
-            console.log("RETURNING ALL OF DOCTORS PATIENT SUBMISSIONS");
             const patients = await doctor.getPatients();
             patients.forEach(async (patient) => {
               const patientSubmissions = await patient.getSubmissions();
@@ -40,7 +38,6 @@ module.exports = {
           }
           break;
         case "PATIENT":
-          console.log("RETURNING specific patients submissions");
           const patient = await Patient.findByPk(user.id);
           submissions = await patient.getSubmissions();
           break;
