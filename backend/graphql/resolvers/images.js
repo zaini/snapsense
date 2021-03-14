@@ -1,10 +1,11 @@
 const imageUploader = require("../../utils/filestreamUploader");
+const { Image, Submission } = require("../../models/index.js");
 
 module.exports = {
   Query:{
     getImages: async () => {
       try {
-        const images = await Images.findAll();
+        const images = await Image.findAll();
         return images;
       } catch (error) {
         throw new Error(error);
