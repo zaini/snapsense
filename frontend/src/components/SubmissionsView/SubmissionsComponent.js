@@ -1,33 +1,19 @@
-import { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { AuthContext } from "../../context/auth";
 import { Alert, AlertIcon, Spinner } from "@chakra-ui/react";
 import { Center } from "@chakra-ui/layout";
 import SubmissionsViewSwitch from "./SubmissionsViewSwitch";
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/react-hooks";
 
 // Takes a list of submissions and shows them in the table and timeline view
-const SubmissionsComponent = ({ loading, data, error }) => {
+const SubmissionsComponent = () => {
   const location = useParams();
-  const { user } = useContext(AuthContext);
 
-  let QUERY;
+  const { loading, data, error } = useQuery(GET_SUBMISSIONS, {
+    variables: { patient_id: location.patient_id },
+  });
 
-  // TODO this is so ugly.
-  switch (user.accountType) {
-    case "PATIENT":
-      // If patient, get all their submissions - /my/submissions
-      break;
-    case "DOCTOR":
-      let patient_id = location.patient_id;
-      if (patient_id) {
-        // If doctor, get all the submissions of the patient they are viewing - /my/patients/show/:patient_id
-        break;
-      }
-      // If doctor, get all the submissions of all their patients - /my/submissions
-      break;
-    default:
-      break;
-  }
+  console.log(loading, error, data);
 
   let markup;
 
@@ -48,6 +34,7 @@ const SubmissionsComponent = ({ loading, data, error }) => {
   } else {
     // let data_rows = data.getSubmissions;
     let data_rows = [];
+    console.log(data);
     markup = <SubmissionsViewSwitch data={data_rows} />;
   }
 
@@ -55,3 +42,25 @@ const SubmissionsComponent = ({ loading, data, error }) => {
 };
 
 export default SubmissionsComponent;
+
+const GET_SUBMISSIONS = gql`
+  query getSubmissions($patient_id: Int) {
+    getSubmissions(patient_id: $patient_id) {
+      id
+      Doctor {
+        id
+        fname
+        lname
+        email
+      }
+      Patient {
+        id
+        fname
+        lname
+        email
+      }
+      deadline
+      createdAt
+    }
+  }
+`;

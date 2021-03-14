@@ -1,13 +1,14 @@
 const { Submission } = require("../../models/index.js");
 const isAuth = require("../../utils/isAuth");
+const { UserInputError } = require("apollo-server-core");
 
 module.exports = {
   Query: {
     getSubmissions: async (_, { patient_id: id }, context) => {
       const user = isAuth(context);
-
       const account_type = user.account_type;
       let submissions = [];
+      console.log("RUNNING", id, account_type);
 
       // TODO check this actually works lol
 
@@ -19,11 +20,17 @@ module.exports = {
       switch (account_type) {
         case "DOCTOR":
           const doctor = await Doctor.findByPk(user.id);
-
+          console.log("DOCTOR");
           if (id) {
             const patient = await Patient.findByPk(id);
+            if (!patient) {
+              throw new UserInputError("This patient does not exist.");
+            }
+
             if (await doctor.hasPatient(patient)) {
               submissions = await patient.getSubmissions();
+            } else {
+              throw new UserInputError("This patient does not belong to you.");
             }
           } else {
             const patients = await doctor.getPatients();
@@ -33,7 +40,6 @@ module.exports = {
             });
           }
 
-          return submissions;
         case "PATIENT":
           const patient = await Patient.findByPk(user.id);
           submissions = await patient.getSubmissions();
