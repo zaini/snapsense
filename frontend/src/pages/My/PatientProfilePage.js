@@ -1,5 +1,5 @@
 import React from "react";
-import SubmissionsComponent from "../../components/incomplete/SubmissionsComponent";
+import SubmissionsComponent from "../../components/SubmissionsView/SubmissionsComponent";
 import PatientInfo from "../../components/PatientInfo";
 
 // Shows the information about a specific patient and also their submissions

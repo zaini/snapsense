@@ -11,22 +11,10 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import DescriptionIcon from "@material-ui/icons/Description";
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: "6px 16px",
-  },
-  secondaryTail: {
-    backgroundColor: theme.palette.secondary.main,
-  },
-}));
-
-//The rows will be an array of the submissions by the patient
-//passed from the submissions page
-
-const PatientSubmissionsTimeline = ({ rows }) => {
+const PatientSubmissionsTimeline = ({ data }) => {
   const classes = useStyles();
 
-  if (rows.length === 0) {
+  if (data.length === 0) {
     return (
       <Timeline>
         <TimelineItem>
@@ -49,7 +37,7 @@ const PatientSubmissionsTimeline = ({ rows }) => {
   } else {
     return (
       <Timeline>
-        {rows.map((row, index) => (
+        {data.map((row, index) => (
           <TimelineItem>
             <TimelineOppositeContent>
               <Typography variant="body2" color="textSecondary">
@@ -79,3 +67,12 @@ const PatientSubmissionsTimeline = ({ rows }) => {
 };
 
 export default PatientSubmissionsTimeline;
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    padding: "6px 16px",
+  },
+  secondaryTail: {
+    backgroundColor: theme.palette.secondary.main,
+  },
+}));

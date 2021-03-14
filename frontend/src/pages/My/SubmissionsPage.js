@@ -1,6 +1,7 @@
-import SubmissionsComponent from "../../components/incomplete/SubmissionsComponent";
+import SubmissionsComponent from "../../components/SubmissionsView/SubmissionsComponent";
 
-// Shows the submissions of a specific patient
+// For patients: shows all their submissions
+// For doctor: shows the submissions of all their patients
 const SubmissionsPage = () => {
   return (
     <>

@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import Table from "../../components/incomplete/Table";
+import Table from "../../components/utils/Table";
 import { Center, Heading } from "@chakra-ui/layout";
 import { Alert, AlertIcon, Button, Spinner, Stack } from "@chakra-ui/react";
 import { ViewIcon, CalendarIcon } from "@chakra-ui/icons";
