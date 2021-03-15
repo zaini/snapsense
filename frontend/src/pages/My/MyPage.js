@@ -92,7 +92,7 @@ const MyPage = ({ changeNavbar }) => {
         <PrivateRoute
           exact
           path="/my/submissions/review"
-          accountTypes={["PATIENT", "DOCTOR"]}
+          accountTypes={["DOCTOR"]}
         >
           <ReviewSubmissions />
         </PrivateRoute>
