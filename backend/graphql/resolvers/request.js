@@ -1,5 +1,4 @@
 const { AuthenticationError, UserInputError } = require("apollo-server-core");
-
 const {
   Patient,
   Doctor,
@@ -7,6 +6,8 @@ const {
   Submission,
 } = require("../../models/index.js");
 const isAuth = require("../../utils/isAuth.js");
+const { Sequelize } = require("../../models/index");
+const Op = Sequelize.Op;
 
 module.exports = {
   Query: {
@@ -49,6 +50,27 @@ module.exports = {
 
       const requests = await Request.findAll({
         where: { doctor_id: doctor.id },
+        include: [Doctor, Patient, Submission],
+      });
+      return requests || [];
+    },
+    getRequestsForReview: async (_, __, context) => {
+      const user = isAuth(context);
+
+      if (user.accountType !== "DOCTOR") {
+        throw new AuthenticationError(
+          "You are not logged into the correct account for this feature."
+        );
+      }
+
+      const doctor = await Doctor.findByPk(user.id);
+
+      if (!doctor) {
+        throw new UserInputError("Invalid doctor");
+      }
+
+      const requests = await Request.findAll({
+        where: { doctor_id: doctor.id, submission_id: { [Op.ne]: null } },
         include: [Doctor, Patient, Submission],
       });
       return requests || [];
