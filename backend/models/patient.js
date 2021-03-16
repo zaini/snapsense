@@ -69,6 +69,10 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      flag: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+      },
     },
     {
       sequelize,
