@@ -58,10 +58,10 @@ const handleFileUpload = async (file) => {
       },
       (err, data) => {
         if (err) {
-          col("error uploading file");
+          console.log("error uploading file");
           reject(err);
         } else {
-          col("successfully uploaded file");
+          console.log("successfully uploaded file");
           resolve(data);
         }
       }

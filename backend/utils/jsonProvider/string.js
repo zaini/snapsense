@@ -3,7 +3,7 @@ const JSONToString = (p) => {
     const data = JSON.stringify(p);
     return data;
   } catch (e) {
-    throw new ApolloError("Invalid User Details for MX Server");
+    throw new ApolloError("Invalid JSON");
   }
 };
 
