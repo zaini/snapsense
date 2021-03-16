@@ -16,7 +16,14 @@ module.exports = (sequelize, DataTypes) => {
   }
   Submission.init(
     {
-      patient_id: DataTypes.INTEGER,
+      patient_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      flag: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+      },
     },
     {
       sequelize,
