@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Box, Flex, Image, Heading, Stack } from "@chakra-ui/react";
 
 // Not sure this is
@@ -47,16 +46,3 @@ export default function Hero({ title, subtitle, image, ...rest }) {
     </Flex>
   );
 }
-
-Hero.propTypes = {
-  title: PropTypes.string,
-  subtitle: PropTypes.string,
-  image: PropTypes.string,
-};
-
-Hero.defaultProps = {
-  title: "React landing page with Chakra UI",
-  subtitle:
-    "This is the subheader section where you describe the basic benefits of your product",
-  image: "https://source.unsplash.com/collection/404339/800x600",
-};

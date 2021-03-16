@@ -290,4 +290,25 @@ describe("Doctor Model Test", () => {
     ).rejects.toThrow();
     done();
   });
+
+  it("should delete doctor if hospital is deleted", async (done) => {
+    const hospital = await new Hospital({
+        name: "Test Hospital",
+        contact_email: "test_hospital@mail.com",
+    }).save();
+    
+    const doctor = await new Doctor({
+        fname: "Ivan",
+        lname: "Ivanov",
+        email: "ivan.ivanov@nhs.net",
+        password: "Abradabra123",
+        hospital_id: hospital.id,
+    }).save();
+
+    await hospital.destroy();
+
+    const doctorFind = await Doctor.findByPk(doctor.id);
+    expect(doctorFind).toBeNull();
+    done();
+  });
 });
