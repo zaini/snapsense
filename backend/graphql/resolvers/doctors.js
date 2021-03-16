@@ -13,7 +13,7 @@ module.exports = {
         throw new Error(error);
       }
     },
-    getDoctorsByAdmin: async (_, __, context) => {
+    getDoctorsAsAdmin: async (_, __, context) => {
       const user = isAuth(context);
 
       if (user.accountType !== "ADMIN") {
@@ -30,7 +30,7 @@ module.exports = {
       const doctors = await hospital.getDoctors();
       return doctors || [];
     },
-    getDoctorsByPatient: async (_, __, context) => {
+    getDoctorsAsPatient: async (_, __, context) => {
       const user = isAuth(context);
 
       if (user.accountType !== "PATIENT") {

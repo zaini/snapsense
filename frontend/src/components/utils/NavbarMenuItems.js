@@ -2,11 +2,9 @@ import { useContext } from "react";
 import MenuItem from "./MenuItem";
 import { Button } from "@chakra-ui/react";
 import { AuthContext } from "../../context/auth";
-import { decode } from 'jsonwebtoken'
 
 const NavbarMenuItems = () => {
-  let { user } = useContext(AuthContext);
-  user = decode(user) === null ? user : decode(user);
+  const { user } = useContext(AuthContext);
 
   if (user) {
     switch (user.accountType) {

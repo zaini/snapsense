@@ -14,6 +14,7 @@ import RequestsPage from "./RequestsPage";
 import NewInvitePage from "./NewInvitePage";
 import ShowSubmissionPage from "./ShowSubmissionPage";
 import SubmissionsPage from "./SubmissionsPage";
+import ReviewSubmissions from "./ReviewSubmissions";
 
 // Main my, where you can place your routers for each my page
 const MyPage = ({ changeNavbar }) => {
@@ -80,8 +81,20 @@ const MyPage = ({ changeNavbar }) => {
           <RequestsPage />
         </PrivateRoute>
 
-        <PrivateRoute exact path="/my/submissions" accountTypes={["PATIENT", "DOCTOR"]}>
+        <PrivateRoute
+          exact
+          path="/my/submissions"
+          accountTypes={["PATIENT", "DOCTOR"]}
+        >
           <SubmissionsPage />
+        </PrivateRoute>
+
+        <PrivateRoute
+          exact
+          path="/my/submissions/review"
+          accountTypes={["DOCTOR"]}
+        >
+          <ReviewSubmissions />
         </PrivateRoute>
 
         <PrivateRoute

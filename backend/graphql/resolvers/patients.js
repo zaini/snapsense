@@ -3,11 +3,7 @@ const {
   AuthenticationError,
   UserInputError,
 } = require("apollo-server");
-const {
-  Doctor,
-  Patient,
-  Doctor_Patient_Relation,
-} = require("../../models/index.js");
+const { Doctor, Patient } = require("../../models/index.js");
 
 const isAuth = require("../../utils/isAuth");
 
@@ -21,7 +17,7 @@ module.exports = {
         throw new Error(error);
       }
     },
-    getPatientsByDoctor: async (_, {}, context) => {
+    getPatientsAsDoctor: async (_, {}, context) => {
       const user = isAuth(context);
 
       if (user.accountType !== "DOCTOR") {
@@ -40,7 +36,7 @@ module.exports = {
 
       return patients || [];
     },
-    getPatientByDoctor: async (_, { patient_id }, context) => {
+    getPatientAsDoctor: async (_, { patient_id }, context) => {
       const user = isAuth(context);
 
       // Authenticate doctor
