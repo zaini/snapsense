@@ -16,7 +16,7 @@ const backendLink = createHttpLink({
 });
 
 const uploadLink = createUploadLink({
-  uri: process.env.BACKEND_URL || "http://192.168.0.31:5000/graphql",
+  uri: process.env.BACKEND_URL || "http://localhost:5000/graphql",
   headers: {
     "keep-alive": "true"
   }
