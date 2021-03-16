@@ -19,7 +19,7 @@ module.exports = {
         }
       },
       flag: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

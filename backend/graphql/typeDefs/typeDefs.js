@@ -39,7 +39,7 @@ module.exports = gql`
     lname: String!
     email: String!
     password: String
-    flag: Boolean!
+    flag: Int
     createdAt: String!
   }
 
@@ -48,7 +48,7 @@ module.exports = gql`
     Patient: Patient
     Images: [Image!]
     Answers: [Answer!]
-    flag: Boolean
+    flag: Int
     createdAt: String!
   }
 

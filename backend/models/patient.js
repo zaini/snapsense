@@ -70,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       flag: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.INTEGER,
         allowNull: true,
       },
     },
