@@ -61,7 +61,7 @@ const questionsObject = [
   },
 ];
 
-const Questionnaire = () => {
+const Questionnaire = ({answersFromQuestionnaire}) => {
   const [questionNumber, setQuestionNumber] = useState(0);
   const [answers, setAnswers] = useState(Array(questionsObject.length));
 
@@ -69,6 +69,7 @@ const Questionnaire = () => {
     let temp = answers;
     temp[questionNumber] = optionIndex;
     setAnswers(temp);
+    answersFromQuestionnaire(answers);
   };
 
   return (
@@ -91,7 +92,7 @@ const Questionnaire = () => {
         ))}
 
         <SimpleGrid
-          columns={[3]}
+          columns={[2]}
           spacing={2}
           direction={["column", "row"]}
           spacing="5px"
@@ -104,15 +105,7 @@ const Questionnaire = () => {
             disabled={questionNumber === 0}
           ></Button>
 
-          <Button
-            rightIcon={<CheckCircleIcon />}
-            colorScheme="teal"
-            variant="solid"
-            disabled={questionNumber !== questionsObject.length - 1}
-            onClick={() => console.log(answers)}
-          >
-            Submit
-          </Button>
+          
 
           <Button
             rightIcon={<ArrowForwardIcon />}
