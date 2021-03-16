@@ -133,6 +133,7 @@ module.exports = gql`
     getRequestsAsPatient: [Request!]
     getRequestsAsDoctor: [Request!]
     getRequestsForReview: [Request!]
+    getImagesBySubmission(submission_id: ID!): [Image!]
     getImages: [Image!]
     isLoggedIn: String!
     checkInvitation(invitationToken: String!): String!
