@@ -34,7 +34,6 @@ const giveTemplate = require("../utils/emailTemplateProvider");
     // return early if the job was already cancelled
     if (isCancelled) return;
     try {
-
       // Retrieve HTML code by passing essential information to Template Provider
       const htmlContent = giveTemplate(result.template, result.html);
 
@@ -51,7 +50,6 @@ const giveTemplate = require("../utils/emailTemplateProvider");
 
       return response;
     } catch (err) {
-
       // If the email was not succesfully sent, set the ID for this ScheduledEmail to 2
       await emailStatusChanger(2, result.id);
       console.log(err);
@@ -81,6 +79,8 @@ const giveTemplate = require("../utils/emailTemplateProvider");
 
     // each ScheduledEmail object inside emailsFetched is passed to mapper with concurrent execution
     await pMap(emailsFetched, mapper, { concurrency });
+    if (parentPort) parentPort.postMessage("done");
+    else process.exit(0);
   } else {
     console.log("___________No Emails___________");
   }
