@@ -1,10 +1,27 @@
 const { ApolloServer } = require("apollo-server-express");
 const express = require("express");
 const cors = require("cors");
+const Bree = require("bree");
+const Graceful = require("@ladjs/graceful");
 require("dotenv").config();
 
 const typeDefs = require("./graphql/typeDefs/typeDefs");
 const resolvers = require("./graphql/resolvers");
+
+const bree = new Bree({
+  jobs: [
+    {
+      name: "email",
+      interval: "25s",
+    },
+  ],
+});
+
+// handle graceful reloads, pm2 support, and events like SIGHUP, SIGINT, etc.
+const graceful = new Graceful({ brees: [bree] });
+graceful.listen();
+// start all jobs (this is the equivalent of reloading a crontab):
+bree.start();
 
 const app = express();
 
