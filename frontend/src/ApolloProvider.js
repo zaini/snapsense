@@ -6,6 +6,7 @@ import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { setContext } from "apollo-link-context";
 import { ChakraProvider } from "@chakra-ui/react";
+import { createUploadLink } from 'apollo-upload-client'
 
 import { AuthProvider } from "./context/auth";
 import customTheme from "./utils/theme";
@@ -13,6 +14,13 @@ import customTheme from "./utils/theme";
 const backendLink = createHttpLink({
   uri: process.env.BACKEND_URL || "http://localhost:5000/graphql",
 });
+
+const uploadLink = createUploadLink({
+  uri: process.env.BACKEND_URL || "http://192.168.0.31:5000/graphql",
+  headers: {
+    "keep-alive": "true"
+  }
+})
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("jwtToken");
@@ -25,7 +33,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const client = new ApolloClient({
-  link: authLink.concat(backendLink),
+  link: authLink.concat(uploadLink),
   cache: new InMemoryCache(),
   connectToDevTools: true,
 });
