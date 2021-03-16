@@ -11,6 +11,28 @@ const isAuth = require("../../utils/isAuth");
 const imageUploader = require("../../utils/filestreamUploader");
 const stringToJSON = require("../../utils/jsonProvider/parse.js");
 
+const fulfilRequests = async (patient) => {
+  const requests = await patient.getRequests({
+    where: {
+      fulfilled: null,
+    },
+  });
+
+  requests.forEach(async (request) => {
+    if (
+      (images !== undefined && images.length > 0 && answers !== undefined) ||
+      (images !== undefined &&
+        images.length > 0 &&
+        request.getDataValue("type") === 1) ||
+      (answers !== undefined && request.getDataValue("type") === 2)
+    ) {
+      request.submission_id = submission.id;
+      request.fulfilled = new Date();
+      await request.save();
+    }
+  });
+};
+
 module.exports = {
   Query: {
     getSubmissions: async (_, { patient_id: id }, context) => {
@@ -90,7 +112,7 @@ module.exports = {
       // Create answers and add them to the submission
       if (answers !== undefined) {
         answers = stringToJSON(answers);
-        console.log(Object.keys(answers.questionnaire).length)
+        console.log(Object.keys(answers.questionnaire).length);
         if (Object.keys(answers.questionnaire).length !== 8)
           throw new UserInputError("Invalid number of answers");
       }
@@ -103,27 +125,7 @@ module.exports = {
         }).save();
       }
 
-      const requests = await patient.getRequests({
-        where: {
-          fulfilled: null,
-        },
-      });
-
-      requests.forEach(async (request) => {
-        if (
-          (images !== undefined &&
-            images.length > 0 &&
-            answers !== undefined) ||
-          (images !== undefined &&
-            images.length > 0 &&
-            request.getDataValue("type") === 1) ||
-          (answers !== undefined && request.getDataValue("type") === 2)
-        ) {
-          request.submission_id = submission.id;
-          request.fulfilled = new Date();
-          await request.save();
-        }
-      });
+      await fulfilRequests(patient);
 
       return true;
     },
