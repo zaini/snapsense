@@ -103,8 +103,15 @@ module.exports = {
       // TODO make it so that these requests also haven't been reviewed yet
       // maybe instead of fulfilled check where submission isn't null?
       const requests = await Request.findAll({
-        where: { doctor_id: doctor.id, submission_id: { [Op.ne]: null } },
-        include: [Doctor, Patient, Submission],
+        where: {
+          doctor_id: doctor.id,
+          submission_id: { [Op.ne]: null },
+        },
+        include: [
+          Doctor,
+          Patient,
+          { model: Submission, where: { flag: null } },
+        ],
       });
       return requests || [];
     },

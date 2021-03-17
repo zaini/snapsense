@@ -12,28 +12,6 @@ const isAuth = require("../../utils/isAuth");
 const imageUploader = require("../../utils/filestreamUploader");
 const stringToJSON = require("../../utils/jsonProvider/parse.js");
 
-const fulfilRequests = async (patient) => {
-  const requests = await patient.getRequests({
-    where: {
-      fulfilled: null,
-    },
-  });
-
-  requests.forEach(async (request) => {
-    if (
-      (images !== undefined && images.length > 0 && answers !== undefined) ||
-      (images !== undefined &&
-        images.length > 0 &&
-        request.getDataValue("type") === 1) ||
-      (answers !== undefined && request.getDataValue("type") === 2)
-    ) {
-      request.submission_id = submission.id;
-      request.fulfilled = new Date();
-      await request.save();
-    }
-  });
-};
-
 module.exports = {
   Query: {
     getSubmissions: async (_, { patient_id: id }, context) => {
@@ -153,7 +131,27 @@ module.exports = {
         }).save();
       }
 
-      await fulfilRequests(patient);
+      const requests = await patient.getRequests({
+        where: {
+          fulfilled: null,
+        },
+      });
+
+      requests.forEach(async (request) => {
+        if (
+          (images !== undefined &&
+            images.length > 0 &&
+            answers !== undefined) ||
+          (images !== undefined &&
+            images.length > 0 &&
+            request.getDataValue("type") === 1) ||
+          (answers !== undefined && request.getDataValue("type") === 2)
+        ) {
+          request.submission_id = submission.id;
+          request.fulfilled = new Date();
+          await request.save();
+        }
+      });
 
       return true;
     },
