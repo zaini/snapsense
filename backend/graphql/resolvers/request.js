@@ -15,9 +15,9 @@ const isAuth = require("../../utils/isAuth.js");
 const { Sequelize } = require("../../models/index");
 const Op = Sequelize.Op;
 const enqueueEmail = require("../../utils/scheduledEmail.js");
+const transactionalEmailSender = require("../../utils/transactionalEmailSender.js");
 
 const sendRequestEmail = async (doctor, patient, request_type, deadline) => {
-  
   // Set email parameters for the template
   const htmlParams = {
     doctorEmail: doctor.email,
@@ -37,7 +37,7 @@ const sendRequestEmail = async (doctor, patient, request_type, deadline) => {
   };
 
   // Insert bundled email params into model
-  await enqueueEmail(emailParams, htmlParams);
+  await transactionalEmailSender(emailParams, htmlParams);
 };
 
 module.exports = {
@@ -100,9 +100,18 @@ module.exports = {
         throw new UserInputError("Invalid doctor");
       }
 
+      // TODO make it so that these requests also haven't been reviewed yet
+      // maybe instead of fulfilled check where submission isn't null?
       const requests = await Request.findAll({
-        where: { doctor_id: doctor.id, submission_id: { [Op.ne]: null } },
-        include: [Doctor, Patient, Submission],
+        where: {
+          doctor_id: doctor.id,
+          submission_id: { [Op.ne]: null },
+        },
+        include: [
+          Doctor,
+          Patient,
+          { model: Submission, where: { flag: null } },
+        ],
       });
       return requests || [];
     },
@@ -156,7 +165,7 @@ module.exports = {
         // An error will be thrown if the request is invalid as a result of a user input error
         throw new UserInputError(error);
       }
-      
+
       await sendRequestEmail(doctor, patient, request_type, deadline);
 
       // Everything was successful so return false

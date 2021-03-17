@@ -29,6 +29,7 @@ const prefix = uuidv4();
 // the actual upload happens here
 const handleFileUpload = async (file) => {
   const { createReadStream, filename } = await file;
+  console.log(file);
   const extension = filename.split(".").pop();
   const extensionsAllowed = [
     "png",
@@ -58,10 +59,10 @@ const handleFileUpload = async (file) => {
       },
       (err, data) => {
         if (err) {
-          col("error uploading file");
+          console.log("error uploading file");
           reject(err);
         } else {
-          col("successfully uploaded file");
+          console.log("successfully uploaded file");
           resolve(data);
         }
       }
