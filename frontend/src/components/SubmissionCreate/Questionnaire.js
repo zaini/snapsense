@@ -58,18 +58,18 @@ const questionsObject = [
 ];
 
 const QuestionForm = ({ step, answers, setAnswers }) => {
-  if (!answers.questionnaire[step]) {
-    answers.questionnaire[step] = {};
+  if (!answers.questionnaire[step + 1]) {
+    answers.questionnaire[step + 1] = {};
   }
   const onChangeOption = (optionIndex) => {
     let temp = answers;
-    temp.questionnaire[step].val = optionIndex;
+    temp.questionnaire[step + 1].val = optionIndex;
     setAnswers(temp);
   };
 
   const onChangeText = (extraInfo) => {
     let temp = answers;
-    temp.questionnaire[step].extra = extraInfo;
+    temp.questionnaire[step + 1].extra = extraInfo;
     setAnswers(temp);
   };
 
@@ -95,7 +95,6 @@ const QuestionForm = ({ step, answers, setAnswers }) => {
                   question={questionsObject[i]}
                   onChangeOption={onChangeOption}
                   onChangeText={onChangeText}
-                  selected={answers.questionnaire[i]}
                 />
               </Box>
             ))}
