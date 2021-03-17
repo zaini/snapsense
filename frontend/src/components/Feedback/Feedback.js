@@ -80,7 +80,7 @@ const Feedback = () => {
             <Center>
               <Button
                 mt={4}
-                colorScheme="blue"
+                colorScheme="teal"
                 rightIcon={<CheckCircleIcon />}
                 onClick={() => handleSubmit()}
               >

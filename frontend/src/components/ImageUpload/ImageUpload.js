@@ -27,7 +27,7 @@ class ImageUpload extends React.Component {
             buttonText="Choose images to Upload"
             onChange={this.onDrop}
             imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-            maxFileSize={5242880}
+            maxFileSize={3024000}
           />
         </Box>
       </Flex>

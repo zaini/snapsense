@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  Button,
-  Box,
-  Flex,
-  SimpleGrid,
-  Stack,
-} from "@chakra-ui/react";
+import { Button, Box, Flex, SimpleGrid, Stack } from "@chakra-ui/react";
 import Question from "./Question";
 import {
   ArrowForwardIcon,
@@ -18,60 +12,43 @@ const questionsObject = [
   {
     questionID: 0,
     questionText: "In the past 7 days, have you felt unwell?",
-    answerOptions: [
-      { answerText: "Yes" },
-      { answerText: "No" },
-    ],
+    answerOptions: [{ answerText: "Yes" }, { answerText: "No" }],
   },
   {
     questionID: 1,
-    questionText: "In the past 7 days, have you had a fever (temperature higher than 36C)?",
-    answerOptions: [
-      { answerText: "Yes" },
-      { answerText: "No" },
-     
-    ],
+    questionText:
+      "In the past 7 days, have you had a fever (temperature higher than 36C)?",
+    answerOptions: [{ answerText: "Yes" }, { answerText: "No" }],
   },
   {
     questionID: 2,
-    questionText: "In the past 7 days, have you seen redness around your ulcer?",
-    answerOptions: [
-      { answerText: "Yes" },
-      { answerText: "No" },
-    ],
+    questionText:
+      "In the past 7 days, have you seen redness around your ulcer?",
+    answerOptions: [{ answerText: "Yes" }, { answerText: "No" }],
   },
   {
     questionID: 3,
-    questionText: "In the past 7 days, have you seen any puss around your ulcer?",
-    answerOptions: [
-      { answerText: "Yes" },
-      { answerText: "No" },
-  
-    ],
+    questionText:
+      "In the past 7 days, have you seen any puss around your ulcer?",
+    answerOptions: [{ answerText: "Yes" }, { answerText: "No" }],
   },
   {
     questionID: 4,
-    questionText: "In the past 7 days, has your ulcer been hotter to touch than usual?",
-    answerOptions: [
-      { answerText: "Yes" },
-      { answerText: "No" },
-    ],
+    questionText:
+      "In the past 7 days, has your ulcer been hotter to touch than usual?",
+    answerOptions: [{ answerText: "Yes" }, { answerText: "No" }],
   },
   {
     questionID: 5,
-    questionText: "In the past 7 days, has one foot been hotter to touch than the other?",
-    answerOptions: [
-      { answerText: "Yes" },
-      { answerText: "No" },
-    ],
+    questionText:
+      "In the past 7 days, has one foot been hotter to touch than the other?",
+    answerOptions: [{ answerText: "Yes" }, { answerText: "No" }],
   },
   {
     questionID: 6,
-    questionText: "In the past 7 days, have you noticed any unusual smells from the wound?",
-    answerOptions: [
-      { answerText: "Yes" },
-      { answerText: "No" },
-    ],
+    questionText:
+      "In the past 7 days, have you noticed any unusual smells from the wound?",
+    answerOptions: [{ answerText: "Yes" }, { answerText: "No" }],
   },
   {
     questionID: 7,
@@ -84,7 +61,7 @@ const questionsObject = [
   },
 ];
 
-const Questionnaire = () => {
+const Questionnaire = ({answersFromQuestionnaire}) => {
   const [questionNumber, setQuestionNumber] = useState(0);
   const [answers, setAnswers] = useState(Array(questionsObject.length));
 
@@ -92,6 +69,7 @@ const Questionnaire = () => {
     let temp = answers;
     temp[questionNumber] = optionIndex;
     setAnswers(temp);
+    answersFromQuestionnaire(answers);
   };
 
   return (
@@ -113,26 +91,21 @@ const Questionnaire = () => {
           </Box>
         ))}
 
-        <SimpleGrid columns={[3]} spacing={2}>
+        <SimpleGrid
+          columns={[2]}
+          spacing={2}
+          direction={["column", "row"]}
+          spacing="5px"
+        >
           <Button
             leftIcon={<ArrowBackIcon />}
             colorScheme="teal"
             variant="solid"
             onClick={() => setQuestionNumber(questionNumber - 1)}
             disabled={questionNumber === 0}
-          >
-            Previous
-          </Button>
+          ></Button>
 
-          <Button
-            rightIcon={<CheckCircleIcon />}
-            colorScheme="teal"
-            variant="solid"
-            disabled={questionNumber !== questionsObject.length - 1}
-            onClick={() => console.log(answers)}
-          >
-            Submit
-          </Button>
+          
 
           <Button
             rightIcon={<ArrowForwardIcon />}
@@ -140,9 +113,7 @@ const Questionnaire = () => {
             variant="solid"
             onClick={() => setQuestionNumber(questionNumber + 1)}
             disabled={questionNumber === questionsObject.length - 1}
-          >
-            Next
-          </Button>
+          ></Button>
         </SimpleGrid>
       </Stack>
     </Flex>
