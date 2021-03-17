@@ -2,26 +2,20 @@ import React from "react";
 import { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
+import { Button, StepLabel, Step, Paper, Stepper } from "@material-ui/core";
 import {
-  Button,
-  StepLabel,
-  Step,
-  Paper,
-  Stepper,
-  Typography,
-} from "@material-ui/core";
-import {
-  Flex,
   Heading,
-  SimpleGrid,
   Stack,
   Box,
-  HStack,
   Center,
   Text,
+  Alert,
   Spinner,
+  AlertIcon,
 } from "@chakra-ui/react";
 import { CheckCircleIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
 
 import QuestionForm from "../../components/SubmissionCreate/Questionnaire";
 import Review from "../../components/SubmissionCreate/Review";
@@ -184,46 +178,60 @@ const NewSubmissionPage = () => {
     body = (
       <Box className={classes.layout}>
         <Stack>
-          <Paper className={classes.paper}>
-            <Heading style={{ textAlign: "center" }}>Image Upload</Heading>
-            <ImageUpload setImages={setImages} />
-          </Paper>
+          <Alert status="info">
+            <AlertIcon />
+            Open the tabs to add your images or questionnaire or both!
+          </Alert>
+          <Tabs>
+            <TabList>
+              <Tab>Image</Tab>
+              <Tab>Questionnaire</Tab>
+            </TabList>
+            <TabPanel>
+              <Paper className={classes.paper}>
+                <Heading style={{ textAlign: "center" }}>Image Upload</Heading>
+                <ImageUpload setImages={setImages} />
+              </Paper>
+            </TabPanel>
+            <TabPanel>
+              <Paper className={classes.paper}>
+                <Heading style={{ textAlign: "center" }}>Questionnaire</Heading>
+                <Stepper activeStep={activeStep} className={classes.stepper}>
+                  {steps.map((label) => (
+                    <Step key={label}>
+                      <StepLabel>{label}</StepLabel>
+                    </Step>
+                  ))}
+                </Stepper>
+                <Box>
+                  <Stack>
+                    {activeStep < 8 ? (
+                      <QuestionForm
+                        step={activeStep}
+                        answers={answers}
+                        setAnswers={setAnswers}
+                      />
+                    ) : (
+                      <Review answers={answers} />
+                    )}
+                    <Center columns={[2]}>
+                      <BackButton
+                        activeStep={activeStep}
+                        handleBack={handleBack}
+                        classes={classes}
+                      />
+                      <NextButton
+                        activeStep={activeStep}
+                        handleNext={handleNext}
+                        classes={classes}
+                      />
+                    </Center>
+                  </Stack>
+                </Box>
+              </Paper>
+            </TabPanel>
+          </Tabs>
 
-          <Paper className={classes.paper}>
-            <Heading style={{ textAlign: "center" }}>Questionnaire</Heading>
-            <Stepper activeStep={activeStep} className={classes.stepper}>
-              {steps.map((label) => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-            <Box>
-              <Stack>
-                {activeStep < 8 ? (
-                  <QuestionForm
-                    step={activeStep}
-                    answers={answers}
-                    setAnswers={setAnswers}
-                  />
-                ) : (
-                  <Review answers={answers} />
-                )}
-                <Center columns={[2]}>
-                  <BackButton
-                    activeStep={activeStep}
-                    handleBack={handleBack}
-                    classes={classes}
-                  />
-                  <NextButton
-                    activeStep={activeStep}
-                    handleNext={handleNext}
-                    classes={classes}
-                  />
-                </Center>
-              </Stack>
-            </Box>
-          </Paper>
           <Paper className={classes.paper}>
             <Center>
               <Button
