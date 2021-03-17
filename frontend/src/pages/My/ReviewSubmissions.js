@@ -33,7 +33,7 @@ const ReviewSubmissions = () => {
       <Tabs>
         <TabList>
           <Tab>Fulfilled Requests</Tab>
-          <Tab>All Submissions</Tab>
+          <Tab>Unreviewed Submissions</Tab>
         </TabList>
         <TabPanel>
           <RequestCardsTable data={data_rows} />
