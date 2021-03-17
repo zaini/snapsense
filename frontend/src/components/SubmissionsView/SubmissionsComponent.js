@@ -31,8 +31,8 @@ const SubmissionsComponent = () => {
       </Alert>
     );
   } else {
-    let data_rows = data.getSubmissions;
-    markup = <SubmissionsViewSwitch data={data_rows} />;
+    const dataRows = data.getSubmissions;
+    markup = <SubmissionsViewSwitch data={dataRows} />;
   }
 
   return markup;
@@ -44,19 +44,25 @@ const GET_SUBMISSIONS = gql`
   query getSubmissions($patient_id: ID) {
     getSubmissions(patient_id: $patient_id) {
       id
-      Doctor {
-        id
-        fname
-        lname
-        email
-      }
       Patient {
         id
         fname
         lname
         email
       }
-      deadline
+      Images {
+        id
+        url
+      }
+      Answers {
+        id
+        Question {
+          id
+          text
+        }
+        value
+        extra
+      }
       createdAt
     }
   }
