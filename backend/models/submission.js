@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       Submission.hasMany(models.Image, { foreignKey: "submission_id" });
       Submission.hasMany(models.Answer, { foreignKey: "submission_id" });
       Submission.hasOne(models.Request, { foreignKey: "submission_id" });
+      Submission.belongsTo(models.Patient, { foreignKey: "patient_id" });
     }
   }
   Submission.init(
