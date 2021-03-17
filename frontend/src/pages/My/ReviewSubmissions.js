@@ -2,9 +2,11 @@ import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { Center, Heading } from "@chakra-ui/layout";
 import { Alert, AlertIcon, Spinner } from "@chakra-ui/react";
-import SubmissionCardsTable from "../../components/SubmissionsView/SubmissionCards/SubmissionCardsTable";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
+import RequestCardsTable from "../../components/SubmissionsView/RequestCards/RequestCardsTable";
 
-// Shows the "cards" of all the requests that have been fulfilled but not reviewed by the doctor
+// Shows the "cards" of all the requests that have been fulfilled but not reviewed by the doctor and general submissions from their patients
 const ReviewSubmissions = () => {
   const { loading, data, error } = useQuery(GET_REQUESTS);
 
@@ -26,38 +28,32 @@ const ReviewSubmissions = () => {
   } else {
     console.log(data);
     let data_rows = data.getRequestsForReview;
-    data_rows = [
-      {
-        id: 1,
-        type: 2,
-        deadline: new Date(),
-        fulfillment_date: new Date(),
-        Submission: {
-          id: 2,
-          questionnaire: { 1: "Yes", 2: "No" },
-          images: [
-            "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg",
-            "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
-          ],
-        },
-        Patient: {
-          id: 1,
-          fname: "Bob",
-          lname: "McBob",
-        },
-      },
-    ];
-    markup = <SubmissionCardsTable data={data_rows} />;
+
+    markup = (
+      <Tabs>
+        <TabList>
+          <Tab>Fulfilled Requests</Tab>
+          <Tab>All Submissions</Tab>
+        </TabList>
+        <TabPanel>
+          <RequestCardsTable data={data_rows} />
+        </TabPanel>
+        <TabPanel>
+          <h2>all submissions will go here</h2>
+        </TabPanel>
+      </Tabs>
+    );
   }
 
   return (
     <>
       <Center>
         <Heading>Review Patient Submissions</Heading>
-        <hr />
-        <br />
-        {markup}
       </Center>
+      <hr />
+      <br />
+      {/* Have 2 tabs: one for submissions associated with requests and one for submissions as a whole */}
+      {markup}
     </>
   );
 };
@@ -72,13 +68,30 @@ const GET_REQUESTS = gql`
       deadline
       Submission {
         id
+        Images {
+          id
+          url
+        }
+        Answers {
+          id
+          Question {
+            id
+            text
+          }
+          value
+          extra
+        }
+        flag
+        createdAt
       }
       Patient {
+        id
         fname
         lname
         email
       }
       Doctor {
+        id
         fname
         lname
         email
