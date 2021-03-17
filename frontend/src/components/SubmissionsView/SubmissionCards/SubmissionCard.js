@@ -1,29 +1,27 @@
 import React from "react";
 
-// {
-//   id: 1,
-//   type: 2,
-//   deadline: new Date(),
-//   fulfillment_date: new Date(),
-//   Submission: {
-//     id: 2,
-//     questionnaire: { 1: "Yes", 2: "No" },
-//     images: [
-//       "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg",
-//       "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
-//     ],
-//   },
-//   Patient: {
-//     id: 1,
-//     fname: "Bob",
-//     lname: "McBob",
-//   },
-// },
+// id: "1"
+// Doctor:
+  // email: "doctor1@nhs.net"
+  // fname: "Doctor"
+  // lname: "One"
+// Patient:
+  // email: "patient1@gmail.com"
+  // fname: "Patient"
+  // lname: "One"
+// Submission:
+  // Answers: null
+  // Images: null
+  // createdAt: "1609718400000"
+  // flag: 1
+  // id: "1"
+// deadline: "1609804800000"
+// type: 3
 
-// This takes a submission. We need something else for requests.
+// This takes a submission.
 const SubmissionCard = ({ data }) => {
   const { Submission } = data;
-  const { id, questionnaire, images } = Submission;
+  const { id } = Submission;
   return <div>{id}</div>;
 };
 

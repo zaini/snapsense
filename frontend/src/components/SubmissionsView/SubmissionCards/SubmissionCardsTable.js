@@ -7,7 +7,7 @@ const SubmissionCardsTable = ({ data }) => {
   if (data.length === 0) {
     markup = (
       <Container>
-        <Text>You have no submissions await review!</Text>
+        <Text>You have no submissions awaiting review!</Text>
       </Container>
     );
   } else {
