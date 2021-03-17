@@ -11,10 +11,11 @@ import {
   Center,
 } from "@chakra-ui/react";
 
-import Error from "../Error";
-import CopyLink from "../CopyLink";
+import Error from "../utils/Error";
+import CopyLink from "../utils/CopyLink";
 
-const URL_PREFIX = process.env.REACT_APP_FRONTEND_URL_PREFIX || "http://localhost:3000";
+const URL_PREFIX =
+  process.env.REACT_APP_FRONTEND_URL_PREFIX || "http://localhost:3000";
 
 const CreateInviteForm = () => {
   const {
@@ -33,19 +34,18 @@ const CreateInviteForm = () => {
       setInvitationToken(invitationToken);
     },
     onError(err) {
-      setError("graphql", {
-        type: "manual",
-        message: err.graphQLErrors[0].message,
-      });
+      const message = err.graphQLErrors[0].message;
+      // We have to assign this to a field in the form for it to let us resubmit after an error
+      setError("email", { type: "manual", message });
       setInvitationToken("");
     },
   });
 
-  const onSubmit = ({ email, repeat_email }) => {
+  const onSubmit = async ({ email, repeat_email }) => {
+    console.log("submitting invite form");
     clearErrors();
     if (email === repeat_email) {
-      // probably have to await this
-      inviteUser({ variables: { email: email } });
+      await inviteUser({ variables: { email: email } });
     } else {
       setError("email", {
         type: "manual",
@@ -56,6 +56,7 @@ const CreateInviteForm = () => {
   return (
     <Box p="7" borderWidth="1px" borderRadius="lg">
       <Error errors={errors} />
+      <br />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl id="email" isRequired>
           <FormLabel htmlFor="email">Email</FormLabel>
@@ -83,10 +84,11 @@ const CreateInviteForm = () => {
         </Center>
       </form>
       {invitationToken ? (
-        <CopyLink link={URL_PREFIX + "/invite/" + invitationToken} />
-      ) : (
-        ""
-      )}
+        <>
+          <br />
+          <CopyLink link={URL_PREFIX + "/invites/show/" + invitationToken} />
+        </>
+      ) : null}
     </Box>
   );
 };

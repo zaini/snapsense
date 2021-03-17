@@ -5,17 +5,14 @@ const initialState = {
   user: null,
 };
 
-const updateUser = () => {
-  if (localStorage.getItem("jwtToken")) {
-    const decodedToken = decode(localStorage.getItem("jwtToken"));
-    if (decodedToken && decodedToken.exp * 1000 < Date.now()) {
-      localStorage.removeItem("jwtToken");
-    } else {
-      initialState.user = decodedToken;
-    }
+if (localStorage.getItem("jwtToken")) {
+  const decodedToken = decode(localStorage.getItem("jwtToken"));
+  if (decodedToken && decodedToken.exp * 1000 < Date.now()) {
+    localStorage.removeItem("jwtToken");
+  } else {
+    initialState.user = decodedToken;
   }
-  return initialState.user;
-};
+}
 
 const AuthContext = createContext({
   user: null,
@@ -60,7 +57,11 @@ const AuthProvider = (props) => {
 
   return (
     <AuthContext.Provider
-      value={{ user: updateUser(), login, logout }}
+      value={{
+        user: decode(state.user) === null ? state.user : decode(state.user),
+        login,
+        logout,
+      }}
       {...props}
     />
   );

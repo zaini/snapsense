@@ -21,8 +21,15 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
-      admin_id: {
-        type: Sequelize.INTEGER
+      hospital_id: {
+        type: Sequelize.INTEGER,
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        references: {
+          model: "Hospitals",
+          key: "id",
+          as: "hospital_id"
+        }
       },
       createdAt: {
         allowNull: false,

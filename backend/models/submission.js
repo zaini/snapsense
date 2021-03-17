@@ -9,9 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Submission.belongsTo(models.Patient, { foreignKey: "patient_id" });
-      Submission.belongsTo(models.Doctor, { foreignKey: "doctor_id" });
       Submission.hasMany(models.Image, { foreignKey: "submission_id" });
+      Submission.hasMany(models.Answer, { foreignKey: "submission_id" });
+      Submission.hasMany(models.Request, { foreignKey: "submission_id" });
+      Submission.belongsTo(models.Patient, { foreignKey: "patient_id" });
     }
   }
   Submission.init(
@@ -20,16 +21,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      doctor_id: {
+      flag: {
         type: DataTypes.INTEGER,
-        allowNull: true,
-      },
-      deadline: {
-        type: DataTypes.DATE,
-        allowNull: true,
-      },
-      fulfilled: {
-        type: DataTypes.DATE,
         allowNull: true,
       },
     },

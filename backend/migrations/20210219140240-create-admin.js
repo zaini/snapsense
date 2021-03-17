@@ -22,7 +22,14 @@ module.exports = {
         type: Sequelize.STRING
       },
       hospital_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        references: {
+          model: "Hospitals",
+          key: "id",
+          as: "hospital_id"
+        }
       },
       createdAt: {
         allowNull: false,

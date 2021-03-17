@@ -1,25 +1,42 @@
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import HomePage from "./pages/HomePage.js";
-import LoginPage from "./pages/LoginPage.js";
-import LogoutPage from "./pages/LogoutPage.js";
-import Navbar from "./components/navBar/Navbar.js";
-import InvitePage from "./pages/InvitePage.js";
-import CreateInvitePage from "./pages/CreateInvitePage.js";
+import { useState } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-function App() {
+import PrivateRoute from "./utils/PrivateRoute";
+import LoggedOutRoute from "./utils/LoggedOutRoute";
+import MainNavbar from "./components/utils/MainNavbar";
+
+import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
+import MyPage from "./pages/My/MyPage";
+import LogoutPage from "./pages/LogoutPage";
+import FeedbackPage from "./pages/FeedbackPage";
+import ShowInvitePage from "./pages/ShowInvitePage";
+
+import NewSubmissionPage from "./pages/My/NewSubmissionPage";
+
+import "./App.css";
+import ErrorPage from "./pages/ErrorPage";
+
+const App = () => {
+  const [mainNavbarIsVisible, setMainNavbarIsVisible] = useState(true);
   return (
     <Router>
-      <Navbar />
+      {mainNavbarIsVisible ? <MainNavbar /> : null}
+
       <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/invite/:token_id" component={InvitePage} />
-        <Route exact path="/invite" component={CreateInvitePage} />
-        {/* We shouldn't have a logout page, ideally the logout function is just called whenever you want to logout I think */}
+        <Route exact path="/" component={LandingPage} />
+        <LoggedOutRoute exact path="/login" component={LoginPage} />
         <Route exact path="/logout" component={LogoutPage} />
+        <Route exact path="/invites/show/:token_id" component={ShowInvitePage} />
+        <PrivateRoute path="/my" accountTypes={["ADMIN", "DOCTOR", "PATIENT"]}>
+          <MyPage changeNavbar={setMainNavbarIsVisible} />
+        </PrivateRoute>
+        <Route exact path="/feedback" component={FeedbackPage} />
+
+        <Route path="/error" component={ErrorPage} />
       </Switch>
     </Router>
   );
-}
+};
 
 export default App;

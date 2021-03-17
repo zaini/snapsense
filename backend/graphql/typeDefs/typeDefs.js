@@ -13,17 +13,13 @@ module.exports = gql`
     createdAt: String!
   }
 
-  # TODO move tokens to a 'me' function
-  # The attribute 'token' will be used to determine whether the user is logged
-  # in or not, it represents a JWT token
-
   type Admin {
     id: ID!
     fname: String!
     lname: String!
     email: String!
     password: String!
-    hospital_id: ID!
+    Hospital: Hospital!
     createdAt: String!
   }
 
@@ -33,7 +29,7 @@ module.exports = gql`
     lname: String!
     email: String!
     password: String!
-    admin_id: ID!
+    Hospital: Hospital!
     createdAt: String!
   }
 
@@ -42,14 +38,26 @@ module.exports = gql`
     fname: String!
     lname: String!
     email: String!
-    password: String!
+    password: String
+    flag: Int
     createdAt: String!
   }
 
   type Submission {
     id: ID!
-    patient_id: ID!
-    doctor_id: ID
+    Patient: Patient
+    Images: [Image!]
+    Answers: [Answer!]
+    flag: Int
+    createdAt: String!
+  }
+
+  type Request {
+    id: ID!
+    Doctor: Doctor
+    Patient: Patient
+    Submission: Submission
+    type: Int!
     deadline: String!
     fulfilled: String!
     createdAt: String!
@@ -57,25 +65,20 @@ module.exports = gql`
 
   type Image {
     id: ID!
-    name: ID!
     url: ID!
-    submission_id: ID!
     createdAt: String!
   }
 
-  type S3Object {
-    ETag: String
-    Location: String!
-    Key: String!
-    Bucket: String!
+  type Question {
+    id: ID!
+    text: String!
   }
 
-  type File {
+  type Answer {
     id: ID!
-    path: String!
-    filename: String!
-    mimetype: String!
-    encoding: String!
+    Question: Question!
+    value: Boolean!
+    extra: String
   }
 
   type Mutation {
@@ -87,17 +90,15 @@ module.exports = gql`
       password: String!
       hospital_id: ID!
     ): Admin
-    createSubmission(
+
+    createSubmission(images: [Upload!], answers: String!): Boolean!
+
+    createRequest(
+      request_type: Int!
+      deadline: String!
       patient_id: ID!
-      doctor_id: ID!
-      deadline: String
-    ): Submission
+    ): Boolean!
 
-    # TODO Image Mutations
-    # singleUpload(file: Upload!): File!
-    singleUploadStream(file: Upload!): S3Object
-
-    # TODO jwt stuff
     register(
       fname: String!
       lname: String!
@@ -112,7 +113,6 @@ module.exports = gql`
       account_type: String!
     ): AuthResponse
 
-    # Invitation service
     inviteUser(email: String!): String!
 
     addPatientToDoctor(patient_email: String!, doctor_email: String!): Boolean!
@@ -123,7 +123,15 @@ module.exports = gql`
     getAdmins: [Admin!]
     getDoctors: [Doctor!]
     getPatients: [Patient!]
-    getSubmissions: [Submission!]
+    getDoctorsAsAdmin: [Doctor!]
+    getDoctorsAsPatient: [Doctor!]
+    getSubmissions(patient_id: ID): [Submission!]
+    getPatientAsDoctor(patient_id: ID!): Patient!
+    getPatientsAsDoctor: [Patient!]
+    getRequestsAsPatient: [Request!]
+    getRequestsAsDoctor: [Request!]
+    getRequestsForReview: [Request!]
+    getImagesBySubmission(submission_id: ID!): [Image!]
     getImages: [Image!]
     isLoggedIn: String!
     checkInvitation(invitationToken: String!): String!
