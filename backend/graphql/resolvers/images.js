@@ -3,7 +3,7 @@ const imageUploader = require("../../utils/filestreamUploader");
 const { Image, Submission } = require("../../models/index.js");
 
 module.exports = {
-  Query:{
+  Query: {
     getImages: async () => {
       try {
         const images = await Image.findAll();
@@ -26,5 +26,5 @@ module.exports = {
       return response;
     },
   },
-  Query: {},
+  Mutation: {},
 };

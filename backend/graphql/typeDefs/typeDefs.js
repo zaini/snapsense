@@ -19,7 +19,7 @@ module.exports = gql`
     lname: String!
     email: String!
     password: String!
-    hospital_id: ID!
+    Hospital: Hospital!
     createdAt: String!
   }
 
@@ -29,7 +29,7 @@ module.exports = gql`
     lname: String!
     email: String!
     password: String!
-    hospital_id: ID!
+    Hospital: Hospital!
     createdAt: String!
   }
 
@@ -39,14 +39,16 @@ module.exports = gql`
     lname: String!
     email: String!
     password: String
+    flag: Int
     createdAt: String!
   }
 
   type Submission {
     id: ID!
-    Doctor: Doctor
     Patient: Patient
-    deadline: String!
+    Images: [Image!]
+    Answers: [Answer!]
+    flag: Int
     createdAt: String!
   }
 
@@ -57,29 +59,26 @@ module.exports = gql`
     Submission: Submission
     type: Int!
     deadline: String!
+    fulfilled: String!
+    createdAt: String!
   }
 
   type Image {
     id: ID!
-    name: ID!
     url: ID!
-    submission_id: ID!
     createdAt: String!
   }
 
-  type S3Object {
-    ETag: String
-    Location: String!
-    Key: String!
-    Bucket: String!
+  type Question {
+    id: ID!
+    text: String!
   }
 
-  type File {
+  type Answer {
     id: ID!
-    path: String!
-    filename: String!
-    mimetype: String!
-    encoding: String!
+    Question: Question!
+    value: Boolean!
+    extra: String
   }
 
   type Mutation {
@@ -91,21 +90,14 @@ module.exports = gql`
       password: String!
       hospital_id: ID!
     ): Admin
-    createSubmission(
-      patient_id: ID!
-      doctor_id: ID!
-      deadline: String
-    ): Submission
+
+    createSubmission(images: [Upload!], answers: String!): Boolean!
 
     createRequest(
       request_type: Int!
       deadline: String!
       patient_id: ID!
     ): Boolean!
-
-    # TODO Image Mutations
-    # singleUpload(file: Upload!): File!
-    singleUploadStream(file: Upload!): S3Object
 
     register(
       fname: String!
@@ -139,6 +131,7 @@ module.exports = gql`
     getRequestsAsPatient: [Request!]
     getRequestsAsDoctor: [Request!]
     getRequestsForReview: [Request!]
+    getImagesBySubmission(submission_id: ID!): [Image!]
     getImages: [Image!]
     isLoggedIn: String!
     checkInvitation(invitationToken: String!): String!

@@ -9,20 +9,10 @@ import { gql, useMutation } from "@apollo/client";
 
 const NewSubmissionPage = () => {
   const [images, setImages] = useState([]);
-  const [answers, setAnswers] = useState([]);
+  const [answers, setAnswers] = useState({ questionnaire: {} });
 
-  const imagesFromImageUpload = (images) => {
-    // the callback. Use a better name
-    setImages(images);
-  };
-
-  const answersFromQuestionnaire = (answers) => {
-    // the callback. Use a better name
-    setAnswers(answers);
-  };
-
-  const [uploadImages, { loading, error, data }] = useMutation(
-    UPLOAD_FILE_STREAM
+  const [uploadSubmission, { loading, error, data }] = useMutation(
+    UPLOAD_SUBMISSION
   );
 
   return (
@@ -35,22 +25,20 @@ const NewSubmissionPage = () => {
         borderRadius="lg"
         mt="30"
       >
-        <ImageUpload imagesFromImageUpload={imagesFromImageUpload} />
-        <Questionnaire answersFromQuestionnaire={answersFromQuestionnaire} />
+        <ImageUpload setImages={setImages} />
+        <Questionnaire answers={answers} setAnswers={setAnswers} />
       </SimpleGrid>
       <Flex>
         <Button
           rightIcon={<CheckCircleIcon />}
           colorScheme="teal"
           variant="solid"
-          disabled={answers.length !== 8}
           onClick={() => {
-            images.forEach((image, index)=>{
-              uploadImages({
-                variables: {
-                  file: image,
-                },
-              });
+            uploadSubmission({
+              variables: {
+                images,
+                answers: JSON.stringify(answers),
+              },
             });
           }}
         >
@@ -63,10 +51,8 @@ const NewSubmissionPage = () => {
 
 export default NewSubmissionPage;
 
-const UPLOAD_FILE_STREAM = gql`
-  mutation SingleUploadStream($file: Upload!) {
-    singleUploadStream(file: $file) {
-      Location
-    }
+const UPLOAD_SUBMISSION = gql`
+  mutation createSubmission($images: [Upload!], $answers: String!) {
+    createSubmission(images: $images, answers: $answers)
   }
 `;
