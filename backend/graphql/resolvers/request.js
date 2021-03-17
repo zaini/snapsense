@@ -15,6 +15,7 @@ const isAuth = require("../../utils/isAuth.js");
 const { Sequelize } = require("../../models/index");
 const Op = Sequelize.Op;
 const enqueueEmail = require("../../utils/scheduledEmail.js");
+const transactionalEmailSender = require("../../utils/transactionalEmailSender.js");
 
 const sendRequestEmail = async (doctor, patient, request_type, deadline) => {
   
@@ -37,7 +38,7 @@ const sendRequestEmail = async (doctor, patient, request_type, deadline) => {
   };
 
   // Insert bundled email params into model
-  await enqueueEmail(emailParams, htmlParams);
+  await transactionalEmailSender(emailParams, htmlParams);
 };
 
 module.exports = {

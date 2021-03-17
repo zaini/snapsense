@@ -16,6 +16,7 @@ const {
 require("dotenv").config();
 
 const enqueueEmail = require("../../../utils/scheduledEmail");
+const transactionalEmailSender = require("../../../utils/transactionalEmailSender");
 
 const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
 
@@ -59,7 +60,7 @@ const sendInviteEmail = async (inviteToken, user, email) => {
   };
 
   // Insert bundled email params into model
-  await enqueueEmail(emailParams, htmlParams);
+  await transactionalEmailSender(emailParams, htmlParams);
 };
 
 module.exports = {
