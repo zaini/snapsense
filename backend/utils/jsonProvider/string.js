@@ -1,3 +1,5 @@
+const { ApolloError } = require("apollo-server-core");
+
 const JSONToString = (p) => {
   try {
     const data = JSON.stringify(p);
