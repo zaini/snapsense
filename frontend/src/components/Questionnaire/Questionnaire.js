@@ -1,69 +1,103 @@
 import { useState } from "react";
 import { Button, Box, Flex, SimpleGrid, Stack } from "@chakra-ui/react";
 import Question from "./Question";
-import {
-  ArrowForwardIcon,
-  ArrowBackIcon,
-  CheckCircleIcon,
-} from "@chakra-ui/icons";
+import { ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
+
+const Questionnaire = ({ answers, setAnswers }) => {
+  const [questionNumber, setQuestionNumber] = useState(0);
+
+  const onChangeOption = (optionIndex) => {
+    let temp = answers;
+    temp.questionnaire[questionNumber] = optionIndex;
+    setAnswers(temp);
+    console.log(answers);
+  };
+
+  return (
+    <Flex>
+      <Stack spacing={2} w={"100%"}>
+        <h1>Question Number: {questionNumber + 1}</h1>
+        {questionsObject.map((e, i) => (
+          <Box
+            borderWidth="1px"
+            borderRadius="lg"
+            overflow="hidden"
+            padding="4"
+            display={questionNumber === i ? "block" : "none"}
+          >
+            <Question
+              question={questionsObject[i]}
+              onChangeOption={onChangeOption}
+            />
+          </Box>
+        ))}
+
+        <SimpleGrid columns={[2]} spacing={2} direction={["column", "row"]}>
+          <Button
+            leftIcon={<ArrowBackIcon />}
+            colorScheme="teal"
+            variant="solid"
+            onClick={() => setQuestionNumber(questionNumber - 1)}
+            disabled={questionNumber === 0}
+          />
+
+          <Button
+            rightIcon={<ArrowForwardIcon />}
+            colorScheme="teal"
+            variant="solid"
+            onClick={() => setQuestionNumber(questionNumber + 1)}
+            disabled={questionNumber === questionsObject.length - 1}
+          />
+        </SimpleGrid>
+      </Stack>
+    </Flex>
+  );
+};
+
+export default Questionnaire;
 
 // Questions will come from backend
 const questionsObject = [
   {
     questionID: 0,
     questionText: "In the past 7 days, have you felt unwell?",
-    answerOptions: [
-      { answerText: "No" },
-      { answerText: "Yes" },
-    ],
+    answerOptions: [{ answerText: "No" }, { answerText: "Yes" }],
   },
   {
     questionID: 1,
-    questionText: "In the past 7 days, have you had a fever (temperature higher than 36C)?",
-    answerOptions: [
-      { answerText: "No" },
-      { answerText: "Yes" },
-    ],
+    questionText:
+      "In the past 7 days, have you had a fever (temperature higher than 36C)?",
+    answerOptions: [{ answerText: "No" }, { answerText: "Yes" }],
   },
   {
     questionID: 2,
-    questionText: "In the past 7 days, have you seen redness around your ulcer?",
-    answerOptions: [
-      { answerText: "No" },
-      { answerText: "Yes" },
-    ],
+    questionText:
+      "In the past 7 days, have you seen redness around your ulcer?",
+    answerOptions: [{ answerText: "No" }, { answerText: "Yes" }],
   },
   {
     questionID: 3,
-    questionText: "In the past 7 days, have you seen any puss around your ulcer?",
-    answerOptions: [
-      { answerText: "No" },
-      { answerText: "Yes" },
-    ],
+    questionText:
+      "In the past 7 days, have you seen any puss around your ulcer?",
+    answerOptions: [{ answerText: "No" }, { answerText: "Yes" }],
   },
   {
     questionID: 4,
-    questionText: "In the past 7 days, has your ulcer been hotter to touch than usual?",
-    answerOptions: [
-      { answerText: "No" },
-      { answerText: "Yes" },
-    ],
+    questionText:
+      "In the past 7 days, has your ulcer been hotter to touch than usual?",
+    answerOptions: [{ answerText: "No" }, { answerText: "Yes" }],
   },
   {
     questionID: 5,
-    questionText: "In the past 7 days, has one foot been hotter to touch than the other?",
-    answerOptions: [
-      { answerText: "No" },
-      { answerText: "Yes" },
-    ],
+    questionText:
+      "In the past 7 days, has one foot been hotter to touch than the other?",
+    answerOptions: [{ answerText: "No" }, { answerText: "Yes" }],
   },
   {
     questionID: 6,
-    questionText: "In the past 7 days, have you noticed any unusual smells from the wound?",
-    answerOptions: [
-      { answerText: "No" },
-      { answerText: "Yes" },
-    ],
+    questionText:
+      "In the past 7 days, have you noticed any unusual smells from the wound?",
+    answerOptions: [{ answerText: "No" }, { answerText: "Yes" }],
     answerOptions: [{ answerText: "Yes" }, { answerText: "No" }],
   },
   {
@@ -112,70 +146,3 @@ const questionsObject = [
     ],
   },
 ];
-
-const Questionnaire = ({ answers, setAnswers }) => {
-const Questionnaire = ({answersFromQuestionnaire}) => {
-  const [questionNumber, setQuestionNumber] = useState(0);
-
-  const onChangeOption = (optionIndex) => {
-    /*console.log(optionIndex)
-    let temp = answers;
-    temp[questionNumber] = {
-      question_id: questionNumber,
-      answer: optionIndex
-    };*/
-    let temp = answers;
-    temp.questionnaire[questionNumber] = optionIndex;
-    setAnswers(temp);
-    console.log(answers)
-    answersFromQuestionnaire(answers);
-  };
-
-  return (
-    <Flex>
-      <Stack spacing={2} w={"100%"}>
-        <h1>Question Number: {questionNumber + 1}</h1>
-        {questionsObject.map((e, i) => (
-          <Box
-            borderWidth="1px"
-            borderRadius="lg"
-            overflow="hidden"
-            padding="4"
-            display={questionNumber === i ? "block" : "none"}
-          >
-            <Question
-              question={questionsObject[i]}
-              onChangeOption={onChangeOption}
-            />
-          </Box>
-        ))}
-
-        <SimpleGrid columns={[2]} spacing={2}>
-        <SimpleGrid
-          columns={[2]}
-          spacing={2}
-          direction={["column", "row"]}
-          spacing="5px"
-        >
-          <Button
-            leftIcon={<ArrowBackIcon />}
-            colorScheme="teal"
-            variant="solid"
-            onClick={() => setQuestionNumber(questionNumber - 1)}
-            disabled={questionNumber === 0}
-          ></Button>
-
-          <Button
-            rightIcon={<ArrowForwardIcon />}
-            colorScheme="teal"
-            variant="solid"
-            onClick={() => setQuestionNumber(questionNumber + 1)}
-            disabled={questionNumber === questionsObject.length - 1}
-          ></Button>
-        </SimpleGrid>
-      </Stack>
-    </Flex>
-  );
-};
-
-export default Questionnaire;
