@@ -1,17 +1,14 @@
-import { Link, useParams } from "react-router-dom";
-import { useContext } from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { Stack, Button } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
+
 import Table from "../utils/Table";
 import { AuthContext } from "../../context/auth";
 
-
 // Takes a list of submissions and shows them in the table and timeline view
 const PatientSubmissionsTable = ({ data }) => {
-  const location = useParams();
-  const patient_id = location.patient_id;
-
-  const user = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const cols = [
     {
@@ -39,12 +36,16 @@ const PatientSubmissionsTable = ({ data }) => {
       sortable: false,
       disableClickEventBubbling: true,
       renderCell: ({ row }) => {
-        let id = row.id;
-        let route_link =
-            user.accountType === "PATIENT"
-              ? `my/submissions/show/${id}`
-              : `my/patients/${patient_id}/submissions/show/${id}`;
-              
+        const id = row.id;
+        row.createdAt = Date.parse(row.createdAt)
+          ? row.createdAt
+          : new Date(parseInt(row.createdAt));
+
+        const route_link =
+          user.accountType === "PATIENT"
+            ? `submissions/show/${id}`
+            : `patients/${row.Patient.id}/submissions/show/${id}`;
+
         return (
           <Stack direction="row" spacing={4}>
             <Link to={route_link}>
@@ -60,9 +61,6 @@ const PatientSubmissionsTable = ({ data }) => {
   ];
 
   return <Table data={data} cols={cols} />;
-
 };
 
 export default PatientSubmissionsTable;
-
-
