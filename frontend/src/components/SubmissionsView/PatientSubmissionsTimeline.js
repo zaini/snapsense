@@ -37,7 +37,7 @@ const PatientSubmissionsTimeline = ({ data }) => {
   } else {
     return (
       <Timeline>
-        {data.map((row, index) => (
+        {Object.entries(data).map((row, index) => (
           <TimelineItem>
             <TimelineOppositeContent>
               <Typography variant="body2" color="textSecondary">

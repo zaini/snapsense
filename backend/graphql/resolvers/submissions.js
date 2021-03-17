@@ -6,6 +6,7 @@ const {
   Doctor,
   Patient,
   Image,
+  Question,
 } = require("../../models/index.js");
 const isAuth = require("../../utils/isAuth");
 const imageUploader = require("../../utils/filestreamUploader");
@@ -56,21 +57,49 @@ module.exports = {
             }
 
             if (await doctor.hasPatient(patient)) {
-              submissions = await patient.getSubmissions();
+              submissions = await patient.getSubmissions({
+                include: [
+                  Patient,
+                  Image,
+                  {
+                    model: Answer,
+                    include: [Question],
+                  },
+                ],
+              });
             } else {
               throw new UserInputError("This patient does not belong to you.");
             }
           } else {
             const patients = await doctor.getPatients();
-            patients.forEach(async (patient) => {
-              const patientSubmissions = await patient.getSubmissions();
-              submissions.push(patientSubmissions);
-            });
+            for await (const patient of patients) {
+              const patientSubmissions = await patient.getSubmissions({
+                include: [
+                  Patient,
+                  Image,
+                  {
+                    model: Answer,
+                    include: [Question],
+                  },
+                ],
+              });
+              submissions.push(...patientSubmissions);
+            }
           }
+
           break;
         case "PATIENT":
           const patient = await Patient.findByPk(user.id);
-          submissions = await patient.getSubmissions();
+          submissions = await patient.getSubmissions({
+            include: [
+              Patient,
+              Image,
+              {
+                model: Answer,
+                include: [Question],
+              },
+            ],
+          });
           break;
         default:
           break;
@@ -112,7 +141,6 @@ module.exports = {
       // Create answers and add them to the submission
       if (answers !== undefined) {
         answers = stringToJSON(answers);
-        console.log(Object.keys(answers.questionnaire).length);
         if (Object.keys(answers.questionnaire).length !== 8)
           throw new UserInputError("Invalid number of answers");
       }
