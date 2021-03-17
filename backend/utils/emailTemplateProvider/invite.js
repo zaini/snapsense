@@ -3,7 +3,8 @@ const stringToJSON = require("../jsonProvider/parse");
 const { header, footer } = require("./common");
 
 const inviteTemplate = (p) => {
-  const obj = stringToJSON(p);
+//   const obj = stringToJSON(p);
+  const obj = p;
   const html = `${header}
     <div class="u-row-container" style="padding: 0px;background-color: transparent">
         <div class="u-row"
