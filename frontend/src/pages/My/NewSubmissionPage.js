@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,12 +10,25 @@ import {
   Stepper,
   Typography,
 } from "@material-ui/core";
-import { Heading, SimpleGrid, Stack, Box } from "@chakra-ui/react";
-import { CheckCircleIcon } from "@chakra-ui/icons";
+import {
+  Flex,
+  Heading,
+  SimpleGrid,
+  Stack,
+  Box,
+  HStack,
+  Center,
+  Text,
+  Spinner,
+} from "@chakra-ui/react";
+import { CheckCircleIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 
 import QuestionForm from "../../components/SubmissionCreate/Questionnaire";
 import Review from "../../components/SubmissionCreate/Review";
 import ImageUpload from "../../components/SubmissionCreate/ImageUpload";
+import BackButton from "../../components/SubmissionCreate/BackButtton";
+import NextButton from "../../components/SubmissionCreate/NextButton";
+import Error from "../../components/utils/Error";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -50,7 +64,10 @@ const NewSubmissionPage = () => {
   const [answers, setAnswers] = useState({ questionnaire: {} });
   const [activeStep, setActiveStep] = useState(0);
   const [uploadSubmission, { loading, error, data }] = useMutation(
-    UPLOAD_SUBMISSION
+    UPLOAD_SUBMISSION,
+    {
+      onError(e) {},
+    }
   );
   const classes = useStyles();
 
@@ -63,36 +80,125 @@ const NewSubmissionPage = () => {
     setActiveStep(temp);
   };
 
-  return (
-    <Box className={classes.layout}>
-      <Stack>
-        <Paper className={classes.paper}>
-          <Heading style={{ textAlign: "center" }}>Image Upload</Heading>
-          <ImageUpload setImages={setImages} />
-        </Paper>
+  let body;
+  if (loading) {
+    body = (
+      <Center py={6}>
+        <Box
+          maxW={"445px"}
+          w={"full"}
+          bg={"white"}
+          boxShadow={"2xl"}
+          rounded={"md"}
+          p={6}
+          overflow={"hidden"}
+        >
+          <Stack>
+            <Heading>
+              <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="blue.500"
+                size="xl"
+              />
+            </Heading>
+            <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
+              Loading...
+            </Heading>
+          </Stack>
+        </Box>
+      </Center>
+    );
+  } else if (error) {
+    body = (
+      <Center py={6}>
+        <Box
+          maxW={"445px"}
+          w={"full"}
+          bg={"white"}
+          boxShadow={"2xl"}
+          rounded={"md"}
+          p={6}
+          overflow={"hidden"}
+        >
+          <Stack>
+            <Heading>
+              <CloseIcon />
+            </Heading>
+            <Text
+              color={"red.500"}
+              textTransform={"uppercase"}
+              fontWeight={800}
+              fontSize={"sm"}
+              letterSpacing={1.1}
+            >
+              Failed :(
+            </Text>
+            <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
+              <Error
+                errors={[
+                  {
+                    message: error.graphQLErrors[0].message,
+                  },
+                ]}
+              />
+            </Heading>
+          </Stack>
+        </Box>
+      </Center>
+    );
+  } else if (data) {
+    body = (
+      <Center py={6}>
+        <Box
+          maxW={"445px"}
+          w={"full"}
+          bg={"white"}
+          boxShadow={"2xl"}
+          rounded={"md"}
+          p={6}
+          overflow={"hidden"}
+        >
+          <Stack>
+            <Heading>
+              <CheckIcon />
+            </Heading>
+            <Text
+              color={"green.500"}
+              textTransform={"uppercase"}
+              fontWeight={800}
+              fontSize={"sm"}
+              letterSpacing={1.1}
+            >
+              Success
+            </Text>
+            <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
+              Form has been submitted !
+            </Heading>
+          </Stack>
+        </Box>
+      </Center>
+    );
+  } else {
+    body = (
+      <Box className={classes.layout}>
+        <Stack>
+          <Paper className={classes.paper}>
+            <Heading style={{ textAlign: "center" }}>Image Upload</Heading>
+            <ImageUpload setImages={setImages} />
+          </Paper>
 
-        <Paper className={classes.paper}>
-          <Heading style={{ textAlign: "center" }}>Questionnaire</Heading>
-          <Stepper activeStep={activeStep} className={classes.stepper}>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          <Box>
-            {activeStep === steps.length ? (
-              <Stack>
-                <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
-                </Typography>
-                <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
-                </Typography>
-              </Stack>
-            ) : (
+          <Paper className={classes.paper}>
+            <Heading style={{ textAlign: "center" }}>Questionnaire</Heading>
+            <Stepper activeStep={activeStep} className={classes.stepper}>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+            <Box>
               <Stack>
                 {activeStep < 8 ? (
                   <QuestionForm
@@ -103,75 +209,47 @@ const NewSubmissionPage = () => {
                 ) : (
                   <Review answers={answers} />
                 )}
-                <SimpleGrid columns={[2]}>
-                  {activeStep === 0 ? (
-                    <Button
-                      variant="contained"
-                      disabled
-                      color="secondary"
-                      onClick={handleBack}
-                      className={classes.button}
-                    >
-                      Back
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={handleBack}
-                      className={classes.button}
-                    >
-                      Back
-                    </Button>
-                  )}
-                  {activeStep === 8 ? (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      disabled
-                      className={classes.button}
-                    >
-                      Next
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      className={classes.button}
-                    >
-                      Next
-                    </Button>
-                  )}
-                </SimpleGrid>
+                <Center columns={[2]}>
+                  <BackButton
+                    activeStep={activeStep}
+                    handleBack={handleBack}
+                    classes={classes}
+                  />
+                  <NextButton
+                    activeStep={activeStep}
+                    handleNext={handleNext}
+                    classes={classes}
+                  />
+                </Center>
               </Stack>
-            )}
-          </Box>
-        </Paper>
-        <Paper className={classes.paper}>
-          <SimpleGrid columns={[1]}>
-            <Button
-              rightIcon={<CheckCircleIcon />}
-              variant="contained"
-              color="primary"
-              colorScheme="teal"
-              onClick={() => {
-                uploadSubmission({
-                  variables: {
-                    images,
-                    answers: JSON.stringify(answers),
-                  },
-                });
-              }}
-            >
-              Submit
-            </Button>
-          </SimpleGrid>
-        </Paper>
-      </Stack>
-    </Box>
-  );
+            </Box>
+          </Paper>
+          <Paper className={classes.paper}>
+            <Center>
+              <Button
+                rightIcon={<CheckCircleIcon />}
+                variant="contained"
+                color="primary"
+                colorScheme="teal"
+                onClick={() => {
+                  uploadSubmission({
+                    variables: {
+                      images,
+                      answers: JSON.stringify(answers),
+                    },
+                  });
+                }}
+              >
+                Submit
+              </Button>
+            </Center>
+          </Paper>
+        </Stack>
+      </Box>
+    );
+  }
+
+  return body;
 };
 
 export default NewSubmissionPage;

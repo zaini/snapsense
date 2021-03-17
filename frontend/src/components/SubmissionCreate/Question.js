@@ -3,7 +3,7 @@ import { TextField } from "@material-ui/core";
 import React from "react";
 import Options from "./Options";
 
-const Question = ({ question, onChangeOption, onChangeText, selected }) => {
+const Question = ({ question, onChangeOption, onChangeText }) => {
   return (
     <Stack w={"100%"}>
       <Text>{question.questionText}</Text>

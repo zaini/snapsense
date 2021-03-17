@@ -67,7 +67,7 @@ const ReviewListItem = ({ answerIndex, answer, extra }) => {
     >
       <Stack>
         <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
-          {questionsObject[answerIndex].questionText}
+          {questionsObject[answerIndex-1].questionText}
         </Heading>
         <Text color={"gray.600"}>{answerOption[parseInt(answer)]}</Text>
         <Text color={"gray.500"}>{extra}</Text>
