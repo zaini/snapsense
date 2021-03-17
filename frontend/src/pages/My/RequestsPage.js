@@ -64,6 +64,21 @@ const GET_REQUESTS_AS_PATIENT = gql`
       deadline
       Submission {
         id
+        Images {
+          id
+          url
+        }
+        Answers {
+          id
+          Question {
+            id
+            text
+          }
+          value
+          extra
+        }
+        flag
+        createdAt
       }
       Patient {
         fname
@@ -87,6 +102,21 @@ const GET_REQUESTS_AS_DOCTOR = gql`
       deadline
       Submission {
         id
+        Images {
+          id
+          url
+        }
+        Answers {
+          id
+          Question {
+            id
+            text
+          }
+          value
+          extra
+        }
+        flag
+        createdAt
       }
       Patient {
         fname
@@ -135,6 +165,16 @@ const cols = [
           {fname} {lname}
         </p>
       );
+    },
+  },
+  {
+    field: "deadline",
+    headerName: "Deadline",
+    flex: 0.2,
+    renderCell: ({ row }) => {
+      const deadline_timestamp = parseInt(row.deadline);
+      const deadline_date = new Date(deadline_timestamp);
+      return <p>{deadline_date.toDateString()}</p>;
     },
   },
   {

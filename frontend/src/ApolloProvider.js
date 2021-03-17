@@ -38,7 +38,7 @@ const client = new ApolloClient({
   connectToDevTools: true,
 });
 
-export default () => {
+const appExport = () => {
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
@@ -49,3 +49,5 @@ export default () => {
     </ApolloProvider>
   );
 };
+ 
+export default appExport;

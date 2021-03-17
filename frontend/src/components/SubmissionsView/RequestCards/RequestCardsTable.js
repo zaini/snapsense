@@ -1,8 +1,8 @@
 import { Container, Text } from "@chakra-ui/layout";
 import React from "react";
-import SubmissionCard from "./SubmissionCard";
+import RequestCard from "./RequestCard";
 
-const SubmissionCardsTable = ({ data }) => {
+const RequestCardsTable = ({ data }) => {
   let markup;
   if (data.length === 0) {
     markup = (
@@ -14,7 +14,7 @@ const SubmissionCardsTable = ({ data }) => {
     markup = (
       <>
         {data.map((e, i) => {
-          return <SubmissionCard data={e} />;
+          return <RequestCard data={e} />;
         })}
       </>
     );
@@ -23,4 +23,4 @@ const SubmissionCardsTable = ({ data }) => {
   return markup;
 };
 
-export default SubmissionCardsTable;
+export default RequestCardsTable;

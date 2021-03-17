@@ -3,8 +3,8 @@ const stringToJSON = require("../jsonProvider/parse");
 const { header, footer } = require("./common");
 
 const requestTemplate = (p) => {
-  const obj = stringToJSON(p);
-
+  //   const obj = stringToJSON(p);
+  const obj = p;
   let type = "";
   if (obj.type === 1) {
     type = "1. Image";

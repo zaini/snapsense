@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Radio, RadioGroup, Stack } from "@chakra-ui/react";
+import { Center, Radio, RadioGroup, Stack } from "@chakra-ui/react";
 
 const Options = ({ options, onChangeOption }) => {
   const [value, setValue] = useState();
 
   return (
-    <div className='center'>
+    <Center>
       <RadioGroup
         onChange={(index) => {
           setValue(index);
@@ -21,7 +21,7 @@ const Options = ({ options, onChangeOption }) => {
           ))}
         </Stack>
       </RadioGroup>
-    </div>
+    </Center>
   );
 };
 

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import ImageUploader from "react-images-upload";
-import { Flex, Box } from "@chakra-ui/react";
+import { Box, } from "@chakra-ui/react";
 
 const ImageUpload = ({ setImages }) => {
   return (
-    <Flex className="ImageUploader" style={{ justifyContent: "center" }}>
-      <Box w={"100%"} p={"10px"}>
+      <Box w={"100%"}>
         <ImageUploader
           withIcon={true}
           withPreview={true}
@@ -15,7 +14,6 @@ const ImageUpload = ({ setImages }) => {
           maxFileSize={5242880}
         />
       </Box>
-    </Flex>
   );
 };
 
