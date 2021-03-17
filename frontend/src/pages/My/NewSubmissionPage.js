@@ -1,4 +1,4 @@
-import ImageUpload from "../../components/ImageUpload/ImageUpload";
+import ImageUpload from "../../components/ImageUpload/twoImageUpload";
 import Questionnaire from "../../components/Questionnaire/Questionnaire.js";
 import { SimpleGrid, Flex, Stack, Button } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
