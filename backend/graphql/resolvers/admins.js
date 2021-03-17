@@ -1,4 +1,5 @@
-const { Admin } = require("../../models/index.js");
+const { UserInputError } = require("apollo-server-core");
+const { Admin, Hospital } = require("../../models/index.js");
 
 module.exports = {
   Query: {
@@ -13,11 +14,24 @@ module.exports = {
   },
   Mutation: {
     createAdmin: async (_, user_details) => {
-      const admin = await new Admin({
-        ...user_details,
-      }).save();
+      const hospital = await Hospital.findByPk(user_details.hospital_id);
 
-      return { ...admin.dataValues };
+      if (!hospital) {
+        throw new UserInputError(
+          "The hospital for this account does not exist."
+        );
+      }
+
+      try {
+        const admin = await new Admin({
+          ...user_details,
+        }).save();
+        return { ...admin.dataValues };
+      } catch (error) {
+        throw new UserInputError(
+          "This account does not have proper validation. e.g. email might already be in use or password is too weak."
+        );
+      }
     },
   },
 };

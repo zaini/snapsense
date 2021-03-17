@@ -7,10 +7,60 @@ const { verify } = require("jsonwebtoken");
 
 const isAuth = require("../../../utils/isAuth");
 const { createAccessToken } = require("./authTokens");
-const { Admin, Doctor, Patient } = require("../../../models/index");
+const {
+  Admin,
+  Doctor,
+  Patient,
+  ScheduledEmail,
+} = require("../../../models/index");
 require("dotenv").config();
 
+const enqueueEmail = require("../../../utils/scheduledEmail");
+
 const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
+
+const sendInviteEmail = async (inviteToken, user, email) => {
+  // Set invite token URL for attaching in email
+  const inviteUrl = "http://localhost:3000/invites/show/" + inviteToken;
+
+  // Set email parameters for the template
+  const htmlParams = {
+    inviter: user.email,
+    newAccount: email,
+    url: inviteUrl,
+  };
+
+  // set User specific template params
+  switch (user.accountType) {
+    case "ADMIN":
+      //Admin is inviting a doctor
+      htmlParams.by = "Admin";
+      htmlParams.for = "Doctor";
+
+      break;
+    case "DOCTOR":
+      //Doctor is inviting a patient
+      htmlParams.by = "Doctor";
+      htmlParams.for = "Patient";
+
+      break;
+    default:
+      throw new ApolloError("Invalid invite request for MX Server", 400);
+      break;
+  }
+
+  // Set essential email parameters
+  const emailParams = {
+    to: email,
+    subject: "Snapsense Account Invitation",
+    altbody: inviteUrl,
+    template: "invite",
+    status: 0,
+  };
+
+  // Insert bundled email params into model
+  await enqueueEmail(emailParams, htmlParams);
+};
 
 module.exports = {
   Query: {
@@ -83,6 +133,7 @@ module.exports = {
     inviteUser: async (_, { email }, context) => {
       // Get the user and their email from the authorization header token
 
+      // Logged in User
       const user = isAuth(context);
       const userEmail = user.email;
 
@@ -134,17 +185,6 @@ module.exports = {
           break;
       }
 
-      // ADMIN CASES:
-      // If admin sends request to an existing doctor, throw an error (DONE)
-      // If admin sends request to a new doctor, render invite/:id (CLIENT SIDE)
-      // If admin sends request to a new doctor, and after that doctor registers and clicks on the link again, render error page (CLIENT/BACKEND SIDE)
-
-      // DOCTOR CASES:
-      // Doctor -> new patient => render invite/:id
-      // If doctors sends request to a new patient, and after that patient registers and clicks on the link again, render error page
-      // Doctor -> existing patient => frontend sends a backend request creating the relation, then take user to home page
-      // If doctor and patient are already related, don't do anything => render home/profile page
-
       const inviteTokenParams = {
         inviterEmail: userEmail,
         newAccountEmail: email,
@@ -153,6 +193,8 @@ module.exports = {
       };
 
       const inviteToken = createAccessToken(inviteTokenParams, "7d");
+
+      await sendInviteEmail(inviteToken, user, email);
 
       return inviteToken;
     },

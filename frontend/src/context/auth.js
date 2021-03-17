@@ -57,7 +57,11 @@ const AuthProvider = (props) => {
 
   return (
     <AuthContext.Provider
-      value={{ user: state.user, login, logout }}
+      value={{
+        user: decode(state.user) === null ? state.user : decode(state.user),
+        login,
+        logout,
+      }}
       {...props}
     />
   );

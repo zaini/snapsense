@@ -1,12 +1,44 @@
-const { AuthenticationError, UserInputError } = require("apollo-server-core");
+const {
+  AuthenticationError,
+  UserInputError,
+  ApolloError,
+} = require("apollo-server-core");
 
 const {
   Patient,
   Doctor,
   Request,
   Submission,
+  ScheduledEmail,
 } = require("../../models/index.js");
 const isAuth = require("../../utils/isAuth.js");
+const { Sequelize } = require("../../models/index");
+const Op = Sequelize.Op;
+const enqueueEmail = require("../../utils/scheduledEmail.js");
+
+const sendRequestEmail = async (doctor, patient, request_type, deadline) => {
+  
+  // Set email parameters for the template
+  const htmlParams = {
+    doctorEmail: doctor.email,
+    patientEmail: patient.email,
+    type: request_type,
+    deadline: deadline,
+  };
+
+  // Set essential email parameters
+  const emailParams = {
+    to: patient.email,
+    subject: "Snapsense Submission Request",
+    altbody:
+      "Please open the snapsense panel and send the desired information to your doctor.",
+    template: "request",
+    status: 0,
+  };
+
+  // Insert bundled email params into model
+  await enqueueEmail(emailParams, htmlParams);
+};
 
 module.exports = {
   Query: {
@@ -49,6 +81,27 @@ module.exports = {
 
       const requests = await Request.findAll({
         where: { doctor_id: doctor.id },
+        include: [Doctor, Patient, Submission],
+      });
+      return requests || [];
+    },
+    getRequestsForReview: async (_, __, context) => {
+      const user = isAuth(context);
+
+      if (user.accountType !== "DOCTOR") {
+        throw new AuthenticationError(
+          "You are not logged into the correct account for this feature."
+        );
+      }
+
+      const doctor = await Doctor.findByPk(user.id);
+
+      if (!doctor) {
+        throw new UserInputError("Invalid doctor");
+      }
+
+      const requests = await Request.findAll({
+        where: { doctor_id: doctor.id, submission_id: { [Op.ne]: null } },
         include: [Doctor, Patient, Submission],
       });
       return requests || [];
@@ -103,6 +156,8 @@ module.exports = {
         // An error will be thrown if the request is invalid as a result of a user input error
         throw new UserInputError(error);
       }
+      
+      await sendRequestEmail(doctor, patient, request_type, deadline);
 
       // Everything was successful so return false
       return true;

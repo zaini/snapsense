@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import Table from "../../components/incomplete/Table";
+import Table from "../../components/utils/Table";
 import { Center, Heading } from "@chakra-ui/layout";
 import { Alert, AlertIcon, Button, Spinner, Stack } from "@chakra-ui/react";
 import { ViewIcon, CalendarIcon } from "@chakra-ui/icons";
@@ -27,7 +27,7 @@ const PatientsPage = () => {
     );
   } else {
     console.log(data);
-    markup = <Table data={data.getPatientsByDoctor} cols={cols} />;
+    markup = <Table data={data.getPatientsAsDoctor} cols={cols} />;
   }
 
   return (
@@ -45,7 +45,7 @@ export default PatientsPage;
 
 const GET_PATIENTS_AS_DOCTOR = gql`
   query {
-    getPatientsByDoctor {
+    getPatientsAsDoctor {
       id
       fname
       lname
@@ -80,14 +80,14 @@ const cols = [
       let id = row.id;
       return (
         <Stack direction="row" spacing={4}>
-          <Link to={`/my/patients/${id}`}>
+          <Link to={`/my/patients/show/${id}`}>
             <Button leftIcon={<ViewIcon />} colorScheme="blue">
-              View Profile
+              View
             </Button>
           </Link>
           <Link to={`/my/patients/${id}/requests/new`}>
             <Button leftIcon={<CalendarIcon />} colorScheme="blue">
-              Request Submission
+              Request
             </Button>
           </Link>
         </Stack>

@@ -15,6 +15,7 @@ import ShowInvitePage from "./pages/ShowInvitePage";
 import NewSubmissionPage from "./pages/My/NewSubmissionPage";
 
 import "./App.css";
+import ErrorPage from "./pages/ErrorPage";
 
 const App = () => {
   const [mainNavbarIsVisible, setMainNavbarIsVisible] = useState(true);
@@ -26,18 +27,13 @@ const App = () => {
         <Route exact path="/" component={LandingPage} />
         <LoggedOutRoute exact path="/login" component={LoginPage} />
         <Route exact path="/logout" component={LogoutPage} />
-        <Route
-          exact
-          path="/invites/show/:token_id"
-          component={ShowInvitePage}
-        />
+        <Route exact path="/invites/show/:token_id" component={ShowInvitePage} />
         <PrivateRoute path="/my" accountTypes={["ADMIN", "DOCTOR", "PATIENT"]}>
           <MyPage changeNavbar={setMainNavbarIsVisible} />
         </PrivateRoute>
         <Route exact path="/feedback" component={FeedbackPage} />
-        {/* Delete this route below */}
-        <Route exact path="/submission" component={NewSubmissionPage} />
-        {/* */}
+
+        <Route path="/error" component={ErrorPage} />
       </Switch>
     </Router>
   );
