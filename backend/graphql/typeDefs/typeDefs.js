@@ -66,7 +66,6 @@ module.exports = gql`
   type Image {
     id: ID!
     url: ID!
-    Submission: Submission!
     createdAt: String!
   }
 
@@ -78,7 +77,6 @@ module.exports = gql`
   type Answer {
     id: ID!
     Question: Question!
-    Submission: Submission!
     value: Boolean!
     extra: String
   }
