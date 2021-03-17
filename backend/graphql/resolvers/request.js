@@ -18,7 +18,6 @@ const enqueueEmail = require("../../utils/scheduledEmail.js");
 const transactionalEmailSender = require("../../utils/transactionalEmailSender.js");
 
 const sendRequestEmail = async (doctor, patient, request_type, deadline) => {
-  
   // Set email parameters for the template
   const htmlParams = {
     doctorEmail: doctor.email,
@@ -101,6 +100,8 @@ module.exports = {
         throw new UserInputError("Invalid doctor");
       }
 
+      // TODO make it so that these requests also haven't been reviewed yet
+      // maybe instead of fulfilled check where submission isn't null?
       const requests = await Request.findAll({
         where: { doctor_id: doctor.id, submission_id: { [Op.ne]: null } },
         include: [Doctor, Patient, Submission],
@@ -157,7 +158,7 @@ module.exports = {
         // An error will be thrown if the request is invalid as a result of a user input error
         throw new UserInputError(error);
       }
-      
+
       await sendRequestEmail(doctor, patient, request_type, deadline);
 
       // Everything was successful so return false
