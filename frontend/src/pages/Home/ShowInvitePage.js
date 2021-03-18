@@ -1,9 +1,10 @@
 import React from "react";
-import InviteForm from "../components/InviteForm/InviteForm";
 import { Container, Alert, AlertIcon, Spinner } from "@chakra-ui/react";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { decode } from "jsonwebtoken";
+
+import InviteForm from "../../components/InviteForm/InviteForm";
 
 // This shows a single invitation
 const ShowInvitePage = (props) => {

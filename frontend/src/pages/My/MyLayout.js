@@ -17,8 +17,7 @@ import SubmissionsPage from "./SubmissionsPage";
 import ReviewSubmissions from "./ReviewSubmissions";
 
 // Main my, where you can place your routers for each my page
-const MyPage = ({ changeNavbar }) => {
-  changeNavbar(false);
+const MyLayout = () => {
   return (
     <MySidebar>
       <Switch>
@@ -117,4 +116,4 @@ const MyPage = ({ changeNavbar }) => {
   );
 };
 
-export default MyPage;
+export default MyLayout;
