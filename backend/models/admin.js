@@ -75,7 +75,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Admin.beforeSave(async (user) => {
+  Admin.beforeSave(async (user, options) => {
+    options.validate = false;
     user.password = await argon2.hash(user.password);
   });
 
