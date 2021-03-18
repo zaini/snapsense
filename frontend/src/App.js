@@ -11,7 +11,7 @@ import MyPage from "./pages/My/MyPage";
 import LogoutPage from "./pages/LogoutPage";
 import FeedbackPage from "./pages/FeedbackPage";
 import ShowInvitePage from "./pages/ShowInvitePage";
-
+import AboutUsPage from "./pages/AboutUsPage"
 import "./App.css";
 
 const App = () => {
@@ -37,6 +37,7 @@ const App = () => {
         </PrivateRoute>
 
         <Route exact path="/feedback" component={FeedbackPage} />
+        <Route exact path="/about" component={AboutUsPage} />
       </Switch>
     </Router>
   );
