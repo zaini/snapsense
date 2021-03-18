@@ -2,7 +2,7 @@ const os = require("os");
 const pMap = require("p-map");
 const { parentPort } = require("worker_threads");
 const { Op } = require("sequelize");
-
+const moment = require("moment");
 const {
   Request,
   Doctor,
@@ -13,11 +13,16 @@ const enqueueEmail = require("../utils/scheduledEmail.js");
 const { ApolloError } = require("apollo-server-core");
 
 const scheduleJob = async (doctor, patient, request) => {
+  var a = moment(request.deadline);
+  var b = moment();
+
+  const daysLeft = a.diff(b, "days");
+  
   // Set email parameters for the template
   const htmlParams = {
     doctor: doctor.email,
     patient: patient.email,
-    days: "7",
+    days: daysLeft,
   };
 
   // Set essential email parameters
@@ -41,9 +46,11 @@ const scheduleJob = async (doctor, patient, request) => {
     // return early if the job was already cancelled
     if (isCancelled) return;
     try {
+      // TODO : Convert to Left join or Inner join to improve efficiency (Low Priority)
       const request = result.dataValues;
       const doctor = await Doctor.findByPk(request.doctor_id);
       const patient = await Patient.findByPk(request.patient_id);
+
       await scheduleJob(doctor.dataValues, patient.dataValues, request);
 
       return true;
