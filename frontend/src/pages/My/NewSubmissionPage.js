@@ -104,44 +104,6 @@ const NewSubmissionPage = () => {
         </Box>
       </Center>
     );
-  } else if (error) {
-    body = (
-      <Center py={6}>
-        <Box
-          maxW={"445px"}
-          w={"full"}
-          bg={"white"}
-          boxShadow={"2xl"}
-          rounded={"md"}
-          p={6}
-          overflow={"hidden"}
-        >
-          <Stack>
-            <Heading>
-              <CloseIcon />
-            </Heading>
-            <Text
-              color={"red.500"}
-              textTransform={"uppercase"}
-              fontWeight={800}
-              fontSize={"sm"}
-              letterSpacing={1.1}
-            >
-              Failed :(
-            </Text>
-            <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
-              <Error
-                errors={[
-                  {
-                    message: error.graphQLErrors[0].message,
-                  },
-                ]}
-              />
-            </Heading>
-          </Stack>
-        </Box>
-      </Center>
-    );
   } else if (data) {
     body = (
       <Center py={6}>
@@ -178,6 +140,15 @@ const NewSubmissionPage = () => {
     body = (
       <Box className={classes.layout}>
         <Stack>
+          {error ?
+          <Error
+            errors={[
+              {
+                message: error.graphQLErrors[0].message,
+              },
+            ]}
+          />
+          : null}
           <Alert status="info">
             <AlertIcon />
             Open the tabs to add your images or questionnaire or both!
@@ -231,7 +202,6 @@ const NewSubmissionPage = () => {
               </Paper>
             </TabPanel>
           </Tabs>
-
           <Paper className={classes.paper}>
             <Center>
               <Button
