@@ -23,6 +23,7 @@ import ImageUpload from "../../components/SubmissionCreate/ImageUpload";
 import BackButton from "../../components/SubmissionCreate/BackButtton";
 import NextButton from "../../components/SubmissionCreate/NextButton";
 import Error from "../../components/utils/Error";
+import InformationCard from "../../components/InformationCard";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -53,6 +54,86 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Review"];
 
+const SubmitButtonPanel = ({ answers, images, classes, uploadSubmission }) => {
+  return (
+    <Paper className={classes.paper}>
+      <Center>
+        <Button
+          rightIcon={<CheckCircleIcon />}
+          variant="contained"
+          color="primary"
+          colorScheme="teal"
+          onClick={() => {
+            uploadSubmission({
+              variables: {
+                images,
+                answers: JSON.stringify(answers),
+              },
+            });
+          }}
+        >
+          Submit
+        </Button>
+      </Center>
+    </Paper>
+  );
+};
+
+const ImageUploadPanel = ({ classes, setImages }) => {
+  return (
+    <Paper className={classes.paper}>
+      <Heading style={{ textAlign: "center" }}>Image Upload</Heading>
+      <ImageUpload setImages={setImages} />
+    </Paper>
+  );
+};
+
+const QuestionnairePanel = ({
+  classes,
+  activeStep,
+  answers,
+  setAnswers,
+  handleBack,
+  handleNext,
+}) => {
+  return (
+    <Paper className={classes.paper}>
+      <Heading style={{ textAlign: "center" }}>Questionnaire</Heading>
+      <Stepper activeStep={activeStep} className={classes.stepper}>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+      <Box>
+        <Stack>
+          {activeStep < 8 ? (
+            <QuestionForm
+              step={activeStep}
+              answers={answers}
+              setAnswers={setAnswers}
+            />
+          ) : (
+            <Review answers={answers} />
+          )}
+          <Center columns={[2]}>
+            <BackButton
+              activeStep={activeStep}
+              handleBack={handleBack}
+              classes={classes}
+            />
+            <NextButton
+              activeStep={activeStep}
+              handleNext={handleNext}
+              classes={classes}
+            />
+          </Center>
+        </Stack>
+      </Box>
+    </Paper>
+  );
+};
 const NewSubmissionPage = () => {
   const [images, setImages] = useState([]);
   const [answers, setAnswers] = useState({ questionnaire: {} });
@@ -77,78 +158,47 @@ const NewSubmissionPage = () => {
   let body;
   if (loading) {
     body = (
-      <Center py={6}>
-        <Box
-          maxW={"445px"}
-          w={"full"}
-          bg={"white"}
-          boxShadow={"2xl"}
-          rounded={"md"}
-          p={6}
-          overflow={"hidden"}
-        >
-          <Stack>
-            <Heading>
-              <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="blue.500"
-                size="xl"
-              />
-            </Heading>
-            <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
-              Loading...
-            </Heading>
-          </Stack>
-        </Box>
-      </Center>
+      <InformationCard
+        head={
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        }
+        body={
+          <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
+            Loading...
+          </Heading>
+        }
+      />
     );
   } else if (data) {
     body = (
-      <Center py={6}>
-        <Box
-          maxW={"445px"}
-          w={"full"}
-          bg={"white"}
-          boxShadow={"2xl"}
-          rounded={"md"}
-          p={6}
-          overflow={"hidden"}
-        >
-          <Stack>
-            <Heading>
-              <CheckIcon />
-            </Heading>
-            <Text
-              color={"green.500"}
-              textTransform={"uppercase"}
-              fontWeight={800}
-              fontSize={"sm"}
-              letterSpacing={1.1}
-            >
-              Success
-            </Text>
-            <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
-              Form has been submitted !
-            </Heading>
-          </Stack>
-        </Box>
-      </Center>
+      <InformationCard
+        head={<CheckIcon />}
+        body={
+          <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
+            Form has been submitted !
+          </Heading>
+        }
+      />
     );
   } else {
     body = (
       <Box className={classes.layout}>
         <Stack>
-          {error ?
-          <Error
-            errors={[
-              {
-                message: error.graphQLErrors[0].message,
-              },
-            ]}
-          />
-          : null}
+          {error ? (
+            <Error
+              errors={[
+                {
+                  message: error.graphQLErrors[0].message,
+                },
+              ]}
+            />
+          ) : null}
           <Alert status="info">
             <AlertIcon />
             Open the tabs to add your images or questionnaire or both!
@@ -159,69 +209,25 @@ const NewSubmissionPage = () => {
               <Tab>Questionnaire</Tab>
             </TabList>
             <TabPanel>
-              <Paper className={classes.paper}>
-                <Heading style={{ textAlign: "center" }}>Image Upload</Heading>
-                <ImageUpload setImages={setImages} />
-              </Paper>
+              <ImageUploadPanel classes={classes} setImages={setImages} />
             </TabPanel>
             <TabPanel>
-              <Paper className={classes.paper}>
-                <Heading style={{ textAlign: "center" }}>Questionnaire</Heading>
-                <Stepper activeStep={activeStep} className={classes.stepper}>
-                  {steps.map((label) => (
-                    <Step key={label}>
-                      <StepLabel>{label}</StepLabel>
-                    </Step>
-                  ))}
-                </Stepper>
-                <Box>
-                  <Stack>
-                    {activeStep < 8 ? (
-                      <QuestionForm
-                        step={activeStep}
-                        answers={answers}
-                        setAnswers={setAnswers}
-                      />
-                    ) : (
-                      <Review answers={answers} />
-                    )}
-                    <Center columns={[2]}>
-                      <BackButton
-                        activeStep={activeStep}
-                        handleBack={handleBack}
-                        classes={classes}
-                      />
-                      <NextButton
-                        activeStep={activeStep}
-                        handleNext={handleNext}
-                        classes={classes}
-                      />
-                    </Center>
-                  </Stack>
-                </Box>
-              </Paper>
+              <QuestionnairePanel
+                classes={classes}
+                activeStep={activeStep}
+                answers={answers}
+                handleBack={handleBack}
+                handleNext={handleNext}
+                setAnswers={setAnswers}
+              />
             </TabPanel>
           </Tabs>
-          <Paper className={classes.paper}>
-            <Center>
-              <Button
-                rightIcon={<CheckCircleIcon />}
-                variant="contained"
-                color="primary"
-                colorScheme="teal"
-                onClick={() => {
-                  uploadSubmission({
-                    variables: {
-                      images,
-                      answers: JSON.stringify(answers),
-                    },
-                  });
-                }}
-              >
-                Submit
-              </Button>
-            </Center>
-          </Paper>
+          <SubmitButtonPanel
+            answers={answers}
+            images={images}
+            classes={classes}
+            uploadSubmission={uploadSubmission}
+          />
         </Stack>
       </Box>
     );
