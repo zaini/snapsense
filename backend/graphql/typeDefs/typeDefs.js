@@ -81,6 +81,12 @@ module.exports = gql`
     extra: String
   }
 
+  type Feedback {
+    id: ID!
+    stars: Int!
+    extra: String
+  }
+
   type Mutation {
     createHospital(name: String!, contact_email: String!): Hospital
     createAdmin(
@@ -119,6 +125,7 @@ module.exports = gql`
 
     changePassword(password: String!, password_confirmation: String!): Boolean!
     deleteAccount(password: String!, password_confirmation: String!): Boolean!
+    createFeedback(stars: Int!, extra: String): Feedback!
   }
 
   type Query {
@@ -138,5 +145,6 @@ module.exports = gql`
     getImages: [Image!]
     isLoggedIn: String!
     checkInvitation(invitationToken: String!): String!
+    getFeedback: [Feedback!]
   }
 `;
