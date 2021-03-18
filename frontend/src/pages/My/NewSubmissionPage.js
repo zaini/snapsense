@@ -2,28 +2,23 @@ import React from "react";
 import { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, StepLabel, Step, Paper, Stepper } from "@material-ui/core";
 import {
   Heading,
   Stack,
   Box,
-  Center,
-  Text,
   Alert,
   Spinner,
   AlertIcon,
 } from "@chakra-ui/react";
-import { CheckCircleIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import { CheckIcon } from "@chakra-ui/icons";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 
-import QuestionForm from "../../components/SubmissionCreate/Questionnaire";
-import Review from "../../components/SubmissionCreate/Review";
-import ImageUpload from "../../components/SubmissionCreate/ImageUpload";
-import BackButton from "../../components/SubmissionCreate/BackButtton";
-import NextButton from "../../components/SubmissionCreate/NextButton";
 import Error from "../../components/utils/Error";
 import InformationCard from "../../components/InformationCard";
+import ImageUploadPanel from "../../components/SubmissionCreate/ImageUploadPanel";
+import QuestionnairePanel from "../../components/SubmissionCreate/QuestionnairePanel";
+import SubmitButtonPanel from "../../components/SubmissionCreate/SubmitButtonPanel";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -52,88 +47,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Review"];
-
-const SubmitButtonPanel = ({ answers, images, classes, uploadSubmission }) => {
-  return (
-    <Paper className={classes.paper}>
-      <Center>
-        <Button
-          rightIcon={<CheckCircleIcon />}
-          variant="contained"
-          color="primary"
-          colorScheme="teal"
-          onClick={() => {
-            uploadSubmission({
-              variables: {
-                images,
-                answers: JSON.stringify(answers),
-              },
-            });
-          }}
-        >
-          Submit
-        </Button>
-      </Center>
-    </Paper>
-  );
-};
-
-const ImageUploadPanel = ({ classes, setImages }) => {
-  return (
-    <Paper className={classes.paper}>
-      <Heading style={{ textAlign: "center" }}>Image Upload</Heading>
-      <ImageUpload setImages={setImages} />
-    </Paper>
-  );
-};
-
-const QuestionnairePanel = ({
-  classes,
-  activeStep,
-  answers,
-  setAnswers,
-  handleBack,
-  handleNext,
-}) => {
-  return (
-    <Paper className={classes.paper}>
-      <Heading style={{ textAlign: "center" }}>Questionnaire</Heading>
-      <Stepper activeStep={activeStep} className={classes.stepper}>
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-      <Box>
-        <Stack>
-          {activeStep < 8 ? (
-            <QuestionForm
-              step={activeStep}
-              answers={answers}
-              setAnswers={setAnswers}
-            />
-          ) : (
-            <Review answers={answers} />
-          )}
-          <Center columns={[2]}>
-            <BackButton
-              activeStep={activeStep}
-              handleBack={handleBack}
-              classes={classes}
-            />
-            <NextButton
-              activeStep={activeStep}
-              handleNext={handleNext}
-              classes={classes}
-            />
-          </Center>
-        </Stack>
-      </Box>
-    </Paper>
-  );
-};
 const NewSubmissionPage = () => {
   const [images, setImages] = useState([]);
   const [answers, setAnswers] = useState({ questionnaire: {} });
