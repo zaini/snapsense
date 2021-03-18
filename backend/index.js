@@ -12,21 +12,12 @@ const bree = new Bree({
   jobs: [
     {
       name: "email",
-      interval: "10s",
+      interval: "15m",
     },
     {
-      name: "seven_day_reminder",
+      name: "reminder_schedule",
       interval: "1d",
     },
-    // {
-    //   name: "five_day_reminder",
-    //   interval: "every day",
-    // },
-    // {
-    //   name: "two_day_reminder",
-    //   interval: "every day",
-    // },
-
   ],
 });
 
