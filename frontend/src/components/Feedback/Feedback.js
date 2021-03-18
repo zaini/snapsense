@@ -35,7 +35,7 @@ const Feedback = () => {
         alignItems="center"
         textAlign="center-left"
       >
-        <Text mb="8px">How was your experience in overall? </Text>
+        <Text mb="8px">How would you rate your experience with SnapSense?</Text>
         <Box d="flex">
           {[...Array(5)].map((star, i) => {
             const ratingValue = i + 1;
@@ -68,7 +68,7 @@ const Feedback = () => {
         <br />
         <Box>
           <form>
-            <Text mb="8px">Did we meet your expectations?</Text>
+            <Text mb="8px">Additional Feedback</Text>
             <Textarea
               isFullWidth="True"
               value={value}
