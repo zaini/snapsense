@@ -1,9 +1,7 @@
+import AboutUs from "../components/AboutUs/AboutUs";
+
 const AboutUsPage = () => {
-  return (
-    <div>
-      <h1>ABOUT US</h1>
-    </div>
-  );
+  return <AboutUs />;
 };
 
 export default AboutUsPage;
