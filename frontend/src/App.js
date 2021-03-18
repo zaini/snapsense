@@ -11,9 +11,7 @@ import MyPage from "./pages/My/MyPage";
 import LogoutPage from "./pages/LogoutPage";
 import FeedbackPage from "./pages/FeedbackPage";
 import ShowInvitePage from "./pages/ShowInvitePage";
-
-import NewSubmissionPage from "./pages/My/NewSubmissionPage";
-
+import AboutUsPage from "./pages/AboutUsPage"
 import "./App.css";
 import ErrorPage from "./pages/ErrorPage";
 
@@ -32,8 +30,7 @@ const App = () => {
           <MyPage changeNavbar={setMainNavbarIsVisible} />
         </PrivateRoute>
         <Route exact path="/feedback" component={FeedbackPage} />
-
-        <Route path="/error" component={ErrorPage} />
+        <Route exact path="/about" component={AboutUsPage} />
       </Switch>
     </Router>
   );
