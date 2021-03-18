@@ -1,35 +1,48 @@
 import React from "react";
+import { useForm } from "react-hook-form";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
 import {
-  FormControl,
-  FormLabel,
+  Alert,
+  AlertIcon,
   ModalFooter,
   Button,
   ModalContent,
-  Input,
   Modal,
   ModalBody,
   ModalOverlay,
   ModalHeader,
   ModalCloseButton,
-  Center,
 } from "@chakra-ui/react";
+
 import Error from "./Error";
-import { useForm } from "react-hook-form";
+import PasswordConfirmationForm from "./PasswordConfirmationForm";
 
 const ChangePasswordModal = ({ isOpen, onClose }) => {
-  const {
-    register,
-    handleSubmit,
-    errors,
-    setError,
-    formState,
-    clearErrors,
-  } = useForm();
+  const { register, handleSubmit, errors, setError, formState } = useForm();
+
+  const [changePassword, { loading, data }] = useMutation(CHANGE_PASSWORD, {
+    onError(err) {
+      setError("password", {
+        type: "manual",
+        message: err.graphQLErrors[0].message,
+      });
+    },
+  });
 
   const onSubmit = ({ password, repeat_password }) => {
-    clearErrors();
     if (password === repeat_password) {
-      // call backend here
+      changePassword({
+        variables: {
+          password,
+          password_confirmation: repeat_password,
+        },
+      });
+    } else {
+      setError("password", {
+        type: "manual",
+        message: "'Password' must match 'Repeat Password'",
+      });
     }
   };
 
@@ -40,36 +53,26 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
         <ModalHeader>Change your password</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
-          <Error errors={errors} />
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <FormControl id="password" isRequired>
-              <FormLabel htmlFor="password">Password</FormLabel>
-              <Input
-                type="password"
-                name="password"
-                placeholder="Password"
-                ref={register}
-              />
-            </FormControl>
-            <br />
-            <FormControl id="repeat_password" isRequired>
-              <FormLabel htmlFor="repeat_password">Repeat Password</FormLabel>
-              <Input
-                type="password"
-                name="repeat_password"
-                placeholder="Repeat password"
-                ref={register}
-              />
-            </FormControl>
-          </form>
+          <Error errors={errors} mb="4" />
+          {Object.keys(errors).length === 0 && data ? (
+            <Alert status="success" variant="subtle" mb="4">
+              <AlertIcon />
+              Password has been updated!
+            </Alert>
+          ) : null}
+          <PasswordConfirmationForm
+            register={register}
+            onSubmit={onSubmit}
+            handleSubmit={handleSubmit}
+          />
         </ModalBody>
-
         <ModalFooter>
           <Button
             mr={3}
             colorScheme="blue"
             type="submit"
-            isLoading={formState.isSubmitting}
+            isLoading={formState.isSubmitting || loading}
+            onClick={handleSubmit(onSubmit)}
           >
             Change Password
           </Button>
@@ -81,3 +84,12 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
 };
 
 export default ChangePasswordModal;
+
+const CHANGE_PASSWORD = gql`
+  mutation changePassword($password: String!, $password_confirmation: String!) {
+    changePassword(
+      password: $password
+      password_confirmation: $password_confirmation
+    )
+  }
+`;

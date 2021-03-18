@@ -123,6 +123,8 @@ module.exports = gql`
 
     addPatientToDoctor(patient_email: String!, doctor_email: String!): Boolean!
 
+    changePassword(password: String!, password_confirmation: String!): Boolean!
+    deleteAccount(password: String!, password_confirmation: String!): Boolean!
     createFeedback(stars: Int!, extra: String): Feedback!
   }
 

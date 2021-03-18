@@ -3,7 +3,7 @@ import React from "react";
 import Hero from "../components/utils/Hero";
 import LandingLayout from "../components/utils/LandingLayout";
 
-export default function Landing() {
+const Landing = () => {
   return (
     <LandingLayout>
       <Hero
@@ -14,3 +14,5 @@ export default function Landing() {
     </LandingLayout>
   );
 }
+
+export default Landing;
