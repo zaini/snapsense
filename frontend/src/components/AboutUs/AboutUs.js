@@ -1,5 +1,15 @@
-import { Text, Container, Heading, Image } from "@chakra-ui/react";
+import {
+  Text,
+  HStack,
+  Container,
+  Heading,
+  Image,
+  Button,
+  IconButton,
+  Center,
+} from "@chakra-ui/react";
 
+import { FaFacebook, FaTwitter, FaYoutube } from "react-icons/fa";
 import img from "./snapsense.png";
 
 const AboutUs = () => {
@@ -20,6 +30,37 @@ const AboutUs = () => {
         encouraging earlier recognition of wounds, and saving the patients and
         hospitals time and money.
       </Text>
+      <Center mt="10">
+        <HStack>
+          <a href="http://www.facebook.com" target="_blank">
+            <IconButton
+              size="lg"
+              isRound="true"
+              colorScheme="facebook"
+              icon={<FaFacebook />}
+            />
+          </a>
+          <a href="http://www.twitter.com" target="_blank">
+            <IconButton
+              size="lg"
+              isRound="true"
+              colorScheme="twitter"
+              icon={<FaTwitter />}
+            />
+          </a>
+          <a
+            href="https://www.youtube.com/watch?v=MNrLKAAJrq8&t=15s"
+            target="_blank"
+          >
+            <IconButton
+              size="lg"
+              isRound="true"
+              colorScheme="red"
+              icon={<FaYoutube />}
+            />
+          </a>
+        </HStack>
+      </Center>
       <br />
     </Container>
   );
