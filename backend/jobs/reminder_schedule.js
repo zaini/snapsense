@@ -53,14 +53,10 @@ const scheduleJob = async (doctor, patient, request) => {
   };
 
   const concurrency = os.cpus().length;
-  const benchmark = new Date().setDate(new Date().getDate() + 7);
 
   // Fetch requests that are due in the next 7 days
   const requestsFetched = await Request.findAll({
     where: {
-      // deadline: {
-      //   [Op.eq]: benchmark,
-      // },
       fulfilled: null,
     },
   });
