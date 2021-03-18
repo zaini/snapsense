@@ -60,7 +60,7 @@ const emailStatusChanger = async (newStatus, id) => {
   // Fetch all scheduled emails that have not been processed yet, status=0
   const emailsFetched = await ScheduledEmail.findAll({
     where: { status: 0 },
-    limit: 25,
+    limit: 250,
   });
 
   // at least one scheduled email
