@@ -1,6 +1,7 @@
 "use strict";
 const { Model, ValidationError } = require("sequelize");
 const { Validator } = require("../utils/validator");
+const argon2 = require("argon2");
 
 const ModelValidator = Validator();
 
