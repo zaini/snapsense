@@ -148,5 +148,6 @@ module.exports = gql`
     isLoggedIn: String!
     checkInvitation(invitationToken: String!): String!
     getFeedback: [Feedback!]
+    getSubmissionsForReview: [Submission!]
   }
 `;

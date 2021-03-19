@@ -84,6 +84,43 @@ module.exports = {
       }
       return submissions || [];
     },
+    getSubmissionsForReview: async (_, __, context) => {
+      const user = isAuth(context);
+
+      if (user.accountType !== "DOCTOR") {
+        throw new AuthenticationError(
+          "You are not logged into the correct account for this feature."
+        );
+      }
+
+      const doctor = await Doctor.findByPk(user.id);
+
+      if (!doctor) {
+        throw new UserInputError("Invalid doctor");
+      }
+
+      // Get all submissions that belong to patients of this doctor which have no flag
+      let submissions = [];
+      const patients = await doctor.getPatients();
+      for await (const patient of patients) {
+        const patient_submissions = await patient.getSubmissions({
+          where: { flag: null },
+          include: [
+            Patient,
+            Image,
+            {
+              model: Answer,
+              include: [Question],
+            },
+          ],
+        });
+        submissions.push(...patient_submissions);
+      }
+
+      console.log("UNREVIEWED submissions: ", submissions);
+
+      return submissions || [];
+    },
   },
   Mutation: {
     createSubmission: async (_, { images, answers }, context) => {
@@ -177,7 +214,6 @@ module.exports = {
       }
 
       await submission.update({ flag });
-      console.log(submission);
       return submission;
     },
   },
