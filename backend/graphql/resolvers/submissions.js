@@ -93,7 +93,17 @@ module.exports = {
       // if the user is a doctor, and they own the patient who owns it, show it
       // else return error
 
-      const submission = await Submission.findByPk(submission_id);
+      const submission = await Submission.findOne({
+        where: { id: submission_id },
+        include: [
+          Patient,
+          Image,
+          {
+            model: Answer,
+            include: [Question],
+          },
+        ],
+      });
       if (!submission) {
         throw new UserInputError("This submission does not exist.");
       }
@@ -101,7 +111,7 @@ module.exports = {
 
       if (user.accountType === "PATIENT") {
         const patient = await Patient.findByPk(user.id);
-        if (patient === submission_owner) {
+        if (patient.id === submission_owner.id) {
           return submission;
         }
       } else if (user.accountType === "DOCTOR") {
