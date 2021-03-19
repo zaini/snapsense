@@ -10,6 +10,9 @@ const {
   Request,
   Submission,
   ScheduledEmail,
+  Image,
+  Answer,
+  Question,
 } = require("../../models/index.js");
 const isAuth = require("../../utils/isAuth.js");
 const { Sequelize } = require("../../models/index");
@@ -110,7 +113,11 @@ module.exports = {
         include: [
           Doctor,
           Patient,
-          { model: Submission, where: { flag: null } },
+          {
+            model: Submission,
+            where: { flag: null },
+            include: [Image, { model: Answer, include: [Question] }],
+          },
         ],
       });
 
