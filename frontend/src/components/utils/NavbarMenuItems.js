@@ -12,7 +12,7 @@ const NavbarMenuItems = () => {
         return (
           <>
             <MenuItem to="/my">My Dashboard</MenuItem>
-            <MenuItem to="/contact">Contact Us</MenuItem>
+            <MenuItem to="/feedback">Share Feedback</MenuItem>
             <MenuItem to="/logout" isLast>
               <Button
                 size="sm"
@@ -37,7 +37,7 @@ const NavbarMenuItems = () => {
         return (
           <>
             <MenuItem to="/my">My Dashboard</MenuItem>
-            <MenuItem to="/contact">Contact Us</MenuItem>
+            <MenuItem to="/feedback">Share Feedback</MenuItem>
             <MenuItem to="/logout" isLast>
               <Button
                 size="sm"
@@ -62,7 +62,7 @@ const NavbarMenuItems = () => {
         return (
           <>
             <MenuItem to="/my">My Dashboard</MenuItem>
-            <MenuItem to="/contact">Contact Us</MenuItem>
+            <MenuItem to="/feedback">Share Feedback</MenuItem>
             <MenuItem to="/logout" isLast>
               <Button
                 size="sm"
@@ -92,7 +92,7 @@ const NavbarMenuItems = () => {
     <>
       <MenuItem to="/">Home</MenuItem>
       <MenuItem to="/about">About Us</MenuItem>
-      <MenuItem to="/contact">Contact Us</MenuItem>
+      <MenuItem to="/feedback">Share Feedback</MenuItem>
       <MenuItem to="/login" isLast>
         <Button
           size="sm"

@@ -10,6 +10,7 @@ import FeedbackPage from "./FeedbackPage";
 import ShowInvitePage from "./ShowInvitePage";
 import ErrorPage from "./ErrorPage";
 import MainNavbar from "../../components/utils/MainNavbar";
+import AboutUsPage from "./AboutUsPage";
 
 const HomeLayout = () => {
   return (
@@ -26,7 +27,7 @@ const HomeLayout = () => {
           component={ShowInvitePage}
         />
         <Route exact path="/feedback" component={FeedbackPage} />
-
+        <Route exact path="/about" component={AboutUsPage} />
         <Route path="/error" component={ErrorPage} />
       </Switch>
     </>
