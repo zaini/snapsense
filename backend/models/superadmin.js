@@ -1,5 +1,4 @@
 "use strict";
-const { Model } = require("sequelize");
 const { Model, ValidationError } = require("sequelize");
 const { Validator } = require("../utils/validator");
 
