@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import PrivateRoute from "./utils/PrivateRoute";
-
 import MyLayout from "./pages/My/MyLayout";
 import HomeLayout from "./pages/Home/HomeLayout";
 
