@@ -4,6 +4,7 @@ import {
   Create,
   Contacts,
   ContactMail,
+  Gavel,
   Home,
   ContactPhone,
   ListAlt,
@@ -28,6 +29,11 @@ const SuperAdminSideBarData = [
     title: "View Hospitals",
     path: "/my/hospitals",
     icon: <LocalHospital />,
+  },
+  {
+    title: "View Admins",
+    path: "/my/admins",
+    icon: <Gavel />,
   },
   {
     title: "My Profile",

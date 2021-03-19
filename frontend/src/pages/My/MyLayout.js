@@ -4,6 +4,7 @@ import PrivateRoute from "../../utils/PrivateRoute";
 
 import MySidebar from "../../components/utils/MySidebar/MySidebar";
 import PatientsPage from "./PatientsPage";
+import AdminsPage from "./AdminsPage";
 import DoctorsPage from "./DoctorsPage";
 import HospitalsPage from "./HospitalsPage";
 import MyHomePage from "./MyHomePage";
@@ -12,6 +13,8 @@ import NewSubmissionPage from "./NewSubmissionPage";
 import NewRequestPage from "./NewRequestPage";
 import PatientProfilePage from "./PatientProfilePage";
 import ProfilePage from "./ProfilePage";
+import HospitalPage from "./HospitalPage";
+import AdminPage from "./AdminPage";
 import RequestsPage from "./RequestsPage";
 import NewInvitePage from "./NewInvitePage";
 import ShowSubmissionPage from "./ShowSubmissionPage";
@@ -50,8 +53,20 @@ const MyLayout = () => {
           <PatientsPage />
         </PrivateRoute>
 
+        <PrivateRoute exact path="/my/admins" accountTypes={["SUPERADMIN"]}>
+          <AdminsPage />
+        </PrivateRoute>
+
         <PrivateRoute exact path="/my/hospitals/new" accountTypes={["SUPERADMIN"]}>
           <NewHospitalPage />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/my/hospitals/show/:hospital_id" accountTypes={["SUPERADMIN"]}>
+          <HospitalPage />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/my/admins/show/:admin_id" accountTypes={["SUPERADMIN"]}>
+          <AdminPage />
         </PrivateRoute>
 
         <PrivateRoute
