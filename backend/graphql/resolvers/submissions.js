@@ -84,6 +84,43 @@ module.exports = {
       }
       return submissions || [];
     },
+    getSubmissionsForReview: async (_, __, context) => {
+      const user = isAuth(context);
+
+      if (user.accountType !== "DOCTOR") {
+        throw new AuthenticationError(
+          "You are not logged into the correct account for this feature."
+        );
+      }
+
+      const doctor = await Doctor.findByPk(user.id);
+
+      if (!doctor) {
+        throw new UserInputError("Invalid doctor");
+      }
+
+      // Get all submissions that belong to patients of this doctor which have no flag
+      let submissions = [];
+      const patients = await doctor.getPatients();
+      for await (const patient of patients) {
+        const patient_submissions = await patient.getSubmissions({
+          where: { flag: null },
+          include: [
+            Patient,
+            Image,
+            {
+              model: Answer,
+              include: [Question],
+            },
+          ],
+        });
+        submissions.push(...patient_submissions);
+      }
+
+      console.log("UNREVIEWED submissions: ", submissions);
+
+      return submissions || [];
+    },
   },
   Mutation: {
     createSubmission: async (_, { images, answers }, context) => {
@@ -119,8 +156,9 @@ module.exports = {
       // Create answers and add them to the submission
       if (answers !== undefined) {
         answers = stringToJSON(answers);
-        if (Object.keys(answers.questionnaire).length !== 8)
-          throw new UserInputError("Invalid number of answers");
+        // if (Object.keys(answers.questionnaire).length !== 8) {
+        //   throw new UserInputError("Invalid number of answers");
+        // }
       }
 
       for (const questionId in answers.questionnaire) {
@@ -154,6 +192,29 @@ module.exports = {
       });
 
       return true;
+    },
+    flagSubmission: async (_, { submission_id, flag }, context) => {
+      // Authenticate user, only allow doctors
+      const user = isAuth(context);
+      if (user.accountType != "DOCTOR") {
+        throw new AuthenticationError("Invalid account type!");
+      }
+
+      if (flag < 1 || flag > 3) {
+        throw new UserInputError("Invalid flag value. Must be 1-3 (inclusive)");
+      }
+
+      const doctor = await Doctor.findByPk(user.id);
+      const submission = await Submission.findByPk(submission_id);
+      const patient = await submission.getPatient();
+
+      const canFlag = await doctor.hasPatient(patient);
+      if (!canFlag) {
+        throw new AuthenticationError("You cannot flag this submission");
+      }
+
+      await submission.update({ flag });
+      return submission;
     },
   },
 };

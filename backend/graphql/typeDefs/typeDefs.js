@@ -126,6 +126,8 @@ module.exports = gql`
     changePassword(password: String!, password_confirmation: String!): Boolean!
     deleteAccount(password: String!, password_confirmation: String!): Boolean!
     createFeedback(stars: Int!, extra: String): Feedback!
+
+    flagSubmission(submission_id: ID!, flag: Int!): Submission
   }
 
   type Query {
@@ -146,5 +148,6 @@ module.exports = gql`
     isLoggedIn: String!
     checkInvitation(invitationToken: String!): String!
     getFeedback: [Feedback!]
+    getSubmissionsForReview: [Submission!]
   }
 `;
