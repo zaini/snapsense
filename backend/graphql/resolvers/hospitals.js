@@ -1,9 +1,33 @@
-const { Hospital } = require("../../models/index.js");
+const { AuthenticationError, UserInputError } = require("apollo-server");
+
+const { Hospital, SuperAdmin } = require("../../models/index.js");
 const isAuth = require("../../utils/isAuth.js");
+
+const authenticateAdmin = async (context) => {
+  // Get the user based on the context
+  const user = isAuth(context);
+
+  // Make sure user is a super admin
+  if (user.accountType !== "SUPERADMIN") {
+    throw new AuthenticationError("Invalid user account type!");
+  }
+
+  // Make sure the super admin is 'real' (i.e. in the db)
+  const admin = await SuperAdmin.findByPk(user.id);
+  if (!admin) {
+    throw new AuthenticationError("Invalid user!");
+  }
+
+  return admin;
+};
 
 module.exports = {
   Query: {
-    getHospitals: async () => {
+    getHospitals: async (_, __, context) => {
+      // Authenticate the super admin
+      const admin = authenticateAdmin(context);
+
+      // Get all hospitals
       try {
         const hospitals = await Hospital.findAll();
         return hospitals;
@@ -11,14 +35,32 @@ module.exports = {
         throw new Error(error);
       }
     },
+    getSpecificHospital: async (_, { hospital_id }, context) => {
+      // Authenticate the super admin
+      const admin = authenticateAdmin(context);
+
+      // Get specific hospital
+      try {
+        const hospital = await Hospital.findByPk(hospital_id);
+        return hospital;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
   },
   Mutation: {
-    createHospital: async (_, hospital_details) => {
-      const hospital = new Hospital({
+    createHospital: async (_, hospital_details, context) => {
+      // Authenticate the super admin
+      const admin = authenticateAdmin(context);
+
+      // Create the hospital
+      const hospital = await new Hospital({
         ...hospital_details,
         createdAt: new Date(),
-      });
-      return hospital.save();
+        updatedAt: new Date(),
+      }).save();
+
+      return hospital;
     },
   },
 };
