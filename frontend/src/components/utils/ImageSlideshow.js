@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button, VStack, Text, Box, HStack } from "@chakra-ui/react";
+import { Button, VStack, Text, Box, HStack, Center } from "@chakra-ui/react";
 import ModalImage from "react-modal-image";
 
 const ImageSlideshow = () => {
@@ -31,7 +31,9 @@ const ImageSlideshow = () => {
 
   return (
     <VStack>
-      {imageComponents[index]}
+      <Box w="150px" h="150px" overflow="hidden" objectFit="scale-down">
+        <Center>{imageComponents[index]}</Center>
+      </Box>
       <HStack>
         <Button isDisabled={index === 0} onClick={() => setIndex(index - 1)}>
           Prev
