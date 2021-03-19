@@ -30,7 +30,7 @@ const ReviewSubmissions = () => {
     markup = (
       <Tabs>
         <TabList>
-          <Tab>Fulfilled Requests</Tab>
+          <Tab>Fulfilled & Unreviewed Requests</Tab>
           <Tab>Unreviewed Submissions</Tab>
         </TabList>
         <TabPanel>
@@ -48,6 +48,7 @@ const ReviewSubmissions = () => {
       <Center>
         <Heading>Review Patient Submissions</Heading>
       </Center>
+      <br />
       <hr />
       <br />
       {/* Have 2 tabs: one for submissions associated with requests and one for submissions as a whole */}
@@ -64,6 +65,7 @@ const GET_REQUESTS = gql`
       id
       type
       deadline
+      fulfilled
       Submission {
         id
         Images {
