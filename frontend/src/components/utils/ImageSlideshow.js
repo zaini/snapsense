@@ -2,23 +2,18 @@ import { useState, useEffect } from "react";
 import { Button, VStack, Text, Box, HStack, Center } from "@chakra-ui/react";
 import ModalImage from "react-modal-image";
 
-const ImageSlideshow = () => {
-  const images = [
-    "https://i.imgur.com/EpQofxh.png",
-    "https://i.imgur.com/EsbdsaJ.png",
-    "https://i.imgur.com/lGqTIfq.png",
-  ];
+const ImageSlideshow = ({ images }) => {
   const [index, setIndex] = useState(0);
   const [imageComponents, setImageComponents] = useState([]);
 
   useEffect(() => {
     let temp = [];
-    images.forEach((e, i) => {
+    images.forEach(({ url }, i) => {
       let component = (
         <ModalImage
           key={i}
-          small={e}
-          large={e}
+          small={url}
+          large={url}
           alt="submission"
           showRotate={true}
         />
@@ -31,7 +26,7 @@ const ImageSlideshow = () => {
 
   return (
     <VStack>
-      <Box w="150px" h="150px" overflow="hidden" objectFit="scale-down">
+      <Box w="220px" h="220px" overflow="hidden" objectFit="scale-down">
         <Center>{imageComponents[index]}</Center>
       </Box>
       <HStack>

@@ -1,39 +1,11 @@
-import {
-  Box,
-  HStack,
-  VStack,
-  Button,
-  Select,
-  Text,
-  InputGroup,
-  InputLeftAddon,
-  Input,
-  Center,
-} from "@chakra-ui/react";
+import { Box, HStack, Text, Center } from "@chakra-ui/react";
 import React from "react";
 import ImageSlideshow from "../../utils/ImageSlideshow";
 import ViewQuestionnaireResponse from "../../utils/ViewQuestionnaireResponse";
 import RequestCardOptions from "./RequestCardOptions";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
 
-// id: "1"
-// Doctor:
-// email: "doctor1@nhs.net"
-// fname: "Doctor"
-// lname: "One"
-// Patient:
-// email: "patient1@gmail.com"
-// fname: "Patient"
-// lname: "One"
-// Submission:
-// Answers: null
-// Images: null
-// createdAt: "1609718400000"
-// flag: 1
-// id: "1"
-// deadline: "1609804800000"
-// type: 3
-
-// This takes a request as above.
 const RequestCard = ({ data }) => {
   const { Patient, Submission, deadline, type } = data;
   const deadline_date = new Date(parseInt(deadline)).toDateString();
@@ -41,28 +13,59 @@ const RequestCard = ({ data }) => {
     parseInt(Submission.createdAt)
   ).toDateString();
 
-  console.log(Patient, Submission, deadline, type);
+  const [flagSubmission, { loading }] = useMutation(FLAG_SUBMISSION, {
+    onCompleted() {
+      // TODO: refresh page through cache!
+    },
+    onError(err) {
+      console.log(err);
+    },
+    update(proxy) {
+      const data = proxy.readQuery({
+        query: GET_REQUESTS,
+      });
+      proxy.writeQuery({
+        query: GET_REQUESTS,
+        data: {
+          getRequestsForReview: data.getRequestsForReview.filter(
+            (p) => p.Submission.id !== Submission.id
+          ),
+        },
+      });
+    },
+  });
 
   return (
-    <Box borderWidth="1px" borderRadius="lg" p="5px" m="5px">
-      <Center>
-        <HStack spacing="10%">
-          {Submission.Images || true ? (
-            <ImageSlideshow images={Submission.Images} />
-          ) : (
-            <Text>This submission has no images</Text>
-          )}
-          {Submission.Answers ? (
-            <ViewQuestionnaireResponse answers={Submission.Answers} />
-          ) : (
-            <Text>This submission has no questionnaire</Text>
-          )}
-          <RequestCardOptions
-            patient={Patient}
-            submission={Submission}
-            submission_date={submission_date}
-            deadline_date={deadline_date}
-          />
+    <Box borderWidth="1px" borderRadius="lg" p="10px" m="5px">
+      <Center p="10px">
+        <HStack>
+          <Box mr="100px">
+            {Submission.Images.length === 0 ? (
+              <Text fontWeight="bold" fontSize="110%" pb="50%">
+                This submission has no images
+              </Text>
+            ) : (
+              <ImageSlideshow images={Submission.Images} />
+            )}
+          </Box>
+          <Box mr="100px">
+            {Submission.Answers.length === 0 ? (
+              <Text fontWeight="bold" fontSize="110%" pb="50%">
+                This submission has no questionnaire
+              </Text>
+            ) : (
+              <ViewQuestionnaireResponse answers={Submission.Answers} />
+            )}
+          </Box>
+          <Box>
+            <RequestCardOptions
+              patient={Patient}
+              submission={Submission}
+              submission_date={submission_date}
+              deadline_date={deadline_date}
+              onFlag={flagSubmission}
+            />
+          </Box>
         </HStack>
       </Center>
     </Box>
@@ -70,3 +73,53 @@ const RequestCard = ({ data }) => {
 };
 
 export default RequestCard;
+
+const FLAG_SUBMISSION = gql`
+  mutation flagSubmission($submission_id: ID!, $flag: Int!) {
+    flagSubmission(submission_id: $submission_id, flag: $flag) {
+      id
+      flag
+    }
+  }
+`;
+
+const GET_REQUESTS = gql`
+  query getRequests {
+    getRequestsForReview {
+      id
+      type
+      deadline
+      fulfilled
+      Submission {
+        id
+        Images {
+          id
+          url
+        }
+        Answers {
+          id
+          Question {
+            id
+            text
+          }
+          value
+          extra
+        }
+        flag
+        createdAt
+      }
+      Patient {
+        id
+        fname
+        lname
+        email
+      }
+      Doctor {
+        id
+        fname
+        lname
+        email
+      }
+    }
+  }
+`;
