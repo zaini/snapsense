@@ -3,7 +3,7 @@ const { AuthenticationError, UserInputError } = require("apollo-server");
 const { Hospital, SuperAdmin } = require("../../models/index.js");
 const isAuth = require("../../utils/isAuth.js");
 
-const authenticateAdmin = async (context) => {
+const getAuthenticatedAdmin = async (context) => {
   // Get the user based on the context
   const user = isAuth(context);
 
@@ -25,7 +25,7 @@ module.exports = {
   Query: {
     getHospitals: async (_, __, context) => {
       // Authenticate the super admin
-      const admin = authenticateAdmin(context);
+      const admin = getAuthenticatedAdmin(context);
 
       // Get all hospitals
       try {
@@ -37,7 +37,7 @@ module.exports = {
     },
     getSpecificHospital: async (_, { hospital_id }, context) => {
       // Authenticate the super admin
-      const admin = authenticateAdmin(context);
+      const admin = getAuthenticatedAdmin(context);
 
       // Get specific hospital
       try {
@@ -51,7 +51,7 @@ module.exports = {
   Mutation: {
     createHospital: async (_, hospital_details, context) => {
       // Authenticate the super admin
-      const admin = authenticateAdmin(context);
+      const admin = getAuthenticatedAdmin(context);
 
       // Create the hospital
       const hospital = await new Hospital({
