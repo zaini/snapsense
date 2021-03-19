@@ -5,7 +5,7 @@ const { ValidationError } = require("sequelize");
 require("dotenv").config();
 
 const { createAccessToken } = require("../utils/authTokens");
-const { Admin, Doctor, Patient } = require("../../../models/index");
+const { Admin, Doctor, Patient, SuperAdmin } = require("../../../models/index");
 const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
 
 // Make sure the the inviter exists and the invited email account does not exist
@@ -113,6 +113,9 @@ module.exports = {
           break;
         case "PATIENT":
           user = await Patient.findOne({ where: { email: email } });
+          break;
+        case "SUPERADMIN":
+          user = await SuperAdmin.findOne({ where: { email: email } });
           break;
         default:
           // Account type is invalid
