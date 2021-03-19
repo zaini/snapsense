@@ -22,7 +22,7 @@ const getAuthenticatedAdmin = async (context) => {
 module.exports = {
   Query: {
     getAdmins: async (_, __, context) => {
-      const admin = getAuthenticatedAdmin(context);
+      const admin = await getAuthenticatedAdmin(context);
 
       try {
         const admins = await Admin.findAll();
@@ -34,7 +34,7 @@ module.exports = {
   },
   Mutation: {
     createAdmin: async (_, user_details, context) => {
-      const admin = getAuthenticatedAdmin(context);
+      const admin = await getAuthenticatedAdmin(context);
 
       const hospital = await Hospital.findByPk(user_details.hospital_id);
 
