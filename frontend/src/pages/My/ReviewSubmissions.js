@@ -26,9 +26,7 @@ const ReviewSubmissions = () => {
       </Alert>
     );
   } else {
-    console.log(data);
     let data_rows = data.getRequestsForReview;
-
     markup = (
       <Tabs>
         <TabList>

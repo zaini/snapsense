@@ -14,7 +14,7 @@ const RequestCardsTable = ({ data }) => {
     markup = (
       <>
         {data.map((e, i) => {
-          return <RequestCard data={e} />;
+          return <RequestCard key={i} data={e} />;
         })}
       </>
     );
