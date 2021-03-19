@@ -1,9 +1,9 @@
-const { AuthenticationError } = require("apollo-server");
+const { AuthenticationError, UserInputError } = require("apollo-server");
 
 const { Hospital, SuperAdmin } = require("../../models/index.js");
 const isAuth = require("../../utils/isAuth.js");
 
-const getAuthenticatedAdmin = async (context) => {
+const getAuthenticatedSuperAdmin = async (context) => {
   // Get the user based on the context
   const user = isAuth(context);
 
@@ -13,19 +13,19 @@ const getAuthenticatedAdmin = async (context) => {
   }
 
   // Make sure the super admin is 'real' (i.e. in the db)
-  const admin = await SuperAdmin.findByPk(user.id);
-  if (!admin) {
+  const superAdmin = await SuperAdmin.findByPk(user.id);
+  if (!superAdmin) {
     throw new AuthenticationError("Invalid user!");
   }
 
-  return admin;
+  return superAdmin;
 };
 
 module.exports = {
   Query: {
     getHospitals: async (_, __, context) => {
       // Authenticate the super admin
-      const admin = await getAuthenticatedAdmin(context);
+      const superAdmin = await getAuthenticatedSuperAdmin(context);
 
       // Get all hospitals
       try {
@@ -37,21 +37,20 @@ module.exports = {
     },
     getSpecificHospital: async (_, { hospital_id }, context) => {
       // Authenticate the super admin
-      const admin = await getAuthenticatedAdmin(context);
+      const superAdmin = await getAuthenticatedSuperAdmin(context);
 
       // Get specific hospital
-      try {
-        const hospital = await Hospital.findByPk(hospital_id);
-        return hospital;
-      } catch (error) {
-        throw new Error(error);
+      const hospital = await Hospital.findByPk(hospital_id);
+      if(!hospital) {
+        throw new UserInputError("Hospital does not exist")
       }
+      return hospital;
     },
   },
   Mutation: {
     createHospital: async (_, hospital_details, context) => {
       // Authenticate the super admin
-      const admin = await getAuthenticatedAdmin(context);
+      const superAdmin = await getAuthenticatedSuperAdmin(context);
 
       // Create the hospital
       const hospital = await new Hospital({
