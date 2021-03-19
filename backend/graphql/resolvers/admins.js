@@ -1,7 +1,9 @@
-const { AuthenticationError, UserInputError } = require("apollo-server-core");
-const { SuperAdmin, Admin, Hospital } = require("../../models/index.js");
+const { AuthenticationError, UserInputError } = require("apollo-server");
 
-const getAuthenticatedAdmin = async (context) => {
+const { SuperAdmin, Admin, Hospital } = require("../../models/index.js");
+const isAuth = require("../../utils/isAuth");
+
+const getAuthenticatedSuperAdmin = async (context) => {
   // Get the user based on the context
   const user = isAuth(context);
 
@@ -11,30 +13,45 @@ const getAuthenticatedAdmin = async (context) => {
   }
 
   // Make sure the super admin is 'real' (i.e. in the db)
-  const admin = await SuperAdmin.findByPk(user.id);
-  if (!admin) {
+  const superAdmin = await SuperAdmin.findByPk(user.id);
+  if (!superAdmin) {
     throw new AuthenticationError("Invalid user!");
   }
 
-  return admin;
+  return superAdmin;
 };
 
 module.exports = {
   Query: {
     getAdmins: async (_, __, context) => {
-      const admin = await getAuthenticatedAdmin(context);
+      const superAdmin = await getAuthenticatedSuperAdmin(context);
 
       try {
-        const admins = await Admin.findAll();
+        const admins = await Admin.findAll({
+          include: Hospital,
+        });
         return admins;
       } catch (error) {
         throw new Error(error);
       }
     },
+    getSpecificAdmin: async (_, { admin_id }, context) => {
+      const superAdmin = await getAuthenticatedSuperAdmin(context);
+
+      const admin = await Admin.findByPk(admin_id, {
+        include: Hospital,
+      });
+
+      if(!admin) {
+        throw new UserInputError("Admin does not exist!")
+      }
+
+      return admin;
+    },
   },
   Mutation: {
     createAdmin: async (_, user_details, context) => {
-      const admin = await getAuthenticatedAdmin(context);
+      const superAdmin = await getAuthenticatedSuperAdmin(context);
 
       const hospital = await Hospital.findByPk(user_details.hospital_id);
 
