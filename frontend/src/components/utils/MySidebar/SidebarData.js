@@ -1,15 +1,40 @@
 import {
   AccountBox,
+  AddToPhotos,
+  Create,
   Contacts,
   ContactMail,
   Home,
   ContactPhone,
   ListAlt,
-  AddToPhotos,
+  LocalHospital,
   Event,
 } from "@material-ui/icons";
 
 // TODO update icons
+
+const SuperAdminSideBarData = [
+  {
+    title: "Home",
+    path: "/my",
+    icon: <Home />,
+  },
+  {
+    title: "Create Hospitals",
+    path: "/my/doctors/new",
+    icon: <Create />,
+  },
+  {
+    title: "View Hospitals",
+    path: "/my/hospitals",
+    icon: <LocalHospital />,
+  },
+  {
+    title: "My Profile",
+    path: "/my/profile",
+    icon: <AccountBox />,
+  },
+];
 
 const AdminSideBarData = [
   {
@@ -101,6 +126,7 @@ const PatientSideBarData = [
 ];
 
 export const SidebarData = {
+  SUPERADMIN: SuperAdminSideBarData,
   ADMIN: AdminSideBarData,
   DOCTOR: DoctorSideBarData,
   PATIENT: PatientSideBarData,
