@@ -26,7 +26,7 @@ const ImageSlideshow = ({ images }) => {
 
   return (
     <VStack>
-      <Box w="220px" h="220px" overflow="hidden" objectFit="scale-down">
+      <Box w="220px" h="100%" overflow="hidden" objectFit="scale-down">
         <Center>{imageComponents[index]}</Center>
       </Box>
       <HStack>
