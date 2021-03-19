@@ -1,5 +1,7 @@
-import { Container, Text, Center, Heading } from "@chakra-ui/layout";
 import React from "react";
+import gql from "graphql-tag";
+import { useQuery } from "@apollo/react-hooks";
+import { Container, Center } from "@chakra-ui/layout";
 import {
   Alert,
   AlertIcon,
@@ -7,8 +9,6 @@ import {
   AlertTitle,
   Spinner,
 } from "@chakra-ui/react";
-import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 import RequestCard from "./RequestCard";
 
 const RequestCardsTable = () => {

@@ -1,25 +1,22 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Box,
   HStack,
   VStack,
   Button,
   Select,
-  Text,
   InputGroup,
   InputLeftAddon,
   Input,
-  Center,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 import { BsPersonFill, BsFlag } from "react-icons/bs";
-import { BiCalendarCheck, BiCalendarExclamation } from "react-icons/bi";
+import { BiCalendarCheck } from "react-icons/bi";
 
 const SubmissionCardOptions = ({
   patient,
   submission_id,
   submission_date,
-  deadline_date,
   onFlag,
 }) => {
   const [flagValue, setFlagValue] = useState(-1);

@@ -1,10 +1,10 @@
-import { Box, HStack, Text, Center } from "@chakra-ui/react";
 import React from "react";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
+import { Box, HStack, Text, Center } from "@chakra-ui/react";
 import ImageSlideshow from "../../utils/ImageSlideshow";
 import ViewQuestionnaireResponse from "../../utils/ViewQuestionnaireResponse";
 import RequestCardOptions from "./RequestCardOptions";
-import gql from "graphql-tag";
-import { useMutation } from "@apollo/react-hooks";
 
 const RequestCard = ({ data }) => {
   const { Patient, Submission, deadline, type } = data;
