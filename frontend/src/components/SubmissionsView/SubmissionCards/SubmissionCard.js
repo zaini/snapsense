@@ -1,12 +1,15 @@
-import { Box, HStack, Text, Center } from "@chakra-ui/react";
-import React from "react";
+import { Box, Stack, Text, Center } from "@chakra-ui/react";
+import { useContext } from "react";
+import { AuthContext } from "../../../context/auth";
 import ImageSlideshow from "../../utils/ImageSlideshow";
 import ViewQuestionnaireResponse from "../../utils/ViewQuestionnaireResponse";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import SubmissionCardOptions from "./SubmissionCardOptions";
 
-const SubmissionCard = ({ data }) => {
+const SubmissionCard = ({ data, vertical }) => {
+  const { user } = useContext(AuthContext);
+
   // data here is a submission object
   const { Patient, Images, Answers, createdAt, flag, id } = data;
   const submission_date = new Date(parseInt(createdAt)).toDateString();
@@ -36,8 +39,8 @@ const SubmissionCard = ({ data }) => {
   return (
     <Box borderWidth="1px" borderRadius="lg" p="10px" m="5px">
       <Center p="10px">
-        <HStack>
-          <Box mr="100px">
+        <Stack direction={vertical ? "column" : "row"}>
+          <Box>
             {Images.length === 0 ? (
               <Text fontWeight="bold" fontSize="110%" pb="50%">
                 This submission has no images
@@ -46,7 +49,16 @@ const SubmissionCard = ({ data }) => {
               <ImageSlideshow images={Images} />
             )}
           </Box>
-          <Box mr="100px">
+
+          {vertical ? (
+            <>
+              <br />
+              <hr />
+              <br />
+            </>
+          ) : null}
+
+          <Box>
             {Answers.length === 0 ? (
               <Text fontWeight="bold" fontSize="110%" pb="50%">
                 This submission has no questionnaire
@@ -55,15 +67,26 @@ const SubmissionCard = ({ data }) => {
               <ViewQuestionnaireResponse answers={Answers} />
             )}
           </Box>
+
+          {vertical ? (
+            <>
+              <br />
+              <hr />
+              <br />
+            </>
+          ) : null}
+
           <Box>
             <SubmissionCardOptions
+              user={user}
               patient={Patient}
               submission_id={id}
               submission_date={submission_date}
               onFlag={flagSubmission}
+              flag={flag}
             />
           </Box>
-        </HStack>
+        </Stack>
       </Center>
     </Box>
   );

@@ -84,6 +84,47 @@ module.exports = {
       }
       return submissions || [];
     },
+    getSubmission: async (_, { submission_id }, context) => {
+      let user = isAuth(context);
+
+      // find the submission
+      // find the patient who owns this submission
+      // if the user is a patient, and they own it, show it
+      // if the user is a doctor, and they own the patient who owns it, show it
+      // else return error
+
+      const submission = await Submission.findOne({
+        where: { id: submission_id },
+        include: [
+          Patient,
+          Image,
+          {
+            model: Answer,
+            include: [Question],
+          },
+        ],
+      });
+      if (!submission) {
+        throw new UserInputError("This submission does not exist.");
+      }
+      const submission_owner = await submission.getPatient();
+
+      if (user.accountType === "PATIENT") {
+        const patient = await Patient.findByPk(user.id);
+        if (patient.id === submission_owner.id) {
+          return submission;
+        }
+      } else if (user.accountType === "DOCTOR") {
+        const doctor = await Doctor.findByPk(user.id);
+        if (doctor.hasPatient(submission_owner)) {
+          return submission;
+        }
+      } else {
+        throw new AuthenticationError(
+          "You are not logged into the correct account to access this submission."
+        );
+      }
+    },
     getSubmissionsForReview: async (_, __, context) => {
       const user = isAuth(context);
 

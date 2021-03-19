@@ -24,7 +24,7 @@ const ViewQuestionnaireResponse = ({ answers }) => {
     let temp = [];
     answers.forEach((e, i) => {
       let component = (
-        <VStack key={i}>
+        <VStack key={i} w="500px">
           <InputGroup mb="3px">
             <InputLeftAddon children={<FaRegQuestionCircle />} />
             <Input value={e.Question.text} isReadOnly={true} />
