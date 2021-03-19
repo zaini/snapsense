@@ -105,7 +105,7 @@ module.exports = {
       const requests = await Request.findAll({
         where: {
           doctor_id: doctor.id,
-          submission_id: { [Op.ne]: null },
+          fulfilled: { [Op.ne]: null },
         },
         include: [
           Doctor,
@@ -113,6 +113,7 @@ module.exports = {
           { model: Submission, where: { flag: null } },
         ],
       });
+
       return requests || [];
     },
   },
