@@ -18,7 +18,7 @@ import { Flex, Box } from "@chakra-ui/react";
 import { SidebarData } from "./SidebarData";
 import { AuthContext } from "../../../context/auth";
 import { Link } from "react-router-dom";
-
+import FeedbackOutlinedIcon from "@material-ui/icons/FeedbackOutlined";
 const drawerWidth = 250;
 
 // When resizing the main content can go behind the sidebar. Someone should fix that.
@@ -64,6 +64,15 @@ const MySidebar = (props) => {
               <PhoneIcon />
             </ListItemIcon>
             <ListItemText primary={"Contact"} />
+          </ListItem>
+        </Link>
+
+        <Link to={"/feedback"}>
+          <ListItem button>
+            <ListItemIcon>
+              <FeedbackOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Feedback"} />
           </ListItem>
         </Link>
 

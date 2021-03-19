@@ -1,4 +1,4 @@
-import LoginFormWrapper from "../components/Login/LoginFormWrapper";
+import LoginFormWrapper from "../../components/Login/LoginFormWrapper";
 
 const LoginPage = () => {
   return <LoginFormWrapper />;
