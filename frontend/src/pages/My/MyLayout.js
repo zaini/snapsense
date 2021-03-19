@@ -68,14 +68,6 @@ const MyLayout = () => {
           <NewRequestPage />
         </PrivateRoute>
 
-        <PrivateRoute
-          exact
-          path="/my/patients/:patient_id/submissions/show/:submission_id"
-          accountTypes={["DOCTOR"]}
-        >
-          <ShowSubmissionPage />
-        </PrivateRoute>
-
         <PrivateRoute exact path="/my/requests" accountTypes={["PATIENT"]}>
           <RequestsPage />
         </PrivateRoute>
@@ -107,7 +99,7 @@ const MyLayout = () => {
         <PrivateRoute
           exact
           path="/my/submissions/show/:submission_id"
-          accountTypes={["PATIENT"]}
+          accountTypes={["PATIENT", "DOCTOR"]}
         >
           <ShowSubmissionPage />
         </PrivateRoute>

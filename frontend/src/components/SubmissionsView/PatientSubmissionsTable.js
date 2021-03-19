@@ -43,8 +43,8 @@ const PatientSubmissionsTable = ({ data }) => {
 
         const route_link =
           user.accountType === "PATIENT"
-            ? `submissions/show/${id}`
-            : `patients/${row.Patient.id}/submissions/show/${id}`;
+            ? `/my/submissions/show/${id}`
+            : `/my/submissions/show/${id}`;
 
         return (
           <Stack direction="row" spacing={4}>
