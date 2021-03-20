@@ -13,9 +13,17 @@ import {
 } from "@chakra-ui/react";
 import InputFieldProvider from "./InputFieldProvider";
 
-const PeriodicSelector = ({ patient, register }) => {
+const PeriodicSelector = ({ patient, register, show }) => {
+  let masterStyle;
+  if (!show) {
+    masterStyle = {
+      display: "none",
+    };
+  } else {
+    masterStyle = {};
+  }
   return (
-    <FormControl isRequired>
+    <FormControl {...masterStyle} isRequired>
       <Center>
         <FormLabel as="header" textAlign="center">
           How often would you like {patient.fname} to make this submissions?
