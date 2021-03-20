@@ -30,7 +30,9 @@ const SubmissionCardOptions = ({
         <InputGroup mb="10px">
           <InputLeftAddon children={<BsPersonFill />} />
           <Input
-            value={`${patient.fname} ${patient.lname}`}
+            value={`${patient.fname} ${patient.lname} (${getFlagText(
+              patient.flag
+            )})`}
             isReadOnly={true}
           />
         </InputGroup>
@@ -64,7 +66,7 @@ const SubmissionCardOptions = ({
           )}
         </InputGroup>
       </Box>
-      {user.accountType === "DOCTOR" ? (
+      {user.accountType === "DOCTOR" && (
         <HStack>
           <Button
             isDisabled={parseInt(flagValue) === -1}
@@ -86,7 +88,7 @@ const SubmissionCardOptions = ({
             <Button>Make a new request</Button>
           </Link>
         </HStack>
-      ) : null}
+      )}
     </VStack>
   );
 };

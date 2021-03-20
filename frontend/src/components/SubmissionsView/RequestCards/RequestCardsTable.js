@@ -100,6 +100,7 @@ const GET_REQUESTS = gql`
         fname
         lname
         email
+        flag
       }
       Doctor {
         id

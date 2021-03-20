@@ -37,6 +37,7 @@ const RequestCard = ({ data }) => {
 
   return (
     <Box borderWidth="1px" borderRadius="lg" p="10px" m="5px">
+      {Submission.id}
       <Center p="10px">
         <HStack>
           <Box mr="100px">
@@ -113,6 +114,7 @@ const GET_REQUESTS = gql`
         fname
         lname
         email
+        flag
       }
       Doctor {
         id

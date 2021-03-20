@@ -13,6 +13,8 @@ import {
 import { BsPersonFill, BsFlag } from "react-icons/bs";
 import { BiCalendarCheck, BiCalendarExclamation } from "react-icons/bi";
 
+import getFlagText from "../../../utils/Flags";
+
 const RequestCardOptions = ({
   patient,
   submission,
@@ -28,7 +30,9 @@ const RequestCardOptions = ({
         <InputGroup mb="10px">
           <InputLeftAddon children={<BsPersonFill />} />
           <Input
-            value={`${patient.fname} ${patient.lname}`}
+            value={`${patient.fname} ${patient.lname} (${getFlagText(
+              patient.flag
+            )})`}
             isReadOnly={true}
           />
         </InputGroup>

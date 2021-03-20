@@ -93,6 +93,7 @@ const GET_SUBMISSIONS = gql`
         fname
         lname
         email
+        flag
       }
     }
   }

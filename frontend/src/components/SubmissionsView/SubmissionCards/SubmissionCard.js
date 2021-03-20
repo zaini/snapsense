@@ -38,6 +38,7 @@ const SubmissionCard = ({ data, vertical }) => {
 
   return (
     <Box borderWidth="1px" borderRadius="lg" p="10px" m="5px">
+      {id}
       <Center p="10px">
         <Stack direction={vertical ? "column" : "row"}>
           <Box>
@@ -107,6 +108,8 @@ const GET_SUBMISSIONS = gql`
   query getSubmissions {
     getSubmissionsForReview {
       id
+      flag
+      createdAt
       Images {
         id
         url
@@ -120,13 +123,12 @@ const GET_SUBMISSIONS = gql`
         value
         extra
       }
-      flag
-      createdAt
       Patient {
         id
         fname
         lname
         email
+        flag
       }
     }
   }
