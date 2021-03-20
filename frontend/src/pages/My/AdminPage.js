@@ -14,7 +14,7 @@ import ViewAdmin from "../../components/Admin/ViewAdmin";
 const AdminPage = () => {
   const location = useParams();
 
-  const { loading, data: { getSpecificAdmin: admin } = {}, error } = useQuery(
+  const { loading, data: { getAdminById: admin } = {}, error } = useQuery(
     GET_ADMIN,
     {
       variables: { admin_id: location.admin_id },
@@ -51,8 +51,8 @@ const AdminPage = () => {
 export default AdminPage;
 
 const GET_ADMIN = gql`
-  query getSpecificAdmin($admin_id: ID!) {
-    getSpecificAdmin(admin_id: $admin_id) {
+  query getAdminById($admin_id: ID!) {
+    getAdminById(admin_id: $admin_id) {
       id
       fname
       lname

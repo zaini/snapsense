@@ -35,7 +35,7 @@ module.exports = {
         throw new Error(error);
       }
     },
-    getSpecificAdmin: async (_, { admin_id }, context) => {
+    getAdminById: async (_, { admin_id }, context) => {
       const superAdmin = await getAuthenticatedSuperAdmin(context);
 
       const admin = await Admin.findByPk(admin_id, {
