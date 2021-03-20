@@ -29,7 +29,6 @@ const prefix = uuidv4();
 // the actual upload happens here
 const handleFileUpload = async (file) => {
   const { createReadStream, filename } = await file;
-  console.log(file);
   const extension = filename.split(".").pop();
   const extensionsAllowed = [
     "png",

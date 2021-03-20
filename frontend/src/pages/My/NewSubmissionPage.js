@@ -54,9 +54,7 @@ const NewSubmissionPage = () => {
   const [uploadSubmission, { loading, error, data }] = useMutation(
     UPLOAD_SUBMISSION,
     {
-      onError(e) {
-        console.log(e);
-      },
+      onError(e) {},
     }
   );
   const classes = useStyles();

@@ -19,7 +19,6 @@ const InviteNewUser = ({ invitation }) => {
 
   const [registerUser, { data, loading }] = useMutation(REGISTER_USER, {
     onCompleted(res) {
-      console.log(res);
       history.push("/login");
     },
     onError(err) {
@@ -31,7 +30,6 @@ const InviteNewUser = ({ invitation }) => {
   });
 
   const onSubmit = ({ first_name, last_name, password, repeat_password }) => {
-    console.log("submitting again");
     if (password === repeat_password) {
       registerUser({
         variables: {

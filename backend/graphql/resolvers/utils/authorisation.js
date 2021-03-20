@@ -76,7 +76,6 @@ module.exports = {
 
       const valid = await isInvitationValid(inviter, invited);
       if (valid) {
-        console.log(user);
         try {
           await user.save();
         } catch (error) {

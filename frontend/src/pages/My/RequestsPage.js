@@ -35,7 +35,6 @@ const RequestsPage = () => {
       </Alert>
     );
   } else {
-    console.log(data);
     let data_rows =
       accountType === "PATIENT"
         ? data.getRequestsAsPatient
@@ -186,7 +185,7 @@ const cols = [
       // const { fname, lname, email } = submission;
       // TODO instead of showing submission ID, show a button to view the actual submission
       // This button will depend on the account type you are logged in as
-      return <p>{"No Submission Made" || submission.id}</p>;
+      return <p>{submission.id || "No Submission Made"}</p>;
     },
   },
   {

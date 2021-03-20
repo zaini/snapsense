@@ -9,7 +9,6 @@ import Submission from "../../components/ShowSubmission";
 const ShowSubmissionPage = () => {
   const params = useParams();
   const submissionId = params.submission_id;
-  console.log("submission id", submissionId);
   const { loading, data, error } = useQuery(GET_SUBMISSION, {
     variables: {
       submission_id: submissionId,

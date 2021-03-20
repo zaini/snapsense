@@ -26,7 +26,6 @@ const PatientsPage = () => {
       </Alert>
     );
   } else {
-    console.log(data);
     markup = <Table data={data.getPatientsAsDoctor} cols={cols} />;
   }
 

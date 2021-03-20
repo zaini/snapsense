@@ -13,7 +13,6 @@ import DescriptionIcon from "@material-ui/icons/Description";
 
 const PatientSubmissionsTimeline = ({ data }) => {
   const classes = useStyles();
-  console.log(data);
   if (data.length === 0) {
     return (
       <Timeline>

@@ -42,7 +42,6 @@ const CreateInviteForm = () => {
   });
 
   const onSubmit = async ({ email, repeat_email }) => {
-    console.log("submitting invite form");
     clearErrors();
     if (email === repeat_email) {
       await inviteUser({ variables: { email: email } });
