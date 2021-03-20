@@ -20,15 +20,21 @@ import Error from "../utils/Error";
 const DeleteAdminModal = ({ isOpen, onClose, admin }) => {
   const history = useHistory();
 
-  const [deleteAdmin, { loading, error, data }] = useMutation(
-    DELETE_ADMIN,
-    {
-      onCompleted(_) {
-        history.push("/my/admins");
-      },
-      onError(_) {}, // Error handled below
-    }
-  );
+  const [deleteAdmin, { loading, error, data }] = useMutation(DELETE_ADMIN, {
+    onCompleted(_) {
+      history.push("/my/admins");
+    },
+    update(proxy) {
+      const data = proxy.readQuery({
+        query: GET_ADMINS,
+      });
+      proxy.writeQuery({
+        query: GET_ADMINS,
+        data: { getAdmins: data.getAdmins.filter((el) => el.id !== admin.id) },
+      });
+    },
+    onError(_) {}, // Error handled below
+  });
 
   const onSubmit = () => {
     deleteAdmin({
@@ -78,6 +84,20 @@ const DeleteAdminModal = ({ isOpen, onClose, admin }) => {
 };
 
 export default DeleteAdminModal;
+
+const GET_ADMINS = gql`
+  query getAdmins {
+    getAdmins {
+      id
+      fname
+      lname
+      email
+      Hospital {
+        name
+      }
+    }
+  }
+`;
 
 const DELETE_ADMIN = gql`
   mutation deleteAdmin($admin_id: ID!) {
