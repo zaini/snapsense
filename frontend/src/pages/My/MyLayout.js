@@ -21,7 +21,10 @@ const MyLayout = () => {
   return (
     <MySidebar>
       <Switch>
-        <Route exact path="/my/" component={MyHomePage} />
+        <PrivateRoute exact path="/my/" accountTypes={["PATIENT", "DOCTOR"]}>
+          <MyHomePage />
+        </PrivateRoute>
+
         <Route exact path="/my/profile" component={ProfilePage} />
 
         <PrivateRoute

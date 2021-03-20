@@ -13,11 +13,6 @@ import {
 
 const AdminSideBarData = [
   {
-    title: "Home",
-    path: "/my",
-    icon: <Home />,
-  },
-  {
     title: "Invite Doctors",
     path: "/my/invites/new",
     icon: <ContactMail />,
