@@ -5,7 +5,6 @@ import { SimpleGrid, Stack } from "@chakra-ui/layout";
 import ReviewListItem from "./ReviewListItem";
 
 const Review = ({ answers }) => {
-  console.log("Calling", answers);
   return (
     <Box>
       <Stack style={{ margin: "3px" }}>
@@ -15,7 +14,7 @@ const Review = ({ answers }) => {
         <SimpleGrid columns={[1, 1, 2, 3, 4]}>
           {Object.keys(answers.questionnaire).map((i) => (
             <ReviewListItem
-             key={`reviewList${i}`}
+              key={`reviewList${i}`}
               answerIndex={i}
               answer={answers.questionnaire[i].val}
               extra={answers.questionnaire[i].extra}

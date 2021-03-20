@@ -13,6 +13,7 @@ import {
   ModalOverlay,
   ModalHeader,
   ModalCloseButton,
+  Text,
 } from "@chakra-ui/react";
 
 import Error from "./Error";
@@ -50,16 +51,22 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Change your password</ModalHeader>
+        <ModalHeader>
+          Change your password
+          <Text fontSize="xs" pt="5px">
+            Enter your new password
+          </Text>
+        </ModalHeader>
+
         <ModalCloseButton />
         <ModalBody pb={6}>
           <Error errors={errors} mb="4" />
-          {Object.keys(errors).length === 0 && data ? (
+          {Object.keys(errors).length === 0 && data && (
             <Alert status="success" variant="subtle" mb="4">
               <AlertIcon />
               Password has been updated!
             </Alert>
-          ) : null}
+          )}
           <PasswordConfirmationForm
             register={register}
             onSubmit={onSubmit}

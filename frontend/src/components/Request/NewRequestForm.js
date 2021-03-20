@@ -64,13 +64,12 @@ const NewRequestForm = ({ patient }) => {
     // Display the form
     markup = (
       <form onSubmit={handleSubmit(onSubmit)}>
-        {data ? (
+        {data && (
           <Alert status="success" borderRadius="50px" mb={4} textAlign="center">
             <AlertIcon />
-            Request has been sent to {patient.fname}, they will be notified
-            shortly.
+            Request has been sent to {patient.fname}
           </Alert>
-        ) : null}
+        )}
         <RequestTypeSelector patient={patient} register={register} />
         <RequestDatePicker control={control} />
         <Center>

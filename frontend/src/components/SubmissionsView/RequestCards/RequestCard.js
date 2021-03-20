@@ -1,68 +1,127 @@
-import { Box, HStack, VStack, Button, Select } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 import React from "react";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
+import { Box, HStack, Text, Center } from "@chakra-ui/react";
+import ImageSlideshow from "../../utils/ImageSlideshow";
+import ViewQuestionnaireResponse from "../../utils/ViewQuestionnaireResponse";
+import RequestCardOptions from "./RequestCardOptions";
 
-// id: "1"
-// Doctor:
-// email: "doctor1@nhs.net"
-// fname: "Doctor"
-// lname: "One"
-// Patient:
-// email: "patient1@gmail.com"
-// fname: "Patient"
-// lname: "One"
-// Submission:
-// Answers: null
-// Images: null
-// createdAt: "1609718400000"
-// flag: 1
-// id: "1"
-// deadline: "1609804800000"
-// type: 3
-
-// This takes a request as above.
 const RequestCard = ({ data }) => {
   const { Patient, Submission, deadline, type } = data;
-  const dateline_date = new Date(parseInt(deadline)).toDateString();
+  const deadline_date = new Date(parseInt(deadline)).toDateString();
   const submission_date = new Date(
     parseInt(Submission.createdAt)
   ).toDateString();
 
-  console.log(Patient, Submission, deadline, type);
+  const [flagSubmission, { loading }] = useMutation(FLAG_SUBMISSION, {
+    onCompleted() {
+      // TODO: refresh page through cache!
+    },
+    onError(err) {
+      console.log(err);
+    },
+    update(proxy) {
+      const data = proxy.readQuery({
+        query: GET_REQUESTS,
+      });
+      proxy.writeQuery({
+        query: GET_REQUESTS,
+        data: {
+          getRequestsForReview: data.getRequestsForReview.filter(
+            (p) => p.Submission.id !== Submission.id
+          ),
+        },
+      });
+    },
+  });
 
   return (
-    <Box borderWidth="1px" borderRadius="lg" p="5px">
-      <HStack align="spread">
-        <Box>images</Box>
-        <Box>questionnaire</Box>
-        <Box>
-          <VStack>
-            <Box>
-              patient info Submitted: {submission_date} Deadline:{" "}
-              {dateline_date}
-            </Box>
-            <Box>
-              <Select placeholder="Review Submission">
-                <option value="1">Low Risk</option>
-                <option value="2">Medium Risk</option>
-                <option value="3">High Risk</option>
-              </Select>
-            </Box>
-            <HStack>
-              <Link
-                to={`/my/submissions/patients/${Patient.id}/submissions/show/${Submission.id}`}
-              >
-                <Button>View Submission</Button>
-              </Link>
-              <Link to={`/my/patients/${Patient.id}/requests/new`}>
-                <Button>Make a new request</Button>
-              </Link>
-            </HStack>
-          </VStack>
-        </Box>
-      </HStack>
+    <Box borderWidth="1px" borderRadius="lg" p="10px" m="5px">
+      {Submission.id}
+      <Center p="10px">
+        <HStack>
+          <Box mr="100px">
+            {Submission.Images.length === 0 ? (
+              <Text fontWeight="bold" fontSize="110%" pb="50%">
+                No images
+              </Text>
+            ) : (
+              <ImageSlideshow images={Submission.Images} />
+            )}
+          </Box>
+          <Box mr="100px">
+            {Submission.Answers.length === 0 ? (
+              <Text fontWeight="bold" fontSize="110%" pb="50%">
+                No questionnaire
+              </Text>
+            ) : (
+              <ViewQuestionnaireResponse answers={Submission.Answers} />
+            )}
+          </Box>
+          <Box>
+            <RequestCardOptions
+              patient={Patient}
+              submission={Submission}
+              submission_date={submission_date}
+              deadline_date={deadline_date}
+              onFlag={flagSubmission}
+            />
+          </Box>
+        </HStack>
+      </Center>
     </Box>
   );
 };
 
 export default RequestCard;
+
+const FLAG_SUBMISSION = gql`
+  mutation flagSubmission($submission_id: ID!, $flag: Int!) {
+    flagSubmission(submission_id: $submission_id, flag: $flag) {
+      id
+      flag
+    }
+  }
+`;
+
+const GET_REQUESTS = gql`
+  query getRequests {
+    getRequestsForReview {
+      id
+      type
+      deadline
+      fulfilled
+      Submission {
+        id
+        Images {
+          id
+          url
+        }
+        Answers {
+          id
+          Question {
+            id
+            text
+          }
+          value
+          extra
+        }
+        flag
+        createdAt
+      }
+      Patient {
+        id
+        fname
+        lname
+        email
+        flag
+      }
+      Doctor {
+        id
+        fname
+        lname
+        email
+      }
+    }
+  }
+`;

@@ -29,7 +29,10 @@ const MyLayout = () => {
   return (
     <MySidebar>
       <Switch>
-        <Route exact path="/my/" component={MyHomePage} />
+        <PrivateRoute exact path="/my/" accountTypes={["PATIENT", "DOCTOR"]}>
+          <MyHomePage />
+        </PrivateRoute>
+
         <Route exact path="/my/profile" component={ProfilePage} />
 
         <PrivateRoute
@@ -108,14 +111,6 @@ const MyLayout = () => {
           <NewRequestPage />
         </PrivateRoute>
 
-        <PrivateRoute
-          exact
-          path="/my/patients/:patient_id/submissions/show/:submission_id"
-          accountTypes={["DOCTOR"]}
-        >
-          <ShowSubmissionPage />
-        </PrivateRoute>
-
         <PrivateRoute exact path="/my/requests" accountTypes={["PATIENT"]}>
           <RequestsPage />
         </PrivateRoute>
@@ -147,7 +142,7 @@ const MyLayout = () => {
         <PrivateRoute
           exact
           path="/my/submissions/show/:submission_id"
-          accountTypes={["PATIENT"]}
+          accountTypes={["PATIENT", "DOCTOR"]}
         >
           <ShowSubmissionPage />
         </PrivateRoute>

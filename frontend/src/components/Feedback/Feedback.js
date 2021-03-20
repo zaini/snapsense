@@ -27,8 +27,6 @@ const Feedback = () => {
   );
 
   const handleSubmit = () => {
-    // eventually this will actually just POST the results to the backend.
-    console.log(rating, value);
     createFeedback({
       variables: {
         stars: parseInt(rating),
@@ -46,7 +44,6 @@ const Feedback = () => {
   let markup;
 
   if (loading) {
-    // Display a spinner if loading
     markup = (
       <Container p="7" borderRadius="lg" mt="20">
         <Center>
@@ -55,7 +52,6 @@ const Feedback = () => {
       </Container>
     );
   } else if (error) {
-    // Display the error on error
     markup = (
       <Container p="7" borderRadius="lg" mt="20">
         <Error
@@ -68,15 +64,14 @@ const Feedback = () => {
       </Container>
     );
   } else {
-    // Display the form
     markup = (
       <>
-        {data ? (
+        {data && (
           <Alert status="success" borderRadius="50px" mb={4} textAlign="center">
             <AlertIcon />
             Thank you for your feedback!
           </Alert>
-        ) : null}
+        )}
         <Container p="10" borderWidth="2em" borderRadius="lg" mt="10">
           <Grid
             container
