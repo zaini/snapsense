@@ -7,12 +7,11 @@ import {
   AlertIcon,
   Button,
   Center,
-  Stack,
   Heading,
   Spinner,
   Text,
 } from "@chakra-ui/react";
-import { AddIcon, ViewIcon } from "@chakra-ui/icons";
+import { ViewIcon } from "@chakra-ui/icons";
 
 import Table from "../../components/utils/Table";
 
