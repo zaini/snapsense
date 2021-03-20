@@ -35,6 +35,9 @@ module.exports = {
         ACCESS_TOKEN_SECRET_KEY
       );
 
+      inviterEmail = inviterEmail.toLowerCase();
+      newAccountEmail = newAccountEmail.toLowerCase();
+
       if (password !== passwordConfirmation) {
         throw new UserInputError(
           "Password and password confirmation must match!"
@@ -101,6 +104,7 @@ module.exports = {
     },
     login: async (_, user_details) => {
       const { email, password, account_type } = user_details;
+      email = email.toLowerCase();
 
       let user;
       switch (account_type) {
