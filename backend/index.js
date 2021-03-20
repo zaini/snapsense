@@ -12,10 +12,14 @@ const bree = new Bree({
   jobs: [
     {
       name: "email",
-      interval: "15m",
+      interval: "30m",
     },
     {
       name: "reminder_schedule",
+      interval: "1d",
+    },
+    {
+      name: "schedule_requests",
       interval: "1d",
     },
   ],
@@ -36,8 +40,11 @@ const apolloServer = new ApolloServer({
   context: ({ req }) => ({ req }),
 });
 
+// virtual machine
+
 // Allow requests only from the frontend
 const corsOptions = {
+  // origin: "http://192.168.137.129:3000",
   origin: "http://localhost:3000",
   optionsSuccessStatus: 200,
 };
