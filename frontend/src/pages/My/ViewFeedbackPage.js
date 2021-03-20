@@ -6,7 +6,7 @@ import ViewFeedback from "../../components/Feedback/ViewFeedback";
 const ViewFeedbackPage = () => {
   return (
     <Container>
-      <Heading>View Feedback</Heading>
+      <Heading textAlign="center">View Feedback</Heading>
       <br />
       <hr />
       <br />
