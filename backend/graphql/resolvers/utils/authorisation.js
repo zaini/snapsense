@@ -30,7 +30,7 @@ module.exports = {
         passwordConfirmation,
         invitationToken,
       } = user_details;
-      const { inviterEmail, newAccountEmail, accountType } = verify(
+      let { inviterEmail, newAccountEmail, accountType } = verify(
         invitationToken,
         ACCESS_TOKEN_SECRET_KEY
       );
@@ -103,7 +103,7 @@ module.exports = {
       return false;
     },
     login: async (_, user_details) => {
-      const { email, password, account_type } = user_details;
+      let { email, password, account_type } = user_details;
       email = email.toLowerCase();
 
       let user;
