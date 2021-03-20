@@ -171,7 +171,9 @@ module.exports = {
         throw new AuthenticationError("Invalid account type!");
       }
 
-      if (!images && !answers) {
+      answers = stringToJSON(answers);
+
+      if (images === [] && Object.keys(answers.questionnaire).length === 0) {
         throw new UserInputError(
           "Must supply at least either answers to a questionnaire or an image!"
         );
@@ -193,14 +195,6 @@ module.exports = {
           submission_id: submission.id,
         }).save();
       });
-
-      // Create answers and add them to the submission
-      if (answers !== undefined) {
-        answers = stringToJSON(answers);
-        // if (Object.keys(answers.questionnaire).length !== 8) {
-        //   throw new UserInputError("Invalid number of answers");
-        // }
-      }
 
       for (const questionId in answers.questionnaire) {
         const answerSave = await new Answer({
