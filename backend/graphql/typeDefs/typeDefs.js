@@ -95,7 +95,11 @@ module.exports = gql`
       email: String!
       password: String!
       hospital_id: ID!
-    ): Admin
+    ): Admin!
+
+    deleteAdmin(
+      admin_id: ID!
+    ): Boolean!
 
     createSubmission(images: [Upload!], answers: String!): Boolean!
 

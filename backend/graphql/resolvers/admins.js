@@ -42,8 +42,8 @@ module.exports = {
         include: Hospital,
       });
 
-      if(!admin) {
-        throw new UserInputError("Admin does not exist!")
+      if (!admin) {
+        throw new UserInputError("Admin does not exist!");
       }
 
       return admin;
@@ -56,24 +56,40 @@ module.exports = {
       const hospital = await Hospital.findByPk(user_details.hospital_id);
 
       if (!hospital) {
-        throw new UserInputError(
-          "This hospital does not exist."
-        );
+        throw new UserInputError("This hospital does not exist.");
       }
 
       try {
         const admin = await new Admin({
           ...user_details,
         }).save();
-        return { 
+        return {
           fname: admin.fname,
           lname: admin.lname,
           email: admin.email,
           createdAt: admin.createdAt,
-         };
+        };
       } catch (error) {
         throw new UserInputError(
           "This account does not have proper validation. e.g. email might already be in use or password is too weak."
+        );
+      }
+    },
+    deleteAdmin: async (_, { admin_id }, context) => {
+      const superAdmin = await getAuthenticatedSuperAdmin(context);
+
+      const admin = await Admin.findByPk(admin_id);
+
+      if (!admin) {
+        throw new UserInputError("This admin does not exist.");
+      }
+
+      try {
+        await admin.destroy();
+        return true;
+      } catch (error) {
+        throw new UserInputError(
+          "Something went wrong, please try again later or contact the system administrator!"
         );
       }
     },
