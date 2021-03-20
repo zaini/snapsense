@@ -10,6 +10,8 @@ import {
   Center,
   Spinner,
 } from "@chakra-ui/react";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
 
 import NewRequestForm from "../../components/Request/NewRequestForm";
 import Error from "../../components/utils/Error";
@@ -70,7 +72,18 @@ const NewRequestPage = () => {
             Submission Request for {patient.fname} {patient.lname}
           </Heading>
           <Container p="7" borderWidth="1px" borderRadius="lg" mt="20">
-            <NewRequestForm patient={patient} />
+            <Tabs>
+              <TabList>
+                <Tab>Single</Tab>
+                <Tab>Scheduled</Tab>
+              </TabList>
+              <TabPanel>
+                <NewRequestForm patient={patient} />
+              </TabPanel>
+              <TabPanel>
+                <NewRequestForm periodic={true} patient={patient} />
+              </TabPanel>
+            </Tabs>
           </Container>
         </Container>
       );
