@@ -54,7 +54,9 @@ const NewSubmissionPage = () => {
   const [uploadSubmission, { loading, error, data }] = useMutation(
     UPLOAD_SUBMISSION,
     {
-      onError(e) {},
+      onError(e) {
+        console.log(e);
+      },
     }
   );
   const classes = useStyles();
@@ -103,7 +105,7 @@ const NewSubmissionPage = () => {
     body = (
       <Box className={classes.layout}>
         <Stack>
-          {error ? (
+          {error && (
             <Error
               errors={[
                 {
@@ -111,7 +113,7 @@ const NewSubmissionPage = () => {
                 },
               ]}
             />
-          ) : null}
+          )}
           <Alert status="info">
             <AlertIcon />
             Open the tabs to add your images or questionnaire or both!

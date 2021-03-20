@@ -173,7 +173,10 @@ module.exports = {
 
       answers = stringToJSON(answers);
 
-      if (images === [] && Object.keys(answers.questionnaire).length === 0) {
+      if (
+        images.length === 0 &&
+        Object.keys(answers.questionnaire).length === 0
+      ) {
         throw new UserInputError(
           "Must supply at least either answers to a questionnaire or an image!"
         );
