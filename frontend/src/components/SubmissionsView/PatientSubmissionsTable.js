@@ -19,16 +19,21 @@ const PatientSubmissionsTable = ({ data }) => {
       hide: true,
     },
     {
-      field: "createdAt",
-      type: "date",
-      headerName: "Date submitted",
-      sortable: true,
+      field: "flag",
+      headerName: "Flag",
       flex: 1,
     },
     {
-      field: "",
+      field: "createdAt",
+      type: "date",
+      headerName: "Date submitted",
+      flex: 1,
+    },
+    {
+      field: "type",
       headerName: "Type",
       flex: 1,
+      sortable: false,
     },
     {
       field: "",

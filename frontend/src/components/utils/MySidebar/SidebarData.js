@@ -46,7 +46,7 @@ const DoctorSideBarData = [
     icon: <Contacts />,
   },
   {
-    title: "Review Patients",
+    title: "Review Submissions",
     path: "/my/submissions/review",
     icon: <ContactPhone />,
   },
