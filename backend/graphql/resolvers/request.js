@@ -10,6 +10,7 @@ const {
   Request,
   Submission,
   ScheduledEmail,
+  ScheduledRequest,
 } = require("../../models/index.js");
 const isAuth = require("../../utils/isAuth.js");
 const { Sequelize } = require("../../models/index");
@@ -38,6 +39,24 @@ const sendRequestEmail = async (doctor, patient, request_type, deadline) => {
 
   // Insert bundled email params into model
   await transactionalEmailSender(emailParams, htmlParams);
+};
+
+const requestScheduler = async (request, interval, frequency, doctor, patient) => {
+  console.log(`Recurring Requests: ${interval} - ${frequency}`);
+  const startDate = new Date(request.deadline);
+  try {
+    const res = await new ScheduledRequest({
+      doctor_id: doctor.id,
+      patient_id: patient.id,
+      request_id: request.id,
+      interval,
+      frequency,
+      startDate,
+    }).save();
+    return res;
+  } catch (e) {
+    throw new ApolloError(e, 500);
+  }
 };
 
 module.exports = {
@@ -128,6 +147,21 @@ module.exports = {
         throw new AuthenticationError("Invalid user credentials!");
       }
 
+      //Check if interval and frequency are within limits
+      if (interval < 0 || interval > 20) {
+        throw new UserInputError("Invalid Interval");
+      }
+
+      if (frequency < 0 || frequency > 20) {
+        throw new UserInputError("Invalid Frequency");
+      }
+
+      //set to true if there scheduling is needed
+      let scheduleRequests = false;
+      if (interval > 0 && frequency > 0) {
+        scheduleRequests = true;
+      }
+
       // Check that the doctor and patient both exist
       const doctor = await Doctor.findByPk(user.id);
       if (!doctor) {
@@ -159,8 +193,12 @@ module.exports = {
         }).save();
 
         // Assign the request to both the doctor and patient
-        doctor.addRequest(request);
-        patient.addRequest(request);
+        await doctor.addRequest(request);
+        await patient.addRequest(request);
+
+        if (scheduleRequests) {
+          await requestScheduler(request, interval, frequency, doctor, patient);
+        }
       } catch (error) {
         // An error will be thrown if the request is invalid as a result of a user input error
         throw new UserInputError(error);
