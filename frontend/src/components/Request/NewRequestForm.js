@@ -76,9 +76,7 @@ const NewRequestForm = ({ patient, periodic }) => {
         ) : null}
         <RequestTypeSelector patient={patient} register={register} />
         <RequestDatePicker control={control} />
-        {periodic ? (
-          <PeriodicSelector patient={patient} register={register} />
-        ) : null}
+        <PeriodicSelector show={periodic} patient={patient} register={register} />
         <Center>
           <Button type="submit" mt={4} colorScheme="blue">
             Submit
