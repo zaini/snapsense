@@ -45,6 +45,8 @@ const DoctorsPage = () => {
         <Heading>My Doctors</Heading>
       </Center>
       <br />
+      <hr />
+      <br />
       {markup}
     </>
   );
