@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import Error from "../utils/Error";
 
-const Feedback = () => {
+export const Feedback = () => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(null);
   const [value, setValue] = useState("");
@@ -146,9 +146,7 @@ const Feedback = () => {
   return markup;
 };
 
-export default Feedback;
-
-const CREATE_FEEDBACK = gql`
+export const CREATE_FEEDBACK = gql`
   mutation createFeedback($stars: Int!, $extra: String) {
     createFeedback(stars: $stars, extra: $extra) {
       id
