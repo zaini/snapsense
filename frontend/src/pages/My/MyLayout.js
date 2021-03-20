@@ -22,6 +22,7 @@ import SubmissionsPage from "./SubmissionsPage";
 import ReviewSubmissions from "./ReviewSubmissions";
 import NewAdminPage from "./NewAdminPage";
 import FeedbackPage from "./FeedbackPage";
+import ViewFeedbackPage from "./ViewFeedbackPage";
 
 // Main my, where you can place your routers for each my page
 const MyLayout = () => {
@@ -49,6 +50,10 @@ const MyLayout = () => {
 
         <PrivateRoute exact path="/my/feedback" accountTypes={["SUPERADMIN"]}>
           <FeedbackPage />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/my/feedback/show/:feedback_id" accountTypes={["SUPERADMIN"]}>
+          <ViewFeedbackPage />
         </PrivateRoute>
 
         <PrivateRoute exact path="/my/hospitals" accountTypes={["SUPERADMIN"]}>
