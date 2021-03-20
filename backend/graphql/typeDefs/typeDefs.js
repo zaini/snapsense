@@ -131,6 +131,8 @@ module.exports = gql`
     deleteAccount(password: String!, password_confirmation: String!): Boolean!
     deleteHospital(hospital_id: ID!): Boolean!
     createFeedback(stars: Int!, extra: String): Feedback!
+
+    flagSubmission(submission_id: ID!, flag: Int!): Submission
   }
 
   type Query {
@@ -142,6 +144,7 @@ module.exports = gql`
     getDoctorsAsAdmin: [Doctor!]
     getDoctorsAsPatient: [Doctor!]
     getSubmissions(patient_id: ID): [Submission!]
+    getSubmission(submission_id: ID): Submission!
     getPatientAsDoctor(patient_id: ID!): Patient!
     getSpecificAdmin(admin_id: ID!): Admin!
     getPatientsAsDoctor: [Patient!]
@@ -154,5 +157,6 @@ module.exports = gql`
     isLoggedIn: String!
     checkInvitation(invitationToken: String!): String!
     getFeedback: [Feedback!]
+    getSubmissionsForReview: [Submission!]
   }
 `;

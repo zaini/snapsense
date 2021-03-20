@@ -50,11 +50,6 @@ const SuperAdminSideBarData = [
 
 const AdminSideBarData = [
   {
-    title: "Home",
-    path: "/my",
-    icon: <Home />,
-  },
-  {
     title: "Invite Doctors",
     path: "/my/invites/new",
     icon: <ContactMail />,
@@ -88,7 +83,7 @@ const DoctorSideBarData = [
     icon: <Contacts />,
   },
   {
-    title: "Review Patients",
+    title: "Review Submissions",
     path: "/my/submissions/review",
     icon: <ContactPhone />,
   },

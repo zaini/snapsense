@@ -1,28 +1,135 @@
-import React from "react";
+import { Box, Stack, Text, Center } from "@chakra-ui/react";
+import { useContext } from "react";
+import { AuthContext } from "../../../context/auth";
+import ImageSlideshow from "../../utils/ImageSlideshow";
+import ViewQuestionnaireResponse from "../../utils/ViewQuestionnaireResponse";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
+import SubmissionCardOptions from "./SubmissionCardOptions";
 
-// id: "1"
-// Doctor:
-  // email: "doctor1@nhs.net"
-  // fname: "Doctor"
-  // lname: "One"
-// Patient:
-  // email: "patient1@gmail.com"
-  // fname: "Patient"
-  // lname: "One"
-// Submission:
-  // Answers: null
-  // Images: null
-  // createdAt: "1609718400000"
-  // flag: 1
-  // id: "1"
-// deadline: "1609804800000"
-// type: 3
+const SubmissionCard = ({ data, vertical }) => {
+  const { user } = useContext(AuthContext);
 
-// This takes a submission.
-const SubmissionCard = ({ data }) => {
-  const { Submission } = data;
-  const { id } = Submission;
-  return <div>{id}</div>;
+  // data here is a submission object
+  const { Patient, Images, Answers, createdAt, flag, id } = data;
+  const submission_date = new Date(parseInt(createdAt)).toDateString();
+
+  const [flagSubmission, { loading }] = useMutation(FLAG_SUBMISSION, {
+    onCompleted() {
+      // TODO: refresh page through cache!
+    },
+    onError(err) {
+      console.log(err);
+    },
+    update(proxy) {
+      const data = proxy.readQuery({
+        query: GET_SUBMISSIONS,
+      });
+      proxy.writeQuery({
+        query: GET_SUBMISSIONS,
+        data: {
+          getSubmissionsForReview: data.getSubmissionsForReview.filter(
+            (p) => p.id !== id
+          ),
+        },
+      });
+    },
+  });
+
+  return (
+    <Box borderWidth="1px" borderRadius="lg" p="10px" m="5px">
+      {id}
+      <Center p="10px">
+        <Stack direction={vertical ? "column" : "row"}>
+          <Box>
+            {Images.length === 0 ? (
+              <Text fontWeight="bold" fontSize="110%" pb="50%">
+                No images
+              </Text>
+            ) : (
+              <ImageSlideshow images={Images} />
+            )}
+          </Box>
+
+          {vertical && (
+            <>
+              <br />
+              <hr />
+              <br />
+            </>
+          )}
+
+          <Box>
+            {Answers.length === 0 ? (
+              <Text fontWeight="bold" fontSize="110%" pb="50%">
+                No questionnaire
+              </Text>
+            ) : (
+              <ViewQuestionnaireResponse answers={Answers} />
+            )}
+          </Box>
+
+          {vertical && (
+            <>
+              <br />
+              <hr />
+              <br />
+            </>
+          )}
+
+          <Box>
+            <SubmissionCardOptions
+              user={user}
+              patient={Patient}
+              submission_id={id}
+              submission_date={submission_date}
+              onFlag={flagSubmission}
+              flag={flag}
+            />
+          </Box>
+        </Stack>
+      </Center>
+    </Box>
+  );
 };
 
 export default SubmissionCard;
+
+const FLAG_SUBMISSION = gql`
+  mutation flagSubmission($submission_id: ID!, $flag: Int!) {
+    flagSubmission(submission_id: $submission_id, flag: $flag) {
+      id
+      flag
+    }
+  }
+`;
+
+const GET_SUBMISSIONS = gql`
+  query getSubmissions {
+    getSubmissionsForReview {
+      id
+      flag
+      createdAt
+      Images {
+        id
+        url
+      }
+      Answers {
+        id
+        Question {
+          id
+          text
+        }
+        value
+        extra
+      }
+      Patient {
+        id
+        fname
+        lname
+        email
+        flag
+      }
+    }
+  }
+`;

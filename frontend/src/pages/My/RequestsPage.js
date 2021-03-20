@@ -35,7 +35,6 @@ const RequestsPage = () => {
       </Alert>
     );
   } else {
-    console.log(data);
     let data_rows =
       accountType === "PATIENT"
         ? data.getRequestsAsPatient
@@ -138,6 +137,7 @@ const cols = [
     type: "number",
     headerName: "ID",
     flex: 0.2,
+    hide: true,
   },
   {
     field: "doctor",
@@ -183,10 +183,14 @@ const cols = [
     flex: 0.2,
     renderCell: ({ row }) => {
       const submission = row.Submission;
+      if (submission) {
+        return <p>{submission.id}</p>;
+      } else {
+        return <p>No Submission Made</p>;
+      }
       // const { fname, lname, email } = submission;
       // TODO instead of showing submission ID, show a button to view the actual submission
       // This button will depend on the account type you are logged in as
-      return <p>{"No Submission Made" || submission.id}</p>;
     },
   },
   {

@@ -58,15 +58,6 @@ const MySidebar = (props) => {
           </ListItem>
         </Link>
 
-        <Link to={"/contact"}>
-          <ListItem button>
-            <ListItemIcon>
-              <PhoneIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Contact"} />
-          </ListItem>
-        </Link>
-
         <Link to={"/feedback"}>
           <ListItem button>
             <ListItemIcon>
