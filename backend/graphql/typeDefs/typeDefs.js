@@ -144,6 +144,7 @@ module.exports = gql`
     getRequestsAsPatient: [Request!]
     getRequestsAsDoctor: [Request!]
     getRequestsForReview: [Request!]
+    getSpecificFeedback(feedback_id: ID!): Feedback!
     getImagesBySubmission(submission_id: ID!): [Image!]
     getImages: [Image!]
     isLoggedIn: String!

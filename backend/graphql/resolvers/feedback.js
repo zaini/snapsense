@@ -1,4 +1,4 @@
-const { AuthenticationError } = require("apollo-server");
+const { AuthenticationError, UserInputError } = require("apollo-server");
 
 const { Feedback, SuperAdmin } = require("../../models/index.js");
 const isAuth = require("../../utils/isAuth.js");
@@ -27,6 +27,17 @@ module.exports = {
       const superAdmin = await getAuthenticatedSuperAdmin(context);
 
       const feedback = await Feedback.findAll();
+      return feedback;
+    },
+    getSpecificFeedback: async (_, { feedback_id }, context) => {
+      console.log("HELLO");
+      const superAdmin = await getAuthenticatedSuperAdmin(context);
+
+      const feedback = await Feedback.findByPk(feedback_id);
+      console.log(feedback);
+      if (!feedback) {
+        throw new UserInputError("Feedback does not exist!");
+      }
       return feedback;
     },
   },
