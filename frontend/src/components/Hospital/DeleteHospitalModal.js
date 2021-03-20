@@ -26,6 +26,17 @@ const DeleteHospitalModal = ({ isOpen, onClose, hospital }) => {
       onCompleted(_) {
         history.push("/my/hospitals");
       },
+      update(proxy) {
+        const data = proxy.readQuery({
+          query: GET_HOSPITALS,
+        });
+        proxy.writeQuery({
+          query: GET_HOSPITALS,
+          data: {
+            getHospitals: data.getHospitals.filter((el) => el.id !== hospital.id),
+          },
+        });
+      },
       onError(_) {}, // Error handled below
     }
   );
@@ -78,6 +89,16 @@ const DeleteHospitalModal = ({ isOpen, onClose, hospital }) => {
 };
 
 export default DeleteHospitalModal;
+
+const GET_HOSPITALS = gql`
+  query getHospitals {
+    getHospitals {
+      id
+      name
+      contact_email
+    }
+  }
+`;
 
 const DELETE_HOSPITAL = gql`
   mutation deleteHospital($hospital_id: ID!) {
