@@ -24,8 +24,6 @@ const s3DefaultParams = {
   ],
 };
 
-const prefix = uuidv4();
-
 // the actual upload happens here
 const handleFileUpload = async (file) => {
   const { createReadStream, filename } = await file;
@@ -48,6 +46,8 @@ const handleFileUpload = async (file) => {
       400
     );
   }
+
+  let prefix = uuidv4();
 
   return new Promise((resolve, reject) => {
     s3.upload(

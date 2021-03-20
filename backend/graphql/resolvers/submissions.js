@@ -158,8 +158,6 @@ module.exports = {
         submissions.push(...patient_submissions);
       }
 
-      console.log("UNREVIEWED submissions: ", submissions);
-
       return submissions || [];
     },
   },
@@ -252,6 +250,7 @@ module.exports = {
       }
 
       await submission.update({ flag });
+      await patient.update({ flag });
       return submission;
     },
   },
