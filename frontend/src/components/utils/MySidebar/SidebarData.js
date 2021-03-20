@@ -4,6 +4,7 @@ import {
   Create,
   Contacts,
   ContactMail,
+  Feedback,
   Gavel,
   Home,
   ContactPhone,
@@ -22,7 +23,7 @@ const SuperAdminSideBarData = [
   },
   {
     title: "Create Hospitals",
-    path: "/my/doctors/new",
+    path: "/my/hospitals/new",
     icon: <Create />,
   },
   {
@@ -34,6 +35,11 @@ const SuperAdminSideBarData = [
     title: "View Admins",
     path: "/my/admins",
     icon: <Gavel />,
+  },
+  {
+    title: "View Feedback",
+    path: "/my/feedback",
+    icon: <Feedback />,
   },
   {
     title: "My Profile",
