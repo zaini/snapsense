@@ -27,26 +27,6 @@ module.exports = {
           as: "request_id"
         }
       },
-      patient_id: {
-        type: Sequelize.INTEGER,
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-        references: {
-          model: "Patients",
-          key: "id",
-          as: "patient_id"
-        }
-      },
-      doctor_id: {
-        type: Sequelize.INTEGER,
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-        references: {
-          model: "Doctors",
-          key: "id",
-          as: "doctor_id"
-        }
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
