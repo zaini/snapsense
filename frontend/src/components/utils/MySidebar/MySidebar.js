@@ -9,11 +9,12 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import MenuIcon from "@material-ui/icons/Menu";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { InfoIcon, PhoneIcon, PlusSquareIcon } from "@chakra-ui/icons";
+import { InfoIcon, PhoneIcon } from "@chakra-ui/icons";
 import { Flex, Box } from "@chakra-ui/react";
 import { SidebarData } from "./SidebarData";
 import { AuthContext } from "../../../context/auth";
@@ -52,7 +53,7 @@ const MySidebar = (props) => {
         <Link to={"/logout"}>
           <ListItem button>
             <ListItemIcon>
-              <PlusSquareIcon />
+              <ExitToAppIcon />
             </ListItemIcon>
             <ListItemText primary={"Logout"} />
           </ListItem>
