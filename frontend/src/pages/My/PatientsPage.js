@@ -46,6 +46,7 @@ const GET_PATIENTS_AS_DOCTOR = gql`
   query {
     getPatientsAsDoctor {
       id
+      flag
       fname
       lname
       email
@@ -59,6 +60,12 @@ const cols = [
     type: "number",
     headerName: "ID",
     flex: 0.2,
+    hide: true,
+  },
+  {
+    field: "flag",
+    headerName: "Flag",
+    flex: 0.3,
   },
   {
     field: "fname",

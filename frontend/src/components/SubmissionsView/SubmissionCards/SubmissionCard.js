@@ -44,7 +44,7 @@ const SubmissionCard = ({ data, vertical }) => {
           <Box>
             {Images.length === 0 ? (
               <Text fontWeight="bold" fontSize="110%" pb="50%">
-                This submission has no images
+                No images
               </Text>
             ) : (
               <ImageSlideshow images={Images} />
@@ -62,7 +62,7 @@ const SubmissionCard = ({ data, vertical }) => {
           <Box>
             {Answers.length === 0 ? (
               <Text fontWeight="bold" fontSize="110%" pb="50%">
-                This submission has no questionnaire
+                No questionnaire
               </Text>
             ) : (
               <ViewQuestionnaireResponse answers={Answers} />

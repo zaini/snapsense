@@ -62,8 +62,7 @@ const NewRequestForm = ({ patient }) => {
         {data && (
           <Alert status="success" borderRadius="50px" mb={4} textAlign="center">
             <AlertIcon />
-            Request has been sent to {patient.fname}, they will be notified
-            shortly.
+            Request has been sent to {patient.fname}
           </Alert>
         )}
         <RequestTypeSelector patient={patient} register={register} />

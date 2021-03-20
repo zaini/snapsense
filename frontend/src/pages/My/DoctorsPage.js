@@ -83,6 +83,7 @@ const cols = [
     headerName: "ID",
     sortable: true,
     flex: 0.3,
+    hide: true,
   },
   {
     field: "fname",

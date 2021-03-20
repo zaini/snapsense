@@ -137,6 +137,7 @@ const cols = [
     type: "number",
     headerName: "ID",
     flex: 0.2,
+    hide: true,
   },
   {
     field: "doctor",

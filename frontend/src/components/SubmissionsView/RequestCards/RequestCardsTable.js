@@ -48,8 +48,7 @@ const RequestCardsTable = () => {
               No fulfilled and unreviewed requests
             </AlertTitle>
             <AlertDescription maxWidth="sm">
-              Your patients have no new submissions which you have requested and
-              have not yet reviewed
+              You have no requested submissions to review
             </AlertDescription>
           </Alert>
         </Container>
