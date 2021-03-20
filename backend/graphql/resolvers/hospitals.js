@@ -42,7 +42,7 @@ module.exports = {
       // Get specific hospital
       const hospital = await Hospital.findByPk(hospital_id);
       if(!hospital) {
-        throw new UserInputError("Hospital does not exist")
+        throw new UserInputError("Hospital does not exist");
       }
       return hospital;
     },
@@ -60,6 +60,21 @@ module.exports = {
       }).save();
 
       return hospital;
+    },
+    deleteHospital: async (_, { hospital_id }, context) => {
+      // Authenticate the super admin
+      const superAdmin = await getAuthenticatedSuperAdmin(context);
+
+      // Create the hospital
+      const hospital = await Hospital.findByPk(hospital_id);
+
+      if (!hospital) {
+        throw new UserInputError("Hospital does not exist") 
+      }
+
+      await hospital.destroy();
+
+      return true;
     },
   },
 };
