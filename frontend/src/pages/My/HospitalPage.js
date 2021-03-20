@@ -1,19 +1,19 @@
-import { useParams } from "react-router-dom";
+import React from "react";
+import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import {
-  FormControl,
-  FormLabel,
-  Container,
-  Input,
-  Heading,
-  Center,
   Alert,
   AlertIcon,
+  Button,
+  Center,
+  Container,
   Spinner,
+  useDisclosure,
 } from "@chakra-ui/react";
 
-import CopyLink from "../../components/utils/CopyLink";
+import HospitalDetails from "../../components/Hospital/HospitalDetails";
+import DeleteHospitalModal from "../../components/Hospital/DeleteHospitalModal";
 
 const HospitalPage = (props) => {
   const location = useParams();
@@ -25,6 +25,12 @@ const HospitalPage = (props) => {
   } = useQuery(GET_HOSPITAL, {
     variables: { hospital_id: location.hospital_id },
   });
+
+  const {
+    isOpen: isDeleteOpen,
+    onOpen: onDeleteOpen,
+    onClose: onDeleteClose,
+  } = useDisclosure();
 
   let markup;
 
@@ -44,30 +50,21 @@ const HospitalPage = (props) => {
   } else {
     markup = (
       <Container>
+        <HospitalDetails hospital={hospital} />
         <Center>
-          <Heading>{hospital.name}</Heading>
+          <Button
+            as={Link}
+            to={`/my/hospitals/${hospital.id}/admins/new`}
+            colorScheme="blue"
+            mr={4}
+          >
+            Create Admin for this Hospital
+          </Button>
+          <Button onClick={onDeleteOpen} colorScheme="red">
+            Delete Hospital
+          </Button>
         </Center>
-        <br />
-        <hr />
-        <br />
-        <FormControl id="id">
-          <FormLabel>ID</FormLabel>
-          <Input value={hospital.id} isReadOnly />
-        </FormControl>
-        <br />
-        <FormControl id="name">
-          <FormLabel>Hospital name</FormLabel>
-          <Input value={hospital.name} isReadOnly />
-        </FormControl>
-        <br />
-        <FormControl id="email">
-          <FormLabel>Contact Email</FormLabel>
-          <CopyLink link={hospital.contact_email} />
-        </FormControl>
-        <br />
-        <br />
-        <hr />
-        <br />
+        <DeleteHospitalModal isOpen={isDeleteOpen} onClose={onDeleteClose} hospital={hospital} />
       </Container>
     );
   }

@@ -7,10 +7,11 @@ import {
   AlertIcon,
   Button,
   Center,
+  Stack,
   Heading,
   Spinner,
 } from "@chakra-ui/react";
-import { ViewIcon } from "@chakra-ui/icons";
+import { AddIcon, ViewIcon } from "@chakra-ui/icons";
 
 import Table from "../../components/utils/Table";
 
@@ -83,17 +84,24 @@ const cols = [
   },
   {
     field: "",
-    headerName: "View Hospital",
+    headerName: "Actions",
     sortable: false,
     disableClickEventBubbling: true,
     renderCell: ({ row }) => {
       let id = row.id;
       return (
-        <Link to={`/my/hospitals/show/${id}`}>
-          <Button leftIcon={<ViewIcon />} colorScheme="blue">
-            View
-          </Button>
-        </Link>
+        <Stack direction="row" spacing={4}>
+          <Link to={`/my/hospitals/show/${id}`}>
+            <Button leftIcon={<ViewIcon />} colorScheme="blue">
+              View
+            </Button>
+          </Link>
+          <Link to={`/my/hospitals/${id}/admins/new`}>
+            <Button leftIcon={<AddIcon />} colorScheme="blue">
+              Create Admin
+            </Button>
+          </Link>
+        </Stack>
       );
     },
     flex: 0.7,

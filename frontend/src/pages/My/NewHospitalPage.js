@@ -1,11 +1,18 @@
-import React from 'react';
+import React from "react";
+import { Heading, Container } from "@chakra-ui/react";
 
-const NewHospitalPage = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+import NewHospitalForm from "../../components/Hospital/NewHospitalForm";
+
+const NewHospital = () => {
+  return (
+    <Container>
+      <Heading textAlign="center">Create a Hospital</Heading>
+      <br />
+      <hr />
+      <br />
+      <NewHospitalForm />
+    </Container>
+  );
 };
 
-export default NewHospitalPage;
+export default NewHospital;
