@@ -13,19 +13,27 @@ import {
 import RequestTypeSelector from "./RequestTypeSelector";
 import RequestDatePicker from "./RequestDatePicker";
 import Error from "../utils/Error";
+import PeriodicSelector from "./PeriodicSelector";
 
-const NewRequestForm = ({ patient }) => {
+const NewRequestForm = ({ patient, periodic }) => {
   const { register, handleSubmit, control, getValues } = useForm();
 
   // Mutation hook with loading and error attributes
   const [createRequest, { loading, error, data }] = useMutation(CREATE_REQUEST);
 
-  const onSubmit = ({ requestType, submissionDate }) => {
+  const onSubmit = ({
+    requestType,
+    submissionDate,
+    requestInterval,
+    requestFrequency,
+  }) => {
     // When the form is submitted, send the request
     createRequest({
       variables: {
         patient_id: patient.id,
         request_type: parseInt(requestType),
+        interval: parseInt(requestInterval),
+        frequency: parseInt(requestFrequency),
         deadline: submissionDate.getTime().toString(),
       },
     });
@@ -65,11 +73,12 @@ const NewRequestForm = ({ patient }) => {
             Request has been sent to {patient.fname}, they will be notified
             shortly.
           </Alert>
-        ) : (
-          null
-        )}
+        ) : null}
         <RequestTypeSelector patient={patient} register={register} />
         <RequestDatePicker control={control} />
+        {periodic ? (
+          <PeriodicSelector patient={patient} register={register} />
+        ) : null}
         <Center>
           <Button type="submit" mt={4} colorScheme="blue">
             Submit
@@ -90,11 +99,15 @@ const CREATE_REQUEST = gql`
     $patient_id: ID!
     $request_type: Int!
     $deadline: String!
+    $interval: Int!
+    $frequency: Int!
   ) {
     createRequest(
       patient_id: $patient_id
       request_type: $request_type
       deadline: $deadline
+      frequency: $frequency
+      interval: $interval
     )
   }
 `;
