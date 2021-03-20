@@ -7,7 +7,6 @@ const {
   Request,
   Doctor,
   Patient,
-  ScheduledEmail,
 } = require("../models/index.js");
 const enqueueEmail = require("../utils/scheduledEmail.js");
 const { ApolloError } = require("apollo-server-core");
