@@ -12,9 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       ScheduledRequest.belongsTo(models.Request, { foreignKey: "request_id" });
-      ScheduledRequest.belongsTo(models.Patient, { foreignKey: "patient_id" });
-      ScheduledRequest.belongsTo(models.Doctor, { foreignKey: "doctor_id" });
-
     }
   };
   ScheduledRequest.init({
@@ -22,8 +19,6 @@ module.exports = (sequelize, DataTypes) => {
     interval: DataTypes.INTEGER,
     frequency: DataTypes.INTEGER,
     request_id: DataTypes.INTEGER,
-    patient_id: DataTypes.INTEGER,
-    doctor_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'ScheduledRequest',
