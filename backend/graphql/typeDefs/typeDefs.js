@@ -125,6 +125,7 @@ module.exports = gql`
 
     changePassword(password: String!, password_confirmation: String!): Boolean!
     deleteAccount(password: String!, password_confirmation: String!): Boolean!
+    deleteHospital(hospital_id: ID!): Boolean!
     createFeedback(stars: Int!, extra: String): Feedback!
   }
 
