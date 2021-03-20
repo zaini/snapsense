@@ -1,6 +1,13 @@
-import { Center, Heading } from "@chakra-ui/layout";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
+import {
+  Center,
+  Heading,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+} from "@chakra-ui/react";
+
 import RequestCardsTable from "../../components/SubmissionsView/RequestCards/RequestCardsTable";
 import SubmissionCardsTable from "../../components/SubmissionsView/SubmissionCards/SubmissionCardsTable";
 
@@ -20,12 +27,14 @@ const ReviewSubmissions = () => {
           <Tab>Fulfilled & Unreviewed Requests</Tab>
           <Tab>Unreviewed Submissions</Tab>
         </TabList>
-        <TabPanel>
-          <RequestCardsTable />
-        </TabPanel>
-        <TabPanel>
-          <SubmissionCardsTable />
-        </TabPanel>
+        <TabPanels>
+          <TabPanel>
+            <RequestCardsTable />
+          </TabPanel>
+          <TabPanel>
+            <SubmissionCardsTable />
+          </TabPanel>
+        </TabPanels>
       </Tabs>
     </>
   );
