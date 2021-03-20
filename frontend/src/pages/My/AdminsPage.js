@@ -95,10 +95,7 @@ const cols = [
     field: "hospital_name",
     headerName: "Hospital Name",
     flex: 0.5,
-    renderCell: ({ row }) => {
-      let hospital = row.Hospital.name;
-      return <Text>{hospital}</Text>;
-    },
+    valueGetter: ({ row }) => row.Hospital.name,
   },
   {
     field: "",
