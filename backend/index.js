@@ -22,6 +22,22 @@ const bree = new Bree({
       name: "schedule_requests",
       interval: "1d",
     },
+    {
+      name: "schedule_reminder_one",
+      interval: "1d",
+    },
+    {
+      name: "schedule_reminder_two",
+      interval: "1d",
+    },
+    {
+      name: "schedule_reminder_five",
+      interval: "1d",
+    },
+    {
+      name: "schedule_reminder_seven",
+      interval: "1d",
+    },
   ],
 });
 
