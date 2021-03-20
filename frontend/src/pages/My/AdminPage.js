@@ -2,29 +2,25 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import {
-  FormControl,
-  FormLabel,
-  Container,
-  Input,
-  Heading,
-  Center,
   Alert,
   AlertIcon,
+  Container,
+  Center,
+  Heading,
   Spinner,
 } from "@chakra-ui/react";
 
-import CopyLink from "../../components/utils/CopyLink";
+import ViewAdmin from "../../components/Admin/ViewAdmin";
 
-const HospitalPage = (props) => {
+const AdminPage = () => {
   const location = useParams();
 
-  const {
-    loading,
-    data: { getSpecificAdmin: admin } = {},
-    error,
-  } = useQuery(GET_ADMIN, {
-    variables: { admin_id: location.admin_id },
-  });
+  const { loading, data: { getSpecificAdmin: admin } = {}, error } = useQuery(
+    GET_ADMIN,
+    {
+      variables: { admin_id: location.admin_id },
+    }
+  );
 
   let markup;
 
@@ -43,49 +39,17 @@ const HospitalPage = (props) => {
     );
   } else {
     markup = (
-      <Container>
-        <Center>
-          <Heading>{admin.fname}'s Profile</Heading>
-        </Center>
-        <br />
-        <hr />
-        <br />
-        <FormControl id="id">
-          <FormLabel>ID</FormLabel>
-          <Input value={admin.id} isReadOnly />
-        </FormControl>
-        <br />
-        <FormControl id="fname">
-          <FormLabel>First name</FormLabel>
-          <Input value={admin.fname} isReadOnly />
-        </FormControl>
-        <br />
-        <FormControl id="lname">
-          <FormLabel>Last name</FormLabel>
-          <Input value={admin.lname} isReadOnly />
-        </FormControl>
-        <br />
-        <FormControl id="hospital">
-          <FormLabel>Hospital</FormLabel>
-          <Input value={admin.Hospital.name} isReadOnly />
-        </FormControl>
-        <br />
-        <FormControl id="email">
-          <FormLabel>Email</FormLabel>
-          <CopyLink link={admin.email} />
-        </FormControl>
-        <br />
-        <br />
-        <hr />
-        <br />
-      </Container>
+      <>
+        <Heading textAlign="center">{admin.fname}'s Profile</Heading>
+        <ViewAdmin admin={admin} />
+      </>
     );
   }
 
   return markup;
 };
 
-export default HospitalPage;
+export default AdminPage;
 
 const GET_ADMIN = gql`
   query getSpecificAdmin($admin_id: ID!) {
