@@ -78,7 +78,7 @@ const NewRequestPage = () => {
                 <Tab>Scheduled</Tab>
               </TabList>
               <TabPanel>
-                <NewRequestForm patient={patient} />
+                <NewRequestForm periodic={false} patient={patient} />
               </TabPanel>
               <TabPanel>
                 <NewRequestForm periodic={true} patient={patient} />
