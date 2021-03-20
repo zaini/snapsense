@@ -4,24 +4,32 @@ import PrivateRoute from "../../utils/PrivateRoute";
 
 import MySidebar from "../../components/utils/MySidebar/MySidebar";
 import PatientsPage from "./PatientsPage";
+import AdminsPage from "./AdminsPage";
 import DoctorsPage from "./DoctorsPage";
+import HospitalsPage from "./HospitalsPage";
 import MyHomePage from "./MyHomePage";
+import NewHospitalPage from "./NewHospitalPage";
 import NewSubmissionPage from "./NewSubmissionPage";
 import NewRequestPage from "./NewRequestPage";
 import PatientProfilePage from "./PatientProfilePage";
 import ProfilePage from "./ProfilePage";
+import HospitalPage from "./HospitalPage";
+import AdminPage from "./AdminPage";
 import RequestsPage from "./RequestsPage";
 import NewInvitePage from "./NewInvitePage";
 import ShowSubmissionPage from "./ShowSubmissionPage";
 import SubmissionsPage from "./SubmissionsPage";
 import ReviewSubmissions from "./ReviewSubmissions";
+import NewAdminPage from "./NewAdminPage";
+import FeedbackPage from "./FeedbackPage";
+import ViewFeedbackPage from "./ViewFeedbackPage";
 
 // Main my, where you can place your routers for each my page
 const MyLayout = () => {
   return (
     <MySidebar>
       <Switch>
-        <PrivateRoute exact path="/my/" accountTypes={["PATIENT", "DOCTOR"]}>
+        <PrivateRoute exact path="/my/" accountTypes={["SUPERADMIN", "PATIENT", "DOCTOR"]}>
           <MyHomePage />
         </PrivateRoute>
 
@@ -43,8 +51,40 @@ const MyLayout = () => {
           <DoctorsPage />
         </PrivateRoute>
 
+        <PrivateRoute exact path="/my/feedback" accountTypes={["SUPERADMIN"]}>
+          <FeedbackPage />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/my/feedback/show/:feedback_id" accountTypes={["SUPERADMIN"]}>
+          <ViewFeedbackPage />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/my/hospitals" accountTypes={["SUPERADMIN"]}>
+          <HospitalsPage />
+        </PrivateRoute>
+
         <PrivateRoute exact path="/my/patients" accountTypes={["DOCTOR"]}>
           <PatientsPage />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/my/admins" accountTypes={["SUPERADMIN"]}>
+          <AdminsPage />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/my/hospitals/new" accountTypes={["SUPERADMIN"]}>
+          <NewHospitalPage />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/my/hospitals/:hospital_id/admins/new" accountTypes={["SUPERADMIN"]}>
+          <NewAdminPage />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/my/hospitals/show/:hospital_id" accountTypes={["SUPERADMIN"]}>
+          <HospitalPage />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/my/admins/show/:admin_id" accountTypes={["SUPERADMIN"]}>
+          <AdminPage />
         </PrivateRoute>
 
         <PrivateRoute

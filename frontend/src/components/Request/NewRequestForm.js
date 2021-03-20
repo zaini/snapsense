@@ -18,7 +18,12 @@ const NewRequestForm = ({ patient }) => {
   const { register, handleSubmit, control, getValues } = useForm();
 
   // Mutation hook with loading and error attributes
-  const [createRequest, { loading, error, data }] = useMutation(CREATE_REQUEST);
+  const [createRequest, { loading, error, data }] = useMutation(
+    CREATE_REQUEST,
+    {
+      onError(_) {}, // Error is handled below
+    }
+  );
 
   const onSubmit = ({ requestType, submissionDate }) => {
     // When the form is submitted, send the request

@@ -6,7 +6,7 @@ const argon2 = require("argon2");
 const ModelValidator = Validator();
 
 module.exports = (sequelize, DataTypes) => {
-  class Doctor extends Model {
+  class SuperAdmin extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -14,28 +14,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Doctor.belongsTo(models.Hospital, { foreignKey: "hospital_id" });
-      Doctor.belongsToMany(models.Patient, {
-        through: "Doctor_Patient_Relation",
-        foreignKey: "doctor_id",
-      });
-      Doctor.hasMany(models.Request, { foreignKey: "doctor_id" });
     }
   }
-  Doctor.init(
+  SuperAdmin.init(
     {
-      fname: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          isName(value) {
-            if (!ModelValidator.isName(value)) {
-              throw new ValidationError("Invalid name");
-            }
-          },
-        },
-      },
-      lname: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -52,10 +35,8 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         validate: {
           isEmail(value) {
-            if (!ModelValidator.isEmail(value, true)) {
-              throw new ValidationError(
-                "Invalid email address. Make sure this is an NHS assigned email"
-              );
+            if (!ModelValidator.isEmail(value)) {
+              throw new ValidationError("Invalid email address");
             }
           },
         },
@@ -71,21 +52,18 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      hospital_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
     },
     {
       sequelize,
-      modelName: "Doctor",
+      modelName: "SuperAdmin",
     }
   );
-  Doctor.beforeSave(async (user, options) => {
+
+  SuperAdmin.beforeSave(async (user, options) => {
     options.validate = false;
     user.email = user.email.toLowerCase();
     user.password = await argon2.hash(user.password);
   });
 
-  return Doctor;
+  return SuperAdmin;
 };

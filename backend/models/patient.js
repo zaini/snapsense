@@ -82,6 +82,7 @@ module.exports = (sequelize, DataTypes) => {
   
   Patient.beforeSave(async (user, options) => {
     options.validate = false;
+    user.email = user.email.toLowerCase();
     user.password = await argon2.hash(user.password);
   });
 

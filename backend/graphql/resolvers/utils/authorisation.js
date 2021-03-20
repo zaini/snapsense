@@ -5,7 +5,7 @@ const { ValidationError } = require("sequelize");
 require("dotenv").config();
 
 const { createAccessToken } = require("../utils/authTokens");
-const { Admin, Doctor, Patient } = require("../../../models/index");
+const { Admin, Doctor, Patient, SuperAdmin } = require("../../../models/index");
 const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
 
 // Make sure the the inviter exists and the invited email account does not exist
@@ -30,10 +30,13 @@ module.exports = {
         passwordConfirmation,
         invitationToken,
       } = user_details;
-      const { inviterEmail, newAccountEmail, accountType } = verify(
+      let { inviterEmail, newAccountEmail, accountType } = verify(
         invitationToken,
         ACCESS_TOKEN_SECRET_KEY
       );
+
+      inviterEmail = inviterEmail.toLowerCase();
+      newAccountEmail = newAccountEmail.toLowerCase();
 
       if (password !== passwordConfirmation) {
         throw new UserInputError(
@@ -99,7 +102,8 @@ module.exports = {
       return false;
     },
     login: async (_, user_details) => {
-      const { email, password, account_type } = user_details;
+      let { email, password, account_type } = user_details;
+      email = email.toLowerCase();
 
       let user;
       switch (account_type) {
@@ -112,6 +116,9 @@ module.exports = {
           break;
         case "PATIENT":
           user = await Patient.findOne({ where: { email: email } });
+          break;
+        case "SUPERADMIN":
+          user = await SuperAdmin.findOne({ where: { email: email } });
           break;
         default:
           // Account type is invalid

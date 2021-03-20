@@ -1,4 +1,4 @@
-const { AuthenticationError, UserInputError } = require("apollo-server-core");
+const { AuthenticationError, UserInputError } = require("apollo-server");
 
 const {
   Answer,

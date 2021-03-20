@@ -74,6 +74,9 @@ module.exports = {
           accountExists,
         } = verify(invitationToken, ACCESS_TOKEN_SECRET_KEY);
 
+        inviterEmail = inviterEmail.toLowerCase();
+        newAccountEmail = newAccountEmail.toLowerCase();
+
         let doctor;
         switch (accountType) {
           case "DOCTOR":
@@ -136,7 +139,8 @@ module.exports = {
 
       // Logged in User
       const user = isAuth(context);
-      const userEmail = user.email;
+      const userEmail = user.email.toLowerCase();
+      email = email.toLowerCase();
 
       let accountType, doctor;
       let accountExists = false;
