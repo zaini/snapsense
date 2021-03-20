@@ -41,15 +41,13 @@ const HospitalsPage = () => {
   }
 
   return (
-    <>
+    <Stack spacing={4}>
       <Center>
         <Heading>Hospitals</Heading>
       </Center>
-      <br />
       <hr />
-      <br />
       {markup}
-    </>
+    </Stack>
   );
 };
 

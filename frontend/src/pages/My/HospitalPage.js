@@ -9,6 +9,7 @@ import {
   Center,
   Container,
   Spinner,
+  Stack,
   useDisclosure,
 } from "@chakra-ui/react";
 
@@ -50,21 +51,27 @@ const HospitalPage = (props) => {
   } else {
     markup = (
       <Container>
-        <HospitalDetails hospital={hospital} />
-        <Center>
-          <Button
-            as={Link}
-            to={`/my/hospitals/${hospital.id}/admins/new`}
-            colorScheme="blue"
-            mr={4}
-          >
-            Create Admin for this Hospital
-          </Button>
-          <Button onClick={onDeleteOpen} colorScheme="red">
-            Delete Hospital
-          </Button>
-        </Center>
-        <DeleteHospitalModal isOpen={isDeleteOpen} onClose={onDeleteClose} hospital={hospital} />
+        <Stack spacing={4}>
+          <HospitalDetails hospital={hospital} />
+          <Center>
+            <Button
+              as={Link}
+              to={`/my/hospitals/${hospital.id}/admins/new`}
+              colorScheme="blue"
+              mr={4}
+            >
+              Create Admin for this Hospital
+            </Button>
+            <Button onClick={onDeleteOpen} colorScheme="red">
+              Delete Hospital
+            </Button>
+          </Center>
+          <DeleteHospitalModal
+            isOpen={isDeleteOpen}
+            onClose={onDeleteClose}
+            hospital={hospital}
+          />
+        </Stack>
       </Container>
     );
   }

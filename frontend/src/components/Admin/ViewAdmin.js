@@ -1,20 +1,15 @@
 import React from "react";
 import {
   Button,
-  FormControl,
-  FormLabel,
-  Container,
-  Input,
-  Heading,
   Center,
-  Alert,
-  AlertIcon,
-  Spinner,
+  Container,
+  Divider,
+  Stack,
   useDisclosure,
 } from "@chakra-ui/react";
 
 import DeleteAdminModal from "./DeleteAdminModal";
-import CopyLink from "../utils/CopyLink";
+import AdminDetails from "./AdminDetails";
 
 const ViewAdmin = ({ admin }) => {
   const {
@@ -24,47 +19,21 @@ const ViewAdmin = ({ admin }) => {
   } = useDisclosure();
   return (
     <Container>
-      <br />
-      <hr />
-      <br />
-      <FormControl id="id">
-        <FormLabel>ID</FormLabel>
-        <Input value={admin.id} isReadOnly />
-      </FormControl>
-      <br />
-      <FormControl id="fname">
-        <FormLabel>First name</FormLabel>
-        <Input value={admin.fname} isReadOnly />
-      </FormControl>
-      <br />
-      <FormControl id="lname">
-        <FormLabel>Last name</FormLabel>
-        <Input value={admin.lname} isReadOnly />
-      </FormControl>
-      <br />
-      <FormControl id="hospital">
-        <FormLabel>Hospital</FormLabel>
-        <Input value={admin.Hospital.name} isReadOnly />
-      </FormControl>
-      <br />
-      <FormControl id="email">
-        <FormLabel>Email</FormLabel>
-        <CopyLink link={admin.email} />
-      </FormControl>
-      <Center>
-        <Button onClick={onDeleteOpen} colorScheme="red">
-          Delete Admin
-        </Button>
-      </Center>
-      <DeleteAdminModal
-        isOpen={isDeleteOpen}
-        onClose={onDeleteClose}
-        admin={admin}
-      />
-      <br />
-      <br />
-      <hr />
-      <br />
+      <Stack spacing={4}>
+        <hr />
+        <AdminDetails admin={admin} />
+        <Center>
+          <Button onClick={onDeleteOpen} colorScheme="red">
+            Delete Admin
+          </Button>
+        </Center>
+        <DeleteAdminModal
+          isOpen={isDeleteOpen}
+          onClose={onDeleteClose}
+          admin={admin}
+        />
+        <hr />
+      </Stack>
     </Container>
   );
 };

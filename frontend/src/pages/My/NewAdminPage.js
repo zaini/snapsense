@@ -9,6 +9,7 @@ import {
   Container,
   Heading,
   Spinner,
+  Stack,
 } from "@chakra-ui/react";
 
 import NewAdminForm from "../../components/Admin/NewAdminForm";
@@ -45,11 +46,11 @@ const NewAdminPage = () => {
 
   return (
     <Container>
-      <Heading textAlign="center">Create an Admin</Heading>
-      <br />
-      <hr />
-      <br />
-      {markup}
+      <Stack spacing={4}>
+        <Heading textAlign="center">Create an Admin</Heading>
+        <hr />
+        {markup}
+      </Stack>
     </Container>
   );
 };

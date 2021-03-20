@@ -29,7 +29,7 @@ const MyLayout = () => {
   return (
     <MySidebar>
       <Switch>
-        <PrivateRoute exact path="/my/" accountTypes={["PATIENT", "DOCTOR"]}>
+        <PrivateRoute exact path="/my/" accountTypes={["SUPERADMIN", "PATIENT", "DOCTOR"]}>
           <MyHomePage />
         </PrivateRoute>
 

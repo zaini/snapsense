@@ -4,7 +4,6 @@ import gql from "graphql-tag";
 import {
   Alert,
   AlertIcon,
-  Container,
   Center,
   Heading,
   Spinner,

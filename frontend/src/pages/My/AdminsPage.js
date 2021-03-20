@@ -9,7 +9,7 @@ import {
   Center,
   Heading,
   Spinner,
-  Text,
+  Stack,
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 
@@ -41,15 +41,13 @@ const HospitalsPage = () => {
   }
 
   return (
-    <>
+    <Stack spacing={4}>
       <Center>
         <Heading>Admins</Heading>
       </Center>
-      <br />
       <hr />
-      <br />
       {markup}
-    </>
+    </Stack>
   );
 };
 

@@ -11,6 +11,7 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Stack,
   Spinner,
   Textarea,
 } from "@chakra-ui/react";
@@ -44,43 +45,39 @@ const ViewFeedback = (props) => {
   } else {
     markup = (
       <Container>
-        <Center>
-          <Heading>{feedback.name}</Heading>
-        </Center>
-        <br />
-        <hr />
-        <br />
-        <FormControl id="id">
-          <FormLabel>ID</FormLabel>
-          <Input value={feedback.id} isReadOnly />
-        </FormControl>
-        <br />
-        <FormControl id="stars">
-          <FormLabel>Number of Stars</FormLabel>
-          <Input
-            value={
-              feedback.stars === 0 ? "No stars 😢" : "⭐".repeat(feedback.stars)
-            }
-            isReadOnly
-          />
-        </FormControl>
-        <br />
-        <FormControl id="info">
-          <FormLabel>Extra Information</FormLabel>
-          <Textarea
-            fontWeight="bold"
-            value={
-              feedback.extra === null
-                ? "No extra information was provided"
-                : feedback.extra
-            }
-            isReadOnly
-          />
-        </FormControl>
-        <br />
-        <br />
-        <hr />
-        <br />
+        <Stack spacing={4}>
+          <Center>
+            <Heading>{feedback.name}</Heading>
+          </Center>
+          <FormControl id="id">
+            <FormLabel>ID</FormLabel>
+            <Input value={feedback.id} isReadOnly />
+          </FormControl>
+          <FormControl id="stars">
+            <FormLabel>Number of Stars</FormLabel>
+            <Input
+              value={
+                feedback.stars === 0
+                  ? "No stars 😢"
+                  : "⭐".repeat(feedback.stars)
+              }
+              isReadOnly
+            />
+          </FormControl>
+          <FormControl id="info">
+            <FormLabel>Extra Information</FormLabel>
+            <Textarea
+              fontWeight="bold"
+              value={
+                feedback.extra === null
+                  ? "No extra information was provided"
+                  : feedback.extra
+              }
+              isReadOnly
+            />
+          </FormControl>
+          <hr />
+        </Stack>
       </Container>
     );
   }
