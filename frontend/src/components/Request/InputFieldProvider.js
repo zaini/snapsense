@@ -10,7 +10,8 @@ const InputFieldProvider = ({ title, name, desc, register }) => {
         name={name}
         type="number"
         max="20"
-        min="1"
+        min="0"
+        defaultValue="0"
         ref={register}
         required
       />
