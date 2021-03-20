@@ -41,7 +41,13 @@ const sendRequestEmail = async (doctor, patient, request_type, deadline) => {
   await transactionalEmailSender(emailParams, htmlParams);
 };
 
-const requestScheduler = async (request, interval, frequency, doctor, patient) => {
+const requestScheduler = async (
+  request,
+  interval,
+  frequency,
+  doctor,
+  patient
+) => {
   console.log(`Recurring Requests: ${interval} - ${frequency}`);
   const startDate = new Date(request.deadline);
   try {
