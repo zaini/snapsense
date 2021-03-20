@@ -12,6 +12,7 @@ const NavbarMenuItems = () => {
         return (
           <>
             <MenuItem to="/my/profile">My Dashboard</MenuItem>
+            <MenuItem to="/about">About Us</MenuItem>
             <MenuItem to="/feedback">Share Feedback</MenuItem>
             <MenuItem to="/logout" isLast>
               <Button
@@ -37,6 +38,7 @@ const NavbarMenuItems = () => {
         return (
           <>
             <MenuItem to="/my">My Dashboard</MenuItem>
+            <MenuItem to="/about">About Us</MenuItem>
             <MenuItem to="/feedback">Share Feedback</MenuItem>
             <MenuItem to="/logout" isLast>
               <Button
@@ -62,6 +64,7 @@ const NavbarMenuItems = () => {
         return (
           <>
             <MenuItem to="/my">My Dashboard</MenuItem>
+            <MenuItem to="/about">About Us</MenuItem>
             <MenuItem to="/feedback">Share Feedback</MenuItem>
             <MenuItem to="/logout" isLast>
               <Button
