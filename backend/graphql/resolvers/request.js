@@ -167,8 +167,8 @@ module.exports = {
         }).save();
 
         // Assign the request to both the doctor and patient
-        doctor.addRequest(request);
-        patient.addRequest(request);
+        await doctor.addRequest(request);
+        await patient.addRequest(request);
       } catch (error) {
         // An error will be thrown if the request is invalid as a result of a user input error
         throw new UserInputError(error);
