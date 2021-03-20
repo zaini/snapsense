@@ -119,7 +119,7 @@ module.exports = {
   Mutation: {
     createRequest: async (
       _,
-      { request_type, deadline, patient_id },
+      { request_type, deadline, patient_id, interval, frequency },
       context
     ) => {
       // Authenticate user
