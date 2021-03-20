@@ -61,12 +61,12 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
         <ModalCloseButton />
         <ModalBody pb={6}>
           <Error errors={errors} mb="4" />
-          {Object.keys(errors).length === 0 && data ? (
+          {Object.keys(errors).length === 0 && data && (
             <Alert status="success" variant="subtle" mb="4">
               <AlertIcon />
               Password has been updated!
             </Alert>
-          ) : null}
+          )}
           <PasswordConfirmationForm
             register={register}
             onSubmit={onSubmit}

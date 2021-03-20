@@ -57,12 +57,12 @@ const CreateInviteForm = () => {
   return (
     <Box p="7" borderWidth="1px" borderRadius="lg">
       <Error errors={errors} />
-      {data ? (
+      {data && (
         <Alert status="success" borderRadius="50px" mb={4} textAlign="center">
           <AlertIcon />
           Your invite has been sent!
         </Alert>
-      ) : null}
+      )}
       <br />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl id="email" isRequired>
@@ -90,12 +90,12 @@ const CreateInviteForm = () => {
           </Button>
         </Center>
       </form>
-      {invitationToken ? (
+      {invitationToken && (
         <>
           <br />
           <CopyLink link={URL_PREFIX + "/invites/show/" + invitationToken} />
         </>
-      ) : null}
+      )}
     </Box>
   );
 };

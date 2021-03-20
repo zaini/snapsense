@@ -50,13 +50,13 @@ const SubmissionCard = ({ data, vertical }) => {
             )}
           </Box>
 
-          {vertical ? (
+          {vertical && (
             <>
               <br />
               <hr />
               <br />
             </>
-          ) : null}
+          )}
 
           <Box>
             {Answers.length === 0 ? (
@@ -68,13 +68,13 @@ const SubmissionCard = ({ data, vertical }) => {
             )}
           </Box>
 
-          {vertical ? (
+          {vertical && (
             <>
               <br />
               <hr />
               <br />
             </>
-          ) : null}
+          )}
 
           <Box>
             <SubmissionCardOptions
