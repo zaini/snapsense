@@ -6,7 +6,7 @@ import LoggedOutRoute from "../../utils/LoggedOutRoute";
 import LandingPage from "./LandingPage";
 import LoginPage from "./LoginPage";
 import LogoutPage from "./LogoutPage";
-import FeedbackPage from "./FeedbackPage";
+import NewFeedbackPage from "./NewFeedbackPage";
 import ShowInvitePage from "./ShowInvitePage";
 import ErrorPage from "./ErrorPage";
 import MainNavbar from "../../components/utils/MainNavbar";
@@ -25,7 +25,7 @@ const HomeLayout = () => {
           path="/invites/show/:token_id"
           component={ShowInvitePage}
         />
-        <Route exact path="/feedback" component={FeedbackPage} />
+        <Route exact path="/feedback" component={NewFeedbackPage} />
 
         <Route path="/error" component={ErrorPage} />
       </Switch>
