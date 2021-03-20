@@ -36,6 +36,7 @@ module.exports = {
 
             if (await doctor.hasPatient(patient)) {
               submissions = await patient.getSubmissions({
+                order: [["updatedAt", "DESC"]],
                 include: [
                   Patient,
                   Image,
@@ -52,6 +53,7 @@ module.exports = {
             const patients = await doctor.getPatients();
             for await (const patient of patients) {
               const patientSubmissions = await patient.getSubmissions({
+                order: [["updatedAt", "DESC"]],
                 include: [
                   Patient,
                   Image,
@@ -69,6 +71,7 @@ module.exports = {
         case "PATIENT":
           const patient = await Patient.findByPk(user.id);
           submissions = await patient.getSubmissions({
+            order: [["updatedAt", "DESC"]],
             include: [
               Patient,
               Image,
