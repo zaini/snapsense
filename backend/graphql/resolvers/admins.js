@@ -57,7 +57,7 @@ module.exports = {
 
       if (!hospital) {
         throw new UserInputError(
-          "The hospital for this account does not exist."
+          "This hospital does not exist."
         );
       }
 
@@ -65,7 +65,12 @@ module.exports = {
         const admin = await new Admin({
           ...user_details,
         }).save();
-        return { ...admin.dataValues };
+        return { 
+          fname: admin.fname,
+          lname: admin.lname,
+          email: admin.email,
+          createdAt: admin.createdAt,
+         };
       } catch (error) {
         throw new UserInputError(
           "This account does not have proper validation. e.g. email might already be in use or password is too weak."
