@@ -1,5 +1,5 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, ValidationError } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Feedback extends Model {
     /**
@@ -13,8 +13,23 @@ module.exports = (sequelize, DataTypes) => {
   }
   Feedback.init(
     {
-      stars: DataTypes.INTEGER,
-      extra: DataTypes.TEXT,
+      stars: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          isValidStarNumber(value) {
+            if (value < 0 || value > 5) {
+              throw new ValidationError(
+                "Invalid number of stars, must be between 0-5 (inclusive)"
+              );
+            }
+          },
+        },
+      },
+      extra: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
     },
     {
       sequelize,
