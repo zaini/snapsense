@@ -37,7 +37,6 @@ const HospitalsPage = () => {
       </Alert>
     );
   } else {
-    console.log(admins);
     markup = <Table data={admins} cols={cols} />;
   }
 

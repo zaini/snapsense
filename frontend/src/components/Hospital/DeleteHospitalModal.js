@@ -26,7 +26,7 @@ const DeleteHospitalModal = ({ isOpen, onClose, hospital }) => {
       onCompleted(_) {
         history.push("/my/hospitals");
       },
-      update(proxy) {
+      update(proxy) { // Write to cache
         const data = proxy.readQuery({
           query: GET_HOSPITALS,
         });
