@@ -17,11 +17,6 @@ import {
 
 const SuperAdminSideBarData = [
   {
-    title: "Home",
-    path: "/my",
-    icon: <Home />,
-  },
-  {
     title: "Create Hospitals",
     path: "/my/hospitals/new",
     icon: <Create />,

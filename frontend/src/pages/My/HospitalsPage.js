@@ -91,7 +91,7 @@ const cols = [
         <Stack direction="row" spacing={4}>
           <Link to={`/my/hospitals/show/${id}`}>
             <Button leftIcon={<ViewIcon />} colorScheme="blue">
-              View
+              View Hospital
             </Button>
           </Link>
           <Link to={`/my/hospitals/${id}/admins/new`}>

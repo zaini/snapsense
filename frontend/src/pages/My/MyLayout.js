@@ -29,7 +29,7 @@ const MyLayout = () => {
   return (
     <MySidebar>
       <Switch>
-        <PrivateRoute exact path="/my/" accountTypes={["SUPERADMIN", "PATIENT", "DOCTOR"]}>
+        <PrivateRoute exact path="/my/" accountTypes={["PATIENT", "DOCTOR"]}>
           <MyHomePage />
         </PrivateRoute>
 
@@ -55,7 +55,11 @@ const MyLayout = () => {
           <FeedbackPage />
         </PrivateRoute>
 
-        <PrivateRoute exact path="/my/feedback/show/:feedback_id" accountTypes={["SUPERADMIN"]}>
+        <PrivateRoute
+          exact
+          path="/my/feedback/show/:feedback_id"
+          accountTypes={["SUPERADMIN"]}
+        >
           <ViewFeedbackPage />
         </PrivateRoute>
 
@@ -71,19 +75,35 @@ const MyLayout = () => {
           <AdminsPage />
         </PrivateRoute>
 
-        <PrivateRoute exact path="/my/hospitals/new" accountTypes={["SUPERADMIN"]}>
+        <PrivateRoute
+          exact
+          path="/my/hospitals/new"
+          accountTypes={["SUPERADMIN"]}
+        >
           <NewHospitalPage />
         </PrivateRoute>
 
-        <PrivateRoute exact path="/my/hospitals/:hospital_id/admins/new" accountTypes={["SUPERADMIN"]}>
+        <PrivateRoute
+          exact
+          path="/my/hospitals/:hospital_id/admins/new"
+          accountTypes={["SUPERADMIN"]}
+        >
           <NewAdminPage />
         </PrivateRoute>
 
-        <PrivateRoute exact path="/my/hospitals/show/:hospital_id" accountTypes={["SUPERADMIN"]}>
+        <PrivateRoute
+          exact
+          path="/my/hospitals/show/:hospital_id"
+          accountTypes={["SUPERADMIN"]}
+        >
           <HospitalPage />
         </PrivateRoute>
 
-        <PrivateRoute exact path="/my/admins/show/:admin_id" accountTypes={["SUPERADMIN"]}>
+        <PrivateRoute
+          exact
+          path="/my/admins/show/:admin_id"
+          accountTypes={["SUPERADMIN"]}
+        >
           <AdminPage />
         </PrivateRoute>
 

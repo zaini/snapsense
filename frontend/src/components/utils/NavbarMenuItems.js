@@ -11,7 +11,7 @@ const NavbarMenuItems = () => {
       case "SUPERADMIN":
         return (
           <>
-            <MenuItem to="/my">My Dashboard</MenuItem>
+            <MenuItem to="/my/hospitals">My Dashboard</MenuItem>
             <MenuItem to="/contact">Contact Us</MenuItem>
             <MenuItem to="/logout" isLast>
               <Button
