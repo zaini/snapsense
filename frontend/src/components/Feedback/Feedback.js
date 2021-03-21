@@ -87,7 +87,7 @@ export const Feedback = () => {
               {[...Array(5)].map((star, i) => {
                 const ratingValue = i + 1;
                 return (
-                  <label>
+                  <label key={i}>
                     <input
                       type="radio"
                       name="rating"
@@ -117,7 +117,7 @@ export const Feedback = () => {
               <form>
                 <Text mb="8px">Additional Feedback</Text>
                 <Textarea
-                  isFullWidth="True"
+                  isfullwidth="True"
                   value={value}
                   onChange={handleInputChange}
                   placeholder="Enter here"
@@ -145,6 +145,7 @@ export const Feedback = () => {
 
   return markup;
 };
+export default Feedback;
 
 export const CREATE_FEEDBACK = gql`
   mutation createFeedback($stars: Int!, $extra: String) {

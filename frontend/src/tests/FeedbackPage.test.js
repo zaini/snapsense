@@ -13,7 +13,7 @@ const mocks = [
     },
     result: {
       data: {
-        createFeedback: { id: "1", stars: 1, breed: "hello world" },
+        createFeedback: { id: "1", stars: 1, extra: "hello world" },
       },
     },
   },
@@ -25,9 +25,29 @@ const component = render(
   </MockedProvider>
 );
 
-afterEach(cleanup);
+/*------ Tests  -----*/
 
-/// Tests
-it("renders without error", () => {
-  expect(component).toMatchSnapshot();
+describe("FeedbackPage", () => {
+  it("renders without crashing", () => {
+    expect(component).toBeTruthy();
+  });
+});
+
+describe("Click submit button", () => {
+  const button = component.findAllByRole("Button");
+
+  it("Landing page has a button", () => {
+    expect(button).toBeTruthy();
+  });
+
+  it("On submit", () => {
+    expect(button.innerHTML).toBe(undefined);
+    // fireEvent.click(button);
+    // expect(btn.innerHTML).toBe("You Clicked");
+  });
+});
+
+it("Textarea", () => {
+  const TextArea = component.findAllByRole("TextArea");
+  expect(TextArea).toBeTruthy();
 });
