@@ -6,7 +6,6 @@ import { ViewIcon } from "@chakra-ui/icons";
 import Table from "../utils/Table";
 import { AuthContext } from "../../context/auth";
 import getFlagText from "../../utils/Flags";
-import getSubmissionTypeText from "../../utils/SubmissionTypes";
 
 // Takes a list of submissions and shows them in the table and timeline view
 const PatientSubmissionsTable = ({ data }) => {
@@ -26,7 +25,6 @@ const PatientSubmissionsTable = ({ data }) => {
       flex: 0.3,
       renderCell: ({ row }) => {
         const flag = row.flag;
-
         return <p>{getFlagText(flag)}</p>;
       },
     },
@@ -44,8 +42,7 @@ const PatientSubmissionsTable = ({ data }) => {
       renderCell: ({ row }) => {
         return (
           <p>
-            {row.Images.length !== 0 && "Images"}{" "}
-            {row.Answers.length !== 0 && "Questionnaire"}
+            {row.Images.length !== 0 && "📷"} {row.Answers.length !== 0 && "📝"}
           </p>
         );
       },
@@ -70,7 +67,7 @@ const PatientSubmissionsTable = ({ data }) => {
           <Stack direction="row" spacing={4}>
             <Link to={route_link}>
               <Button leftIcon={<ViewIcon />} colorScheme="blue">
-                View
+                View Submission
               </Button>
             </Link>
           </Stack>

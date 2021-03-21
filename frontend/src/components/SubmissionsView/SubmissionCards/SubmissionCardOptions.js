@@ -83,10 +83,10 @@ const SubmissionCardOptions = ({
             Submit Review
           </Button>
           <Link to={`/my/submissions/show/${submission_id}`}>
-            <Button>View</Button>
+            <Button>View Submission</Button>
           </Link>
           <Link to={`/my/patients/${patient.id}/requests/new`}>
-            <Button>Request</Button>
+            <Button>Request Submission</Button>
           </Link>
         </HStack>
       )}
