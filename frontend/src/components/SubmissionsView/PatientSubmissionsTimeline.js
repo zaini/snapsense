@@ -10,10 +10,10 @@ import TimelineDot from "@material-ui/lab/TimelineDot";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import DescriptionIcon from "@material-ui/icons/Description";
+import SubmissionCard from "../SubmissionsView/SubmissionCards/SubmissionCard";
 
 const PatientSubmissionsTimeline = ({ data }) => {
   const classes = useStyles();
-  console.log(data);
   if (data.length === 0) {
     return (
       <Timeline>
@@ -37,30 +37,29 @@ const PatientSubmissionsTimeline = ({ data }) => {
   } else {
     return (
       <Timeline align="right">
-        {data.map((row, index) => (
-          <TimelineItem key={index}>
-            <TimelineOppositeContent>
-              <Typography variant="body2" color="textSecondary">
-                {new Date(row.createdAt).toDateString()}
-              </Typography>
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineDot color="primary">
-                <DescriptionIcon />
-              </TimelineDot>
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent>
-              <Paper elevation={3} className={classes.paper}>
-                <Typography variant="h6" component="h1" align="center">
-                  Submission {index}
+        {data.map((submission, index) => {
+          console.log(submission);
+          return (
+            <TimelineItem key={index}>
+              <TimelineOppositeContent>
+                <Typography variant="body2" color="textSecondary">
+                  {new Date(submission.createdAt).toDateString()}
                 </Typography>
-                {/* TODO: Add image/questionnaire answers from real data */}
-                <Typography>Image/questionnaire</Typography>
-              </Paper>
-            </TimelineContent>
-          </TimelineItem>
-        ))}
+              </TimelineOppositeContent>
+              <TimelineSeparator>
+                <TimelineDot color="primary">
+                  <DescriptionIcon />
+                </TimelineDot>
+                <TimelineConnector />
+              </TimelineSeparator>
+              <TimelineContent>
+                <Paper elevation={3} className={classes.paper}>
+                  <SubmissionCard data={submission} />
+                </Paper>
+              </TimelineContent>
+            </TimelineItem>
+          );
+        })}
       </Timeline>
     );
   }

@@ -1,4 +1,4 @@
-const { AuthenticationError, UserInputError } = require("apollo-server-core");
+const { AuthenticationError, UserInputError } = require("apollo-server");
 
 const {
   Answer,
@@ -36,6 +36,7 @@ module.exports = {
 
             if (await doctor.hasPatient(patient)) {
               submissions = await patient.getSubmissions({
+                order: [["updatedAt", "DESC"]],
                 include: [
                   Patient,
                   Image,
@@ -52,6 +53,7 @@ module.exports = {
             const patients = await doctor.getPatients();
             for await (const patient of patients) {
               const patientSubmissions = await patient.getSubmissions({
+                order: [["updatedAt", "DESC"]],
                 include: [
                   Patient,
                   Image,
@@ -69,6 +71,7 @@ module.exports = {
         case "PATIENT":
           const patient = await Patient.findByPk(user.id);
           submissions = await patient.getSubmissions({
+            order: [["updatedAt", "DESC"]],
             include: [
               Patient,
               Image,
@@ -84,6 +87,82 @@ module.exports = {
       }
       return submissions || [];
     },
+    getSubmission: async (_, { submission_id }, context) => {
+      let user = isAuth(context);
+
+      // find the submission
+      // find the patient who owns this submission
+      // if the user is a patient, and they own it, show it
+      // if the user is a doctor, and they own the patient who owns it, show it
+      // else return error
+
+      const submission = await Submission.findOne({
+        where: { id: submission_id },
+        include: [
+          Patient,
+          Image,
+          {
+            model: Answer,
+            include: [Question],
+          },
+        ],
+      });
+      if (!submission) {
+        throw new UserInputError("This submission does not exist.");
+      }
+      const submission_owner = await submission.getPatient();
+
+      if (user.accountType === "PATIENT") {
+        const patient = await Patient.findByPk(user.id);
+        if (patient.id === submission_owner.id) {
+          return submission;
+        }
+      } else if (user.accountType === "DOCTOR") {
+        const doctor = await Doctor.findByPk(user.id);
+        if (doctor.hasPatient(submission_owner)) {
+          return submission;
+        }
+      } else {
+        throw new AuthenticationError(
+          "You are not logged into the correct account to access this submission."
+        );
+      }
+    },
+    getSubmissionsForReview: async (_, __, context) => {
+      const user = isAuth(context);
+
+      if (user.accountType !== "DOCTOR") {
+        throw new AuthenticationError(
+          "You are not logged into the correct account for this feature."
+        );
+      }
+
+      const doctor = await Doctor.findByPk(user.id);
+
+      if (!doctor) {
+        throw new UserInputError("Invalid doctor");
+      }
+
+      // Get all submissions that belong to patients of this doctor which have no flag
+      let submissions = [];
+      const patients = await doctor.getPatients();
+      for await (const patient of patients) {
+        const patient_submissions = await patient.getSubmissions({
+          where: { flag: null },
+          include: [
+            Patient,
+            Image,
+            {
+              model: Answer,
+              include: [Question],
+            },
+          ],
+        });
+        submissions.push(...patient_submissions);
+      }
+
+      return submissions || [];
+    },
   },
   Mutation: {
     createSubmission: async (_, { images, answers }, context) => {
@@ -93,7 +172,12 @@ module.exports = {
         throw new AuthenticationError("Invalid account type!");
       }
 
-      if (!images && !answers) {
+      answers = stringToJSON(answers);
+
+      if (
+        images.length === 0 &&
+        Object.keys(answers.questionnaire).length === 0
+      ) {
         throw new UserInputError(
           "Must supply at least either answers to a questionnaire or an image!"
         );
@@ -115,13 +199,6 @@ module.exports = {
           submission_id: submission.id,
         }).save();
       });
-
-      // Create answers and add them to the submission
-      if (answers !== undefined) {
-        answers = stringToJSON(answers);
-        if (Object.keys(answers.questionnaire).length !== 8)
-          throw new UserInputError("Invalid number of answers");
-      }
 
       for (const questionId in answers.questionnaire) {
         const answerSave = await new Answer({
@@ -154,6 +231,30 @@ module.exports = {
       });
 
       return true;
+    },
+    flagSubmission: async (_, { submission_id, flag }, context) => {
+      // Authenticate user, only allow doctors
+      const user = isAuth(context);
+      if (user.accountType != "DOCTOR") {
+        throw new AuthenticationError("Invalid account type!");
+      }
+
+      if (flag < 1 || flag > 3) {
+        throw new UserInputError("Invalid flag value. Must be 1-3 (inclusive)");
+      }
+
+      const doctor = await Doctor.findByPk(user.id);
+      const submission = await Submission.findByPk(submission_id);
+      const patient = await submission.getPatient();
+
+      const canFlag = await doctor.hasPatient(patient);
+      if (!canFlag) {
+        throw new AuthenticationError("You cannot flag this submission");
+      }
+
+      await submission.update({ flag });
+      await patient.update({ flag });
+      return submission;
     },
   },
 };

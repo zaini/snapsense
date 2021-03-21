@@ -15,15 +15,7 @@ module.exports = {
     getImagesBySubmission: async (_, { submission_id: id }, __) => {
       const submission = await Submission.findByPk(id);
       const images = submission.getImages();
-      return images || []
-    }
-  },
-  Mutation: {
-    singleUploadStream: async (parent,{ file }) => {
-      console.log(file);
-      const response = await handleFileUpload(file);
-      console.log(response);
-      return response;
+      return images || [];
     },
   },
   Mutation: {},

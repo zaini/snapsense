@@ -81,7 +81,9 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Doctor",
     }
   );
-  Doctor.beforeSave(async (user) => {
+  Doctor.beforeSave(async (user, options) => {
+    options.validate = false;
+    user.email = user.email.toLowerCase();
     user.password = await argon2.hash(user.password);
   });
 

@@ -33,9 +33,8 @@ const LoginForm = ({ accountType }) => {
   });
 
   const onSubmit = async ({ email, password }) => {
-    console.log("submitting again");
     setValues({ email, password, account_type: accountType });
-    const res = await login();
+    login();
   };
 
   if (context.user) {

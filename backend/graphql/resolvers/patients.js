@@ -78,16 +78,14 @@ module.exports = {
         where: { email: patient_email },
       });
 
-      // TODO check this is working properly. Similar to the check occuring on InviteExistingUser but now on the backend
       const user = isAuth(context);
-      const { email, accountType } = verify(user, ACCESS_TOKEN_SECRET_KEY);
+      const { email, accountType } = user;
 
       if (!(accountType === "PATIENT" && email === patient_email)) {
         throw new AuthenticationError(
           "You are not logged into the correct account for this invite."
         );
       }
-      // TODO ends here
 
       if (doctor) {
         if (patient) {

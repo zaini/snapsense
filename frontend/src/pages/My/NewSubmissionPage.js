@@ -9,10 +9,13 @@ import {
   Alert,
   Spinner,
   AlertIcon,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
 } from "@chakra-ui/react";
 import { CheckIcon } from "@chakra-ui/icons";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
 
 import Error from "../../components/utils/Error";
 import InformationCard from "../../components/InformationCard";
@@ -103,7 +106,7 @@ const NewSubmissionPage = () => {
     body = (
       <Box className={classes.layout}>
         <Stack>
-          {error ? (
+          {error && (
             <Error
               errors={[
                 {
@@ -111,29 +114,31 @@ const NewSubmissionPage = () => {
                 },
               ]}
             />
-          ) : null}
+          )}
           <Alert status="info">
             <AlertIcon />
             Open the tabs to add your images or questionnaire or both!
           </Alert>
-          <Tabs>
+          <Tabs variant="enclosed">
             <TabList>
               <Tab>Image</Tab>
               <Tab>Questionnaire</Tab>
             </TabList>
-            <TabPanel>
-              <ImageUploadPanel classes={classes} setImages={setImages} />
-            </TabPanel>
-            <TabPanel>
-              <QuestionnairePanel
-                classes={classes}
-                activeStep={activeStep}
-                answers={answers}
-                handleBack={handleBack}
-                handleNext={handleNext}
-                setAnswers={setAnswers}
-              />
-            </TabPanel>
+            <TabPanels>
+              <TabPanel>
+                <ImageUploadPanel classes={classes} setImages={setImages} />
+              </TabPanel>
+              <TabPanel>
+                <QuestionnairePanel
+                  classes={classes}
+                  activeStep={activeStep}
+                  answers={answers}
+                  handleBack={handleBack}
+                  handleNext={handleNext}
+                  setAnswers={setAnswers}
+                />
+              </TabPanel>
+            </TabPanels>
           </Tabs>
           <SubmitButtonPanel
             answers={answers}

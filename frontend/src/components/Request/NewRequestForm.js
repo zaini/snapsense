@@ -19,7 +19,12 @@ const NewRequestForm = ({ patient, periodic }) => {
   const { register, handleSubmit, control, getValues } = useForm();
 
   // Mutation hook with loading and error attributes
-  const [createRequest, { loading, error, data }] = useMutation(CREATE_REQUEST);
+  const [createRequest, { loading, error, data }] = useMutation(
+    CREATE_REQUEST,
+    {
+      onError(_) {}, // Error is handled below
+    }
+  );
 
   const onSubmit = ({
     requestType,
@@ -67,11 +72,10 @@ const NewRequestForm = ({ patient, periodic }) => {
     // Display the form
     markup = (
       <form onSubmit={handleSubmit(onSubmit)}>
-        {data ? (
+        {data && (
           <Alert status="success" borderRadius="50px" mb={4} textAlign="center">
             <AlertIcon />
-            Request has been sent to {patient.fname}, they will be notified
-            shortly.
+            Request has been sent to {patient.fname}
           </Alert>
         ) : null}
         <RequestTypeSelector patient={patient} register={register} />

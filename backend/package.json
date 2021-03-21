@@ -10,7 +10,7 @@
     "db:drop:test": "cross-env NODE_ENV=test npx sequelize-cli db:drop",
     "db:create:test": "cross-env NODE_ENV=test npx sequelize-cli db:create",
     "db:migrate:test": "cross-env NODE_ENV=test npx sequelize-cli db:migrate",
-    "db:seed:test": "cross-env NODE_ENV=test  npx sequelize-cli db:seed:all",
+    "db:seed:test": "cross-env NODE_ENV=test npx sequelize-cli db:seed:all",
     "db:test": "npm run db:drop:test && npm run db:create:test && npm run db:migrate:test"
   },
   "author": "",

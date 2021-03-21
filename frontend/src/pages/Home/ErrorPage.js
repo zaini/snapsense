@@ -24,8 +24,8 @@ const ErrorPage = () => {
           An Error Occured!
         </AlertTitle>
         <AlertDescription maxWidth="sm">
-          Something went wrong. If this persists, please contact us{" "}
-          {<Link to="/contact">here.</Link>}
+          Something went wrong. If this persists, please send us feedback{" "}
+          {<Link to="/feedback">here.</Link>}
         </AlertDescription>
       </Alert>
     </div>

@@ -1,9 +1,17 @@
 import React from "react";
-import InviteForm from "../components/InviteForm/InviteForm";
-import { Container, Alert, AlertIcon, Spinner } from "@chakra-ui/react";
+import {
+  Container,
+  Alert,
+  AlertIcon,
+  Spinner,
+  Heading,
+  Center,
+} from "@chakra-ui/react";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { decode } from "jsonwebtoken";
+
+import InviteForm from "../../components/InviteForm/InviteForm";
 
 // This shows a single invitation
 const ShowInvitePage = (props) => {
@@ -36,7 +44,17 @@ const ShowInvitePage = (props) => {
       />
     );
   }
-  return <Container pt="20px">{markup}</Container>;
+  return (
+    <Container pt="20px">
+      <Center>
+        <Heading>You have an invite!</Heading>
+      </Center>
+      <br />
+      <hr />
+      <br />
+      {markup}
+    </Container>
+  );
 };
 
 export default ShowInvitePage;
