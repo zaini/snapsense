@@ -1,29 +1,21 @@
 const { Patient } = require("../../models/index");
 
 const seed = async () => {
-  await new Patient({
+  await Patient.create({
     id: 1,
-    fname: "Patient",
-    lname: "One",
-    email: "patient1@gmail.com",
-    password:
-      "Password123",
-    flag: 1,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  }).save();
+    fname: "Garry",
+    lname: "Kasparov",
+    email: "garry.kasparov@chess.com",
+    password: "Password123",
+  });
 
-  await new Patient({
+  await Patient.create({
     id: 2,
-    fname: "Patient",
-    lname: "Two",
-    email: "patient2@gmail.com",
-    password:
-      "Password123",
-    flag: 2,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  }).save();
+    fname: "Peter",
+    lname: "Parker",
+    email: "peter.parker@marvel.com",
+    password: "Password123",
+  });
 };
 
 module.exports = seed;
