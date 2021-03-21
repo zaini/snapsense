@@ -77,6 +77,7 @@ const SubmissionCardOptions = ({
                   flag: parseInt(flagValue),
                 },
               });
+              alert("This submission has now been reviewed.");
             }}
           >
             Submit Review
