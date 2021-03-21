@@ -47,13 +47,7 @@ const DoctorHomePanel = () => {
           <Text>You have {submission_data.length} submissions to review.</Text>
           <Text>You have {request_data.length} requests to review.</Text>
           <Link to="/my/submissions/review">
-            <Button
-              backgroundColor="blue.600"
-              color="blue.50"
-              _hover={{ bg: "blue.700" }}
-            >
-              View My Patients
-            </Button>
+            <Button colorScheme="blue">View My Patients</Button>
           </Link>
         </Stack>
       </Box>

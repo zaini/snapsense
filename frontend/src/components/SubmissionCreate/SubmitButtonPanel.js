@@ -11,7 +11,7 @@ const SubmitButtonPanel = ({ answers, images, classes, uploadSubmission }) => {
           rightIcon={<CheckCircleIcon />}
           variant="contained"
           color="primary"
-          colorScheme="teal"
+          colorScheme="blue"
           onClick={() => {
             uploadSubmission({
               variables: {

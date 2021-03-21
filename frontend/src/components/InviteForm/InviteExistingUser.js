@@ -65,7 +65,9 @@ const InvitePatientExists = ({ invitation }) => {
             mt={4}
             colorScheme="red"
             onClick={() => {
-              alert("You have declined this invitation.");
+              alert(
+                "You have declined this invitation. You can come back to this link to accept it before it expires."
+              );
               history.push("/");
             }}
           >

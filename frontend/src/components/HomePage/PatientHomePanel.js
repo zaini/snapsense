@@ -40,13 +40,7 @@ const PatientHomePanel = () => {
         <Stack>
           <Text>You have {request_data.length} requests to fulfil.</Text>
           <Link to="/my/requests">
-            <Button
-              backgroundColor="blue.600"
-              color="blue.50"
-              _hover={{ bg: "blue.700" }}
-            >
-              View My Requests
-            </Button>
+            <Button colorScheme="blue">View My Requests</Button>
           </Link>
         </Stack>
       </Box>
@@ -57,13 +51,7 @@ const PatientHomePanel = () => {
     <Container>
       <Center>
         <Link to="/my/submissions/new">
-          <Button
-            backgroundColor="blue.600"
-            color="blue.50"
-            _hover={{ bg: "blue.700" }}
-          >
-            Create New Submission Now
-          </Button>
+          <Button colorScheme="blue">Create New Submission Now</Button>
         </Link>
       </Center>
 

@@ -44,7 +44,14 @@ const SubmissionCard = ({ data, vertical }) => {
           <Box>
             {Images.length === 0 ? (
               <Text fontWeight="bold" fontSize="110%" pb="50%">
-                No images
+                <Box
+                  w="220px"
+                  h="100%"
+                  overflow="hidden"
+                  objectFit="scale-down"
+                >
+                  <Center>No Images</Center>
+                </Box>
               </Text>
             ) : (
               <ImageSlideshow images={Images} />
