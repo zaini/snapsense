@@ -19,6 +19,7 @@ const InviteNewUser = ({ invitation }) => {
 
   const [registerUser, { data, loading }] = useMutation(REGISTER_USER, {
     onCompleted(res) {
+      alert("You have created an account and accepted this invitation.");
       history.push("/login");
     },
     onError(err) {
