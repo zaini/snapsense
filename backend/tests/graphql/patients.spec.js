@@ -17,7 +17,23 @@ test("allPatients", async (done) => {
   const { body } = response;
   expect(body).toMatchObject({
     data: {
-      getHospitals: [],
+      getHospitals: [
+          {
+            id: "1",
+            name: "London Hospital",
+            contact_email: "london.hospital@mail.com",
+          },
+          {
+            id: "2",
+            name: "London Hospital 2",
+            contact_email: "london.hospital.two@mail.com",
+          },
+          {
+            id: "3",
+            name: "London Hospital 3",
+            contact_email: "london.hospital.three@mail.com", 
+          }
+      ],
     },
   });
   done();
