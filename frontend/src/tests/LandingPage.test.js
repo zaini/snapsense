@@ -9,12 +9,12 @@ test('renders without crashing', () => {
 })
 
 //Check to see if it contains more tests
-describe('Landing page renders banner of information', () => {
+describe('Landing page renders hero of information', () => {
   const wrapper = render(<LandingPage/>)
 
-  test('Landing page has a banner', () => {
-    const banner = wrapper.findByRole('Hero')
-    expect(banner).toBeTruthy()
+  test('Landing page has a hero', () => {
+    const hero = wrapper.findByRole('Hero')
+    expect(hero).toBeTruthy()
   })
   
 })
