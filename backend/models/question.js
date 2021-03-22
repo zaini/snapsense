@@ -1,5 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
+const { Validator } = require("../utils/validator");
+const ModelValidator = Validator();
 module.exports = (sequelize, DataTypes) => {
   class Question extends Model {
     /**
@@ -14,7 +16,17 @@ module.exports = (sequelize, DataTypes) => {
   }
   Question.init(
     {
-      text: DataTypes.STRING,
+      text: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isNotEmpty(value) {
+            if (ModelValidator.isEmpty(value)) {
+              throw new Error("Invalid question text");
+            }
+          },
+        },
+      },
     },
     {
       sequelize,
