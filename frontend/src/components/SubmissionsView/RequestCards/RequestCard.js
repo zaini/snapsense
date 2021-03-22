@@ -32,6 +32,19 @@ const RequestCard = ({ data, vertical }) => {
           }),
         },
       });
+      const dataSubmission = proxy.readQuery({
+        query: GET_SUBMISSIONS,
+      });
+      proxy.writeQuery({
+        query: GET_SUBMISSIONS,
+        data: {
+          getSubmissionsForReview: dataSubmission.getSubmissionsForReview.filter(
+            (p) => {
+              return p.id !== Submission.id;
+            }
+          ),
+        },
+      });
     },
   });
 
@@ -150,6 +163,36 @@ const GET_REQUESTS = gql`
         fname
         lname
         email
+      }
+    }
+  }
+`;
+
+const GET_SUBMISSIONS = gql`
+  query getSubmissions {
+    getSubmissionsForReview {
+      id
+      flag
+      createdAt
+      Images {
+        id
+        url
+      }
+      Answers {
+        id
+        Question {
+          id
+          text
+        }
+        value
+        extra
+      }
+      Patient {
+        id
+        fname
+        lname
+        email
+        flag
       }
     }
   }
