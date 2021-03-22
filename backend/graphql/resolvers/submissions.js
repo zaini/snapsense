@@ -11,6 +11,7 @@ const {
 const isAuth = require("../../utils/isAuth");
 const imageUploader = require("../../utils/filestreamUploader");
 const stringToJSON = require("../../utils/jsonProvider/parse.js");
+const validateUpload = require("../../utils/filestreamValidate.js");
 
 module.exports = {
   Query: {
@@ -174,13 +175,45 @@ module.exports = {
 
       answers = stringToJSON(answers);
 
-      if (
-        images.length === 0 &&
-        Object.keys(answers.questionnaire).length === 0
-      ) {
+      // Check what all content has been uploaded
+      const imageUploadExists = images.length > 0;
+      let answerUploadExists = Object.keys(answers.questionnaire).length > 1;
+
+      // One or more should exist
+      if (!imageUploadExists && !answerUploadExists) {
         throw new UserInputError(
           "Must supply at least either answers to a questionnaire or an image!"
         );
+      }
+
+      // If some answers have been submitted, validate them
+      if (answerUploadExists) {
+        if (Object.keys(answers.questionnaire).length < 8) {
+          throw new UserInputError("Please answer all questions");
+        } else {
+          let radioAll = true;
+          Object.keys(answers.questionnaire).forEach((p, i) => {
+            console.log(p);
+            if (p < 9) {
+              if (!answers.questionnaire[p].val) {
+                radioAll = false;
+              }
+            }
+          });
+
+          if (!radioAll) {
+            throw new UserInputError(
+              "Please select Yes or No for all questions"
+            );
+          }
+        }
+      }
+
+      // Validate Images Here
+      if (imageUploadExists) {
+        for await (const image of images) {
+          await validateUpload(image);
+        }
       }
 
       const patient = await Patient.findByPk(user.id);
@@ -191,21 +224,30 @@ module.exports = {
       }).save();
 
       // Create images and add them to the submission
-      images.forEach(async (image) => {
-        const { Location: location } = await imageUploader(image);
-        const imageSave = await new Image({
-          name: location,
-          url: location,
-          submission_id: submission.id,
-        }).save();
-      });
+      if (imageUploadExists) {
+        for await (const image of images) {
+          const { Location: location } = await imageUploader(image);
+          await new Image({
+            name: location,
+            url: location,
+            submission_id: submission.id,
+          }).save();
+        }
+      }
 
-      for (const questionId in answers.questionnaire) {
-        const answerSave = await new Answer({
-          question_id: questionId,
-          submission_id: submission.id,
-          value: answers.questionnaire[questionId] === "0" ? false : true,
-        }).save();
+      if (answerUploadExists) {
+        for (const questionId in answers.questionnaire) {
+          if (questionId < 9) {
+            const answerSave = await new Answer({
+              question_id: questionId,
+              submission_id: submission.id,
+              extra: answers.questionnaire[questionId]
+                ? answers.questionnaire[questionId].extra
+                : null,
+              value: answers.questionnaire[questionId].val === "0" ? false : true,
+            }).save();
+          }
+        }
       }
 
       const requests = await patient.getRequests({
