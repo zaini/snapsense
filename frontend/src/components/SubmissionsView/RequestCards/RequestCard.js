@@ -8,10 +8,8 @@ import RequestCardOptions from "./RequestCardOptions";
 
 const RequestCard = ({ data, vertical }) => {
   const { Patient, Submission, deadline, type } = data;
-  const deadline_date = new Date(parseInt(deadline)).toDateString();
-  const submission_date = new Date(
-    parseInt(Submission.createdAt)
-  ).toDateString();
+  const deadline_date = new Date(deadline).toDateString();
+  const submission_date = new Date(Submission.createdAt).toDateString();
 
   const [flagSubmission, { loading }] = useMutation(FLAG_SUBMISSION, {
     onCompleted() {
