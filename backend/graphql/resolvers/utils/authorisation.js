@@ -112,7 +112,6 @@ module.exports = {
           break;
         case "DOCTOR":
           user = await Doctor.findOne({ where: { email: email } });
-
           break;
         case "PATIENT":
           user = await Patient.findOne({ where: { email: email } });
