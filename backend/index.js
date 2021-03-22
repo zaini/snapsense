@@ -12,31 +12,28 @@ const bree = new Bree({
   jobs: [
     {
       name: "email",
+      timeout: "5m",
       interval: "30m",
     },
     {
-      name: "reminder_schedule",
-      interval: "1d",
-    },
-    {
       name: "schedule_requests",
-      interval: "1d",
+      interval: "at 12:01 am",
     },
     {
       name: "schedule_reminder_one",
-      interval: "1d",
+      interval: "at 12:15 am",
     },
     {
       name: "schedule_reminder_two",
-      interval: "1d",
+      interval: "at 12:20 am",
     },
     {
       name: "schedule_reminder_five",
-      interval: "1d",
+      interval: "at 12:25 am",
     },
     {
       name: "schedule_reminder_seven",
-      interval: "1d",
+      interval: "at 12:30 am",
     },
   ],
 });
