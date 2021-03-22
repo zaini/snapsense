@@ -1,8 +1,6 @@
 import React from 'react';
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import LandingPage from '../pages/Home/LandingPage';
-import { toHaveAttribute } from '@testing-library/jest-dom';
-import Hero from "../components/utils/Hero";
 
 test('the correct hero is rendered', () => {
   const landingPage = render(<LandingPage/>);
@@ -29,7 +27,7 @@ describe('hero displays correct information', () => {
     const heroImage = landingPage.queryByTestId('heroImage');
     expect(heroImage).toBeTruthy();
   })
-  
+
 })
 
 
