@@ -13,4 +13,10 @@ test('hero contains correct title', () => {
   expect(getByText('Snapsense, welcomes you to the future')).toBeInTheDocument();
 })
 
+test('the correct hero is rendered', () => {
+  const landPage = render(<LandingPage />)
+  const foundHero = landPage.findByTestId('landingHero')
+  expect(foundHero).toBeTruthy();
+})
+
 
