@@ -22,7 +22,7 @@ const ReviewSubmissions = () => {
       <hr />
       <br />
       {/* Have 2 tabs: one for submissions associated with requests and one for submissions as a whole */}
-      <Tabs>
+      <Tabs isLazy>
         <TabList>
           <Tab>Fulfilled & Unreviewed Requests</Tab>
           <Tab>Unreviewed Submissions</Tab>
