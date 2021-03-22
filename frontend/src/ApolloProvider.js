@@ -12,11 +12,6 @@ import customTheme from "./utils/theme";
 
 // virtual machine
 
-const backendLink = createHttpLink({
-  // uri: process.env.BACKEND_URL || "http://192.168.137.129:5000/graphql",
-  uri: process.env.BACKEND_URL || "http://localhost:5000/graphql",
-});
-
 const uploadLink = createUploadLink({
   // uri: process.env.BACKEND_URL || "http://192.68.137.129:5000/graphql",
   uri: process.env.BACKEND_URL || "http://localhost:5000/graphql",
