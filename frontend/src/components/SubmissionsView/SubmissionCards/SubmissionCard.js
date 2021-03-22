@@ -16,23 +16,10 @@ const SubmissionCard = ({ data, vertical }) => {
 
   const [flagSubmission, { loading }] = useMutation(FLAG_SUBMISSION, {
     onCompleted() {
-      // TODO: refresh page through cache!
+      window.location.reload();
     },
     onError(err) {
       console.log(err);
-    },
-    update(proxy) {
-      const data = proxy.readQuery({
-        query: GET_SUBMISSIONS,
-      });
-      proxy.writeQuery({
-        query: GET_SUBMISSIONS,
-        data: {
-          getSubmissionsForReview: data.getSubmissionsForReview.filter(
-            (p) => p.id !== id
-          ),
-        },
-      });
     },
   });
 
