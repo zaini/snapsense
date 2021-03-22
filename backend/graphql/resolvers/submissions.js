@@ -117,11 +117,15 @@ module.exports = {
         const patient = await Patient.findByPk(user.id);
         if (patient.id === submission_owner.id) {
           return submission;
+        } else {
+          throw new UserInputError("This submission does not exist!");
         }
       } else if (user.accountType === "DOCTOR") {
         const doctor = await Doctor.findByPk(user.id);
-        if (doctor.hasPatient(submission_owner)) {
+        if (await doctor.hasPatient(submission_owner)) {
           return submission;
+        } else {
+          throw new UserInputError("This submission does not exist!!");
         }
       } else {
         throw new AuthenticationError(
@@ -244,7 +248,8 @@ module.exports = {
               extra: answers.questionnaire[questionId]
                 ? answers.questionnaire[questionId].extra
                 : null,
-              value: answers.questionnaire[questionId].val === "0" ? false : true,
+              value:
+                answers.questionnaire[questionId].val === "0" ? false : true,
             }).save();
           }
         }
