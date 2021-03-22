@@ -65,6 +65,7 @@ const NewSubmissionPage = () => {
   const handleNext = () => {
     const temp = activeStep + 1;
     setActiveStep(temp);
+    console.log(answers);
   };
   const handleBack = () => {
     const temp = activeStep - 1;
