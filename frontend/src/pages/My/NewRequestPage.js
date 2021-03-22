@@ -9,9 +9,12 @@ import {
   Container,
   Center,
   Spinner,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
 } from "@chakra-ui/react";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
 
 import NewRequestForm from "../../components/Request/NewRequestForm";
 import Error from "../../components/utils/Error";
@@ -77,12 +80,14 @@ const NewRequestPage = () => {
                 <Tab>Single</Tab>
                 <Tab>Scheduled</Tab>
               </TabList>
-              <TabPanel>
-                <NewRequestForm periodic={false} patient={patient} />
-              </TabPanel>
-              <TabPanel>
-                <NewRequestForm periodic={true} patient={patient} />
-              </TabPanel>
+              <TabPanels>
+                <TabPanel>
+                  <NewRequestForm periodic={false} patient={patient} />
+                </TabPanel>
+                <TabPanel>
+                  <NewRequestForm periodic={true} patient={patient} />
+                </TabPanel>
+              </TabPanels>
             </Tabs>
           </Container>
         </Container>
