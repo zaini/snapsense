@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, queryByAttribute, getByTestId, getByAltText, toBeInTheDocument} from "@testing-library/react";
+import { render } from "@testing-library/react";
 import LandingPage from '../pages/Home/LandingPage';
 import Hero from "../components/utils/Hero";
 
