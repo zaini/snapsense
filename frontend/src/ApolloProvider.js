@@ -10,7 +10,10 @@ import { createUploadLink } from "apollo-upload-client";
 import { AuthProvider } from "./context/auth";
 import customTheme from "./utils/theme";
 
+// virtual machine
+
 const uploadLink = createUploadLink({
+  // uri: process.env.BACKEND_URL || "http://192.68.137.129:5000/graphql",
   uri: process.env.BACKEND_URL || "http://localhost:5000/graphql",
   headers: {
     "keep-alive": "true",

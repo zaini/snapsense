@@ -9,6 +9,11 @@ import {
   Container,
   Center,
   Spinner,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
 } from "@chakra-ui/react";
 
 import NewRequestForm from "../../components/Request/NewRequestForm";
@@ -70,7 +75,20 @@ const NewRequestPage = () => {
             Submission Request for {patient.fname} {patient.lname}
           </Heading>
           <Container p="7" borderWidth="1px" borderRadius="lg" mt="20">
-            <NewRequestForm patient={patient} />
+            <Tabs>
+              <TabList>
+                <Tab>Single</Tab>
+                <Tab>Scheduled</Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel>
+                  <NewRequestForm periodic={false} patient={patient} />
+                </TabPanel>
+                <TabPanel>
+                  <NewRequestForm periodic={true} patient={patient} />
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
           </Container>
         </Container>
       );

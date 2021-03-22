@@ -107,6 +107,8 @@ module.exports = gql`
       request_type: Int!
       deadline: String!
       patient_id: ID!
+      frequency: Int
+      interval: Int
     ): Boolean!
 
     register(

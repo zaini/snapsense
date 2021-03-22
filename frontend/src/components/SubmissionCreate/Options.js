@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Center, Radio, RadioGroup, Stack } from "@chakra-ui/react";
 
-const Options = ({ options, onChangeOption }) => {
+const Options = ({ defVal, options, onChangeOption }) => {
   const [value, setValue] = useState();
 
   return (

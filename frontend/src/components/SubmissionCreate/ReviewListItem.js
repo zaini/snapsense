@@ -53,21 +53,31 @@ const questionsObject = [
       //TODO: Figure a way to add a text field for this questions instead of Y/N
     ],
   },
+  {
+    questionID: 8,
+    questionText: "Review Page:",
+    answerOptions: [
+      { answerText: "No" },
+      { answerText: "Yes" },
+      //TODO: Figure a way to add a text field for this questions instead of Y/N
+    ],
+  },
 ];
 const answerOption = ["No", "Yes"];
 
-const ReviewListItem = ({ answerIndex, answer, extra }) => {
+const ReviewListItem = ({ display, answerIndex, answer, extra }) => {
   return (
     <Box
+      hidden={display}
       w={"full"}
-      style={{ backgroundColor: "#edf8ff", margin:"5px"}}
+      style={{ backgroundColor: "#edf8ff", margin: "5px" }}
       boxShadow={"2xl"}
       rounded={"md"}
       p={3}
     >
       <Stack>
         <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
-          {questionsObject[answerIndex-1].questionText}
+          {questionsObject[answerIndex - 1].questionText}
         </Heading>
         <Text color={"gray.600"}>{answerOption[parseInt(answer)]}</Text>
         <Text color={"gray.500"}>{extra}</Text>
