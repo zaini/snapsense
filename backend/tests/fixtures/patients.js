@@ -16,6 +16,14 @@ const seed = async () => {
     email: "peter.parker@marvel.com",
     password: "Password123",
   });
+
+  await Patient.create({
+    id: 3,
+    fname: "Ben",
+    lname: "Parker",
+    email: "ben.parker@marvel.com",
+    password: "Password123",
+  });
 };
 
 module.exports = seed;
