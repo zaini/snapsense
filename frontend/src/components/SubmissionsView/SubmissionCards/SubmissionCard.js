@@ -1,5 +1,6 @@
 import { Box, Stack, Text, Center } from "@chakra-ui/react";
 import { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../context/auth";
 import ImageSlideshow from "../../utils/ImageSlideshow";
 import ViewQuestionnaireResponse from "../../utils/ViewQuestionnaireResponse";
@@ -7,8 +8,9 @@ import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import SubmissionCardOptions from "./SubmissionCardOptions";
 
-const SubmissionCard = ({ data, vertical }) => {
+const SubmissionCard = ({ data, vertical, redirect }) => {
   const { user } = useContext(AuthContext);
+  const history = useHistory();
 
   // data here is a submission object
   const { Patient, Images, Answers, createdAt, flag, id } = data;
@@ -16,7 +18,7 @@ const SubmissionCard = ({ data, vertical }) => {
 
   const [flagSubmission, { loading }] = useMutation(FLAG_SUBMISSION, {
     onCompleted() {
-      // window.location.reload();
+      redirect && history.push(redirect);
     },
     onError(err) {
       console.log(err);
