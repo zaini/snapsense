@@ -77,7 +77,7 @@ const NewRequestForm = ({ patient, periodic }) => {
             <AlertIcon />
             Request has been sent to {patient.fname}
           </Alert>
-        ) : null}
+        )}
         <RequestTypeSelector patient={patient} register={register} />
         <RequestDatePicker control={control} />
         <PeriodicSelector show={periodic} patient={patient} register={register} />
