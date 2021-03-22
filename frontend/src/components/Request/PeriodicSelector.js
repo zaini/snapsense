@@ -30,22 +30,20 @@ const PeriodicSelector = ({ patient, register, show }) => {
         </FormLabel>
       </Center>
       <Center>
-        <RadioGroup defaultValue="3">
-          <Stack>
-            <InputFieldProvider
-              title="Interval"
-              name={"requestInterval"}
-              desc="Interval in days"
-              register={register}
-            />
-            <InputFieldProvider
-              title="Frequency"
-              name={"requestFrequency"}
-              desc="Frequncy of Cycles"
-              register={register}
-            />
-          </Stack>
-        </RadioGroup>
+        <Stack>
+          <InputFieldProvider
+            title="Interval"
+            name={"requestInterval"}
+            desc="Interval in days"
+            register={register}
+          />
+          <InputFieldProvider
+            title="Frequency"
+            name={"requestFrequency"}
+            desc="Frequncy of Cycles"
+            register={register}
+          />
+        </Stack>
       </Center>
     </FormControl>
   );
