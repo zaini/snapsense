@@ -68,9 +68,13 @@ const SubmissionCard = ({ data, vertical }) => {
 
           <Box>
             {Answers.length === 0 ? (
-              <Text fontWeight="bold" fontSize="110%" pb="50%">
-                No questionnaire
-              </Text>
+              <Box w="500px">
+                <Center>
+                  <Text fontWeight="bold" fontSize="110%" pb="50%">
+                    No questionnaire
+                  </Text>
+                </Center>
+              </Box>
             ) : (
               <ViewQuestionnaireResponse answers={Answers} />
             )}

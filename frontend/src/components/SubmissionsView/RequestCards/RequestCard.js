@@ -1,12 +1,12 @@
 import React from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { Box, HStack, Text, Center } from "@chakra-ui/react";
+import { Box, Stack, Text, Center } from "@chakra-ui/react";
 import ImageSlideshow from "../../utils/ImageSlideshow";
 import ViewQuestionnaireResponse from "../../utils/ViewQuestionnaireResponse";
 import RequestCardOptions from "./RequestCardOptions";
 
-const RequestCard = ({ data }) => {
+const RequestCard = ({ data, vertical }) => {
   const { Patient, Submission, deadline, type } = data;
   const deadline_date = new Date(parseInt(deadline)).toDateString();
   const submission_date = new Date(
@@ -39,8 +39,8 @@ const RequestCard = ({ data }) => {
     <Box borderWidth="1px" borderRadius="lg" p="10px" m="5px">
       {Submission.id}
       <Center p="10px">
-        <HStack>
-          <Box mr="100px">
+        <Stack direction={vertical ? "column" : "row"}>
+          <Box>
             {Submission.Images.length === 0 ? (
               <Text fontWeight="bold" fontSize="110%" pb="50%">
                 <Box
@@ -56,15 +56,37 @@ const RequestCard = ({ data }) => {
               <ImageSlideshow images={Submission.Images} />
             )}
           </Box>
-          <Box mr="100px">
+
+          {vertical && (
+            <>
+              <br />
+              <hr />
+              <br />
+            </>
+          )}
+
+          <Box>
             {Submission.Answers.length === 0 ? (
-              <Text fontWeight="bold" fontSize="110%" pb="50%">
-                No questionnaire
-              </Text>
+              <Box w="500px">
+                <Center>
+                  <Text fontWeight="bold" fontSize="110%" pb="50%">
+                    No questionnaire
+                  </Text>
+                </Center>
+              </Box>
             ) : (
               <ViewQuestionnaireResponse answers={Submission.Answers} />
             )}
           </Box>
+
+          {vertical && (
+            <>
+              <br />
+              <hr />
+              <br />
+            </>
+          )}
+
           <Box>
             <RequestCardOptions
               patient={Patient}
@@ -74,7 +96,7 @@ const RequestCard = ({ data }) => {
               onFlag={flagSubmission}
             />
           </Box>
-        </HStack>
+        </Stack>
       </Center>
     </Box>
   );
