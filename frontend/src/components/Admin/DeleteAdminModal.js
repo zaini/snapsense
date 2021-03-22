@@ -24,7 +24,8 @@ const DeleteAdminModal = ({ isOpen, onClose, admin }) => {
     onCompleted(_) {
       history.push("/my/admins");
     },
-    update(proxy) { // Write to cache
+    update(proxy) {
+      // Write to cache
       const data = proxy.readQuery({
         query: GET_ADMINS,
       });

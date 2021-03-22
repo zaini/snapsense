@@ -26,14 +26,17 @@ const DeleteHospitalModal = ({ isOpen, onClose, hospital }) => {
       onCompleted(_) {
         history.push("/my/hospitals");
       },
-      update(proxy) { // Write to cache
+      update(proxy) {
+        // Write to cache
         const data = proxy.readQuery({
           query: GET_HOSPITALS,
         });
         proxy.writeQuery({
           query: GET_HOSPITALS,
           data: {
-            getHospitals: data.getHospitals.filter((el) => el.id !== hospital.id),
+            getHospitals: data.getHospitals.filter(
+              (el) => el.id !== hospital.id
+            ),
           },
         });
       },

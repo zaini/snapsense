@@ -42,7 +42,8 @@ const PatientSubmissionsTable = ({ data }) => {
       renderCell: ({ row }) => {
         return (
           <p>
-            {row.Images.length !== 0 && "📷"} {row.Answers.length !== 0 && "📝"}
+            {row.Images && row.Images.length !== 0 && "📷"}
+            {row.Answers && row.Answers.length !== 0 && "📝"}
           </p>
         );
       },

@@ -16,23 +16,10 @@ const SubmissionCard = ({ data, vertical }) => {
 
   const [flagSubmission, { loading }] = useMutation(FLAG_SUBMISSION, {
     onCompleted() {
-      // TODO: refresh page through cache!
+      window.location.reload();
     },
     onError(err) {
       console.log(err);
-    },
-    update(proxy) {
-      const data = proxy.readQuery({
-        query: GET_SUBMISSIONS,
-      });
-      proxy.writeQuery({
-        query: GET_SUBMISSIONS,
-        data: {
-          getSubmissionsForReview: data.getSubmissionsForReview.filter(
-            (p) => p.id !== id
-          ),
-        },
-      });
     },
   });
 
@@ -68,9 +55,13 @@ const SubmissionCard = ({ data, vertical }) => {
 
           <Box>
             {Answers.length === 0 ? (
-              <Text fontWeight="bold" fontSize="110%" pb="50%">
-                No questionnaire
-              </Text>
+              <Box w="500px">
+                <Center>
+                  <Text fontWeight="bold" fontSize="110%" pb="50%">
+                    No questionnaire
+                  </Text>
+                </Center>
+              </Box>
             ) : (
               <ViewQuestionnaireResponse answers={Answers} />
             )}
