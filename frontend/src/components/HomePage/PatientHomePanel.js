@@ -25,6 +25,7 @@ const PatientHomePanel = () => {
     );
   } else {
     let request_data = data.getRequestsAsPatient;
+    request_data = request_data.filter(({ fulfilled }) => fulfilled === null);
 
     markup = (
       <Box
@@ -38,7 +39,7 @@ const PatientHomePanel = () => {
         backgroundColor="blue.100"
       >
         <Stack>
-          <Text>You have {request_data.length} requests to fulfil.</Text>
+          <Text>You have {request_data.length} request(s) to fulfil.</Text>
           <Link to="/my/requests">
             <Button colorScheme="blue">View My Requests</Button>
           </Link>
@@ -67,6 +68,7 @@ const GET_REQUESTS = gql`
   query getRequests {
     getRequestsAsPatient {
       id
+      fulfilled
     }
   }
 `;

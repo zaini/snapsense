@@ -59,7 +59,7 @@ module.exports = gql`
     Submission: Submission
     type: Int!
     deadline: String!
-    fulfilled: String!
+    fulfilled: String
     createdAt: String!
   }
 
