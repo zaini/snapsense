@@ -57,8 +57,7 @@ const apolloServer = new ApolloServer({
 
 // Allow requests only from the frontend
 const corsOptions = {
-  // origin: "http://192.168.137.129:3000",
-  origin: "http://localhost:3000",
+  origin: process.env.FRONTEND_URL || "http://localhost:3000",
   optionsSuccessStatus: 200,
 };
 
