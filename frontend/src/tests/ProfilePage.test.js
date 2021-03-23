@@ -1,27 +1,60 @@
 import React from 'react';
+
+import ReactDOM from 'react-dom';
+import { act } from 'react-dom/test-utils';
+
 import { render } from "@testing-library/react";
 import ProfilePage from '../pages/My/ProfilePage';
+import { AuthContext } from '../context/auth';
 
-test('renders without crashing', () => {
+import { ApolloProvider } from '@apollo/client';
 
-    // const email = '@gmail.com';
-    // const password = '';
+let container;
+beforeEach(() => {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+});
 
-    // const wrapper = shallow(<ProfilePage handleLogin={state => {
-    //     expect(state.email).to.be.equal(email);
-    //     expect(state.password).to.be.equal(password);
-    // }} />);
+afterEach(() => {
+    document.body.removeChild(container);
+    container = null;
+});
 
-    // wrapper.setState({ email: '@gmail.com', password: ''});
+test("renders without crashing with ReactDOM", () => {
+    act(() => {
+        ReactDOM.render((
+            <ApolloProvider>
+                <AuthContext.Provider value={{ user: "PATIENT" }}>
+                    <ProfilePage />
+                </AuthContext.Provider>
+            </ApolloProvider>
+        ), container);
+    });
 
-    // wrapper.find('button').simulate('click');
+    expect(container.textContent).toBe("Provided Value");
+});
 
-    const renderProfilePage = render(<ProfilePage />);
-    expect(renderProfilePage).toBeTruthy();
-})
+// test('renders without crashing', () => {
 
-test('Profile page has a userInfo', () => {
-    const wrapper = render(<ProfilePage />);
-    const userInfo = wrapper.findByRole('UserInfo');
-    expect(userInfo).toBeTruthy();
-})
+//     const email = '@gmail.com';
+//     const password = '';
+
+//     const wrapper = shallow(<ProfilePage handleLogin={state => {
+//         expect(state.email).to.be.equal(email);
+//         expect(state.password).to.be.equal(password);
+//     }} />);
+
+//     wrapper.setState({ email: '@gmail.com', password: ''});
+
+//     wrapper.find('button').simulate('click');
+
+
+//     const renderProfilePage = render(<ProfilePage accountType="" />);
+//     expect(renderProfilePage).toBeTruthy();
+// })
+
+// test('Profile page has a userInfo', () => {
+//     const wrapper = render(<ProfilePage />);
+//     const userInfo = wrapper.findByRole('UserInfo');
+//     expect(userInfo).toBeTruthy();
+// })
