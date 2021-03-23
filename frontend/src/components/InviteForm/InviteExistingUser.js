@@ -12,6 +12,7 @@ const InvitePatientExists = ({ invitation }) => {
 
   const [addRelation, { loading }] = useMutation(ADD_PATIENT_TO_DOCTOR, {
     onCompleted(data) {
+      alert("You have accepted this invitation.");
       history.push("/");
     },
     variables: {
@@ -63,8 +64,12 @@ const InvitePatientExists = ({ invitation }) => {
           <Button
             mt={4}
             colorScheme="red"
-            type="submit"
-            onClick={() => history.push("/")}
+            onClick={() => {
+              alert(
+                "You have declined this invitation. You can come back to this link to accept it before it expires."
+              );
+              history.push("/");
+            }}
           >
             Decline Invite
           </Button>

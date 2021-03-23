@@ -45,6 +45,8 @@ const DoctorsPage = () => {
         <Heading>My Doctors</Heading>
       </Center>
       <br />
+      <hr />
+      <br />
       {markup}
     </>
   );
@@ -81,6 +83,7 @@ const cols = [
     headerName: "ID",
     sortable: true,
     flex: 0.3,
+    hide: true,
   },
   {
     field: "fname",

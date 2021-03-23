@@ -1,9 +1,15 @@
 import { Divider, Box, SimpleGrid, Stack, Text } from "@chakra-ui/layout";
 import { TextField } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import Options from "./Options";
 
-const Question = ({ question, onChangeOption, onChangeText }) => {
+const Question = ({
+  defVal,
+  defExtra,
+  question,
+  onChangeOption,
+  onChangeText,
+}) => {
   return (
     <Stack w={"100%"}>
       <Text>{question.questionText}</Text>
@@ -20,7 +26,9 @@ const Question = ({ question, onChangeOption, onChangeText }) => {
           rows={2}
           rowsMax={5}
           variant="filled"
-          onChange={(event)=>{onChangeText(event.target.value)}}
+          onChange={(event) => {
+            onChangeText(event.target.value);
+          }}
         />
       </SimpleGrid>
     </Stack>

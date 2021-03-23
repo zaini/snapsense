@@ -12,13 +12,13 @@ const ProfilePage = () => {
   return (
     <>
       <UserInfo />
-      {user.accountType === "PATIENT" ? (
+      {user.accountType === "PATIENT" && (
         <>
           <Heading>My Submissions</Heading>
           <br />
           <SubmissionsComponent />
         </>
-      ) : null}
+      )}
     </>
   );
 };

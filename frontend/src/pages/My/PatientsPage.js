@@ -26,7 +26,6 @@ const PatientsPage = () => {
       </Alert>
     );
   } else {
-    console.log(data);
     markup = <Table data={data.getPatientsAsDoctor} cols={cols} />;
   }
 
@@ -47,6 +46,7 @@ const GET_PATIENTS_AS_DOCTOR = gql`
   query {
     getPatientsAsDoctor {
       id
+      flag
       fname
       lname
       email
@@ -60,6 +60,12 @@ const cols = [
     type: "number",
     headerName: "ID",
     flex: 0.2,
+    hide: true,
+  },
+  {
+    field: "flag",
+    headerName: "Flag",
+    flex: 0.3,
   },
   {
     field: "fname",
@@ -82,12 +88,12 @@ const cols = [
         <Stack direction="row" spacing={4}>
           <Link to={`/my/patients/show/${id}`}>
             <Button leftIcon={<ViewIcon />} colorScheme="blue">
-              View
+              View Patient
             </Button>
           </Link>
           <Link to={`/my/patients/${id}/requests/new`}>
             <Button leftIcon={<CalendarIcon />} colorScheme="blue">
-              Request
+              Request Submission
             </Button>
           </Link>
         </Stack>

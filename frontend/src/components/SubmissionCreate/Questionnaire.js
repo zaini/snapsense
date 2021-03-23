@@ -55,9 +55,18 @@ const questionsObject = [
       //TODO: Figure a way to add a text field for this questions instead of Y/N
     ],
   },
+  {
+    questionID: 8,
+    questionText: "Review Page:",
+    answerOptions: [
+      { answerText: "No" },
+      { answerText: "Yes" },
+      //TODO: Figure a way to add a text field for this questions instead of Y/N
+    ],
+  },
 ];
 
-const QuestionForm = ({ step, answers, setAnswers }) => {
+const QuestionForm = ({ isVisible, step, answers, setAnswers }) => {
   if (!answers.questionnaire[step + 1]) {
     answers.questionnaire[step + 1] = {};
   }
@@ -74,7 +83,7 @@ const QuestionForm = ({ step, answers, setAnswers }) => {
   };
 
   return (
-    <Box>
+    <Box hidden={!isVisible}>
       <Flex>
         <Stack w={"100%"} textAlign={"center"}>
           <Typography variant="h6" gutterBottom>
@@ -82,6 +91,7 @@ const QuestionForm = ({ step, answers, setAnswers }) => {
           </Typography>
 
           <Flex>
+            {console.log(`I am at Step ${step}`)}
             {questionsObject.map((e, i) => (
               <Box
                 borderWidth="1px"
@@ -92,6 +102,8 @@ const QuestionForm = ({ step, answers, setAnswers }) => {
                 display={step === i ? "block" : "none"}
               >
                 <Question
+                  step={step}
+                  answers={answers}
                   question={questionsObject[i]}
                   onChangeOption={onChangeOption}
                   onChangeText={onChangeText}

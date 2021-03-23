@@ -44,11 +44,14 @@ const GET_SUBMISSIONS = gql`
   query getSubmissions($patient_id: ID) {
     getSubmissions(patient_id: $patient_id) {
       id
+      flag
+      createdAt
       Patient {
         id
         fname
         lname
         email
+        flag
       }
       Images {
         id
@@ -63,7 +66,6 @@ const GET_SUBMISSIONS = gql`
         value
         extra
       }
-      createdAt
     }
   }
 `;
