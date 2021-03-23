@@ -38,7 +38,6 @@ const PatientSubmissionsTimeline = ({ data }) => {
     return (
       <Timeline align="right">
         {data.map((submission, index) => {
-          console.log(submission);
           return (
             <TimelineItem key={index}>
               <TimelineOppositeContent>

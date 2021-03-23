@@ -59,10 +59,7 @@ const PatientSubmissionsTable = ({ data }) => {
           ? row.createdAt
           : new Date(parseInt(row.createdAt));
 
-        const route_link =
-          user.accountType === "PATIENT"
-            ? `/my/submissions/show/${id}`
-            : `/my/submissions/show/${id}`;
+        const route_link = `/my/submissions/show/${id}`;
 
         return (
           <Stack direction="row" spacing={4}>

@@ -15,7 +15,14 @@ const SubmissionCard = ({ data, vertical, redirect }) => {
   // data here is a submission object
   const { Patient, Images, Answers, createdAt, flag, id } = data;
 
-  const submission_date = new Date(createdAt).toDateString();
+  let createdAtDate = parseInt(createdAt);
+  if (isNaN(createdAtDate)) {
+    createdAtDate = createdAt;
+  }
+
+  const submission_date = new Date(createdAtDate).toLocaleString();
+
+  console.log(createdAtDate, submission_date);
 
   const [flagSubmission, { loading }] = useMutation(FLAG_SUBMISSION, {
     onCompleted() {
