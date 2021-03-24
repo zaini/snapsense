@@ -6,15 +6,11 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { setContext } from "apollo-link-context";
 import { ChakraProvider } from "@chakra-ui/react";
 import { createUploadLink } from "apollo-upload-client";
-
 import { AuthProvider } from "./context/auth";
 import customTheme from "./utils/theme";
 
-// virtual machine
-
 const uploadLink = createUploadLink({
-  // uri: process.env.BACKEND_URL || "http://192.68.137.129:5000/graphql",
-  uri: process.env.BACKEND_URL || "http://localhost:5000/graphql",
+  uri: process.env.REACT_APP_BACKEND_URL,
   headers: {
     "keep-alive": "true",
   },
@@ -37,6 +33,7 @@ const client = new ApolloClient({
 });
 
 const appExport = () => {
+  console.log(process.env)
   return (
     <ApolloProvider client={client}>
       <AuthProvider>

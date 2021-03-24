@@ -1,6 +1,5 @@
 const { sign } = require("jsonwebtoken");
-require("dotenv").config();
-
+require("dotenv").config({ path: "../.env" });
 const { ApolloError } = require("apollo-server");
 
 const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
