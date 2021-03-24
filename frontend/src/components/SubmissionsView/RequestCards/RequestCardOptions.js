@@ -59,6 +59,11 @@ const RequestCardOptions = ({
             <option value="3">High Risk</option>
           </Select>
         </InputGroup>
+        {/* TODO: this is not actaully linked to any API and is just mock data. */}
+        <InputGroup mb="10px">
+          <InputLeftAddon children={<p>SnapSense AI Rating</p>} />
+          <Input value={"High Risk"} isReadOnly={true} />
+        </InputGroup>
       </Box>
       <HStack>
         <Button
@@ -70,7 +75,7 @@ const RequestCardOptions = ({
                 flag: parseInt(flagValue),
               },
             });
-            alert("This submission has now been reviewed.")
+            alert("This submission has now been reviewed.");
           }}
         >
           Submit Review

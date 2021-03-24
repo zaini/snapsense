@@ -64,6 +64,11 @@ const SubmissionCardOptions = ({
             <Input value={getFlagText(flag)} isReadOnly={true} />
           )}
         </InputGroup>
+        {/* TODO: this is not actaully linked to any API and is just mock data. */}
+        <InputGroup mb="10px">
+          <InputLeftAddon children={<p>SnapSense AI Rating</p>} />
+          <Input value={"High Risk"} isReadOnly={true} />
+        </InputGroup>
       </Box>
       {user.accountType === "DOCTOR" && (
         <HStack>
