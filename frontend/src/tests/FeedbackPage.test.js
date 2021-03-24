@@ -1,21 +1,13 @@
 import { CREATE_FEEDBACK, Feedback } from "../components/Feedback/Feedback";
 import { MockedProvider } from "@apollo/client/testing";
-import { render, cleanup, fireEvent, screen } from "@testing-library/react";
+import { render, cleanup, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 //Creating mock data
 const mocks = [
   {
     request: {
       query: CREATE_FEEDBACK,
-      variables: {
-        stars: "1",
-        extra: "hello world",
-      },
-    },
-    result: {
-      data: {
-        createFeedback: { id: "1", stars: 1, extra: "hello world" },
-      },
     },
   },
 ];
@@ -28,8 +20,7 @@ const component = render(
 );
 
 /* Essentials */
-screen.debug(); //to see the html elements
-afterEach(cleanup);
+afterAll(cleanup);
 
 /*------ Tests  -----*/
 //Feedback page general tests
@@ -54,10 +45,11 @@ describe("Submit button", () => {
   it("Page has a submit button", () => {
     expect(button).toBeTruthy();
   });
+});
 
-  it("On submit", () => {
-    expect(button.innerHTML).toBe(undefined);
-  });
+describe("User can click on submit button", () => {
+  userEvent.click(screen.getByText("Submit"));
+  expect(screen.getByRole("Button")).toBeChecked();
 });
 
 //Input text test
@@ -67,6 +59,21 @@ describe("Feedback textbox", () => {
   it("Textarea exist", () => {
     expect(TextArea).toBeTruthy();
   });
+});
+
+describe("A user can input in textarea to make a feedback", () => {
+  userEvent.type(
+    screen.getByTestId("textarea"),
+    "The website was really useful and easy to use. Therefore I do not need to visit the hospital. Thanks!"
+  );
+  expect(screen.getByTestId("textarea")).toHaveValue(
+    "The website was really useful and easy to use. Therefore I do not need to visit the hospital. Thanks!"
+  );
+});
+
+describe("this is an expected failure", () => {
+  userEvent.type(screen.getByTestId("textarea"), "Thank you for the failing");
+  expect(screen.getByTestId("textarea")).toHaveValue("this is a failed.");
 });
 
 //Star Rate test
