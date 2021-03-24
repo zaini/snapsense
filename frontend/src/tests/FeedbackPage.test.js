@@ -12,18 +12,20 @@ const mocks = [
   },
 ];
 
-//Component variable to avoid code duplication.
+//Render component
 const component = render(
   <MockedProvider mocks={mocks} addTypename={false}>
     <Feedback />
   </MockedProvider>
 );
 
-/* Essentials */
-afterAll(cleanup);
+/* Essential */
+afterEach(async () => {
+  await cleanup();
+});
 
 /*------ Tests  -----*/
-//Feedback page general tests
+// Feedback page general tests
 describe("FeedbackPage", () => {
   it("has those written lines", () => {
     expect(
@@ -40,23 +42,23 @@ describe("FeedbackPage", () => {
 
 //Submit button check
 describe("Submit button", () => {
-  const button = component.findAllByTestId("submitbutton");
-
   it("Page has a submit button", () => {
+    const button = component.findAllByTestId("submitbutton");
     expect(button).toBeTruthy();
   });
 });
 
-describe("User can click on submit button", () => {
-  userEvent.click(screen.getByText("Submit"));
-  expect(screen.getByRole("Button")).toBeChecked();
-});
+//TODO
+// describe("User can click on submit button", () => {
+//   const SubmitButton = jest.fn();
+//   userEvent.click(screen.getByText("Submit"));
+//   expect(SubmitButton).toBeCalledTimes(1);
+// });
 
 //Input text test
 describe("Feedback textbox", () => {
-  const TextArea = component.findAllByTestId("textarea");
-
   it("Textarea exist", () => {
+    const TextArea = component.findAllByTestId("textarea");
     expect(TextArea).toBeTruthy();
   });
 });
@@ -71,16 +73,12 @@ describe("A user can input in textarea to make a feedback", () => {
   );
 });
 
-describe("this is an expected failure", () => {
-  userEvent.type(screen.getByTestId("textarea"), "Thank you for the failing");
-  expect(screen.getByTestId("textarea")).toHaveValue("this is a failed.");
-});
+
 
 //Star Rate test
 describe("Star Rating", () => {
-  const StarRate = component.findAllByTestId("starrate");
-
   it("Start rating exist", () => {
+    const StarRate = component.findAllByTestId("starrate");
     expect(StarRate).toBeTruthy();
   });
 });
