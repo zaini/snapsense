@@ -5,34 +5,49 @@ import { act } from 'react-dom/test-utils';
 
 import { render } from "@testing-library/react";
 import ProfilePage from '../pages/My/ProfilePage';
+import UserInfo from '../components/UserInfo';
 import { AuthContext } from '../context/auth';
 
 import { ApolloProvider } from '@apollo/client';
 
-let container;
-beforeEach(() => {
-    container = document.createElement('div');
-    document.body.appendChild(container);
+// let container;
+// beforeEach(() => {
+//     container = document.createElement('div');
+//     document.body.appendChild(container);
+// });
+
+// afterEach(() => {
+//     document.body.removeChild(container);
+//     container = null;
+// });
+
+let accType = "null"
+
+jest.mock('../context/auth', () => {
+    return jest.fn(() => {
+        user: accType
+    })
+})
+
+test("renders without crashing", () => {
+    accType = "PATIENT"
+    const {getByText} = render(<ProfilePage/>)
+    expect(getByText('My Submissions')).toBeTruthy()
 });
 
-afterEach(() => {
-    document.body.removeChild(container);
-    container = null;
-});
+// test("renders without crashing with ReactDOM", () => {
+//     act(() => {
+//         ReactDOM.render((
+//             <ApolloProvider>
+//                 <AuthContext.Provider value={{ user: "PATIENT" }}>
+//                     <ProfilePage />
+//                 </AuthContext.Provider>
+//             </ApolloProvider>
+//         ), container);
+//     });
 
-test("renders without crashing with ReactDOM", () => {
-    act(() => {
-        ReactDOM.render((
-            <ApolloProvider>
-                <AuthContext.Provider value={{ user: "PATIENT" }}>
-                    <ProfilePage />
-                </AuthContext.Provider>
-            </ApolloProvider>
-        ), container);
-    });
-
-    expect(container.textContent).toBe("Provided Value");
-});
+//     expect(container.textContent).toBe("Provided Value");
+// });
 
 // test('renders without crashing', () => {
 
