@@ -74,7 +74,7 @@ export const Feedback = () => {
         )}
         <Container p="10" borderWidth="2em" borderRadius="lg" mt="10">
           <Grid
-            container
+            container="true"
             justify="center"
             direction="column"
             alignItems="center"
@@ -96,6 +96,7 @@ export const Feedback = () => {
                       style={{ display: "none" }}
                     />
                     <FaStar
+                      data-testid="starrate"
                       size={30}
                       color={
                         ratingValue <= (hover || rating) ? "#ffc107" : "#a9a9a9"
@@ -117,6 +118,7 @@ export const Feedback = () => {
               <form>
                 <Text mb="8px">Additional Feedback</Text>
                 <Textarea
+                  data-testid="textarea"
                   isfullwidth="True"
                   value={value}
                   onChange={handleInputChange}
@@ -126,6 +128,7 @@ export const Feedback = () => {
                 <br />
                 <Center>
                   <Button
+                    data-testid="submitbutton"
                     mt={4}
                     colorScheme="teal"
                     rightIcon={<CheckCircleIcon />}
