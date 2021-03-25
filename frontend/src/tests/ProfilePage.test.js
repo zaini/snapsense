@@ -21,16 +21,18 @@ import { ApolloProvider } from '@apollo/client';
 //     container = null;
 // });
 
-let accType = "null"
+
+// let accType = "null"
 
 jest.mock('../context/auth', () => {
+    const accType = "PATIENT";
     return jest.fn(() => {
-        user: accType
+        user: "PATIENT"
     })
 })
 
 test("renders without crashing", () => {
-    accType = "PATIENT"
+    // accType = "PATIENT"
     const {getByText} = render(<ProfilePage/>)
     expect(getByText('My Submissions')).toBeTruthy()
 });
