@@ -37,6 +37,7 @@
     "react-modal-image": "^2.5.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
+    "react-test-renderer": "^17.0.2",
     "react-tilt": "^0.1.4",
     "react-to-print": "^2.12.3",
     "tachyons": "^4.12.0",
