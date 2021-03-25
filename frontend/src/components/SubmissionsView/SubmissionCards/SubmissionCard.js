@@ -63,7 +63,7 @@ const SubmissionCard = ({ data, vertical, redirect }) => {
       <Center p="10px">
         <Stack direction={vertical ? "column" : "row"}>
           <Box>
-            {Images.length === 0 ? (
+            {Images && Images.length === 0 ? (
               <Text fontWeight="bold" fontSize="110%" pb="50%">
                 <Box
                   w="220px"
