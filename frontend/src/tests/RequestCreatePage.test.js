@@ -8,26 +8,24 @@ import {
 } from "../pages/My/NewRequestPage";
 import { MemoryRouter } from "react-router";
 
-const mocks = [
-  {
-    request: {
-      query: GET_PATIENT_AS_DOCTOR,
-      variables: {
-        patient_id: 1,
-      },
-    },
-    result: {
-      data: {
-        getPatientAsDoctor: { id: 1, fname: "Ayan", lname: "Ahmad" },
-      },
+const mocks = {
+  request: {
+    query: GET_PATIENT_AS_DOCTOR,
+    variables: {
+      patient_id: 1,
     },
   },
-];
+  result: {
+    data: {
+      getPatientAsDoctor: { id: 1, fname: "Ayan", lname: "Ahmad" },
+    },
+  },
+};
 
 test("loading spinner shows when opening new requests page", async () => {
   act(() => {
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={[mocks]} addTypename={false}>
         <MemoryRouter initialEntries={["/my/patients/1/requests/new"]}>
           <NewRequestPage />
         </MemoryRouter>
@@ -48,7 +46,7 @@ test("new request page shows warning text if patient doesnt exist", async () => 
       },
       result: {
         data: {
-            getPatientAsDoctor: { id: 2, fname: "Ayan", lname: "Ahmad" },
+          getPatientAsDoctor: { id: 2, fname: "Ayan", lname: "Ahmad" },
         },
       },
     },
@@ -72,9 +70,9 @@ test("new request page shows warning text if patient doesnt exist", async () => 
 test("new request page loads new request form on gql query success", async () => {
   act(() => {
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={[mocks]} addTypename={false}>
         <MemoryRouter initialEntries={["/my/patients/1/requests/new"]}>
-          <NewRequestPage />
+          <NewRequestPage patient_id={1} />
         </MemoryRouter>
       </MockedProvider>
     );
