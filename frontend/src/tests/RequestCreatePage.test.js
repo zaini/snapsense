@@ -1,42 +1,86 @@
 import { React } from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
 import { act } from "react-dom/test-utils";
-import {
-  GET_PATIENT_AS_DOCTOR,
-  NewRequestPage,
-} from "../pages/My/NewRequestPage";
-import { MemoryRouter } from "react-router";
+import gql from "graphql-tag";
 
-const mocks = {
-  request: {
-    query: GET_PATIENT_AS_DOCTOR,
-    variables: {
-      patient_id: 1,
+import NewRequestPage from "../pages/My/NewRequestPage";
+import { Route, MemoryRouter } from "react-router";
+
+
+const GET_PATIENT_AS_DOCTOR = gql`
+query getPatientAsDoctor($patient_id: ID!) {
+  getPatientAsDoctor(patient_id: $patient_id) {
+    id
+    fname
+    lname
+  }
+}
+`;
+
+const mocks = [
+  {
+    request: {
+      query: GET_PATIENT_AS_DOCTOR,
+      variables: {
+        patient_id: "1",
+      },
+    },
+    result: {
+      data: {
+        getPatientAsDoctor: {
+          id: 1,
+          fname: "Patient",
+          lname: "One",
+        },
+      },
     },
   },
-  result: {
-    data: {
-      getPatientAsDoctor: { id: 1, fname: "Ayan", lname: "Ahmad" },
+  {
+    request: {
+      query: GET_PATIENT_AS_DOCTOR,
+      variables: {
+        patient_id: 2,
+      },
     },
+    error: Error("This is an invalid patient"),
   },
-};
+];
+
+test("new request page loads new request form on gql query success", async () => {
+  act(() => {
+    const { getByText, findByText } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <MemoryRouter initialEntries={["/my/patients/1/requests/new"]}>
+          <Route path="/my/patients/:patient_id/requests/new">
+            <NewRequestPage />
+          </Route>
+        </MemoryRouter>
+      </MockedProvider>
+    );
+  });
+
+  expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+  await waitFor(() => {expect(screen.getByText(/Submission Request for /i)).toBeInTheDocument()});
+  
+});
 
 test("loading spinner shows when opening new requests page", async () => {
   act(() => {
     render(
-      <MockedProvider mocks={[mocks]} addTypename={false}>
+      <MockedProvider mocks={mocks} addTypename={false}>
         <MemoryRouter initialEntries={["/my/patients/1/requests/new"]}>
           <NewRequestPage />
         </MemoryRouter>
       </MockedProvider>
     );
   });
+
   expect(screen.getByText(/Loading/i)).toBeInTheDocument();
 });
 
 test("new request page shows warning text if patient doesnt exist", async () => {
-  const errorMocks = [
+  const noPatientMocks = [
     {
       request: {
         query: GET_PATIENT_AS_DOCTOR,
@@ -54,7 +98,7 @@ test("new request page shows warning text if patient doesnt exist", async () => 
 
   act(() => {
     render(
-      <MockedProvider mocks={errorMocks} addTypename={false}>
+      <MockedProvider mocks={noPatientMocks} addTypename={false}>
         <MemoryRouter initialEntries={["/my/patients/1/requests/new"]}>
           <NewRequestPage />
         </MemoryRouter>
@@ -63,23 +107,5 @@ test("new request page shows warning text if patient doesnt exist", async () => 
   });
 
   expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-  await new Promise((resolve) => setTimeout(resolve, 0));
-  expect(screen.getByText(/Invalid Patient!/i)).toBeInTheDocument();
-});
-
-test("new request page loads new request form on gql query success", async () => {
-  act(() => {
-    render(
-      <MockedProvider mocks={[mocks]} addTypename={false}>
-        <MemoryRouter initialEntries={["/my/patients/1/requests/new"]}>
-          <NewRequestPage patient_id={1} />
-        </MemoryRouter>
-      </MockedProvider>
-    );
-  });
-
-  expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
-  await new Promise((resolve) => setTimeout(resolve, 0));
-  screen.debug();
-  expect(screen.getByText(/Submission Request/i)).toBeInTheDocument();
+  await waitFor(() => {expect(screen.getByText(/Invalid Patient!/i)).toBeInTheDocument()});
 });
