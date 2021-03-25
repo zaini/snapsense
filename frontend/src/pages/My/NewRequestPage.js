@@ -14,13 +14,15 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  Stack,
+  Text,
 } from "@chakra-ui/react";
 
 import NewRequestForm from "../../components/Request/NewRequestForm";
 import Error from "../../components/utils/Error";
 
 // Form for creating a new request for patients
-export const NewRequestPage = () => {
+const NewRequestPage = () => {
   const [errors, setError] = useState();
 
   // Get the patient id from the url params
@@ -103,8 +105,9 @@ export const NewRequestPage = () => {
   }
 };
 
+export default NewRequestPage;
 
-export const GET_PATIENT_AS_DOCTOR = gql`
+const GET_PATIENT_AS_DOCTOR = gql`
   query getPatientAsDoctor($patient_id: ID!) {
     getPatientAsDoctor(patient_id: $patient_id) {
       id
