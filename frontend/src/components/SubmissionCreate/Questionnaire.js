@@ -91,7 +91,6 @@ const QuestionForm = ({ isVisible, step, answers, setAnswers }) => {
           </Typography>
 
           <Flex>
-            {console.log(`I am at Step ${step}`)}
             {questionsObject.map((e, i) => (
               <Box
                 borderWidth="1px"

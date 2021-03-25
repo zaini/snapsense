@@ -38,7 +38,6 @@ const PatientSubmissionsTimeline = ({ data }) => {
       </Timeline>
     );
   } else {
-    console.log(isTabletOrMobile);
     return (
       <Timeline align="right">
         {data.map((submission, index) => {
