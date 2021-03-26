@@ -19,13 +19,13 @@ const RequestTypeSelector = ({ patient, register }) => {
       <Center>
         <RadioGroup defaultValue="3">
           <HStack spacing="24px">
-            <Radio ref={register} name="requestType" value="1">
+            <Radio data-testid="radioImage" ref={register} name="requestType" value="1">
               Image
             </Radio>
-            <Radio ref={register} name="requestType" value="2">
+            <Radio data-testid="radioQuestion" ref={register} name="requestType" value="2">
               Questionnaire
             </Radio>
-            <Radio ref={register} name="requestType" value="3">
+            <Radio data-testid="radioBoth" ref={register} name="requestType" value="3">
               Both
             </Radio>
           </HStack>
