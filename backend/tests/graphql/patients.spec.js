@@ -2,9 +2,11 @@ const request = require("supertest");
 
 const app = require("../../index");
 
+let loginResponse;
+
 describe("patient resolvers", () => {
-  test("get a patient as a doctor where the patient belongs to the doctor", async (done) => {
-    const loginResponse = await request(app).post("/graphql").send({
+	test("doctor should login", async (done) => {
+		loginResponse = await request(app).post("/graphql").send({
       query: `
 				mutation {
 					login(
@@ -18,7 +20,10 @@ describe("patient resolvers", () => {
 				}
 			`,
     });
+		done();
+	});
 
+  test("get a patient as a doctor where the patient belongs to the doctor", async (done) => {
     const {
       data: {
         login: { accessToken },
@@ -57,21 +62,6 @@ describe("patient resolvers", () => {
   });
 
   test("get a patient as a doctor where the patient does not belongs to the doctor", async (done) => {
-    const loginResponse = await request(app).post("/graphql").send({
-      query: `
-				mutation {
-					login(
-						email: "doctor1@nhs.net"
-						password: "Password123"
-						account_type: "DOCTOR"
-					)	
-					{
-						accessToken
-					}
-				}
-			`,
-    });
-
     const {
       data: {
         login: { accessToken },
@@ -100,22 +90,7 @@ describe("patient resolvers", () => {
     done();
   });
 
-	test("get a patient as a doctor where the patient does not exist", async (done) => {
-    const loginResponse = await request(app).post("/graphql").send({
-      query: `
-				mutation {
-					login(
-						email: "doctor1@nhs.net"
-						password: "Password123"
-						account_type: "DOCTOR"
-					)	
-					{
-						accessToken
-					}
-				}
-			`,
-    });
-
+  test("get a patient as a doctor where the patient does not exist", async (done) => {
     const {
       data: {
         login: { accessToken },
