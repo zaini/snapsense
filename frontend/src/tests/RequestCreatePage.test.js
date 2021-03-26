@@ -135,7 +135,7 @@ test("schedule tab on request page loads periodic form", async () => {
   });
 });
 
-test("interval on schedule form on request page allows values from 0 to 20 inclusive", async () => {
+test("interval on schedule form on request page allows values within 0 and 20 inclusive", async () => {
   setup();
 
   expect(screen.getByText(/Loading/i)).toBeInTheDocument();
@@ -151,18 +151,40 @@ test("interval on schedule form on request page allows values from 0 to 20 inclu
     const form = screen.getByTestId("periodicForm");
 
     const interval = within(form).getByTestId("inputInterval");
-    fireEvent.change(interval, { target: { value: 21 } });
-    expect(interval.value).toBe(21);
+    fireEvent.change(interval, { target: { value: "15" } });
+    expect(interval.value).toBe("15");
 
-    const btnSubmit = within(form).getByTestId("formSubmit");
-    fireEvent(
-      btnSubmit,
-      new MouseEvent("click", {
-        bubbles: true,
-        cancelable: true,
-      })
-    );
-
-    within(form).getByText(/Please select a value that is no more that 20/i);
   });
 });
+
+// test("form submit gives necessary validations", async () => {
+//   setup();
+
+//   expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+//   await waitFor(() => {
+//     fireEvent(
+//       screen.getByText("Scheduled"),
+//       new MouseEvent("click", {
+//         bubbles: true,
+//         cancelable: true,
+//       })
+//     );
+//     expect(screen.getByTestId("periodicForm")).toBeInTheDocument();
+//     const form = screen.getByTestId("periodicForm");
+
+//     const interval = within(form).getByTestId("inputInterval");
+//     fireEvent.change(interval, { target: { value: 15 } });
+//     expect(interval.value).toBe(15);
+
+//     const btnSubmit = within(form).getByTestId("formSubmit");
+//     fireEvent(
+//       btnSubmit,
+//       new MouseEvent("click", {
+//         bubbles: true,
+//         cancelable: true,
+//       })
+//     );
+
+//     within(form).getByText(/Please select a value that is no more that 20/i);
+//   });
+// });
