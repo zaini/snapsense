@@ -84,10 +84,10 @@ const NewRequestPage = () => {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <NewRequestForm periodic={false} patient={patient} />
+                  <NewRequestForm testName="nonPeriodicForm" periodic={false} patient={patient} />
                 </TabPanel>
                 <TabPanel>
-                  <NewRequestForm periodic={true} patient={patient} />
+                  <NewRequestForm testName="periodicForm" periodic={true} patient={patient} />
                 </TabPanel>
               </TabPanels>
             </Tabs>
