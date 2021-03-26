@@ -1,5 +1,11 @@
 import { React } from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
 import { act } from "react-dom/test-utils";
 import gql from "graphql-tag";
@@ -7,15 +13,14 @@ import gql from "graphql-tag";
 import NewRequestPage from "../pages/My/NewRequestPage";
 import { Route, MemoryRouter } from "react-router";
 
-
 const GET_PATIENT_AS_DOCTOR = gql`
-query getPatientAsDoctor($patient_id: ID!) {
-  getPatientAsDoctor(patient_id: $patient_id) {
-    id
-    fname
-    lname
+  query getPatientAsDoctor($patient_id: ID!) {
+    getPatientAsDoctor(patient_id: $patient_id) {
+      id
+      fname
+      lname
+    }
   }
-}
 `;
 
 const mocks = [
@@ -47,9 +52,9 @@ const mocks = [
   },
 ];
 
-test("new request page loads new request form on gql query success", async () => {
+const setup = async () => {
   act(() => {
-    const { getByText, findByText } = render(
+    render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <MemoryRouter initialEntries={["/my/patients/1/requests/new"]}>
           <Route path="/my/patients/:patient_id/requests/new">
@@ -59,53 +64,105 @@ test("new request page loads new request form on gql query success", async () =>
       </MockedProvider>
     );
   });
-
-  expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-  await waitFor(() => {expect(screen.getByText(/Submission Request for /i)).toBeInTheDocument()});
-  
-});
+};
 
 test("loading spinner shows when opening new requests page", async () => {
-  act(() => {
-    render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <MemoryRouter initialEntries={["/my/patients/1/requests/new"]}>
-          <NewRequestPage />
-        </MemoryRouter>
-      </MockedProvider>
-    );
-  });
+  setup();
 
   expect(screen.getByText(/Loading/i)).toBeInTheDocument();
 });
 
 test("new request page shows warning text if patient doesnt exist", async () => {
-  const noPatientMocks = [
-    {
-      request: {
-        query: GET_PATIENT_AS_DOCTOR,
-        variables: {
-          patient_id: 2,
-        },
-      },
-      result: {
-        data: {
-          getPatientAsDoctor: { id: 2, fname: "Ayan", lname: "Ahmad" },
-        },
-      },
-    },
-  ];
-
   act(() => {
     render(
-      <MockedProvider mocks={noPatientMocks} addTypename={false}>
-        <MemoryRouter initialEntries={["/my/patients/1/requests/new"]}>
-          <NewRequestPage />
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <MemoryRouter initialEntries={["/my/patients/2/requests/new"]}>
+          <Route path="/my/patients/:patient_id/requests/new">
+            <NewRequestPage />
+          </Route>
         </MemoryRouter>
       </MockedProvider>
     );
   });
 
   expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-  await waitFor(() => {expect(screen.getByText(/Invalid Patient!/i)).toBeInTheDocument()});
+  await waitFor(() => {
+    expect(screen.getByText(/Invalid Patient!/i)).toBeInTheDocument();
+  });
+});
+
+test("new request page loads new request form on gql query success", async () => {
+  setup();
+
+  expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+  await waitFor(() => {
+    expect(screen.getByText(/Submission Request for /i)).toBeInTheDocument();
+  });
+});
+
+test("new request page loads non periodic form by default", async () => {
+  setup();
+
+  expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+  await waitFor(() => {
+    expect(screen.getByTestId("nonPeriodicForm")).toBeInTheDocument();
+    const form = screen.getByTestId("nonPeriodicForm");
+    within(form).getByTestId("radioImage");
+    within(form).getByTestId("radioQuestion");
+    within(form).getByTestId("radioBoth");
+  });
+});
+
+test("schedule tab on request page loads periodic form", async () => {
+  setup();
+
+  expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+  await waitFor(() => {
+    fireEvent(
+      screen.getByText("Scheduled"),
+      new MouseEvent("click", {
+        bubbles: true,
+        cancelable: true,
+      })
+    );
+    expect(screen.getByTestId("periodicForm")).toBeInTheDocument();
+    const form = screen.getByTestId("periodicForm");
+    within(form).getByTestId("radioImage");
+    within(form).getByTestId("radioQuestion");
+    within(form).getByTestId("radioBoth");
+    within(form).getByText("Interval in days");
+    within(form).getByText("Frequency of Cycles");
+  });
+});
+
+test("interval on schedule form on request page allows values from 0 to 20 inclusive", async () => {
+  setup();
+
+  expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+  await waitFor(() => {
+    fireEvent(
+      screen.getByText("Scheduled"),
+      new MouseEvent("click", {
+        bubbles: true,
+        cancelable: true,
+      })
+    );
+    expect(screen.getByTestId("periodicForm")).toBeInTheDocument();
+    const form = screen.getByTestId("periodicForm");
+
+    const interval = within(form).getByTestId("inputInterval");
+    fireEvent.change(interval, { target: { value: 21 } });
+    expect(interval.value).toBe(21);
+
+    const btnSubmit = within(form).getByTestId("formSubmit");
+    fireEvent(
+      btnSubmit,
+      new MouseEvent("click", {
+        bubbles: true,
+        cancelable: true,
+      })
+    );
+
+    within(form).getByText(/Please select a value that is no more that 20/i);
+  });
 });
