@@ -5,8 +5,8 @@ const app = require("../../index");
 let loginResponse;
 
 describe("patient resolvers", () => {
-	test("doctor should login", async (done) => {
-		loginResponse = await request(app).post("/graphql").send({
+  test("doctor should login", async (done) => {
+    loginResponse = await request(app).post("/graphql").send({
       query: `
 				mutation {
 					login(
@@ -20,8 +20,8 @@ describe("patient resolvers", () => {
 				}
 			`,
     });
-		done();
-	});
+    done();
+  });
 
   test("get a patient as a doctor where the patient belongs to the doctor", async (done) => {
     const {
@@ -116,6 +116,87 @@ describe("patient resolvers", () => {
     const errorMessage = response.body.errors[0].message;
 
     expect(errorMessage).toMatch("Invalid patient!");
+    done();
+  });
+
+  test("get patient as a doctor without authorization header should throw error", async (done) => {
+    const response = await request(app).post("/graphql").send({
+      query: `
+			query {
+				getPatientAsDoctor(patient_id: "100") {
+					id
+					fname
+					lname
+					email
+				}
+			}
+		`,
+    });
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Missing Authorization Header");
+    done();
+  });
+
+  test("get patients as a doctor where doctor is valid", async (done) => {
+    const {
+      data: {
+        login: { accessToken },
+      },
+    } = loginResponse.body;
+
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+			query {
+				getPatientsAsDoctor {
+					id
+					fname
+					lname
+					email
+				}
+			}
+		`,
+      })
+      .set("authorization", `Bearer ${accessToken}`);
+
+    const { body } = response;
+
+    expect(body).toMatchObject({
+      data: {
+        getPatientsAsDoctor: [
+          {
+            id: "1",
+            fname: "Patient",
+            lname: "One",
+            email: "patient1@gmail.com",
+          },
+        ],
+      },
+    });
+
+    done();
+  });
+
+  test("get patients as a doctor without authorization header should throw error", async (done) => {
+    const response = await request(app).post("/graphql").send({
+      query: `
+			query {
+				getPatientsAsDoctor {
+					id
+					fname
+					lname
+					email
+				}
+			}
+		`,
+    });
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Missing Authorization Header");
     done();
   });
 });
