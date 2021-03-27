@@ -6,7 +6,6 @@ const doctorResolvers = require("./doctors");
 const patientResolvers = require("./patients");
 const submissionResolvers = require("./submissions");
 const requestResolvers = require("./request");
-const imageResolvers = require("./images");
 const feedbackResolvers = require("./feedback");
 const questionResolvers = require("./questions");
 const authorisation = require("./utils/authorisation");
@@ -20,7 +19,6 @@ module.exports = {
     ...doctorResolvers.Mutation,
     ...patientResolvers.Mutation,
     ...submissionResolvers.Mutation,
-    ...imageResolvers.Mutation,
     ...authorisation.Mutation,
     ...inviteTokenResolvers.Mutation,
     ...requestResolvers.Mutation,
@@ -34,7 +32,6 @@ module.exports = {
     ...doctorResolvers.Query,
     ...patientResolvers.Query,
     ...submissionResolvers.Query,
-    ...imageResolvers.Query,
     ...inviteTokenResolvers.Query,
     ...requestResolvers.Query,
     ...userResolvers.Query,
