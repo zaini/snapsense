@@ -145,6 +145,7 @@ module.exports = gql`
     getPatients: [Patient!]
     getDoctorsAsAdmin: [Doctor!]
     getDoctorsAsPatient: [Doctor!]
+	getQuestionnaire: [Question!]
     getSubmissions(patient_id: ID): [Submission!]
     getSubmission(submission_id: ID): Submission!
     getPatientAsDoctor(patient_id: ID!): Patient!
