@@ -9,7 +9,7 @@ let patientTwoToken;
 
 describe("patient resolvers", () => {
   beforeAll(async (done) => {
-		// Login and get the access tokens for various users needed in this test suite
+    // Login and get the access tokens for various users needed in this test suite
     doctorOneToken = await request(app).post("/graphql").send({
       query: `
 				mutation {
@@ -25,7 +25,7 @@ describe("patient resolvers", () => {
 			`,
     });
 
-		doctorOneToken = doctorOneToken.body.data.login.accessToken;
+    doctorOneToken = doctorOneToken.body.data.login.accessToken;
 
     patientOneToken = await request(app).post("/graphql").send({
       query: `
@@ -62,8 +62,8 @@ describe("patient resolvers", () => {
     done();
   });
 
-  test("get a patient as a doctor where the patient belongs to the doctor", async (done) => {
-		// Get the patients belonging to the logged in doctor
+  test("should get a patient as a doctor where the patient belongs to the doctor", async (done) => {
+    // Get the patients belonging to the logged in doctor
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -95,8 +95,8 @@ describe("patient resolvers", () => {
     done();
   });
 
-  test("get a patient as a doctor where the patient does not belongs to the doctor", async (done) => {
-		// Try to get a patient that does not belong to the logged in doctor
+  test("should not get a patient as a doctor where the patient does not belongs to the doctor", async (done) => {
+    // Try to get a patient that does not belong to the logged in doctor
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -119,8 +119,8 @@ describe("patient resolvers", () => {
     done();
   });
 
-  test("get a patient as a doctor where the patient does not exist", async (done) => {
-		// Look for patient_id 100, as an id of 100 does not exist in the test fixtures
+  test("should not get a patient as a doctor where the patient does not exist", async (done) => {
+    // Look for patient_id 100, as an id of 100 does not exist in the test fixtures
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -143,8 +143,8 @@ describe("patient resolvers", () => {
     done();
   });
 
-  test("get patient as a doctor without authorization header should throw error", async (done) => {
-		// Do not attach an authorization header
+  test("should not get a patient as a doctor without authorization header", async (done) => {
+    // Do not attach an authorization header
     const response = await request(app).post("/graphql").send({
       query: `
 				query {
@@ -164,7 +164,7 @@ describe("patient resolvers", () => {
     done();
   });
 
-  test("get patients as a doctor where doctor is valid", async (done) => {
+  test("should get patients as a doctor where doctor is valid", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -199,7 +199,7 @@ describe("patient resolvers", () => {
     done();
   });
 
-  test("get patients as a doctor without authorization header should throw error", async (done) => {
+  test("should not get patients as a doctor without authorization header", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 				query {
@@ -219,7 +219,7 @@ describe("patient resolvers", () => {
     done();
   });
 
-  test("add a valid patient to a new valid doctor", async (done) => {
+  test("should add a valid patient to a new valid doctor", async (done) => {
     // Add a patient to a new doctor
     const response = await request(app)
       .post("/graphql")
@@ -283,7 +283,7 @@ describe("patient resolvers", () => {
     done();
   });
 
-  test("add an existing doctor patient relationship should have no effect", async (done) => {
+  test("should not add new doctor patient relationship if it exists already", async (done) => {
     // Add a patient to an existing doctor where there is already a relationship between the doctor and patient
     const response = await request(app)
       .post("/graphql")
@@ -338,6 +338,30 @@ describe("patient resolvers", () => {
       },
     });
 
+    done();
+  });
+
+  test("should not add a doctor patient relationship if the patient_email does not match the logged in user email", async (done) => {
+    // Add a patient to an existing doctor where there is already a relationship between the doctor and patient
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					mutation {
+						addPatientToDoctor(
+							patient_email: "patient1@gmail.com"
+							doctor_email: "doctor1@nhs.net"
+						)
+					}
+				`,
+      })
+      .set("authorization", `Bearer ${patientTwoToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch(
+      "You are not logged into the correct account for this invite."
+    );
     done();
   });
 });
