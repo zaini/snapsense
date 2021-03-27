@@ -57,6 +57,25 @@ const NewSubmissionPage = () => {
   const [uploadSubmission, { loading, error, data }] = useMutation(
     UPLOAD_SUBMISSION,
     {
+      update(proxy, result) {
+        // Write to cache
+        const data = proxy.readQuery({
+          query: GET_SUBMISSIONS,
+        });
+        data.getSubmissions = [
+          result.data.createSubmission,
+          ...data.getSubmissions,
+        ];
+        proxy.writeQuery({
+          query: GET_SUBMISSIONS,
+          data: {
+            getSubmissions: [
+              result.data.createSubmission,
+              ...data.getSubmissions,
+            ],
+          },
+        });
+      },
       onError(e) {},
     }
   );
@@ -159,5 +178,35 @@ export default NewSubmissionPage;
 const UPLOAD_SUBMISSION = gql`
   mutation createSubmission($images: [Upload!], $answers: String!) {
     createSubmission(images: $images, answers: $answers)
+  }
+`;
+
+const GET_SUBMISSIONS = gql`
+  query getSubmissions($patient_id: ID) {
+    getSubmissions(patient_id: $patient_id) {
+      id
+      flag
+      createdAt
+      Patient {
+        id
+        fname
+        lname
+        email
+        flag
+      }
+      Images {
+        id
+        url
+      }
+      Answers {
+        id
+        Question {
+          id
+          text
+        }
+        value
+        extra
+      }
+    }
   }
 `;
