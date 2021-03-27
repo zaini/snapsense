@@ -33,7 +33,6 @@ const client = new ApolloClient({
 });
 
 const appExport = () => {
-  console.log(process.env)
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
