@@ -116,21 +116,23 @@ describe('My Home Page' , () => {
         screen.debug();
     });
 
-    // it("is loading spinner shows for doctor", async () => {
-    //     doctor_component();
-    //     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-    // });
-
-    // it("is loading spinner shows for patients", async () => {
-    //     patient_component();
-    //     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-    // });
-
 //     it('should have header', () => {
 //         expect(screen.getByText("My Home")).toBeInTheDocument();
 //         screen.debug();
 //     })
 });
+
+// describe('Loading spinner', () => {
+//  it("shows for doctor", async () => {
+//     doctor_component();
+//     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+// });
+
+// it("shows for patients", async () => {
+//     patient_component();
+//     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+// });
+//});
 
 // describe('Doctor Panel', () => {
 //     it('should have submission to review', () => {
