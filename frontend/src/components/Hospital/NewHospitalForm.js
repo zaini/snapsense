@@ -66,16 +66,16 @@ export const NewHospitalForm = () => {
             Hospital successfully created!
           </Alert>
         )}
-        <FormControl id="name" isRequired mb={4}>
+        <FormControl id="name" isRequired mb={4} data-testid='name-form'>
           <FormLabel>Hospital name</FormLabel>
           <Input placeholder="Name" name="name" ref={register} />
         </FormControl>
-        <FormControl id="email" name="email" isRequired mb={4}>
+        <FormControl id="email" name="email" isRequired mb={4} data-testid='email-form'>
           <FormLabel>Contact email</FormLabel>
           <Input type="email" name="email" placeholder="Email" ref={register} />
         </FormControl>
         <Center>
-          <Button type="submit" mt={4} colorScheme="blue">
+          <Button type="submit" mt={4} colorScheme="blue" data-testid="submitbutton">
             Submit
           </Button>
         </Center>
