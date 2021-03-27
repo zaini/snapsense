@@ -2,11 +2,15 @@ const request = require("supertest");
 
 const app = require("../../index");
 
-let loginResponse;
+// Access tokens for various users that are needed
+let doctorOneToken;
+let patientOneToken;
+let patientTwoToken;
 
 describe("patient resolvers", () => {
-  test("doctor should login", async (done) => {
-    loginResponse = await request(app).post("/graphql").send({
+  beforeAll(async (done) => {
+		// Login and get the access tokens for various users needed in this test suite
+    doctorOneToken = await request(app).post("/graphql").send({
       query: `
 				mutation {
 					login(
@@ -20,16 +24,46 @@ describe("patient resolvers", () => {
 				}
 			`,
     });
+
+		doctorOneToken = doctorOneToken.body.data.login.accessToken;
+
+    patientOneToken = await request(app).post("/graphql").send({
+      query: `
+				mutation {
+					login(
+						email: "patient1@gmail.com"
+						password: "Password123"
+						account_type: "PATIENT"
+					)	
+					{
+						accessToken
+					}
+				}
+			`,
+    });
+    patientOneToken = patientOneToken.body.data.login.accessToken;
+
+    patientTwoToken = await request(app).post("/graphql").send({
+      query: `
+				mutation {
+					login(
+						email: "patient2@gmail.com"
+						password: "Password123"
+						account_type: "PATIENT"
+					)	
+					{
+						accessToken
+					}
+				}
+			`,
+    });
+
+    patientTwoToken = patientTwoToken.body.data.login.accessToken;
     done();
   });
 
   test("get a patient as a doctor where the patient belongs to the doctor", async (done) => {
-    const {
-      data: {
-        login: { accessToken },
-      },
-    } = loginResponse.body;
-
+		// Get the patients belonging to the logged in doctor
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -44,7 +78,7 @@ describe("patient resolvers", () => {
 					}
 				`,
       })
-      .set("authorization", `Bearer ${accessToken}`);
+      .set("authorization", `Bearer ${doctorOneToken}`);
 
     const { body } = response;
 
@@ -62,12 +96,7 @@ describe("patient resolvers", () => {
   });
 
   test("get a patient as a doctor where the patient does not belongs to the doctor", async (done) => {
-    const {
-      data: {
-        login: { accessToken },
-      },
-    } = loginResponse.body;
-
+		// Try to get a patient that does not belong to the logged in doctor
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -82,7 +111,7 @@ describe("patient resolvers", () => {
 					}
 				`,
       })
-      .set("authorization", `Bearer ${accessToken}`);
+      .set("authorization", `Bearer ${doctorOneToken}`);
 
     const errorMessage = response.body.errors[0].message;
 
@@ -91,12 +120,7 @@ describe("patient resolvers", () => {
   });
 
   test("get a patient as a doctor where the patient does not exist", async (done) => {
-    const {
-      data: {
-        login: { accessToken },
-      },
-    } = loginResponse.body;
-
+		// Look for patient_id 100, as an id of 100 does not exist in the test fixtures
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -111,7 +135,7 @@ describe("patient resolvers", () => {
 					}
 				`,
       })
-      .set("authorization", `Bearer ${accessToken}`);
+      .set("authorization", `Bearer ${doctorOneToken}`);
 
     const errorMessage = response.body.errors[0].message;
 
@@ -120,6 +144,7 @@ describe("patient resolvers", () => {
   });
 
   test("get patient as a doctor without authorization header should throw error", async (done) => {
+		// Do not attach an authorization header
     const response = await request(app).post("/graphql").send({
       query: `
 				query {
@@ -140,12 +165,6 @@ describe("patient resolvers", () => {
   });
 
   test("get patients as a doctor where doctor is valid", async (done) => {
-    const {
-      data: {
-        login: { accessToken },
-      },
-    } = loginResponse.body;
-
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -160,7 +179,7 @@ describe("patient resolvers", () => {
 					}
 				`,
       })
-      .set("authorization", `Bearer ${accessToken}`);
+      .set("authorization", `Bearer ${doctorOneToken}`);
 
     const { body } = response;
 
@@ -200,30 +219,8 @@ describe("patient resolvers", () => {
     done();
   });
 
-  test("add a valid patient to a valid doctor", async (done) => {
-    // Login as a patient
-    const patientLogin = await request(app).post("/graphql").send({
-      query: `
-				mutation {
-					login(
-						email: "patient2@gmail.com"
-						password: "Password123"
-						account_type: "PATIENT"
-					)	
-					{
-						accessToken
-					}
-				}
-			`,
-    });
-
-    const {
-      data: {
-        login: { accessToken },
-      },
-    } = patientLogin.body;
-
-    // Add the patient to a new doctor
+  test("add a valid patient to a new valid doctor", async (done) => {
+    // Add a patient to a new doctor
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -236,7 +233,7 @@ describe("patient resolvers", () => {
 					}
 				`,
       })
-      .set("authorization", `Bearer ${accessToken}`);
+      .set("authorization", `Bearer ${patientTwoToken}`);
 
     const {
       data: { addPatientToDoctor: result },
@@ -244,9 +241,6 @@ describe("patient resolvers", () => {
 
     // Make sure the result was successful
     expect(result).toBe(true);
-
-    // Get the doctor's access token
-    const doctorAccessToken = loginResponse.body.data.login.accessToken;
 
     // Make sure the doctor now has this new association with the patient
     const getPatientsAsDoctor = await request(app)
@@ -263,7 +257,7 @@ describe("patient resolvers", () => {
 					}
 				`,
       })
-      .set("authorization", `Bearer ${doctorAccessToken}`);
+      .set("authorization", `Bearer ${doctorOneToken}`);
 
     const { body } = getPatientsAsDoctor;
 
@@ -281,6 +275,64 @@ describe("patient resolvers", () => {
             fname: "Patient",
             lname: "Two",
             email: "patient2@gmail.com",
+          },
+        ],
+      },
+    });
+
+    done();
+  });
+
+  test("add an existing doctor patient relationship should have no effect", async (done) => {
+    // Add a patient to an existing doctor where there is already a relationship between the doctor and patient
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					mutation {
+						addPatientToDoctor(
+							patient_email: "patient1@gmail.com"
+							doctor_email: "doctor1@nhs.net"
+						)
+					}
+				`,
+      })
+      .set("authorization", `Bearer ${patientOneToken}`);
+
+    const {
+      data: { addPatientToDoctor: result },
+    } = response.body;
+
+    // Make sure the result was successful
+    expect(result).toBe(true);
+
+    // Make sure the doctor has the patient association only once (meaning it was not duplicated)
+    const getPatientsAsDoctor = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					query {
+						getPatientsAsDoctor {
+							id
+							fname
+							lname
+							email
+						}
+					}
+				`,
+      })
+      .set("authorization", `Bearer ${doctorOneToken}`);
+
+    const { body } = getPatientsAsDoctor;
+
+    expect(body).toMatchObject({
+      data: {
+        getPatientsAsDoctor: [
+          {
+            id: "1",
+            fname: "Patient",
+            lname: "One",
+            email: "patient1@gmail.com",
           },
         ],
       },
