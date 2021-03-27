@@ -253,15 +253,15 @@ describe("patient resolvers", () => {
       .post("/graphql")
       .send({
         query: `
-			query {
-				getPatientsAsDoctor {
-					id
-					fname
-					lname
-					email
-				}
-			}
-		`,
+					query {
+						getPatientsAsDoctor {
+							id
+							fname
+							lname
+							email
+						}
+					}
+				`,
       })
       .set("authorization", `Bearer ${doctorAccessToken}`);
 
