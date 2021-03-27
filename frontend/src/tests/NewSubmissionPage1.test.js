@@ -16,6 +16,7 @@ const mocks = [
   },
 ];
 
+/*------ Essential  -----*/
 afterEach(async () => {
   await cleanup();
 });
@@ -27,6 +28,7 @@ const component = render(
   </MockedProvider>
 );
 
+/*------ Tests  -----*/
 it("should be truthy", () => {
   const button = component.findAllByTestId("submitbutton");
   expect(button).toBeTruthy();
