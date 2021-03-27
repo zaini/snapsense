@@ -59,7 +59,7 @@ module.exports = gql`
     Submission: Submission
     type: Int!
     deadline: String!
-    fulfilled: String!
+    fulfilled: String
     createdAt: String!
   }
 
@@ -107,6 +107,8 @@ module.exports = gql`
       request_type: Int!
       deadline: String!
       patient_id: ID!
+      frequency: Int
+      interval: Int
     ): Boolean!
 
     register(
@@ -158,5 +160,6 @@ module.exports = gql`
     checkInvitation(invitationToken: String!): String!
     getFeedback: [Feedback!]
     getSubmissionsForReview: [Submission!]
+    getQuestionnaire: [Question!]
   }
 `;

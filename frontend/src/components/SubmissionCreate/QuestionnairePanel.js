@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { StepLabel, Step, Paper, Stepper } from "@material-ui/core";
-import { Heading, Stack, Box, Center } from "@chakra-ui/react";
+import { Heading, Stack, Box, Center, Flex } from "@chakra-ui/react";
 
 import QuestionForm from "./Questionnaire";
 import Review from "./Review";
@@ -17,6 +17,7 @@ const QuestionnairePanel = ({
   handleBack,
   handleNext,
 }) => {
+  const [reviewBtn, setReviewBtn] = useState(false);
   return (
     <Paper className={classes.paper}>
       <Heading style={{ textAlign: "center" }}>Questionnaire</Heading>
@@ -29,15 +30,15 @@ const QuestionnairePanel = ({
       </Stepper>
       <Box>
         <Stack>
-          {activeStep < 8 ? (
-            <QuestionForm
-              step={activeStep}
-              answers={answers}
-              setAnswers={setAnswers}
-            />
-          ) : (
-            <Review answers={answers} />
-          )}
+          <QuestionForm
+            isVisible={!reviewBtn}
+            step={activeStep}
+            answers={answers}
+            setAnswers={setAnswers}
+          />
+
+          <Review isVisible={reviewBtn} answers={answers} />
+
           <Center columns={[2]}>
             <BackButton
               activeStep={activeStep}
@@ -48,6 +49,7 @@ const QuestionnairePanel = ({
               activeStep={activeStep}
               handleNext={handleNext}
               classes={classes}
+              setReviewBtn={setReviewBtn}
             />
           </Center>
         </Stack>

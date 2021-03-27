@@ -16,8 +16,7 @@ import {
 import Error from "../utils/Error";
 import CopyLink from "../utils/CopyLink";
 
-const URL_PREFIX =
-  process.env.REACT_APP_FRONTEND_URL_PREFIX || "http://localhost:3000";
+const URL_PREFIX = process.env.REACT_APP_FRONTEND_URL_PREFIX;
 
 const CreateInviteForm = () => {
   const {
@@ -93,7 +92,7 @@ const CreateInviteForm = () => {
       {invitationToken && (
         <>
           <br />
-          <CopyLink link={URL_PREFIX + "/invites/show/" + invitationToken} />
+          <CopyLink link={`${URL_PREFIX}/invites/show/${invitationToken}`} />
         </>
       )}
     </Box>

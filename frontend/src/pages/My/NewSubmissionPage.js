@@ -86,7 +86,7 @@ const NewSubmissionPage = () => {
         }
         body={
           <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
-            Loading...
+            Uploading...
           </Heading>
         }
       />

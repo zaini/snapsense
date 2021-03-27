@@ -10,7 +10,7 @@ import {
   InputLeftAddon,
   Input,
 } from "@chakra-ui/react";
-import { BsPersonFill, BsFlag } from "react-icons/bs";
+import { BsPerson, BsFlag } from "react-icons/bs";
 import { BiCalendarCheck } from "react-icons/bi";
 import getFlagText from "../../../utils/Flags";
 
@@ -23,12 +23,11 @@ const SubmissionCardOptions = ({
   flag,
 }) => {
   const [flagValue, setFlagValue] = useState(flag || -1);
-
   return (
     <VStack>
       <Box w="500px">
         <InputGroup mb="10px">
-          <InputLeftAddon children={<BsPersonFill />} />
+          <InputLeftAddon children={<BsPerson />} backgroundColor="#ABCAE7" />
           <Input
             value={`${patient.fname} ${patient.lname} (${getFlagText(
               patient.flag
@@ -37,11 +36,14 @@ const SubmissionCardOptions = ({
           />
         </InputGroup>
         <InputGroup mb="10px">
-          <InputLeftAddon children={<BiCalendarCheck />} />
+          <InputLeftAddon
+            children={<BiCalendarCheck />}
+            backgroundColor="#ABCAE7"
+          />
           <Input value={submission_date} isReadOnly={true} />
         </InputGroup>
         <InputGroup mb="10px">
-          <InputLeftAddon children={<BsFlag />} />
+          <InputLeftAddon children={<BsFlag />} backgroundColor="#ABCAE7" />
           {user.accountType === "DOCTOR" ? (
             <Select
               onChange={(e) => {
@@ -65,10 +67,19 @@ const SubmissionCardOptions = ({
             <Input value={getFlagText(flag)} isReadOnly={true} />
           )}
         </InputGroup>
+        {/* TODO: this is not actaully linked to any API and is just mock data. */}
+        <InputGroup mb="10px">
+          <InputLeftAddon
+            children={<p>SnapSense AI Rating</p>}
+            backgroundColor="#ABCAE7"
+          />
+          <Input value={"High Risk"} isReadOnly={true} />
+        </InputGroup>
       </Box>
       {user.accountType === "DOCTOR" && (
         <HStack>
           <Button
+            colorScheme="blue"
             isDisabled={parseInt(flagValue) === -1}
             onClick={() => {
               onFlag({
@@ -77,15 +88,16 @@ const SubmissionCardOptions = ({
                   flag: parseInt(flagValue),
                 },
               });
+              alert("This submission has now been reviewed.");
             }}
           >
             Submit Review
           </Button>
           <Link to={`/my/submissions/show/${submission_id}`}>
-            <Button>View</Button>
+            <Button colorScheme="blue">View Submission</Button>
           </Link>
           <Link to={`/my/patients/${patient.id}/requests/new`}>
-            <Button>Request</Button>
+            <Button colorScheme="blue">Request Submission</Button>
           </Link>
         </HStack>
       )}

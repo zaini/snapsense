@@ -51,12 +51,17 @@ const ViewQuestionnaireResponse = ({ answers }) => {
         <Center>{responseComponents[index]}</Center>
       </Box>
       <HStack>
-        <Button isDisabled={index === 0} onClick={() => setIndex(index - 1)}>
+        <Button
+          isDisabled={index === 0}
+          onClick={() => setIndex(index - 1)}
+          colorScheme="blue"
+        >
           Prev
         </Button>
         <Button
           isDisabled={index === answers.length - 1}
           onClick={() => setIndex(index + 1)}
+          colorScheme="blue"
         >
           Next
         </Button>
