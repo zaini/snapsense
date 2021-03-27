@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Review"];
 
-const NewSubmissionPage = () => {
+export const NewSubmissionPage = () => {
   const [images, setImages] = useState([]);
   const [answers, setAnswers] = useState({ questionnaire: {} });
   const [activeStep, setActiveStep] = useState(0);
@@ -235,10 +235,11 @@ const NewSubmissionPage = () => {
           <Paper className={classes.paper}>
             <Center>
               <Button
-                rightIcon={<CheckCircleIcon />}
+                data-testid="CircleIcon"
+                righticon={<CheckCircleIcon />}
                 variant="contained"
                 color="primary"
-                colorScheme="teal"
+                colorscheme="teal"
                 onClick={() => {
                   uploadSubmission({
                     variables: {
@@ -262,7 +263,7 @@ const NewSubmissionPage = () => {
 
 export default NewSubmissionPage;
 
-const UPLOAD_SUBMISSION = gql`
+export const UPLOAD_SUBMISSION = gql`
   mutation createSubmission($images: [Upload!], $answers: String!) {
     createSubmission(images: $images, answers: $answers)
   }

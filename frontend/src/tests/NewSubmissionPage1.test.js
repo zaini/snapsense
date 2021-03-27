@@ -1,25 +1,33 @@
-import TestRenderer from 'react-test-renderer';
-import { MockedProvider } from '@apollo/client/testing';
+import { MockedProvider } from "@apollo/client/testing";
 import { gql, useMutation } from "@apollo/client";
-import { UPLOAD_SUBMISSION, NewSubmissionPage } from "../pages/My/NewSubmissionPage";
-import { render, cleanup, screen } from "@testing-library/react";
+import {
+  UPLOAD_SUBMISSION,
+  NewSubmissionPage,
+} from "../pages/My/NewSubmissionPage";
 
+import { render, cleanup, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 const mocks = [
-    {
-      request: {
-        query: UPLOAD_SUBMISSION,
-        variables: { id: 1, Patient: 1, images: 1 , answers: 1 },
-      },
-    }];
-    //Render component
-    const component = render(
-    <MockedProvider mocks={mocks} addTypename={false}>
-      <NewSubmissionPage />
-    </MockedProvider>,
+  {
+    request: {
+      query: UPLOAD_SUBMISSION,
+    },
+  },
+];
+
+afterEach(async () => {
+  await cleanup();
+});
+
+//Render component
+const component = render(
+  <MockedProvider mocks={mocks} addTypename={false}>
+    <NewSubmissionPage />
+  </MockedProvider>
 );
 
 it("should be truthy", () => {
-    const button = component.findAllByTestId("submitbutton");
-    expect(button).toBeTruthy();
+  const button = component.findAllByTestId("submitbutton");
+  expect(button).toBeTruthy();
 });
