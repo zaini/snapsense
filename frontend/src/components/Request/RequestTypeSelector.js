@@ -13,7 +13,7 @@ const RequestTypeSelector = ({ patient, register }) => {
     <FormControl isRequired>
       <Center>
         <FormLabel as="header" textAlign="center">
-          Ask {patient.name} to upload a picture, questionnaire or both
+          Ask {patient.fname} to upload a picture, questionnaire or both
         </FormLabel>
       </Center>
       <Center>
