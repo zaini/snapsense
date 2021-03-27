@@ -10,14 +10,16 @@ const FormDate = ({ control }) => {
       name="submissionDate"
       control={control}
       render={({ onChange, value, ref }) => (
-        <DatePicker
-          selected={value}
-          onChange={onChange}
-          inputRef={ref}
-          minDate={new Date()}
-          inline
-          showTimeInput
-        />
+        <div data-testid="DatePickerContainer">
+          <DatePicker
+            selected={value}
+            onChange={onChange}
+            inputRef={ref}
+            minDate={new Date()}
+            inline
+            showTimeInput
+          />
+        </div>
       )}
     />
   );
