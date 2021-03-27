@@ -70,7 +70,7 @@ const NewAdminForm = ({ hospital }) => {
           <Input placeholder="First Name" name="fname" ref={register} />
         </FormControl>
         <FormControl id="lname" isRequired mb={4}>
-          <FormLabel>First name</FormLabel>
+          <FormLabel>Last name</FormLabel>
           <Input placeholder="Last Name" name="lname" ref={register} />
         </FormControl>
         <FormControl id="email" name="email" isRequired mb={4}>
