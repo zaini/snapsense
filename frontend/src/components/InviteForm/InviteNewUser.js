@@ -25,7 +25,8 @@ const InviteNewUser = ({ invitation }) => {
     onError(err) {
       setError("graphql", {
         type: "manual",
-        message: err.graphQLErrors[0].message,
+        message:
+          (err.graphQLErrors && err.graphQLErrors[0].message) || err.message,
       });
     },
   });

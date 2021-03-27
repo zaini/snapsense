@@ -40,7 +40,9 @@ const NewRequestPage = () => {
         //Set the error object to a graphql error
         setError([
           {
-            message: err.graphQLErrors[0].message,
+            message:
+              (err.graphQLErrors && err.graphQLErrors[0].message) ||
+              err.message,
           },
         ]);
       },
