@@ -18,6 +18,7 @@ This project was developed as part of coursework for 5CCS2SEG.
 - Considerations for accessiblity and mobile use have been made where possible
 - There is validation and testing throughout the application
 - Well documented for future extensibilty, implementing all features for the client as well as documenting the development progress
+- And much much more...
 
 ## Setup & Installation 📄
 
