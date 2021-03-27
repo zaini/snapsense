@@ -28,8 +28,30 @@ const component = render(
   </MockedProvider>
 );
 
+
 /*------ Tests  -----*/
-it("should be truthy", () => {
-  const button = component.findAllByTestId("submitbutton");
-  expect(button).toBeTruthy();
+
+it("renders without crashing", () => {
+  expect(component).toBeTruthy();
+});
+
+describe("Submit button", () => {
+  it("has a submit button", () => {
+    const button = component.findAllByTestId("submitbutton");
+    expect(button).toBeTruthy();
+  });
+});
+
+describe("ImageUpload", () => {
+  it("has a imageUpload", () => {
+    const button = component.findAllByTestId("imageUpload");
+    expect(button).toBeTruthy();
+  });
+});
+
+describe("questionnaireForm", () => {
+  it("has a questionnaireForm", () => {
+    const button = component.findAllByTestId("questionnaireForm");
+    expect(button).toBeTruthy();
+  });
 });
