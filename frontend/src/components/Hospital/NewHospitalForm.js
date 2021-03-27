@@ -15,7 +15,8 @@ import {
 
 import Error from "../utils/Error";
 
-const NewHospitalForm = () => {
+
+export const NewHospitalForm = () => {
   const { register, handleSubmit } = useForm();
 
   const [createHospital, { loading, error, data }] = useMutation(
@@ -87,7 +88,7 @@ const NewHospitalForm = () => {
 
 export default NewHospitalForm;
 
-const CREATE_HOSPITAL = gql`
+export const CREATE_HOSPITAL = gql`
   mutation createHospital($name: String!, $contact_email: String!) {
     createHospital(name: $name, contact_email: $contact_email) {
       name
