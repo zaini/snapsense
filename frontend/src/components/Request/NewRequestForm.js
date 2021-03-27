@@ -15,7 +15,7 @@ import RequestDatePicker from "./RequestDatePicker";
 import Error from "../utils/Error";
 import PeriodicSelector from "./PeriodicSelector";
 
-const NewRequestForm = ({ testName, patient, periodic }) => {
+const NewRequestForm = ({ lol, testName, patient, periodic }) => {
   const { register, handleSubmit, control, getValues } = useForm();
 
   // Mutation hook with loading and error attributes
@@ -49,7 +49,7 @@ const NewRequestForm = ({ testName, patient, periodic }) => {
   if (loading) {
     // Display a spinner if loading
     markup = (
-      <Container p="7" borderRadius="lg" mt="20">
+      <Container data-testid="formSubmitInnerLoader" p="7" borderRadius="lg" mt="20">
         <Center>
           <Spinner size="xl" />
         </Center>
@@ -58,11 +58,11 @@ const NewRequestForm = ({ testName, patient, periodic }) => {
   } else if (error) {
     // Display the error on error
     markup = (
-      <Container p="7" borderRadius="lg" mt="20">
+      <Container data-testid="formSubmitInnerError" p="7" borderRadius="lg" mt="20">
         <Error
           errors={[
             {
-              message: error.graphQLErrors[0].message,
+              message: error.message,
             },
           ]}
         />
@@ -73,10 +73,17 @@ const NewRequestForm = ({ testName, patient, periodic }) => {
     markup = (
       <form onSubmit={handleSubmit(onSubmit)}>
         {data && (
-          <Alert status="success" borderRadius="50px" mb={4} textAlign="center">
-            <AlertIcon />
-            Request has been sent to {patient.fname}
-          </Alert>
+          <div data-testid="formSubmitInnerSuccess">
+            <Alert
+              status="success"
+              borderRadius="50px"
+              mb={4}
+              textAlign="center"
+            >
+              <AlertIcon />
+              Request has been sent to {patient.fname}
+            </Alert>
+          </div>
         )}
         <RequestTypeSelector patient={patient} register={register} />
         <RequestDatePicker control={control} />
@@ -86,7 +93,12 @@ const NewRequestForm = ({ testName, patient, periodic }) => {
           register={register}
         />
         <Center>
-          <Button data-testid="formSubmit" type="submit" mt={4} colorScheme="blue">
+          <Button
+            data-testid="formSubmit"
+            type="submit"
+            mt={4}
+            colorScheme="blue"
+          >
             Submit
           </Button>
         </Center>
@@ -94,7 +106,7 @@ const NewRequestForm = ({ testName, patient, periodic }) => {
     );
   }
 
-  return <div  data-testid={testName}>{markup}</div>;
+  return <div data-testid={testName}>{markup}</div>;
 };
 
 export default NewRequestForm;
