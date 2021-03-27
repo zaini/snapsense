@@ -4,7 +4,7 @@ import Logo from "./Logo";
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import NavbarMenuItems from "./NavbarMenuItems";
 
-const Header = () => {
+export const Header = () => {
   const [show, setShow] = useState(false);
   const toggleMenu = () => setShow(!show);
 
@@ -40,7 +40,7 @@ const Header = () => {
           direction={["column", "row", "row", "row"]}
           pt={[4, 4, 0, 0]}
         >
-          <NavbarMenuItems data-testid="navbarItems"/>
+          <NavbarMenuItems testName="navbarItems"/>
         </Flex>
       </Box>
     </Flex>

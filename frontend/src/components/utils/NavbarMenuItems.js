@@ -3,7 +3,7 @@ import MenuItem from "./MenuItem";
 import { Button } from "@chakra-ui/react";
 import { AuthContext } from "../../context/auth";
 
-const NavbarMenuItems = () => {
+export const NavbarMenuItems = () => {
   const { user } = useContext(AuthContext);
 
   if (user) {
@@ -11,7 +11,7 @@ const NavbarMenuItems = () => {
       case "ADMIN":
         return (
           <>
-            <MenuItem to="/my/profile">My Dashboard</MenuItem>
+            <MenuItem data-testid="myDash" to="/my/profile">My Dashboard</MenuItem>
             <MenuItem to="/feedback">Share Feedback</MenuItem>
             <MenuItem to="/logout" isLast>
               <Button
