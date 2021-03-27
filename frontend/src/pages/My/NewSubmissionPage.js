@@ -184,13 +184,13 @@ export const NewSubmissionPage = () => {
           </Alert>
           <Tabs>
             <TabList>
-              <Tab>Image</Tab>
+              <Tab >Image</Tab>
               <Tab>Questionnaire</Tab>
             </TabList>
             <TabPanel>
               <Paper className={classes.paper}>
                 <Heading style={{ textAlign: "center" }}>Image Upload</Heading>
-                <ImageUpload setImages={setImages} />
+                <ImageUpload data-testid="imageUpload" setImages={setImages} />
               </Paper>
             </TabPanel>
             <TabPanel>
@@ -207,6 +207,7 @@ export const NewSubmissionPage = () => {
                   <Stack>
                     {activeStep < 8 ? (
                       <QuestionForm
+                      data-testid="questionnaireForm"
                         step={activeStep}
                         answers={answers}
                         setAnswers={setAnswers}
@@ -235,7 +236,7 @@ export const NewSubmissionPage = () => {
           <Paper className={classes.paper}>
             <Center>
               <Button
-                data-testid="CircleIcon"
+                data-testid="submitbutton"
                 righticon={<CheckCircleIcon />}
                 variant="contained"
                 color="primary"

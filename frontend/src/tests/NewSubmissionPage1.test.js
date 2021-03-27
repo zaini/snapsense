@@ -5,7 +5,7 @@ import {
   NewSubmissionPage,
 } from "../pages/My/NewSubmissionPage";
 
-import { render, cleanup, screen } from "@testing-library/react";
+import { render, fireEvent, cleanup, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 const mocks = [
@@ -44,14 +44,21 @@ describe("Submit button", () => {
 
 describe("ImageUpload", () => {
   it("has a imageUpload", () => {
-    const button = component.findAllByTestId("imageUpload");
-    expect(button).toBeTruthy();
+    const imageUpload = component.findAllByTestId("imageUpload");
+    expect(imageUpload).toBeTruthy();
   });
 });
 
 describe("questionnaireForm", () => {
   it("has a questionnaireForm", () => {
-    const button = component.findAllByTestId("questionnaireForm");
-    expect(button).toBeTruthy();
+    const form = component.findAllByTestId("questionnaireForm");
+    expect(form).toBeTruthy();
   });
 });
+
+
+
+
+
+
+  
