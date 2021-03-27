@@ -1,5 +1,6 @@
 import { DoctorHomePanel } from "../components/HomePage/DoctorHomePanel";
 import { PatientHomePanel } from "../components/HomePage/DoctorHomePanel";
+import { MyHomePage } from "../pages/My/MyHomePage";
 import { MockedProvider } from "@apollo/client/testing";
 import { fireEvent, waitFor, within, render, cleanup, screen } from "@testing-library/react";
 import { createMemoryHistory } from 'history';
@@ -83,7 +84,7 @@ const doctor_component = async () => {
         <MockedProvider mocks={doctor_mocks} addTypename={false}>
           <MemoryRouter initialEntries={["/my/"]}>
             <Route path="/my/">
-              <NewRequestPage />
+              <DoctorHomePanel />
             </Route>
           </MemoryRouter>
         </MockedProvider>
@@ -97,7 +98,7 @@ const patient_component = async () => {
         <MockedProvider mocks={patient_mocks} addTypename={false}>
           <MemoryRouter initialEntries={["/my/"]}>
             <Route path="/my/">
-              <NewRequestPage />
+              <PatientHomePanel />
             </Route>
           </MemoryRouter>
         </MockedProvider>
@@ -107,7 +108,7 @@ const patient_component = async () => {
 
 describe('My Home Page' , () => {
     it('should render without crashing for doctor', () => {
-        expect(doctor_component).toBeTruthy();
+        expect(doctor_component).toBeTruthy;
         screen.debug();
     });
 
