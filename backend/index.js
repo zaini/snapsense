@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const Bree = require("bree");
 const Graceful = require("@ladjs/graceful");
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 
 const typeDefs = require("./graphql/typeDefs/typeDefs");
 const resolvers = require("./graphql/resolvers");
@@ -57,7 +57,7 @@ const apolloServer = new ApolloServer({
 
 // Allow requests only from the frontend
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:3000",
+  origin: process.env.FRONTEND_URL,
   optionsSuccessStatus: 200,
 };
 

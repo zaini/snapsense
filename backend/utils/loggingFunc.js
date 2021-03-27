@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 
 const print_my_arguments = (msg) => {
   // var args = arguments;

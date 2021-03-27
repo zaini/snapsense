@@ -1,4 +1,5 @@
 import React from "react";
+import { useMediaQuery } from "react-responsive";
 import { makeStyles } from "@material-ui/core/styles";
 import Timeline from "@material-ui/lab/Timeline";
 import TimelineItem from "@material-ui/lab/TimelineItem";
@@ -14,6 +15,8 @@ import SubmissionCard from "../SubmissionsView/SubmissionCards/SubmissionCard";
 
 const PatientSubmissionsTimeline = ({ data }) => {
   const classes = useStyles();
+  const isTabletOrMobile = useMediaQuery({ maxWidth: 1600 });
+
   if (data.length === 0) {
     return (
       <Timeline>
@@ -53,7 +56,10 @@ const PatientSubmissionsTimeline = ({ data }) => {
               </TimelineSeparator>
               <TimelineContent>
                 <Paper elevation={3} className={classes.paper}>
-                  <SubmissionCard data={submission} />
+                  <SubmissionCard
+                    data={submission}
+                    vertical={isTabletOrMobile}
+                  />
                 </Paper>
               </TimelineContent>
             </TimelineItem>

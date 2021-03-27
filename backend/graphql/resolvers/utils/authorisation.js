@@ -2,8 +2,7 @@ const argon2 = require("argon2");
 const { UserInputError, ApolloError } = require("apollo-server");
 const { verify } = require("jsonwebtoken");
 const { ValidationError } = require("sequelize");
-require("dotenv").config();
-
+require("dotenv").config({ path: "../.env" });
 const { createAccessToken } = require("../utils/authTokens");
 const { Admin, Doctor, Patient, SuperAdmin } = require("../../../models/index");
 const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
