@@ -54,7 +54,7 @@ export const NewHospitalForm = () => {
             <Error
               errors={[
                 {
-                  message: error.graphQLErrors[0].message,
+                  message: error.message,
                 },
               ]}
             />
@@ -66,13 +66,13 @@ export const NewHospitalForm = () => {
             Hospital successfully created!
           </Alert>
         )}
-        <FormControl id="name" isRequired mb={4} data-testid='name-form'>
+        <FormControl id="name" isRequired mb={4} >
           <FormLabel>Hospital name</FormLabel>
-          <Input placeholder="Name" name="name" ref={register} />
+          <Input data-testid="hospitalNewFormName" placeholder="Name" name="name" ref={register} />
         </FormControl>
         <FormControl id="email" name="email" isRequired mb={4} data-testid='email-form'>
           <FormLabel>Contact email</FormLabel>
-          <Input type="email" name="email" placeholder="Email" ref={register} />
+          <Input data-testid="hospitalNewFormEmail" type="email" name="email" placeholder="Email" ref={register} />
         </FormControl>
         <Center>
           <Button type="submit" mt={4} colorScheme="blue" data-testid="submitbutton">
