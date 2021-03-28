@@ -1,25 +1,9 @@
-const { AuthenticationError, UserInputError } = require("apollo-server");
+const { UserInputError } = require("apollo-server");
 
-const { Hospital, SuperAdmin } = require("../../models/index.js");
-const isAuth = require("../../utils/isAuth.js");
-
-const getAuthenticatedSuperAdmin = async (context) => {
-  // Get the user based on the context
-  const user = isAuth(context);
-
-  // Make sure user is a super admin
-  if (user.accountType !== "SUPERADMIN") {
-    throw new AuthenticationError("Invalid user account type!");
-  }
-
-  // Make sure the super admin is 'real' (i.e. in the db)
-  const superAdmin = await SuperAdmin.findByPk(user.id);
-  if (!superAdmin) {
-    throw new AuthenticationError("Invalid user!");
-  }
-
-  return superAdmin;
-};
+const { Hospital } = require("../../models/index.js");
+const {
+  getAuthenticatedSuperAdmin,
+} = require("./utils/superadminAuthorisation");
 
 module.exports = {
   Query: {
@@ -41,7 +25,7 @@ module.exports = {
 
       // Get specific hospital
       const hospital = await Hospital.findByPk(hospital_id);
-      if(!hospital) {
+      if (!hospital) {
         throw new UserInputError("Hospital does not exist");
       }
       return hospital;
@@ -69,7 +53,7 @@ module.exports = {
       const hospital = await Hospital.findByPk(hospital_id);
 
       if (!hospital) {
-        throw new UserInputError("Hospital does not exist") 
+        throw new UserInputError("Hospital does not exist");
       }
 
       await hospital.destroy();
