@@ -11,6 +11,7 @@ const questionResolvers = require("./questions");
 const authorisation = require("./utils/authorisation");
 const inviteTokenResolvers = require("./utils/inviteLinks");
 const userResolvers = require("./utils/users");
+const questionsResolvers = require("./questions");
 
 module.exports = {
   Mutation: {

@@ -14,7 +14,7 @@ const Review = ({ isVisible, answers }) => {
         <SimpleGrid columns={[1, 1, 2, 3, 4]}>
           {Object.keys(answers.questionnaire).map((i, index) => (
             <ReviewListItem
-              display={index === 8 ? true : false}
+              display={index === 8}
               key={`reviewList${i}`}
               answerIndex={i}
               answer={answers.questionnaire[i].val}

@@ -159,5 +159,6 @@ module.exports = gql`
     checkInvitation(invitationToken: String!): String!
     getFeedback: [Feedback!]
     getSubmissionsForReview: [Submission!]
+    getQuestionnaire: [Question!]
   }
 `;
