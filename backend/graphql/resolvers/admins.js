@@ -1,9 +1,7 @@
 const { UserInputError } = require("apollo-server");
 
 const { Admin, Hospital } = require("../../models/index.js");
-const {
-  getAuthenticatedSuperAdmin,
-} = require("./utils/superadminAuthorisation");
+const { getAuthenticatedSuperAdmin } = require("./utils/userAuthorisation");
 
 module.exports = {
   Query: {

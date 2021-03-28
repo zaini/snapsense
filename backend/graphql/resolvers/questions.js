@@ -11,7 +11,7 @@ module.exports = {
 
       // Currently the questionnaire is just all the questions, so just return all questions
       const questions = await Question.findAll();
-      
+
       return questions;
     },
   },

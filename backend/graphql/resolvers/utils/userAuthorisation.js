@@ -1,5 +1,5 @@
 const { AuthenticationError } = require("apollo-server");
-const { SuperAdmin } = require("../../../models/index.js");
+const { SuperAdmin, Doctor, Patient } = require("../../../models/index.js");
 const isAuth = require("../../../utils/isAuth");
 
 const getAuthenticatedSuperAdmin = async (context) => {
@@ -20,4 +20,22 @@ const getAuthenticatedSuperAdmin = async (context) => {
   return superAdmin;
 };
 
-module.exports = { getAuthenticatedSuperAdmin };
+// Get the doctor and make sure they exist
+const getDoctorById = async (id) => {
+  const doctor = await Doctor.findByPk(id);
+  if (!doctor) {
+    throw new UserInputError("Invalid user!");
+  }
+  return doctor;
+};
+
+// Get the patient and make sure they exist
+const getPatientById = async (id) => {
+  const patient = await Patient.findByPk(id);
+  if (!patient) {
+    throw new UserInputError("Invalid patient!");
+  }
+  return patient;
+};
+
+module.exports = { getAuthenticatedSuperAdmin, getDoctorById, getPatientById };
