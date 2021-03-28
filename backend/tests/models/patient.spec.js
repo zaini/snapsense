@@ -110,18 +110,11 @@ describe("Patient Model Test", () => {
   });
 
   it("should throw an error on duplicated email", async (done) => {
-    const patient = await new Patient({
-      fname: "John",
-      lname: "Doe",
-      email: "johndoe@gmail.com",
-      password: "12345ABCDEfghi!",
-    }).save();
-
     await expect(
       Patient.create({
         fname: "John",
         lname: "Doe",
-        email: "johndoe@gmail.com",
+        email: "patient1@gmail.com",
         password: "12345ABCDEfghi!",
       })
     ).rejects.toThrow();
