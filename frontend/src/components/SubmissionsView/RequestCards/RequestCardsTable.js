@@ -58,7 +58,7 @@ const RequestCardsTable = () => {
       markup = (
         <>
           {data_rows.map((e, i) => {
-            return <RequestCard key={`${e.Submission.id}-${i}`} data={e} />;
+            return <RequestCard testID={`requestCard${i+1}`} key={`${e.Submission.id}-${i}`} data={e} />;
           })}
         </>
       );
@@ -71,7 +71,7 @@ const RequestCardsTable = () => {
 export default RequestCardsTable;
 
 export const GET_REQUESTS = gql`
-  query getRequests {
+  query getRequestsForReview {
     getRequestsForReview {
       id
       type
