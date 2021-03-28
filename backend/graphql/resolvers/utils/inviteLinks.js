@@ -4,18 +4,10 @@ const {
   AuthenticationError,
 } = require("apollo-server");
 const { verify } = require("jsonwebtoken");
-
 const isAuth = require("../../../utils/isAuth");
 const { createAccessToken } = require("./authTokens");
-const {
-  Admin,
-  Doctor,
-  Patient,
-  ScheduledEmail,
-} = require("../../../models/index");
+const { Admin, Doctor, Patient } = require("../../../models/index");
 require("dotenv").config({ path: "../.env" });
-
-const enqueueEmail = require("../../../utils/scheduledEmail");
 const transactionalEmailSender = require("../../../utils/transactionalEmailSender");
 
 const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
