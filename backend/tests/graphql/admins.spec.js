@@ -23,6 +23,8 @@ describe("admins resolvers", () => {
     });
 
     superAdminToken = superAdminToken.body.data.login.accessToken;
+		
+    done();
   });
 
   test("should create admin as a super-admin", async (done) => {
