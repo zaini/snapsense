@@ -127,4 +127,78 @@ describe("hospitals resolvers", () => {
     expect(errorMessage).toMatch("Invalid user account type!");
     done();
   });
+
+  test("should get specific hospital as super-admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					query {
+						getSpecificHospital(hospital_id: "1") {
+							id
+							name
+							contact_email
+						}
+					}				
+			`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const { body } = response;
+
+    expect(body).toMatchObject({
+      data: {
+        getSpecificHospital: {
+          id: "1",
+          name: "London Hospital",
+          contact_email: "london.hospital@mail.com",
+        },
+      },
+    });
+    done();
+  });
+
+  test("should throw error on invalid hospital retrieval as super-admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					query {
+						getSpecificHospital(hospital_id: "100") {
+							id
+							name
+							contact_email
+						}
+					}				
+			`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Hospital does not exist");
+    done();
+  });
+
+	test("should not get specific hospital if logged in as a user that's not a super admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					query {
+						getSpecificHospital(hospital_id: "100") {
+							id
+							name
+							contact_email
+						}
+					}				
+			`,
+      })
+      .set("authorization", `Bearer ${adminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Invalid user account type!");
+    done();
+  });
 });
