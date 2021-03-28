@@ -201,4 +201,85 @@ describe("hospitals resolvers", () => {
     expect(errorMessage).toMatch("Invalid user account type!");
     done();
   });
+
+  test("should create hospital as a super-admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					mutation {
+						createHospital(
+							name: "KCL Hospital"
+							contact_email: "kcl.hospital@kcl.ac.uk"
+						) {
+							id
+							name
+							contact_email
+						}
+					}										
+				`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const { body } = response;
+
+    expect(body).toMatchObject({
+      data: {
+        createHospital: {
+          id: "4",
+          name: "KCL Hospital",
+          contact_email: "kcl.hospital@kcl.ac.uk",
+        },
+      },
+    });
+
+    done();
+  });
+
+  test("should should not create hospital if not logged in", async (done) => {
+    const response = await request(app).post("/graphql").send({
+      query: `
+					mutation {
+						createHospital(
+							name: "KCL Hospital"
+							contact_email: "kcl.hospital@kcl.ac.uk"
+						) {
+							id
+							name
+							contact_email
+						}
+					}										
+				`,
+    });
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Missing Authorization Header");
+    done();
+  });
+
+  test("should should not create hospital if not logged in as a super-admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					mutation {
+						createHospital(
+							name: "KCL Hospital"
+							contact_email: "kcl.hospital@kcl.ac.uk"
+						) {
+							id
+							name
+							contact_email
+						}
+					}										
+				`,
+      })
+      .set("authorization", `Bearer ${adminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Invalid user account type!");
+    done();
+  });
 });
