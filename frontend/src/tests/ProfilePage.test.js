@@ -1,10 +1,31 @@
 import React from 'react';
-import { cleanup, render } from "@testing-library/react";
+import { screen, cleanup, render } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import ProfilePage from '../pages/My/ProfilePage';
 import { Route, MemoryRouter } from "react-router";
 import { AuthContext } from '../context/auth';
 import { MockedProvider } from "@apollo/client/testing";
+
+const {
+    GET_SUBMISSIONS,
+} = require("../components/SubmissionsView/SubmissionsComponent");
+
+const submissionMock = [
+    {
+        request: {
+            query: GET_SUBMISSIONS,
+        },
+        result: {
+            data: {
+                getSubmissions: [
+                    {
+                        id: "1", patient_id: "1",
+                    },
+                ],
+            },
+        },
+    },
+]
 
 afterEach(cleanup);
 
@@ -26,11 +47,13 @@ const setup = async () => {
     act(() => {
         render(
             <AuthContext.Provider value={toRet}>
-                <MemoryRouter initialEntries={["/my/profile"]}>
-                    <Route path="/my/profile">
-                        <ProfilePage />
-                    </Route>
-                </MemoryRouter>
+                <MockedProvider mocks={submissionMock} addTypename={false}>
+                    <MemoryRouter initialEntries={["/my/profile"]}>
+                        <Route path="/my/profile">
+                            <ProfilePage />
+                        </Route>
+                    </MemoryRouter>
+                </MockedProvider>
             </AuthContext.Provider>
         );
     });
@@ -44,11 +67,9 @@ const setup = async () => {
 //     })
 // })
 
-test("renders without crashing", () => {
+it("renders without crashing", () => {
     setup();
     expect(screen.getByText(/My Profile/i)).toBeInTheDocument();
-    // const { getByText } = render(<ProfilePage />)
-    // expect(getByText('My Submissions')).toBeTruthy()
 });
 
 // test("renders without crashing with ReactDOM", () => {
