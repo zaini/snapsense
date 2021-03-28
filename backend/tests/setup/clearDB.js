@@ -8,6 +8,9 @@ const {
   Image,
   Hospital,
   Doctor_Patient_Relation,
+  Answer,
+  Question,
+  Request,
 } = require("../../models/index");
 
 const deleteAll = async () => {
@@ -31,6 +34,13 @@ const deleteAll = async () => {
     truncate: { cascade: true },
   });
 
+  
+  await Question.destroy({
+    where: {},
+    trucate: { cascade: true },
+  })
+
+
   await Submission.destroy({
     where: {},
     truncate: { cascade: true },
@@ -41,10 +51,21 @@ const deleteAll = async () => {
     truncate: { cascade: true },
   });
 
+  await Answer.destroy({
+    where: {},
+    trucate: { cascade: true },
+  });
+
   await Doctor_Patient_Relation.destroy({
     where: {},
     truncate: { cascade: true },
   });
+
+  await Request.destroy({
+    where: {},
+    trucate: { cascade: true },
+  })
+
 };
 
 module.exports = deleteAll;
