@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import Error from "../utils/Error";
 
-export const Feedback = () => {
+const Feedback = () => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(null);
   const [value, setValue] = useState("");

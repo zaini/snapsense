@@ -1,7 +1,9 @@
-import { CREATE_FEEDBACK, Feedback } from "../components/Feedback/Feedback";
 import { MockedProvider } from "@apollo/client/testing";
 import { render, cleanup, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import Feedback from "../components/Feedback/Feedback";
+
+const { CREATE_FEEDBACK } = require("../components/Feedback/Feedback");
 
 //Creating mock data
 const mocks = [
@@ -20,9 +22,7 @@ const component = render(
 );
 
 /* Essential */
-afterEach(async () => {
-  await cleanup();
-});
+afterEach(cleanup);
 
 /*------ Tests  -----*/
 // Feedback page general tests
