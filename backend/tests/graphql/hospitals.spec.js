@@ -201,47 +201,4 @@ describe("hospitals resolvers", () => {
     expect(errorMessage).toMatch("Invalid user account type!");
     done();
   });
-
-  test("should create admin as a super-admin", async (done) => {
-    const response = await request(app)
-      .post("/graphql")
-      .send({
-        query: `
-					mutation {
-						createAdmin(
-							fname: "Jerry"
-							lname: "Seinfeld"
-							email: "bob@sacamano.com"
-							password: "Password123"
-							hospital_id: 1
-						) {
-							id
-							fname
-							lname
-							email
-							Hospital {
-								id
-							}
-						}
-					}						
-				`,
-      })
-      .set("authorization", `Bearer ${superAdminToken}`);
-
-    const { body } = response;
-
-    expect(body).toMatchObject({
-      data: {
-        createAdmin: {
-          id: "3",
-          fname: "Jerry",
-          lname: "Seinfeld",
-          email: "bob@sacamano.com",
-          Hospital: { id: "1" },
-        },
-      },
-    });
-
-    done();
-  });
 });
