@@ -1,9 +1,7 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { render, cleanup, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Feedback from "../components/Feedback/Feedback";
-
-const { CREATE_FEEDBACK } = require("../components/Feedback/Feedback");
+import Feedback, { CREATE_FEEDBACK } from "../components/Feedback/Feedback";
 
 //Creating mock data
 const mocks = [
