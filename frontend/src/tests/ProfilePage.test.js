@@ -60,53 +60,21 @@ const setup = async () => {
 };
 
 
-// jest.mock('../context/auth', () => {
-//     const accType = "PATIENT";
-//     return jest.fn(() => {
-//         user: "PATIENT"
-//     })
-// })
-
 it("renders without crashing", () => {
     setup();
     expect(screen.getByText(/My Profile/i)).toBeInTheDocument();
 });
 
-// test("renders without crashing with ReactDOM", () => {
-//     act(() => {
-//         ReactDOM.render((
-//             <ApolloProvider>
-//                 <AuthContext.Provider value={{ user: "PATIENT" }}>
-//                     <ProfilePage />
-//                 </AuthContext.Provider>
-//             </ApolloProvider>
-//         ), container);
+// it("should load doctor home page without crashing", async () => {
+//     setup();
+//     expect(screen.getByText(/My Profile/i)).toBeInTheDocument();
+//     await waitFor(() => {
+//         const submissionReview = screen.getByTestId("doctorHomeTextOne");
+//         const requestReview = screen.getByTestId("doctorHomeTextTwo");
+//         expect(screen.getByTestId("doctorHomeContainer")).toBeInTheDocument();
+//         expect(submissionReview).toBeInTheDocument();
+//         expect(requestReview).toBeInTheDocument();
+//         within(submissionReview).getByText(/You have 7 submissions to review./i);
+//         within(requestReview).getByText(/You have 1 requests to review./i);
 //     });
-
-//     expect(container.textContent).toBe("Provided Value");
 // });
-
-// test('renders without crashing', () => {
-
-//     const email = '@gmail.com';
-//     const password = '';
-
-//     const wrapper = shallow(<ProfilePage handleLogin={state => {
-//         expect(state.email).to.be.equal(email);
-//         expect(state.password).to.be.equal(password);
-//     }} />);
-
-//     wrapper.setState({ email: '@gmail.com', password: ''});
-
-//     wrapper.find('button').simulate('click');
-
-
-//     const renderProfilePage = render(<ProfilePage accountType="" />);
-//     expect(renderProfilePage).toBeTruthy();
-// })
-
-// test('Profile page has a userInfo', () => {
-//     const wrapper = render(<ProfilePage />);
-//     const userInfo = wrapper.findByRole('UserInfo');
-//     expect(userInfo).toBeTruthy();
-// })
