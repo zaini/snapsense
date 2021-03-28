@@ -91,12 +91,12 @@ const RequestCardOptions = ({
         >
           Submit Review
         </Button>
-        <Link to={`/my/submissions/show/${submission.id}`}>
+        <Link data-testid="viewLink" to={`/my/submissions/show/${submission.id}`}>
           <Button data-testid="viewSubBtnForm" colorScheme="blue">
             View Submission
           </Button>
         </Link>
-        <Link to={`/my/patients/${patient.id}/requests/new`}>
+        <Link data-testid="newRequestLink" to={`/my/patients/${patient.id}/requests/new`}>
           <Button data-testid="requestSubBtnForm" colorScheme="blue">
             Make a new request
           </Button>
