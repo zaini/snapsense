@@ -6,7 +6,7 @@ import ImageSlideshow from "../../utils/ImageSlideshow";
 import ViewQuestionnaireResponse from "../../utils/ViewQuestionnaireResponse";
 import RequestCardOptions from "./RequestCardOptions";
 
-const RequestCard = ({ data, vertical }) => {
+const RequestCard = ({ data, vertical, testID }) => {
   const { Patient, Submission, deadline } = data;
 
   const deadline_date = new Date(parseInt(deadline)).toLocaleString();
@@ -50,7 +50,7 @@ const RequestCard = ({ data, vertical }) => {
   });
 
   return (
-    <Box borderWidth="1px" borderRadius="lg" p="10px" m="5px">
+    <Box data-testid={testID} borderWidth="1px" borderRadius="lg" p="10px" m="5px">
       {Submission.id}
       <Center p="10px">
         <Stack direction={vertical ? "column" : "row"}>
