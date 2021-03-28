@@ -17,7 +17,7 @@ describe("Doctor Patient Relation Model Test", () => {
   it("should delete relation if doctor is deleted", async (done) => {
     await Doctor.destroy({ where: { id: 2 } });
 
-    const dprFind = await Doctor_Patient_Relation.findByPk(2);
+    const dprFind = await Doctor_Patient_Relation.findByPk(1);
     expect(dprFind).toBeNull();
     done();
   });
