@@ -53,15 +53,16 @@ const RequestCardOptions = ({
         <InputGroup mb="10px">
           <InputLeftAddon children={<BsFlag />} backgroundColor="#ABCAE7" />
           <Select
+            data-testid="requestRiskSelect"
             value={flagValue}
             onChange={(e) => {
               setFlagValue(e.target.value);
             }}
           >
-            <option value="-1">Review Submission</option>
-            <option value="1">Low Risk</option>
-            <option value="2">Medium Risk</option>
-            <option value="3">High Risk</option>
+            <option data-testid="select-option" value="-1">Review Submission</option>
+            <option data-testid="select-option" value="1">Low Risk</option>
+            <option data-testid="select-option" value="2">Medium Risk</option>
+            <option data-testid="select-option" value="3">High Risk</option>
           </Select>
         </InputGroup>
         {/* TODO: this is not actaully linked to any API and is just mock data. */}
@@ -75,7 +76,7 @@ const RequestCardOptions = ({
       </Box>
       <HStack>
         <Button
-        data-testid="submitBtnForm"
+          data-testid="submitBtnForm"
           colorScheme="blue"
           isDisabled={parseInt(flagValue) === -1}
           onClick={() => {
@@ -91,10 +92,14 @@ const RequestCardOptions = ({
           Submit Review
         </Button>
         <Link to={`/my/submissions/show/${submission.id}`}>
-          <Button data-testid="viewSubBtnForm" colorScheme="blue">View Submission</Button>
+          <Button data-testid="viewSubBtnForm" colorScheme="blue">
+            View Submission
+          </Button>
         </Link>
         <Link to={`/my/patients/${patient.id}/requests/new`}>
-          <Button data-testid="requestSubBtnForm" colorScheme="blue">Make a new request</Button>
+          <Button data-testid="requestSubBtnForm" colorScheme="blue">
+            Make a new request
+          </Button>
         </Link>
       </HStack>
     </VStack>
