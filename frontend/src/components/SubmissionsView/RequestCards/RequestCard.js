@@ -118,7 +118,7 @@ const RequestCard = ({ data, vertical, testID }) => {
 
 export default RequestCard;
 
-const FLAG_SUBMISSION = gql`
+export const FLAG_SUBMISSION = gql`
   mutation flagSubmission($submission_id: ID!, $flag: Int!) {
     flagSubmission(submission_id: $submission_id, flag: $flag) {
       id
@@ -128,7 +128,7 @@ const FLAG_SUBMISSION = gql`
 `;
 
 const GET_REQUESTS = gql`
-  query getRequests {
+  query getRequestsForReview {
     getRequestsForReview {
       id
       type
@@ -170,7 +170,7 @@ const GET_REQUESTS = gql`
 `;
 
 const GET_SUBMISSIONS = gql`
-  query getSubmissions {
+  query getSubmissionsForReview {
     getSubmissionsForReview {
       id
       flag
