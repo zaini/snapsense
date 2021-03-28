@@ -25,7 +25,7 @@ const DoctorHomePanel = () => {
     markup = (
       <Alert status="error">
         <AlertIcon />
-        {error.message}
+        {(error) ? error.message : requests_error.message}
       </Alert>
     );
   } else {
@@ -64,16 +64,16 @@ const DoctorHomePanel = () => {
 
 export default DoctorHomePanel;
 
-const GET_SUBMISSIONS = gql`
-  query getSubmissions {
+export const GET_SUBMISSIONS = gql`
+  query getSubmissionsForReview {
     getSubmissionsForReview {
       id
     }
   }
 `;
 
-const GET_REQUESTS = gql`
-  query getRequests {
+export const GET_REQUESTS = gql`
+  query getRequestsForReview {
     getRequestsForReview {
       id
     }
