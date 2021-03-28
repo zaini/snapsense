@@ -8,10 +8,8 @@ import {
   cleanup,
   screen,
 } from "@testing-library/react";
-import { createMemoryHistory } from "history";
 import { act } from "react-dom/test-utils";
 import { Route, MemoryRouter } from "react-router";
-import { Router } from "react-router-dom";
 import gql from "graphql-tag";
 import { AuthContext } from "../context/auth";
 
@@ -60,22 +58,31 @@ const doctor_mocks = [
     },
     results: {
       data: {
-        getRequestsForReview: {
-          id: 2,
-        },
+        getRequestsForReview: [
+          {
+            id: "3",
+          },
+        ],
       },
     },
   },
-
   {
     request: {
       query: GET_SUBMISSIONS,
     },
     results: {
       data: {
-        getSubmissionsForReview: {
-          id: 1,
-        },
+        getSubmissionsForReview: [
+          {
+            id: "5",
+          },
+          {
+            id: "6",
+          },
+          {
+            id: "7",
+          },
+        ],
       },
     },
   },
@@ -83,7 +90,7 @@ const doctor_mocks = [
 
 afterEach(cleanup);
 
-const doctor_component = async () => {
+const doctorSetup = () => {
   const doc = {
     id: 1,
     fname: "Doctor",
@@ -96,8 +103,8 @@ const doctor_component = async () => {
   };
 
   const toRet = {
-    user: doc
-  }
+    user: doc,
+  };
   act(() => {
     render(
       <AuthContext.Provider value={toRet}>
@@ -140,8 +147,16 @@ const patient_component = async () => {
 };
 
 it("should render without crashing for doctor", () => {
-  doctor_component();
+  doctorSetup();
   expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+});
+
+it("should load doctor home page without crashing for doctor", async () => {
+  doctorSetup();
+  expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+  await waitFor(() => {
+    expect(screen.getByTestId("doctorHomeContainer")).toBeInTheDocument();
+  });
   screen.debug();
 });
 
