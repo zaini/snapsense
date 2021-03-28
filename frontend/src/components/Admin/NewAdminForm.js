@@ -19,6 +19,19 @@ const NewAdminForm = ({ hospital }) => {
   const { register, handleSubmit } = useForm();
 
   const [createAdmin, { loading, error, data }] = useMutation(CREATE_ADMIN, {
+    update(proxy, result) {
+      // Write to cache
+      const data = proxy.readQuery({
+        query: GET_ADMINS,
+      });
+      data.getAdmins = [result.data.createAdmin, ...data.getAdmins];
+      proxy.writeQuery({
+        query: GET_ADMINS,
+        data: {
+          getAdmins: [result.data.createAdmin, ...data.getAdmins],
+        },
+      });
+    },
     onError(_) {}, // Error is handled below
   });
 
@@ -117,6 +130,20 @@ const CREATE_ADMIN = gql`
     ) {
       fname
       email
+    }
+  }
+`;
+
+const GET_ADMINS = gql`
+  query getAdmins {
+    getAdmins {
+      id
+      fname
+      lname
+      email
+      Hospital {
+        name
+      }
     }
   }
 `;
