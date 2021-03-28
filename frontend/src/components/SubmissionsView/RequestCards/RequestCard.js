@@ -1,21 +1,20 @@
 import React from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { Box, HStack, Text, Center } from "@chakra-ui/react";
+import { Box, Stack, Text, Center } from "@chakra-ui/react";
 import ImageSlideshow from "../../utils/ImageSlideshow";
 import ViewQuestionnaireResponse from "../../utils/ViewQuestionnaireResponse";
 import RequestCardOptions from "./RequestCardOptions";
 
-const RequestCard = ({ data }) => {
+const RequestCard = ({ data, vertical }) => {
   const { Patient, Submission, deadline, type } = data;
-  const deadline_date = new Date(parseInt(deadline)).toDateString();
-  const submission_date = new Date(
-    parseInt(Submission.createdAt)
-  ).toDateString();
+  
+  const deadline_date = new Date(deadline);
+  const submission_date = new Date(Submission.createdAt);
 
   const [flagSubmission, { loading }] = useMutation(FLAG_SUBMISSION, {
     onCompleted() {
-      // TODO: refresh page through cache!
+      // window.location.reload();
     },
     onError(err) {
       console.log(err);
@@ -27,8 +26,21 @@ const RequestCard = ({ data }) => {
       proxy.writeQuery({
         query: GET_REQUESTS,
         data: {
-          getRequestsForReview: data.getRequestsForReview.filter(
-            (p) => p.Submission.id !== Submission.id
+          getRequestsForReview: data.getRequestsForReview.filter((p) => {
+            return p.Submission.id !== Submission.id;
+          }),
+        },
+      });
+      const dataSubmission = proxy.readQuery({
+        query: GET_SUBMISSIONS,
+      });
+      proxy.writeQuery({
+        query: GET_SUBMISSIONS,
+        data: {
+          getSubmissionsForReview: dataSubmission.getSubmissionsForReview.filter(
+            (p) => {
+              return p.id !== Submission.id;
+            }
           ),
         },
       });
@@ -39,25 +51,54 @@ const RequestCard = ({ data }) => {
     <Box borderWidth="1px" borderRadius="lg" p="10px" m="5px">
       {Submission.id}
       <Center p="10px">
-        <HStack>
-          <Box mr="100px">
-            {Submission.Images.length === 0 ? (
+        <Stack direction={vertical ? "column" : "row"}>
+          <Box>
+            {Submission.Images && Submission.Images.length === 0 ? (
               <Text fontWeight="bold" fontSize="110%" pb="50%">
-                No images
+                <Box
+                  w="220px"
+                  h="100%"
+                  overflow="hidden"
+                  objectFit="scale-down"
+                >
+                  <Center>No Images</Center>
+                </Box>
               </Text>
             ) : (
               <ImageSlideshow images={Submission.Images} />
             )}
           </Box>
-          <Box mr="100px">
+
+          {vertical && (
+            <>
+              <br />
+              <hr />
+              <br />
+            </>
+          )}
+
+          <Box>
             {Submission.Answers.length === 0 ? (
-              <Text fontWeight="bold" fontSize="110%" pb="50%">
-                No questionnaire
-              </Text>
+              <Box w="500px">
+                <Center>
+                  <Text fontWeight="bold" fontSize="110%" pb="50%">
+                    No questionnaire
+                  </Text>
+                </Center>
+              </Box>
             ) : (
               <ViewQuestionnaireResponse answers={Submission.Answers} />
             )}
           </Box>
+
+          {vertical && (
+            <>
+              <br />
+              <hr />
+              <br />
+            </>
+          )}
+
           <Box>
             <RequestCardOptions
               patient={Patient}
@@ -67,7 +108,7 @@ const RequestCard = ({ data }) => {
               onFlag={flagSubmission}
             />
           </Box>
-        </HStack>
+        </Stack>
       </Center>
     </Box>
   );
@@ -121,6 +162,36 @@ const GET_REQUESTS = gql`
         fname
         lname
         email
+      }
+    }
+  }
+`;
+
+const GET_SUBMISSIONS = gql`
+  query getSubmissions {
+    getSubmissionsForReview {
+      id
+      flag
+      createdAt
+      Images {
+        id
+        url
+      }
+      Answers {
+        id
+        Question {
+          id
+          text
+        }
+        value
+        extra
+      }
+      Patient {
+        id
+        fname
+        lname
+        email
+        flag
       }
     }
   }

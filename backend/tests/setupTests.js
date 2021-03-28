@@ -7,3 +7,8 @@ global.beforeEach(async () => {
   await deleteAll();
   await seedFixtures();
 });
+
+global.beforeAll(async () => {
+	await deleteAll();
+	await seedFixtures();
+  });

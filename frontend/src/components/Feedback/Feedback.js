@@ -127,7 +127,7 @@ const Feedback = () => {
                 <Center>
                   <Button
                     mt={4}
-                    colorScheme="teal"
+                    colorScheme="blue"
                     rightIcon={<CheckCircleIcon />}
                     onClick={() => handleSubmit()}
                     isDisabled={!canSubmit}

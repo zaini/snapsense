@@ -1,6 +1,7 @@
 const { ApolloError } = require("apollo-server");
 const inviteTemplate = require("./invite");
 const requestTemplate = require("./request");
+const reminderTemplate = require("./reminder");
 
 const giveTemplate = (t, p) => {
   let toRet = "";
@@ -11,6 +12,10 @@ const giveTemplate = (t, p) => {
 
     case "request":
       toRet = requestTemplate(p);
+      break;
+
+    case "reminder":
+      toRet = reminderTemplate(p);
       break;
 
     default:

@@ -105,7 +105,7 @@ const cols = [
       return (
         <Link to={`/my/admins/show/${id}`}>
           <Button leftIcon={<ViewIcon />} colorScheme="blue">
-            View
+            View Admin
           </Button>
         </Link>
       );

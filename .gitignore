@@ -2,3 +2,5 @@ node_modules
 backend/config
 backend/.env
 .DS_Store
+frontend/.env
+.env
