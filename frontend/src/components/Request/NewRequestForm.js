@@ -15,7 +15,7 @@ import RequestDatePicker from "./RequestDatePicker";
 import Error from "../utils/Error";
 import PeriodicSelector from "./PeriodicSelector";
 
-const NewRequestForm = ({ lol, testName, patient, periodic }) => {
+const NewRequestForm = ({ dateIn, testName, patient, periodic }) => {
   const { register, handleSubmit, control, getValues } = useForm();
 
   // Mutation hook with loading and error attributes
@@ -49,7 +49,12 @@ const NewRequestForm = ({ lol, testName, patient, periodic }) => {
   if (loading) {
     // Display a spinner if loading
     markup = (
-      <Container data-testid="formSubmitInnerLoader" p="7" borderRadius="lg" mt="20">
+      <Container
+        data-testid="formSubmitInnerLoader"
+        p="7"
+        borderRadius="lg"
+        mt="20"
+      >
         <Center>
           <Spinner size="xl" />
         </Center>
@@ -58,7 +63,12 @@ const NewRequestForm = ({ lol, testName, patient, periodic }) => {
   } else if (error) {
     // Display the error on error
     markup = (
-      <Container data-testid="formSubmitInnerError" p="7" borderRadius="lg" mt="20">
+      <Container
+        data-testid="formSubmitInnerError"
+        p="7"
+        borderRadius="lg"
+        mt="20"
+      >
         <Error
           errors={[
             {
@@ -86,7 +96,7 @@ const NewRequestForm = ({ lol, testName, patient, periodic }) => {
           </div>
         )}
         <RequestTypeSelector patient={patient} register={register} />
-        <RequestDatePicker control={control} />
+        <RequestDatePicker dateIn={dateIn} control={control} />
         <PeriodicSelector
           show={periodic}
           patient={patient}
@@ -112,7 +122,7 @@ const NewRequestForm = ({ lol, testName, patient, periodic }) => {
 export default NewRequestForm;
 
 // Graphql mutation
-const CREATE_REQUEST = gql`
+export const CREATE_REQUEST = gql`
   mutation createRequest(
     $patient_id: ID!
     $request_type: Int!
