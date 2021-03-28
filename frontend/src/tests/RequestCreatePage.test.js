@@ -1,5 +1,6 @@
 import { React } from "react";
 import {
+  cleanup,
   fireEvent,
   render,
   screen,
@@ -11,6 +12,8 @@ import { act } from "react-dom/test-utils";
 
 import NewRequestPage from "../pages/My/NewRequestPage";
 import { Route, MemoryRouter } from "react-router";
+
+afterEach(cleanup);
 
 const { CREATE_REQUEST } = require("../components/Request/NewRequestForm");
 const { GET_PATIENT_AS_DOCTOR } = require("../pages/My/NewRequestPage");
@@ -132,13 +135,16 @@ describe("new request form renders properly", () => {
 
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
-      fireEvent(
-        screen.getByText("Scheduled"),
-        new MouseEvent("click", {
-          bubbles: true,
-          cancelable: true,
-        })
-      );
+      act(() => {
+        fireEvent(
+          screen.getByText("Scheduled"),
+          new MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+          })
+        );
+      });
+
       expect(screen.getByTestId("periodicForm")).toBeInTheDocument();
       const form = screen.getByTestId("periodicForm");
       within(form).getByTestId("radioImage");
@@ -153,19 +159,25 @@ describe("new request form renders properly", () => {
     setup();
 
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+
     await waitFor(() => {
-      fireEvent(
-        screen.getByText("Scheduled"),
-        new MouseEvent("click", {
-          bubbles: true,
-          cancelable: true,
-        })
-      );
+      act(() => {
+        fireEvent(
+          screen.getByText("Scheduled"),
+          new MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+          })
+        );
+      });
       expect(screen.getByTestId("periodicForm")).toBeInTheDocument();
       const form = screen.getByTestId("periodicForm");
 
       const interval = within(form).getByTestId("inputInterval");
-      fireEvent.change(interval, { target: { value: "15" } });
+      act(() => {
+        fireEvent.change(interval, { target: { value: "15" } });
+      });
+
       expect(interval.value).toBe("15");
     });
   });
@@ -183,7 +195,9 @@ describe("new request form submits properly", () => {
     const form = screen.getByTestId("nonPeriodicForm");
 
     const btnSubmit = within(form).getByText("Submit");
-    fireEvent.click(btnSubmit);
+    act(() => {
+      fireEvent.click(btnSubmit);
+    });
 
     await waitFor(async () => {
       expect(screen.getByTestId("formSubmitInnerLoader")).toBeInTheDocument();
@@ -196,5 +210,33 @@ describe("new request form submits properly", () => {
     expect(
       screen.getByText(/Request has been sent to Patient/i)
     ).toBeInTheDocument();
+  });
+
+  test("form submit shows relevant error message on invalid input", async () => {
+    setup();
+
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+    await waitFor(async () => {
+      expect(screen.getByTestId("nonPeriodicForm")).toBeInTheDocument();
+    });
+
+    const form = screen.getByTestId("nonPeriodicForm");
+
+    const interval = within(form).getByTestId("inputInterval");
+
+    act(() => {
+      fireEvent.change(interval, { target: { value: "50" } });
+    });
+
+    expect(interval.value).toBe("50");
+
+    const btnSubmit = within(form).getByText("Submit");
+
+    act(() => {
+      fireEvent.click(btnSubmit);
+    });
+
+    expect(screen.queryByTestId("formSubmitInnerLoader")).toBeNull(); // it doesn't exist
+    expect(screen.queryByTestId("formSubmitInnerSuccess")).toBeNull(); // it doesn't exist
   });
 });
