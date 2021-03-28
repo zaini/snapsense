@@ -72,7 +72,7 @@ const NewRequestForm = ({ dateIn, testName, patient, periodic }) => {
         <Error
           errors={[
             {
-              message: error.message,
+              message: (err.graphQLErrors && err.graphQLErrors[0].message) || err.message,
             },
           ]}
         />
