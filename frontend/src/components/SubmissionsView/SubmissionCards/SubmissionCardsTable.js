@@ -69,7 +69,7 @@ const SubmissionCardsTable = () => {
 
 export default SubmissionCardsTable;
 
-const GET_SUBMISSIONS = gql`
+export const GET_SUBMISSIONS = gql`
   query getSubmissions {
     getSubmissionsForReview {
       id

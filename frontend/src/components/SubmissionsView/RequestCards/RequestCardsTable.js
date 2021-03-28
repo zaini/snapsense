@@ -70,7 +70,7 @@ const RequestCardsTable = () => {
 
 export default RequestCardsTable;
 
-const GET_REQUESTS = gql`
+export const GET_REQUESTS = gql`
   query getRequests {
     getRequestsForReview {
       id
