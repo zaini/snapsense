@@ -44,7 +44,13 @@ const mocks = [
         patient_id: "2",
       },
     },
-    error: Error("This is an invalid patient"),
+    error: {
+      graphQLErrors: [
+        {
+          message: "This is an invalid patient",
+        },
+      ],
+    },
   },
   {
     request: {
@@ -102,7 +108,7 @@ describe("new request page renders properly", () => {
 
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
-      expect(screen.getByText(/Invalid Patient!/i)).toBeInTheDocument();
+      expect(screen.getByText(/This is an invalid patient/i)).toBeInTheDocument();
     });
   });
 
