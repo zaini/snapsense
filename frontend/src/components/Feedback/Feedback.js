@@ -130,7 +130,7 @@ const Feedback = () => {
                   <Button
                     data-testid="submitbutton"
                     mt={4}
-                    colorScheme="teal"
+                    colorScheme="blue"
                     rightIcon={<CheckCircleIcon />}
                     onClick={() => handleSubmit()}
                     isDisabled={!canSubmit}

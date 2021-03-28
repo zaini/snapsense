@@ -79,10 +79,13 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Patient",
     }
   );
-  
+
   Patient.beforeSave(async (user, options) => {
     options.validate = false;
-    user.password = await argon2.hash(user.password);
+    user.email = user.email.toLowerCase();
+    if (user.changed("password")) {
+      user.password = await argon2.hash(user.password);
+    }
   });
 
   return Patient;

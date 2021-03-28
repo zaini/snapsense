@@ -6,11 +6,12 @@ const doctorResolvers = require("./doctors");
 const patientResolvers = require("./patients");
 const submissionResolvers = require("./submissions");
 const requestResolvers = require("./request");
-const imageResolvers = require("./images");
 const feedbackResolvers = require("./feedback");
+const questionResolvers = require("./questions");
 const authorisation = require("./utils/authorisation");
 const inviteTokenResolvers = require("./utils/inviteLinks");
 const userResolvers = require("./utils/users");
+const questionsResolvers = require("./questions");
 
 module.exports = {
   Mutation: {
@@ -19,12 +20,12 @@ module.exports = {
     ...doctorResolvers.Mutation,
     ...patientResolvers.Mutation,
     ...submissionResolvers.Mutation,
-    ...imageResolvers.Mutation,
     ...authorisation.Mutation,
     ...inviteTokenResolvers.Mutation,
     ...requestResolvers.Mutation,
     ...userResolvers.Mutation,
     ...feedbackResolvers.Mutation,
+	...questionResolvers.Mutation,
   },
   Query: {
     ...hospitalResolvers.Query,
@@ -32,11 +33,11 @@ module.exports = {
     ...doctorResolvers.Query,
     ...patientResolvers.Query,
     ...submissionResolvers.Query,
-    ...imageResolvers.Query,
     ...inviteTokenResolvers.Query,
     ...requestResolvers.Query,
     ...userResolvers.Query,
     ...feedbackResolvers.Query,
+	...questionResolvers.Query,
     isLoggedIn: async (_, __, { req, payload }) => {
       // This is an example query. Will be deleted.
       // user_data will store the payload, which is basically the data that's in the token

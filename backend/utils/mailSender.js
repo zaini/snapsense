@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 const smtpTransport = require("nodemailer-smtp-transport");
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 
 let transporter = nodemailer.createTransport(
   smtpTransport({
