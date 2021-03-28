@@ -22,6 +22,10 @@ const {
   GET_SUBMISSIONS,
 } = require("../components/SubmissionsView/SubmissionCards/SubmissionCardsTable");
 
+const {
+  FLAG_SUBMISSION,
+} = require("../components/SubmissionsView/RequestCards/RequestCard");
+
 const fulfilledRequestData = {
   data: {
     getRequestsForReview: [
@@ -371,6 +375,24 @@ const mocksWithData = [
     },
     result: submissionData,
   },
+  {
+    request: {
+      query: FLAG_SUBMISSION,
+      variables: {
+        submission_id: "11",
+        flag: 2,
+      },
+    },
+    result: {
+      data: {
+        flagSubmission: {
+          id: "5",
+          flag: 2,
+          __typename: "Submission",
+        },
+      },
+    },
+  },
 ];
 
 const mocksWithoutData = [
@@ -635,29 +657,61 @@ describe("fulfilled and unreviewed tab", () => {
 
     act(() => {
       //The value should be the key of the option
-      fireEvent.change(riskSelect, { target: { value: 1 } });
+      fireEvent.change(riskSelect, { target: { value: 2 } });
     });
 
     const options = within(riskSelect).getAllByTestId("select-option");
     expect(options[0].selected).toBeFalsy();
-    expect(options[1].selected).toBeTruthy();
-    expect(options[2].selected).toBeFalsy();
+    expect(options[1].selected).toBeFalsy();
+    expect(options[2].selected).toBeTruthy();
     expect(options[3].selected).toBeFalsy();
 
     const submitBtn = within(requestCard).getByTestId("submitBtnForm");
     expect(!submitBtn.disabled).toBeTruthy();
+    jest.spyOn(window, "alert").mockImplementation(() => {});
+    act(() => {
+      fireEvent.click(submitBtn);
+    });
+    expect(window.alert).toBeCalledWith(
+      "This submission has now been reviewed."
+    );
   });
 
-  // test("view submission redirect to correct page in card three", async () => {
-  //   setup();
-  //   // expect(screen.getByText(/aaaaaaaaaaaaaaaaa/i)).toBeInTheDocument();
-  // });
+  test("view submission redirect to correct page in card three", async () => {
+    setup();
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByTestId("requestCard3")).toBeInTheDocument();
+    });
+    const requestCard = screen.getByTestId("requestCard3");
 
-  // test("make a new request redirects to correct page in card three ", async () => {
-  //   setup();
-  //   // expect(screen.getByText(/aaaaaaaaaaaaaaaaa/i)).toBeInTheDocument();
-  // });
-  // });
+    const viewBtn = within(requestCard).getByTestId("viewSubBtnForm");
+    expect(!viewBtn.disabled).toBeTruthy();
+
+    const viewLink = within(requestCard).getByTestId("viewLink");
+    expect(viewLink).toBeInTheDocument();
+    expect(viewLink).toHaveAttribute("href", "/my/submissions/show/11");
+  });
+
+  test("make a new request redirects to correct page in card three ", async () => {
+    setup();
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByTestId("requestCard3")).toBeInTheDocument();
+    });
+    const requestCard = screen.getByTestId("requestCard3");
+
+    const requestBtn = within(requestCard).getByTestId("requestSubBtnForm");
+    expect(!requestBtn.disabled).toBeTruthy();
+
+    const newRequestLink = within(requestCard).getByTestId("newRequestLink");
+    expect(newRequestLink).toBeInTheDocument();
+
+    expect(newRequestLink).toHaveAttribute(
+      "href",
+      "/my/patients/1/requests/new"
+    );
+  });
 
   // describe("fulfilled and unreviewed tab", () => {
   //   test("spinner shows up when tab is loaded", async () => {
