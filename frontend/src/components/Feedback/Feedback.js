@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import Error from "../utils/Error";
 
-const Feedback = () => {
+export const Feedback = () => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(null);
   const [value, setValue] = useState("");
@@ -74,7 +74,7 @@ const Feedback = () => {
         )}
         <Container p="10" borderWidth="2em" borderRadius="lg" mt="10">
           <Grid
-            container
+            container="true"
             justify="center"
             direction="column"
             alignItems="center"
@@ -87,7 +87,7 @@ const Feedback = () => {
               {[...Array(5)].map((star, i) => {
                 const ratingValue = i + 1;
                 return (
-                  <label>
+                  <label key={i}>
                     <input
                       type="radio"
                       name="rating"
@@ -96,6 +96,7 @@ const Feedback = () => {
                       style={{ display: "none" }}
                     />
                     <FaStar
+                      data-testid="starrate"
                       size={30}
                       color={
                         ratingValue <= (hover || rating) ? "#ffc107" : "#a9a9a9"
@@ -117,7 +118,8 @@ const Feedback = () => {
               <form>
                 <Text mb="8px">Additional Feedback</Text>
                 <Textarea
-                  isFullWidth="True"
+                  data-testid="textarea"
+                  isfullwidth="True"
                   value={value}
                   onChange={handleInputChange}
                   placeholder="Enter here"
@@ -126,6 +128,7 @@ const Feedback = () => {
                 <br />
                 <Center>
                   <Button
+                    data-testid="submitbutton"
                     mt={4}
                     colorScheme="blue"
                     rightIcon={<CheckCircleIcon />}
@@ -145,10 +148,9 @@ const Feedback = () => {
 
   return markup;
 };
-
 export default Feedback;
 
-const CREATE_FEEDBACK = gql`
+export const CREATE_FEEDBACK = gql`
   mutation createFeedback($stars: Int!, $extra: String) {
     createFeedback(stars: $stars, extra: $extra) {
       id
