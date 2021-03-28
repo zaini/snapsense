@@ -2,11 +2,15 @@
 
 const {
   Admin,
+  Answer,
   Doctor,
+  Feedback,
   Patient,
   Submission,
+  SuperAdmin,
   Image,
   Hospital,
+  Question,
   Doctor_Patient_Relation,
   Answer,
   Question,
@@ -34,13 +38,11 @@ const deleteAll = async () => {
     truncate: { cascade: true },
   });
 
-  
   await Question.destroy({
     where: {},
-    trucate: { cascade: true },
-  })
-
-
+    truncate: { cascade: true },
+  });
+  
   await Submission.destroy({
     where: {},
     truncate: { cascade: true },
@@ -53,7 +55,7 @@ const deleteAll = async () => {
 
   await Answer.destroy({
     where: {},
-    trucate: { cascade: true },
+    truncate: { cascade: true },
   });
 
   await Doctor_Patient_Relation.destroy({
@@ -66,6 +68,15 @@ const deleteAll = async () => {
     trucate: { cascade: true },
   })
 
+  await SuperAdmin.destroy({
+    where: {},
+    truncate: { cascade: true },
+  });
+
+  await Feedback.destroy({
+    where: {},
+    truncate: { cascade: true },
+  });
 };
 
 module.exports = deleteAll;

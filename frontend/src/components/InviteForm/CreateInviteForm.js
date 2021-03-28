@@ -35,7 +35,8 @@ const CreateInviteForm = () => {
       setInvitationToken(invitationToken);
     },
     onError(err) {
-      const message = err.graphQLErrors[0].message;
+      const message =
+        (err.graphQLErrors && err.graphQLErrors[0].message) || err.message;
       // We have to assign this to a field in the form for it to let us resubmit after an error
       setError("email", { type: "manual", message });
       setInvitationToken("");

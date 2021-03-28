@@ -88,7 +88,7 @@ const SubmissionCard = ({ data, vertical, redirect }) => {
           )}
 
           <Box>
-            {Answers.length === 0 ? (
+            {Answers && Answers.length === 0 ? (
               <Box w="500px">
                 <Center>
                   <Text fontWeight="bold" fontSize="110%" pb="50%">

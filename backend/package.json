@@ -6,7 +6,8 @@
   "scripts": {
     "serve": "node server.js",
     "start": "nodemon server.js",
-    "test": "jest --config ./tests/jest.config.js --forceExit --detectOpenHandles",
+    "test": "npm run db:test && jest --config ./tests/jest.config.js --forceExit --detectOpenHandles",
+	"test-silent": "npm run db:test && jest --silent --config ./tests/jest.config.js --forceExit --detectOpenHandles",
     "db:drop:test": "cross-env NODE_ENV=test npx sequelize-cli db:drop",
     "db:create:test": "cross-env NODE_ENV=test npx sequelize-cli db:create",
     "db:migrate:test": "cross-env NODE_ENV=test npx sequelize-cli db:migrate",
