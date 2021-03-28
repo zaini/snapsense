@@ -226,14 +226,14 @@ describe("hospitals resolvers", () => {
 					}						
 				`,
       })
-      .set("authorization", `Bearer ${adminToken}`);
+      .set("authorization", `Bearer ${superAdminToken}`);
 
     const { body } = response;
 
     expect(body).toMatchObject({
       data: {
         createAdmin: {
-          id: "5",
+          id: "3",
           fname: "Jerry",
           lname: "Seinfeld",
           email: "bob@sacamano.com",
