@@ -606,11 +606,13 @@ describe("fulfilled and unreviewed tab", () => {
     within(requestCard).getByDisplayValue(/Patient One/i);
     within(requestCard).getByDisplayValue(/Review Submission/i);
     within(requestCard).getByText(/SnapSense AI Rating/i);
-    
+
     const submitBtn = within(requestCard).getByTestId("submitBtnForm");
     const viewSubmissionBtn = within(requestCard).getByTestId("viewSubBtnForm");
-    const requestSubmissionBtn =within(requestCard).getByTestId("requestSubBtnForm");
-    
+    const requestSubmissionBtn = within(requestCard).getByTestId(
+      "requestSubBtnForm"
+    );
+
     expect(submitBtn).toBeInTheDocument();
     expect(viewSubmissionBtn).toBeInTheDocument();
     expect(requestSubmissionBtn).toBeInTheDocument();
@@ -618,12 +620,32 @@ describe("fulfilled and unreviewed tab", () => {
     expect(submitBtn.disabled).toBeTruthy();
     expect(!viewSubmissionBtn.disabled).toBeTruthy();
     expect(!requestSubmissionBtn.disabled).toBeTruthy();
-
   });
 
   test("submit button correctly submits form in card three", async () => {
     setup();
-    // expect(screen.getByText(/aaaaaaaaaaaaaaaaa/i)).toBeInTheDocument();
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByTestId("requestCard3")).toBeInTheDocument();
+    });
+    const requestCard = screen.getByTestId("requestCard3");
+    const riskSelect = within(requestCard).getByTestId("requestRiskSelect");
+
+    expect(riskSelect).toBeInTheDocument();
+
+    act(() => {
+      //The value should be the key of the option
+      fireEvent.change(riskSelect, { target: { value: 1 } });
+    });
+
+    const options = within(riskSelect).getAllByTestId("select-option");
+    expect(options[0].selected).toBeFalsy();
+    expect(options[1].selected).toBeTruthy();
+    expect(options[2].selected).toBeFalsy();
+    expect(options[3].selected).toBeFalsy();
+
+    const submitBtn = within(requestCard).getByTestId("submitBtnForm");
+    expect(!submitBtn.disabled).toBeTruthy();
   });
 
   // test("view submission redirect to correct page in card three", async () => {
