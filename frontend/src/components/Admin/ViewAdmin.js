@@ -3,7 +3,6 @@ import {
   Button,
   Center,
   Container,
-  Divider,
   Stack,
   useDisclosure,
 } from "@chakra-ui/react";

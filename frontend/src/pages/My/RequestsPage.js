@@ -147,7 +147,7 @@ const cols = [
     flex: 0.2,
     renderCell: ({ row }) => {
       const doctor = row.Doctor;
-      const { fname, lname, email } = doctor;
+      const { fname, lname } = doctor;
       return (
         <p>
           {fname} {lname}
@@ -161,7 +161,7 @@ const cols = [
     flex: 0.2,
     renderCell: ({ row }) => {
       const patient = row.Patient;
-      const { fname, lname, email } = patient;
+      const { fname, lname } = patient;
       return (
         <p>
           {fname} {lname}

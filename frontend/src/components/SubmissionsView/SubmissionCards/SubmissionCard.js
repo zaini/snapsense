@@ -22,7 +22,7 @@ const SubmissionCard = ({ data, vertical, redirect }) => {
 
   const submission_date = new Date(createdAtDate).toLocaleString();
 
-  const [flagSubmission, { loading }] = useMutation(FLAG_SUBMISSION, {
+  const [flagSubmission] = useMutation(FLAG_SUBMISSION, {
     onCompleted() {
       redirect && history.push(redirect);
     },

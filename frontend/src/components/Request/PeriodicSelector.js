@@ -1,16 +1,5 @@
 import React from "react";
-import {
-  Center,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  HStack,
-  Radio,
-  Stack,
-  SimpleGrid,
-  Input,
-  Text,
-} from "@chakra-ui/react";
+import { Center, FormControl, FormLabel, Stack } from "@chakra-ui/react";
 import InputFieldProvider from "./InputFieldProvider";
 
 const PeriodicSelector = ({ patient, register, show }) => {

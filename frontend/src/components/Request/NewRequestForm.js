@@ -16,7 +16,7 @@ import Error from "../utils/Error";
 import PeriodicSelector from "./PeriodicSelector";
 
 const NewRequestForm = ({ patient, periodic }) => {
-  const { register, handleSubmit, control, getValues } = useForm();
+  const { register, handleSubmit, control } = useForm();
 
   // Mutation hook with loading and error attributes
   const [createRequest, { loading, error, data }] = useMutation(
@@ -80,7 +80,11 @@ const NewRequestForm = ({ patient, periodic }) => {
         )}
         <RequestTypeSelector patient={patient} register={register} />
         <RequestDatePicker control={control} />
-        <PeriodicSelector show={periodic} patient={patient} register={register} />
+        <PeriodicSelector
+          show={periodic}
+          patient={patient}
+          register={register}
+        />
         <Center>
           <Button type="submit" mt={4} colorScheme="blue">
             Submit
