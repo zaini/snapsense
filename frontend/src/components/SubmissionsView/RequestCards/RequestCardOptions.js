@@ -75,6 +75,7 @@ const RequestCardOptions = ({
       </Box>
       <HStack>
         <Button
+        data-testid="submitBtnForm"
           colorScheme="blue"
           isDisabled={parseInt(flagValue) === -1}
           onClick={() => {
@@ -90,10 +91,10 @@ const RequestCardOptions = ({
           Submit Review
         </Button>
         <Link to={`/my/submissions/show/${submission.id}`}>
-          <Button colorScheme="blue">View Submission</Button>
+          <Button data-testid="viewSubBtnForm" colorScheme="blue">View Submission</Button>
         </Link>
         <Link to={`/my/patients/${patient.id}/requests/new`}>
-          <Button colorScheme="blue">Make a new request</Button>
+          <Button data-testid="requestSubBtnForm" colorScheme="blue">Make a new request</Button>
         </Link>
       </HStack>
     </VStack>
