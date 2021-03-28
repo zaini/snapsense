@@ -1,40 +1,54 @@
 import React from 'react';
-
-import ReactDOM from 'react-dom';
-import { act } from 'react-dom/test-utils';
-
-import { render } from "@testing-library/react";
+import { cleanup, render } from "@testing-library/react";
+import { act } from "react-dom/test-utils";
 import ProfilePage from '../pages/My/ProfilePage';
-import UserInfo from '../components/UserInfo';
+import { Route, MemoryRouter } from "react-router";
 import { AuthContext } from '../context/auth';
+import { MockedProvider } from "@apollo/client/testing";
 
-import { ApolloProvider } from '@apollo/client';
+afterEach(cleanup);
 
-// let container;
-// beforeEach(() => {
-//     container = document.createElement('div');
-//     document.body.appendChild(container);
-// });
+const setup = async () => {
+    const patient = {
+        id: 1,
+        fname: "first",
+        lname: "last",
+        email: "patient1@gmail.com",
+        createdAt: "2021-03-26T17:42:58.000Z",
+        createdAt: "2021-03-26T17:42:58.000Z",
+        accountType: "PATIENT",
+    };
 
-// afterEach(() => {
-//     document.body.removeChild(container);
-//     container = null;
-// });
+    const toRet = {
+        user: patient
+    };
+
+    act(() => {
+        render(
+            <AuthContext.Provider value={toRet}>
+                <MemoryRouter initialEntries={["/my/profile"]}>
+                    <Route path="/my/profile">
+                        <ProfilePage />
+                    </Route>
+                </MemoryRouter>
+            </AuthContext.Provider>
+        );
+    });
+};
 
 
-// let accType = "null"
-
-jest.mock('../context/auth', () => {
-    const accType = "PATIENT";
-    return jest.fn(() => {
-        user: "PATIENT"
-    })
-})
+// jest.mock('../context/auth', () => {
+//     const accType = "PATIENT";
+//     return jest.fn(() => {
+//         user: "PATIENT"
+//     })
+// })
 
 test("renders without crashing", () => {
-    // accType = "PATIENT"
-    const {getByText} = render(<ProfilePage/>)
-    expect(getByText('My Submissions')).toBeTruthy()
+    setup();
+    expect(screen.getByText(/My Profile/i)).toBeInTheDocument();
+    // const { getByText } = render(<ProfilePage />)
+    // expect(getByText('My Submissions')).toBeTruthy()
 });
 
 // test("renders without crashing with ReactDOM", () => {
