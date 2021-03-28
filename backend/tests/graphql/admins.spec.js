@@ -3,6 +3,7 @@ const request = require("supertest");
 const app = require("../../index");
 
 let superAdminToken;
+let adminToken;
 
 describe("admins resolvers", () => {
   beforeAll(async (done) => {
@@ -23,7 +24,24 @@ describe("admins resolvers", () => {
     });
 
     superAdminToken = superAdminToken.body.data.login.accessToken;
-		
+
+    adminToken = await request(app).post("/graphql").send({
+      query: `
+				mutation {
+					login(
+						email: "admin1@gmail.com"
+						password: "Password123"
+						account_type: "ADMIN"
+					)	
+					{
+						accessToken
+					}
+				}
+			`,
+    });
+
+    adminToken = adminToken.body.data.login.accessToken;
+
     done();
   });
 
@@ -70,7 +88,7 @@ describe("admins resolvers", () => {
     done();
   });
 
-  test("should should not create admin if not logged in as a super-admin", async (done) => {
+  test("should should not create admin if not logged in", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 					mutation {
@@ -96,6 +114,38 @@ describe("admins resolvers", () => {
     const errorMessage = response.body.errors[0].message;
 
     expect(errorMessage).toMatch("Missing Authorization Header");
+    done();
+  });
+
+  test("should should not create admin if not logged in as a super-admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					mutation {
+						createAdmin(
+							fname: "Jerry"
+							lname: "Seinfeld"
+							email: "bob@sacamano.com"
+							password: "Password123"
+							hospital_id: 1
+						) {
+							id
+							fname
+							lname
+							email
+							Hospital {
+								id
+							}
+						}
+					}						
+				`,
+      })
+      .set("authorization", `Bearer ${adminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Invalid user account type!");
     done();
   });
 });
