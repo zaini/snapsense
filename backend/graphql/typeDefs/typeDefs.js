@@ -97,9 +97,7 @@ module.exports = gql`
       hospital_id: ID!
     ): Admin!
 
-    deleteAdmin(
-      admin_id: ID!
-    ): Boolean!
+    deleteAdmin(admin_id: ID!): Boolean!
 
     createSubmission(images: [Upload!], answers: String!): Boolean!
 
@@ -145,6 +143,7 @@ module.exports = gql`
     getPatients: [Patient!]
     getDoctorsAsAdmin: [Doctor!]
     getDoctorsAsPatient: [Doctor!]
+    getQuestionnaire: [Question!]
     getSubmissions(patient_id: ID): [Submission!]
     getSubmission(submission_id: ID): Submission!
     getPatientAsDoctor(patient_id: ID!): Patient!
@@ -154,8 +153,6 @@ module.exports = gql`
     getRequestsAsDoctor: [Request!]
     getRequestsForReview: [Request!]
     getSpecificFeedback(feedback_id: ID!): Feedback!
-    getImagesBySubmission(submission_id: ID!): [Image!]
-    getImages: [Image!]
     isLoggedIn: String!
     checkInvitation(invitationToken: String!): String!
     getFeedback: [Feedback!]

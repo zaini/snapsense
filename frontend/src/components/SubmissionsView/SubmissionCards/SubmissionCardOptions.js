@@ -46,22 +46,15 @@ const SubmissionCardOptions = ({
           <InputLeftAddon children={<BsFlag />} backgroundColor="#ABCAE7" />
           {user.accountType === "DOCTOR" ? (
             <Select
+              value={flagValue}
               onChange={(e) => {
                 setFlagValue(e.target.value);
               }}
             >
-              <option value="-1" selected={flagValue === -1}>
-                Review Submission
-              </option>
-              <option value="1" selected={flagValue === 1}>
-                Low Risk
-              </option>
-              <option value="2" selected={flagValue === 2}>
-                Medium Risk
-              </option>
-              <option value="3" selected={flagValue === 3}>
-                High Risk
-              </option>
+              <option value="-1">Review Submission</option>
+              <option value="1">Low Risk</option>
+              <option value="2">Medium Risk</option>
+              <option value="3">High Risk</option>
             </Select>
           ) : (
             <Input value={getFlagText(flag)} isReadOnly={true} />

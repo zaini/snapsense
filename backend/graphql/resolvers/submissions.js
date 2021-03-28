@@ -12,6 +12,7 @@ const isAuth = require("../../utils/isAuth");
 const imageUploader = require("../../utils/filestreamUploader");
 const stringToJSON = require("../../utils/jsonProvider/parse.js");
 const validateUpload = require("../../utils/filestreamValidate.js");
+const { getDoctorById, getPatientById } = require("./utils/userAuthorisation");
 
 module.exports = {
   Query: {
@@ -30,10 +31,7 @@ module.exports = {
         case "DOCTOR":
           const doctor = await Doctor.findByPk(user.id);
           if (id) {
-            const patient = await Patient.findByPk(id);
-            if (!patient) {
-              throw new UserInputError("This patient does not exist.");
-            }
+            const patient = await getPatientById(id);
 
             if (await doctor.hasPatient(patient)) {
               submissions = await patient.getSubmissions({
@@ -70,7 +68,7 @@ module.exports = {
 
           break;
         case "PATIENT":
-          const patient = await Patient.findByPk(user.id);
+          const patient = await getPatientById(user.id);
           submissions = await patient.getSubmissions({
             order: [["updatedAt", "DESC"]],
             include: [
@@ -97,20 +95,7 @@ module.exports = {
       // if the user is a doctor, and they own the patient who owns it, show it
       // else return error
 
-      const submission = await Submission.findOne({
-        where: { id: submission_id },
-        include: [
-          Patient,
-          Image,
-          {
-            model: Answer,
-            include: [Question],
-          },
-        ],
-      });
-      if (!submission) {
-        throw new UserInputError("This submission does not exist.");
-      }
+      const submission = await getSubmissionById(submission_id);
       const submission_owner = await submission.getPatient();
 
       if (user.accountType === "PATIENT") {
@@ -142,11 +127,7 @@ module.exports = {
         );
       }
 
-      const doctor = await Doctor.findByPk(user.id);
-
-      if (!doctor) {
-        throw new UserInputError("Invalid doctor");
-      }
+      const doctor = await getDoctorById(user.id);
 
       // Get all submissions that belong to patients of this doctor which have no flag
       let submissions = [];
@@ -180,11 +161,11 @@ module.exports = {
       answers = stringToJSON(answers);
 
       // Check what all content has been uploaded
-      const imageUploadExists = images.length > 0;
+      let imageUploadExists = images.length > 0;
       let answerUploadExists = Object.keys(answers.questionnaire).length > 1;
 
       // One or more should exist
-      if (!imageUploadExists && !answerUploadExists) {
+      if (!(imageUploadExists || answerUploadExists)) {
         throw new UserInputError(
           "Must supply at least either answers to a questionnaire or an image!"
         );
@@ -220,7 +201,7 @@ module.exports = {
         }
       }
 
-      const patient = await Patient.findByPk(user.id);
+      const patient = await getPatientById(user.id);
 
       // Create submission
       const submission = await new Submission({
@@ -242,14 +223,13 @@ module.exports = {
       if (answerUploadExists) {
         for (const questionId in answers.questionnaire) {
           if (questionId < 9) {
-            const answerSave = await new Answer({
+            await new Answer({
               question_id: questionId,
               submission_id: submission.id,
               extra: answers.questionnaire[questionId]
                 ? answers.questionnaire[questionId].extra
                 : null,
-              value:
-                answers.questionnaire[questionId].val === "0" ? false : true,
+              value: !(answers.questionnaire[questionId].val === "0"),
             }).save();
           }
         }
@@ -262,15 +242,7 @@ module.exports = {
       });
 
       requests.forEach(async (request) => {
-        if (
-          (images !== undefined &&
-            images.length > 0 &&
-            answers !== undefined) ||
-          (images !== undefined &&
-            images.length > 0 &&
-            request.getDataValue("type") === 1) ||
-          (answers !== undefined && request.getDataValue("type") === 2)
-        ) {
+        if (requestIsFulfilled(images, answers, request)) {
           request.submission_id = submission.id;
           request.fulfilled = new Date();
           await request.save();
@@ -286,11 +258,9 @@ module.exports = {
         throw new AuthenticationError("Invalid account type!");
       }
 
-      if (flag < 1 || flag > 3) {
-        throw new UserInputError("Invalid flag value. Must be 1-3 (inclusive)");
-      }
+      isFlagValid(flag);
 
-      const doctor = await Doctor.findByPk(user.id);
+      const doctor = await getDoctorById(user.id);
       const submission = await Submission.findByPk(submission_id);
       const patient = await submission.getPatient();
 
@@ -304,4 +274,39 @@ module.exports = {
       return submission;
     },
   },
+};
+
+const isFlagValid = (flag) => {
+  if (flag < 1 || flag > 3) {
+    throw new UserInputError("Invalid flag value. Must be 1-3 (inclusive)");
+  }
+};
+
+const requestIsFulfilled = (images, answers, request) => {
+  return (
+    (images !== undefined && images.length > 0 && answers !== undefined) ||
+    (images !== undefined &&
+      images.length > 0 &&
+      request.getDataValue("type") === 1) ||
+    (answers !== undefined && request.getDataValue("type") === 2)
+  );
+};
+
+const getSubmissionById = async (submission_id) => {
+  const submission = await Submission.findOne({
+    where: { id: submission_id },
+    include: [
+      Patient,
+      Image,
+      {
+        model: Answer,
+        include: [Question],
+      },
+    ],
+  });
+
+  if (!submission) {
+    throw new UserInputError("This submission does not exist.");
+  }
+  return submission;
 };

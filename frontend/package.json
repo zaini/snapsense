@@ -35,6 +35,7 @@
     "react-images-upload": "^1.2.8",
     "react-images-uploading": "^3.1.2",
     "react-modal-image": "^2.5.0",
+    "react-responsive": "^8.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
     "react-test-renderer": "^17.0.2",

@@ -5,8 +5,6 @@ require("dotenv").config({ path: "../.env" });
 const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
 
 const isAuth = (context) => {
-  // Context = { ...headers }
-  console.log(ACCESS_TOKEN_SECRET_KEY)
   const authHeader = context.req.headers.authorization;
   const needle = "Bearer ";
   if (authHeader) {

@@ -20,7 +20,7 @@ import Error from "../utils/Error";
 const DeleteAdminModal = ({ isOpen, onClose, admin }) => {
   const history = useHistory();
 
-  const [deleteAdmin, { loading, error, data }] = useMutation(DELETE_ADMIN, {
+  const [deleteAdmin, { loading, error }] = useMutation(DELETE_ADMIN, {
     onCompleted(_) {
       history.push("/my/admins");
     },

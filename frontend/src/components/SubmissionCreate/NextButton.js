@@ -1,12 +1,7 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 
-const NextButton = ({
-  setReviewBtn,
-  activeStep,
-  handleNext,
-  classes,
-}) => {
+const NextButton = ({ setReviewBtn, activeStep, handleNext, classes }) => {
   let params;
   let name = "Next";
   if (activeStep === 8) {

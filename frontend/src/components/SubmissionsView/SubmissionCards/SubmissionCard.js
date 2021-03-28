@@ -22,9 +22,7 @@ const SubmissionCard = ({ data, vertical, redirect }) => {
 
   const submission_date = new Date(createdAtDate).toLocaleString();
 
-  console.log(createdAtDate, submission_date);
-
-  const [flagSubmission, { loading }] = useMutation(FLAG_SUBMISSION, {
+  const [flagSubmission] = useMutation(FLAG_SUBMISSION, {
     onCompleted() {
       redirect && history.push(redirect);
     },
@@ -65,7 +63,7 @@ const SubmissionCard = ({ data, vertical, redirect }) => {
       <Center p="10px">
         <Stack direction={vertical ? "column" : "row"}>
           <Box>
-            {Images.length === 0 ? (
+            {Images && Images.length === 0 ? (
               <Text fontWeight="bold" fontSize="110%" pb="50%">
                 <Box
                   w="220px"
@@ -90,7 +88,7 @@ const SubmissionCard = ({ data, vertical, redirect }) => {
           )}
 
           <Box>
-            {Answers.length === 0 ? (
+            {Answers && Answers.length === 0 ? (
               <Box w="500px">
                 <Center>
                   <Text fontWeight="bold" fontSize="110%" pb="50%">

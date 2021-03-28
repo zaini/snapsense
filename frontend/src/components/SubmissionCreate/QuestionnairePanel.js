@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StepLabel, Step, Paper, Stepper } from "@material-ui/core";
-import { Heading, Stack, Box, Center, Flex } from "@chakra-ui/react";
+import { Heading, Stack, Box, Center } from "@chakra-ui/react";
 
 import QuestionForm from "./Questionnaire";
 import Review from "./Review";

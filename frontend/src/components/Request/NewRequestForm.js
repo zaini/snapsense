@@ -97,6 +97,7 @@ const NewRequestForm = ({ dateIn, testName, patient, periodic }) => {
         )}
         <RequestTypeSelector patient={patient} register={register} />
         <RequestDatePicker dateIn={dateIn} control={control} />
+
         <PeriodicSelector
           show={periodic}
           patient={patient}
