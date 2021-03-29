@@ -3,19 +3,19 @@ const { Doctor } = require("../../models/index");
 const seed = async () => {
   await Doctor.create({
     id: 1,
-    fname: "John",
-    lname: "Smith",
-    email: "john.smith@nhs.net",
-    password: "MyPassword123",
+    fname: "Doctor",
+    lname: "One",
+    email: "doctor1@nhs.net",
+    password: "Password123",
     hospital_id: 1,
   });
 
   await Doctor.create({
     id: 2,
-    fname: "James",
-    lname: "Smith",
-    email: "james.smith@nhs.net",
-    password: "MyPassword123",
+    fname: "Doctor",
+    lname: "Two",
+    email: "doctor2@nhs.net",
+    password: "Password123",
     hospital_id: 2,
   });
 
@@ -24,7 +24,7 @@ const seed = async () => {
     fname: "Jacob",
     lname: "Smith",
     email: "jacob.smith@nhs.net",
-    password: "MyPassword123",
+    password: "Password123",
     hospital_id: 3,
   });
 
@@ -33,10 +33,9 @@ const seed = async () => {
     fname: "Jarvis",
     lname: "Smith",
     email: "jarvis.smith@nhs.net",
-    password: "MyPassword123",
+    password: "Password123",
     hospital_id: 3,
   });
-
 };
 
 module.exports = seed;
