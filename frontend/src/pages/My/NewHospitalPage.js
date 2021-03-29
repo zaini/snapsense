@@ -7,7 +7,9 @@ const NewHospital = () => {
   return (
     <Container>
       <Stack spacing={4}>
-        <Heading data-testid="hospitalNewHeading" textAlign="center">Create a Hospital</Heading>
+        <Heading data-testid="hospitalNewHeading" textAlign="center">
+          Create a Hospital
+        </Heading>
         <hr />
         <NewHospitalForm />
       </Stack>

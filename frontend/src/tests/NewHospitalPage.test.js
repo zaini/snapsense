@@ -21,7 +21,7 @@ const mocks = [
   {
     request: {
       query: CREATE_HOSPITAL,
-      variables: { name: "Hospital", contact_email: "hospital@gmail.com" }, 
+      variables: { name: "Hospital", contact_email: "hospital@gmail.com" },
     },
     result: { data: { createHospital: true } },
   },
@@ -42,7 +42,7 @@ const mocks = [
   {
     request: {
       query: CREATE_HOSPITAL,
-      variables: { name: "Hospital One", contact_email: 'invalidEmail' },
+      variables: { name: "Hospital One", contact_email: "invalidEmail" },
     },
     // error: new Error('Invalid email'),
     // error: {
@@ -71,7 +71,6 @@ const setup = () => {
 };
 
 describe("New Hospital page", () => {
-  
   it("should render without crashing", () => {
     expect(setup).toBeTruthy();
   });
@@ -121,88 +120,90 @@ describe("Placeholder for email", () => {
   });
 });
 
-//gql testing 
+//gql testing
 describe("Submitting form with invalid input", () => {
-    it("pops up a name warning and doesn't submit when the name is invalid", () => {
-      setup();
+  it("pops up a name warning and doesn't submit when the name is invalid", () => {
+    setup();
 
-      const nameInput = screen.getByTestId("hospitalNewFormName");
-      act(() => {
-        fireEvent.change(nameInput, { target: { value: "invalidName" } });
-      });
-      expect(nameInput.value).toBe("invalidName");
+    const nameInput = screen.getByTestId("hospitalNewFormName");
+    act(() => {
+      fireEvent.change(nameInput, { target: { value: "invalidName" } });
+    });
+    expect(nameInput.value).toBe("invalidName");
 
-      const emailInput = screen.getByTestId("hospitalNewFormEmail");
-      act(() => {
-        fireEvent.change(emailInput, { target: { value: "hospital1@gmail.com" } });
+    const emailInput = screen.getByTestId("hospitalNewFormEmail");
+    act(() => {
+      fireEvent.change(emailInput, {
+        target: { value: "hospital1@gmail.com" },
       });
-      expect(emailInput.value).toBe("hospital1@gmail.com");
+    });
+    expect(emailInput.value).toBe("hospital1@gmail.com");
 
-      const submitButton = screen.getByRole("button");
-      act(() => {
-        fireEvent.click(submitButton);
-      });
-        
-      expect(screen.queryByTestId("formSubmitInnerLoader")).toBeNull(); // it doesn't exist
-      expect(screen.queryByTestId("formSubmitInnerSuccess")).toBeNull(); // it doesn't exist
+    const submitButton = screen.getByRole("button");
+    act(() => {
+      fireEvent.click(submitButton);
     });
 
-    it("pops up an email warning and doesn't submit when the email is invalid", () => {
-      setup();
+    expect(screen.queryByTestId("formSubmitInnerLoader")).toBeNull(); // it doesn't exist
+    expect(screen.queryByTestId("formSubmitInnerSuccess")).toBeNull(); // it doesn't exist
+  });
 
-      const nameInput = screen.getByTestId("hospitalNewFormName");
-      act(() => {
-        fireEvent.change(nameInput, { target: { value: "Hospital One" } });
-      });
-      expect(nameInput.value).toBe("Hospital One");
+  it("pops up an email warning and doesn't submit when the email is invalid", () => {
+    setup();
 
-      const emailInput = screen.getByTestId("hospitalNewFormEmail");
-      act(() => {
-        fireEvent.change(emailInput, { target: { value: "invalidEmail" } });
-      });
-      expect(emailInput.value).toBe("invalidEmail");
-
-      const submitButton = screen.getByRole("button");
-      act(() => {
-        fireEvent.click(submitButton);
-      });
-
-      expect(screen.queryByTestId("formSubmitInnerLoader")).toBeNull(); // it doesn't exist
-      expect(screen.queryByTestId("formSubmitInnerSuccess")).toBeNull(); // it doesn't exist
+    const nameInput = screen.getByTestId("hospitalNewFormName");
+    act(() => {
+      fireEvent.change(nameInput, { target: { value: "Hospital One" } });
     });
+    expect(nameInput.value).toBe("Hospital One");
+
+    const emailInput = screen.getByTestId("hospitalNewFormEmail");
+    act(() => {
+      fireEvent.change(emailInput, { target: { value: "invalidEmail" } });
+    });
+    expect(emailInput.value).toBe("invalidEmail");
+
+    const submitButton = screen.getByRole("button");
+    act(() => {
+      fireEvent.click(submitButton);
+    });
+
+    expect(screen.queryByTestId("formSubmitInnerLoader")).toBeNull(); // it doesn't exist
+    expect(screen.queryByTestId("formSubmitInnerSuccess")).toBeNull(); // it doesn't exist
   });
+});
 
-  describe("Submitting form with valid input", () => {
-      it("pops up a success message", async () => {
-        setup();
+describe("Submitting form with valid input", () => {
+  it("pops up a success message", async () => {
+    setup();
 
-        const nameInput = screen.getByTestId("hospitalNewFormName");
-        act(() => {
-          fireEvent.change(nameInput, { target: { value: "Hospital" } });
-        });
-        expect(nameInput.value).toBe("Hospital");
+    const nameInput = screen.getByTestId("hospitalNewFormName");
+    act(() => {
+      fireEvent.change(nameInput, { target: { value: "Hospital" } });
+    });
+    expect(nameInput.value).toBe("Hospital");
 
-        const emailInput = screen.getByTestId("hospitalNewFormEmail");
-        act(() => {
-          fireEvent.change(emailInput, { target: { value: "hospital@gmail.com" } });
-        });
-        expect(emailInput.value).toBe("hospital@gmail.com");
+    const emailInput = screen.getByTestId("hospitalNewFormEmail");
+    act(() => {
+      fireEvent.change(emailInput, { target: { value: "hospital@gmail.com" } });
+    });
+    expect(emailInput.value).toBe("hospital@gmail.com");
 
-        const submitButton = screen.getByRole("button");
-        act(() => {
-          fireEvent.click(submitButton);
-        });
+    const submitButton = screen.getByRole("button");
+    act(() => {
+      fireEvent.click(submitButton);
+    });
 
-        await waitFor(async () => {
-          expect(screen.getByTestId("formSubmitInnerLoader")).toBeInTheDocument();
-        });
-        
-        await waitFor(async () => {
-          expect(screen.getByTestId("formSubmitInnerSuccess")).toBeInTheDocument();
-        });
+    await waitFor(async () => {
+      expect(screen.getByTestId("formSubmitInnerLoader")).toBeInTheDocument();
+    });
 
-        expect(
-          screen.getByText(/Hospital successfully created!/i)
-        ).toBeInTheDocument();
-      });
+    await waitFor(async () => {
+      expect(screen.getByTestId("formSubmitInnerSuccess")).toBeInTheDocument();
+    });
+
+    expect(
+      screen.getByText(/Hospital successfully created!/i)
+    ).toBeInTheDocument();
   });
+});
