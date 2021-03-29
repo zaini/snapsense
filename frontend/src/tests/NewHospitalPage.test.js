@@ -199,7 +199,6 @@ describe("Submitting form with valid input", () => {
 
     await waitFor(() => {
       expect(screen.getByTestId("formSubmitInnerLoader")).toBeInTheDocument();
-      screen.debug();
     });
     
     // TODO: Fix this success state
