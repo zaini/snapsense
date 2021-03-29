@@ -30,7 +30,7 @@ const mocks = [
       query: CREATE_HOSPITAL,
       variables: { name: "invalidName", contact_email: "hospital1@gmail.com" },
     },
-    // error: new Error('Invalid name'),
+    // error: new Error('Invalid name')x,
     // error: {
     //   graphQLErrors: [
     //     {
@@ -114,7 +114,9 @@ describe("Placeholder for email", () => {
     const emailInput = screen.getByTestId("hospitalNewFormEmail");
 
     act(() => {
-      fireEvent.change(emailInput, { target: { value: "hospital@gmail.com" } });
+      fireEvent.change(emailInput, {
+        target: { value: "hospital@gmail.com" },
+      });
     });
     expect(emailInput.value).toBe("hospital@gmail.com");
   });
