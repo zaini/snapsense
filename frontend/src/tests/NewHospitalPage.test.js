@@ -124,7 +124,7 @@ describe("Placeholder for email", () => {
 
 //gql testing
 describe("Submitting form with invalid input", () => {
-  it("pops up a name warning and doesn't submit when the name is invalid", () => {
+  it("pops up a name warning and doesn't submit when the name is invalid", async () => {
     setup();
 
     const nameInput = screen.getByTestId("hospitalNewFormName");
@@ -146,11 +146,13 @@ describe("Submitting form with invalid input", () => {
       fireEvent.click(submitButton);
     });
 
-    expect(screen.queryByTestId("formSubmitInnerLoader")).toBeNull(); // it doesn't exist
-    expect(screen.queryByTestId("formSubmitInnerSuccess")).toBeNull(); // it doesn't exist
+    await waitFor(async () => {
+      expect(screen.queryByTestId("formSubmitInnerLoader")).toBeNull();
+      expect(screen.queryByTestId("formSubmitInnerSuccess")).toBeNull();
+    });
   });
 
-  it("pops up an email warning and doesn't submit when the email is invalid", () => {
+  it("pops up an email warning and doesn't submit when the email is invalid", async () => {
     setup();
 
     const nameInput = screen.getByTestId("hospitalNewFormName");
@@ -170,8 +172,10 @@ describe("Submitting form with invalid input", () => {
       fireEvent.click(submitButton);
     });
 
-    expect(screen.queryByTestId("formSubmitInnerLoader")).toBeNull(); // it doesn't exist
-    expect(screen.queryByTestId("formSubmitInnerSuccess")).toBeNull(); // it doesn't exist
+    await waitFor(async () => {
+      expect(screen.queryByTestId("formSubmitInnerLoader")).toBeNull();
+      expect(screen.queryByTestId("formSubmitInnerSuccess")).toBeNull();
+    });
   });
 });
 
