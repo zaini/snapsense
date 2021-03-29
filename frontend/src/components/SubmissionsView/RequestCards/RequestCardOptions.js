@@ -59,10 +59,10 @@ const RequestCardOptions = ({
               setFlagValue(e.target.value);
             }}
           >
-            <option data-testid="select-option" value="-1">Review Submission</option>
-            <option data-testid="select-option" value="1">Low Risk</option>
-            <option data-testid="select-option" value="2">Medium Risk</option>
-            <option data-testid="select-option" value="3">High Risk</option>
+            <option data-testid="selectOption" value="-1">Review Submission</option>
+            <option data-testid="selectOption" value="1">Low Risk</option>
+            <option data-testid="selectOption" value="2">Medium Risk</option>
+            <option data-testid="selectOption" value="3">High Risk</option>
           </Select>
         </InputGroup>
         {/* TODO: this is not actaully linked to any API and is just mock data. */}
