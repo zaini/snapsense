@@ -1,4 +1,4 @@
-const { AuthenticationError } = require("apollo-server");
+const { AuthenticationError, UserInputError } = require("apollo-server");
 const { SuperAdmin, Doctor, Patient } = require("../../../models/index.js");
 const isAuth = require("../../../utils/isAuth");
 
