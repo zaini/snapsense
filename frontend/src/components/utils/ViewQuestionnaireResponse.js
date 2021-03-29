@@ -27,15 +27,23 @@ const ViewQuestionnaireResponse = ({ answers }) => {
         <VStack data-testid="QuestionAnswer" key={i} w="500px">
           <InputGroup mb="3px">
             <InputLeftAddon children={<FaRegQuestionCircle />} />
-            <Input data-testid={`inputQuestion${i}`} value={e.Question.text} isReadOnly={true} />
+            <Input
+              data-testid={`inputQuestion${i}`}
+              value={e.Question.text}
+              isReadOnly={true}
+            />
           </InputGroup>
           <InputGroup mb="3px">
             <InputLeftAddon children={<RiQuestionAnswerLine />} />
-            <Input data-testid={`inputAnswer${i}`} value={e.value === true ? "Yes" : "No"} isReadOnly={true} />
+            <Input
+              data-testid={`inputAnswer${i}`}
+              value={e.value === true ? "Yes" : "No"}
+              isReadOnly={true}
+            />
           </InputGroup>
           <FormControl mb="3px">
             <FormLabel>Other notes</FormLabel>
-            <Textarea value={e.extra} isReadOnly={true} />
+            <Textarea value={e.extra || ""} isReadOnly={true} />
           </FormControl>
         </VStack>
       );
