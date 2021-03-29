@@ -58,7 +58,6 @@ describe("admins resolvers", () => {
 							password: "Password123"
 							hospital_id: 1
 						) {
-							id
 							fname
 							lname
 							email
@@ -76,7 +75,6 @@ describe("admins resolvers", () => {
     expect(body).toMatchObject({
       data: {
         createAdmin: {
-          id: "3",
           fname: "Jerry",
           lname: "Seinfeld",
           email: "bob@sacamano.com",
@@ -99,7 +97,6 @@ describe("admins resolvers", () => {
 							password: "Password123"
 							hospital_id: 1
 						) {
-							id
 							fname
 							lname
 							email
@@ -130,7 +127,6 @@ describe("admins resolvers", () => {
 							password: "Password123"
 							hospital_id: 1
 						) {
-							id
 							fname
 							lname
 							email
