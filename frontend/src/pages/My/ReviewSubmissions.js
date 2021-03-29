@@ -24,8 +24,8 @@ const ReviewSubmissions = () => {
       {/* Have 2 tabs: one for submissions associated with requests and one for submissions as a whole */}
       <Tabs isLazy>
         <TabList>
-          <Tab>Fulfilled & Unreviewed Requests</Tab>
-          <Tab>Unreviewed Submissions</Tab>
+          <Tab data-testid="tabFulfillOne">Fulfilled & Unreviewed Requests</Tab>
+          <Tab data-testid="tabFulfillTwo">Unreviewed Submissions</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>

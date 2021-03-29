@@ -30,7 +30,7 @@ const CreateInviteForm = () => {
 
   const [invitationToken, setInvitationToken] = useState("");
 
-  const [inviteUser, { loading, data }] = useMutation(INVITE_USER, {
+  const [inviteUser, { data }] = useMutation(INVITE_USER, {
     onCompleted({ inviteUser: invitationToken }) {
       setInvitationToken(invitationToken);
     },

@@ -20,29 +20,24 @@ import Error from "../utils/Error";
 const DeleteHospitalModal = ({ isOpen, onClose, hospital }) => {
   const history = useHistory();
 
-  const [deleteHospital, { loading, error, data }] = useMutation(
-    DELETE_HOSPITAL,
-    {
-      onCompleted(_) {
-        history.push("/my/hospitals");
-      },
-      update(proxy) {
-        // Write to cache
-        const data = proxy.readQuery({
-          query: GET_HOSPITALS,
-        });
-        proxy.writeQuery({
-          query: GET_HOSPITALS,
-          data: {
-            getHospitals: data.getHospitals.filter(
-              (el) => el.id !== hospital.id
-            ),
-          },
-        });
-      },
-      onError(_) {}, // Error handled below
-    }
-  );
+  const [deleteHospital, { loading, error }] = useMutation(DELETE_HOSPITAL, {
+    onCompleted(_) {
+      history.push("/my/hospitals");
+    },
+    update(proxy) {
+      // Write to cache
+      const data = proxy.readQuery({
+        query: GET_HOSPITALS,
+      });
+      proxy.writeQuery({
+        query: GET_HOSPITALS,
+        data: {
+          getHospitals: data.getHospitals.filter((el) => el.id !== hospital.id),
+        },
+      });
+    },
+    onError(_) {}, // Error handled below
+  });
 
   const onSubmit = () => {
     deleteHospital({
