@@ -11,21 +11,43 @@ import { MockedProvider } from "@apollo/client/testing";
 import { act } from "react-dom/test-utils";
 
 import { Route, MemoryRouter } from "react-router";
+import { AuthContext } from "../context/auth";
 import ReviewSubmissions from "../pages/My/ReviewSubmissions";
-import { fulfilledRequestData, mocksWithData, mocksWithoutData } from "./mocks/reviewSubmissionPage";
+import {
+  fulfilledRequestData,
+  mocksWithData,
+  mocksWithoutData,
+} from "./mocks/reviewSubmissionPage";
 
 afterEach(cleanup);
+
+const doc = {
+  id: 1,
+  fname: "Doctor",
+  lname: "One",
+  email: "doctor1@nhs.net",
+  hospital_id: 1,
+  createdAt: "2021-03-25T17:42:58.000Z",
+  updatedAt: "2021-03-25T17:42:58.000Z",
+  accountType: "DOCTOR",
+};
+
+const toRet = {
+  user: doc,
+};
 
 const setup = async () => {
   act(() => {
     render(
-      <MockedProvider mocks={mocksWithData}>
-        <MemoryRouter initialEntries={["/my/submissions/review"]}>
-          <Route path="/my/submissions/review">
-            <ReviewSubmissions />
-          </Route>
-        </MemoryRouter>
-      </MockedProvider>
+      <AuthContext.Provider value={toRet}>
+        <MockedProvider mocks={mocksWithData}>
+          <MemoryRouter initialEntries={["/my/submissions/review"]}>
+            <Route path="/my/submissions/review">
+              <ReviewSubmissions />
+            </Route>
+          </MemoryRouter>
+        </MockedProvider>
+      </AuthContext.Provider>
     );
   });
 };
@@ -244,40 +266,6 @@ describe("fulfilled and unreviewed tab", () => {
     expect(!requestSubmissionBtn.disabled).toBeTruthy();
   });
 
-  // TODO: Check if cache has been edited properly
-  test("submit button correctly submits form in card three", async () => {
-    setup();
-    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-    await waitFor(() => {
-      expect(screen.getByTestId("requestCard3")).toBeInTheDocument();
-    });
-    const requestCard = screen.getByTestId("requestCard3");
-    const riskSelect = within(requestCard).getByTestId("requestRiskSelect");
-
-    expect(riskSelect).toBeInTheDocument();
-
-    act(() => {
-      //The value should be the key of the option
-      fireEvent.change(riskSelect, { target: { value: 2 } });
-    });
-
-    const options = within(riskSelect).getAllByTestId("select-option");
-    expect(options[0].selected).toBeFalsy();
-    expect(options[1].selected).toBeFalsy();
-    expect(options[2].selected).toBeTruthy();
-    expect(options[3].selected).toBeFalsy();
-
-    const submitBtn = within(requestCard).getByTestId("submitBtnForm");
-    expect(!submitBtn.disabled).toBeTruthy();
-    jest.spyOn(window, "alert").mockImplementation(() => {});
-    act(() => {
-      fireEvent.click(submitBtn);
-    });
-    expect(window.alert).toBeCalledWith(
-      "This submission has now been reviewed."
-    );
-  });
-
   test("view submission redirect to correct page in card three", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
@@ -314,14 +302,66 @@ describe("fulfilled and unreviewed tab", () => {
     );
   });
 
-  // describe("fulfilled and unreviewed tab", () => {
-  //   test("spinner shows up when tab is loaded", async () => {
-  //     setup();
-  //     // expect(screen.getByText(/aaaaaaaaaaaaaaaaa/i)).toBeInTheDocument();
-  //   });
+  // TODO: Check if cache has been edited properly
+  // TODO: Getting null error for request card called query
+  test("submit button correctly submits form in card three", async () => {
+    setup();
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByTestId("requestCard3")).toBeInTheDocument();
+    });
+    const requestCard = screen.getByTestId("requestCard3");
+    const riskSelect = within(requestCard).getByTestId("requestRiskSelect");
 
-  //   test("number of cards displayed are correct", async () => {
-  //     setup();
-  //     // expect(screen.getByText(/aaaaaaaaaaaaaaaaa/i)).toBeInTheDocument();
-  //   });
+    expect(riskSelect).toBeInTheDocument();
+
+    act(() => {
+      //The value should be the key of the option
+      fireEvent.change(riskSelect, { target: { value: 2 } });
+    });
+
+    const options = within(riskSelect).getAllByTestId("selectOption");
+    expect(options[0].selected).toBeFalsy();
+    expect(options[1].selected).toBeFalsy();
+    expect(options[2].selected).toBeTruthy();
+    expect(options[3].selected).toBeFalsy();
+
+    const submitBtn = within(requestCard).getByTestId("submitBtnForm");
+    expect(!submitBtn.disabled).toBeTruthy();
+
+    jest.spyOn(window, "alert").mockImplementation(() => {});
+    act(() => {
+      fireEvent.click(submitBtn);
+    });
+
+    expect(window.alert).toBeCalledWith(
+      "This submission has now been reviewed."
+    );
+  });
+});
+
+describe("unreviewed submissions tab", () => {
+  test("spinner shows up when tab is loaded", async () => {
+    setup();
+    const tab = screen.getByTestId("tabFulfillTwo");
+    act(() => {
+      fireEvent.click(tab);
+    });
+    expect(screen.getByText(/Loading./i)).toBeInTheDocument();
+  });
+
+  test("correct number of cards are displayed in second tab ", async () => {
+    setup();
+    const tab = screen.getByTestId("tabFulfillTwo");
+    act(() => {
+      fireEvent.click(tab);
+    });
+    expect(screen.getByText(/Loading./i)).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByTestId("submissionCard1")).toBeInTheDocument();
+      expect(screen.getByTestId("submissionCard2")).toBeInTheDocument();
+      expect(screen.getByTestId("submissionCard3")).toBeInTheDocument();
+    });
+  });
 });
