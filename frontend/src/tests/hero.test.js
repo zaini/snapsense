@@ -4,7 +4,7 @@ import LandingPage from "../pages/Home/LandingPage";
 
 test("the correct hero is rendered", () => {
   const landingPage = render(<LandingPage />);
-  const foundHero = landingPage.findByTestId("landingHero");
+  const foundHero = landingPage.getByTestId("landingHero");
   expect(foundHero).toBeTruthy();
 });
 
