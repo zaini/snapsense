@@ -14,6 +14,7 @@ import SubmissionCard from "../SubmissionsView/SubmissionCards/SubmissionCard";
 
 const PatientSubmissionsTimeline = ({ data }) => {
   const classes = useStyles();
+
   if (data.length === 0) {
     return (
       <Timeline>
@@ -38,7 +39,6 @@ const PatientSubmissionsTimeline = ({ data }) => {
     return (
       <Timeline align="right">
         {data.map((submission, index) => {
-          console.log(submission);
           return (
             <TimelineItem key={index}>
               <TimelineOppositeContent>

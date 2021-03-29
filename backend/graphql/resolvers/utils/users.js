@@ -1,12 +1,15 @@
 const { UserInputError } = require("apollo-server");
 const argon2 = require("argon2");
 
-const { Admin, Doctor, Patient } = require("../../../models/index");
+const { Admin, Doctor, Patient, SuperAdmin } = require("../../../models/index");
 const isAuth = require("../../../utils/isAuth.js");
 
 const getUser = async (userContext) => {
   let user = isAuth(userContext);
   switch (user.accountType) {
+    case "SUPERADMIN":
+      user = await SuperAdmin.findByPk(user.id);
+      break;
     case "ADMIN":
       user = await Admin.findByPk(user.id);
       break;

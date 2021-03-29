@@ -48,7 +48,8 @@ const RequestCardsTable = () => {
               No fulfilled and unreviewed requests
             </AlertTitle>
             <AlertDescription maxWidth="sm">
-              You have no requested submissions to review
+              Your patients have no new submissions which you have requested and
+              have not yet reviewed
             </AlertDescription>
           </Alert>
         </Container>
@@ -57,7 +58,7 @@ const RequestCardsTable = () => {
       markup = (
         <>
           {data_rows.map((e, i) => {
-            return <RequestCard key={i} data={e} />;
+            return <RequestCard testID={`requestCard${i+1}`} key={`${e.Submission.id}-${i}`} data={e} />;
           })}
         </>
       );
@@ -69,8 +70,8 @@ const RequestCardsTable = () => {
 
 export default RequestCardsTable;
 
-const GET_REQUESTS = gql`
-  query getRequests {
+export const GET_REQUESTS = gql`
+  query getRequestsForReview {
     getRequestsForReview {
       id
       type

@@ -1,5 +1,7 @@
 import { Box, Stack, Text, Center } from "@chakra-ui/react";
+import { useMediaQuery } from "react-responsive";
 import { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../context/auth";
 import ImageSlideshow from "../../utils/ImageSlideshow";
 import ViewQuestionnaireResponse from "../../utils/ViewQuestionnaireResponse";
@@ -7,16 +9,25 @@ import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import SubmissionCardOptions from "./SubmissionCardOptions";
 
-const SubmissionCard = ({ data, vertical }) => {
+const SubmissionCard = ({ testID, data, vertical, redirect }) => {
   const { user } = useContext(AuthContext);
+  const history = useHistory();
+  const isTabletOrMobile = useMediaQuery({ maxWidth: 1600 });
+  vertical = vertical || isTabletOrMobile;
 
   // data here is a submission object
   const { Patient, Images, Answers, createdAt, flag, id } = data;
-  const submission_date = new Date(parseInt(createdAt)).toDateString();
 
-  const [flagSubmission, { loading }] = useMutation(FLAG_SUBMISSION, {
+  let createdAtDate = parseInt(createdAt);
+  if (isNaN(createdAtDate)) {
+    createdAtDate = createdAt;
+  }
+
+  const submission_date = new Date(createdAtDate).toLocaleString();
+
+  const [flagSubmission] = useMutation(FLAG_SUBMISSION, {
     onCompleted() {
-      // TODO: refresh page through cache!
+      redirect && history.push(redirect);
     },
     onError(err) {
       console.log(err);
@@ -28,8 +39,21 @@ const SubmissionCard = ({ data, vertical }) => {
       proxy.writeQuery({
         query: GET_SUBMISSIONS,
         data: {
-          getSubmissionsForReview: data.getSubmissionsForReview.filter(
-            (p) => p.id !== id
+          getSubmissionsForReview: data.getSubmissionsForReview.filter((p) => {
+            return p.id !== id;
+          }),
+        },
+      });
+      const dataRequests = proxy.readQuery({
+        query: GET_REQUESTS,
+      });
+      proxy.writeQuery({
+        query: GET_REQUESTS,
+        data: {
+          getRequestsForReview: dataRequests.getRequestsForReview.filter(
+            (p) => {
+              return p.Submission.id !== id;
+            }
           ),
         },
       });
@@ -37,15 +61,30 @@ const SubmissionCard = ({ data, vertical }) => {
   });
 
   return (
-    <Box borderWidth="1px" borderRadius="lg" p="10px" m="5px">
+    <Box
+      data-testid={testID}
+      borderWidth="1px"
+      borderRadius="lg"
+      p="10px"
+      m="5px"
+    >
       {id}
       <Center p="10px">
         <Stack direction={vertical ? "column" : "row"}>
           <Box>
-            {Images.length === 0 ? (
-              <Text fontWeight="bold" fontSize="110%" pb="50%">
-                No images
-              </Text>
+            {Images && Images.length === 0 ? (
+              <Center>
+                <Box
+                  w="220px"
+                  h="100%"
+                  overflow="hidden"
+                  objectFit="scale-down"
+                >
+                  <Text fontWeight="bold" fontSize="110%" pb="50%">
+                    No images
+                  </Text>
+                </Box>
+              </Center>
             ) : (
               <ImageSlideshow images={Images} />
             )}
@@ -60,10 +99,14 @@ const SubmissionCard = ({ data, vertical }) => {
           )}
 
           <Box>
-            {Answers.length === 0 ? (
-              <Text fontWeight="bold" fontSize="110%" pb="50%">
-                No questionnaire
-              </Text>
+            {Answers && Answers.length === 0 ? (
+              <Box w="500px">
+                <Center>
+                  <Text fontWeight="bold" fontSize="110%" pb="50%">
+                    No questionnaire
+                  </Text>
+                </Center>
+              </Box>
             ) : (
               <ViewQuestionnaireResponse answers={Answers} />
             )}
@@ -129,6 +172,48 @@ const GET_SUBMISSIONS = gql`
         lname
         email
         flag
+      }
+    }
+  }
+`;
+
+const GET_REQUESTS = gql`
+  query getRequests {
+    getRequestsForReview {
+      id
+      type
+      deadline
+      fulfilled
+      Submission {
+        id
+        Images {
+          id
+          url
+        }
+        Answers {
+          id
+          Question {
+            id
+            text
+          }
+          value
+          extra
+        }
+        flag
+        createdAt
+      }
+      Patient {
+        id
+        fname
+        lname
+        email
+        flag
+      }
+      Doctor {
+        id
+        fname
+        lname
+        email
       }
     }
   }

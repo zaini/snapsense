@@ -25,17 +25,24 @@ const ImageSlideshow = ({ images }) => {
   }, []);
 
   return (
-    <VStack>
+    <VStack data-testid="ImageSlideshow">
       <Box w="220px" h="100%" overflow="hidden" objectFit="scale-down">
         <Center>{imageComponents[index]}</Center>
       </Box>
       <HStack>
-        <Button isDisabled={index === 0} onClick={() => setIndex(index - 1)}>
+        <Button
+          data-testid="imagePrevBtn"
+          isDisabled={index === 0}
+          onClick={() => setIndex(index - 1)}
+          colorScheme="blue"
+        >
           Prev
         </Button>
         <Button
+          data-testid="imageNextBtn"
           isDisabled={index === images.length - 1}
           onClick={() => setIndex(index + 1)}
+          colorScheme="blue"
         >
           Next
         </Button>

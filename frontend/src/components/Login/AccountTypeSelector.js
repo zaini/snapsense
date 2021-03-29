@@ -10,6 +10,11 @@ const AccountTypeSelector = ({ accountType, onAccountTypeChange }) => {
       />
       <FormControlLabel value="DOCTOR" control={<Radio />} label="👩‍⚕️ Doctor" />
       <FormControlLabel value="ADMIN" control={<Radio />} label="🤖 Admin" />
+      <FormControlLabel
+        value="SUPERADMIN"
+        control={<Radio />}
+        label="🌟 SnapSense"
+      />
     </RadioGroup>
   );
 };

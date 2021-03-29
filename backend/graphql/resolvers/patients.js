@@ -4,6 +4,7 @@ const {
   UserInputError,
 } = require("apollo-server");
 const { Doctor, Patient } = require("../../models/index.js");
+const { getDoctorById, getPatientById } = require("./utils/userAuthorisation");
 
 const isAuth = require("../../utils/isAuth");
 
@@ -26,11 +27,7 @@ module.exports = {
         );
       }
 
-      // Get the doctor and make sure they exist
-      const doctor = await Doctor.findByPk(user.id);
-      if (!doctor) {
-        throw new UserInputError("Invalid user!");
-      }
+      const doctor = await getDoctorById(user.id);
 
       const patients = await doctor.getPatients();
 
@@ -44,17 +41,8 @@ module.exports = {
         throw new AuthenticationError("Invalid user credentials!");
       }
 
-      // Get the doctor and make sure they exist
-      const doctor = await Doctor.findByPk(user.id);
-      if (!doctor) {
-        throw new UserInputError("Invalid user!");
-      }
-
-      // Get the patient and make sure they exist
-      const patient = await Patient.findByPk(patient_id);
-      if (!patient) {
-        throw new UserInputError("Invalid patient!");
-      }
+      const doctor = await getDoctorById(user.id);
+      const patient = await getPatientById(patient_id);
 
       // If the patient belongs to the doctor, return the patient
       if (await doctor.hasPatient(patient)) {

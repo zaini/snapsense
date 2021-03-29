@@ -1,7 +1,7 @@
 const AWS = require("aws-sdk");
 const { v4: uuidv4 } = require("uuid");
 const { ApolloError } = require("apollo-server");
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 
 const col = require("./loggingFunc");
 const { Image } = require("../models/index");

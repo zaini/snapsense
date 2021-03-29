@@ -88,12 +88,12 @@ const cols = [
         <Stack direction="row" spacing={4}>
           <Link to={`/my/patients/show/${id}`}>
             <Button leftIcon={<ViewIcon />} colorScheme="blue">
-              View
+              View Patient
             </Button>
           </Link>
           <Link to={`/my/patients/${id}/requests/new`}>
             <Button leftIcon={<CalendarIcon />} colorScheme="blue">
-              Request
+              Request Submission
             </Button>
           </Link>
         </Stack>

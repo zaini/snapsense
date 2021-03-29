@@ -1,63 +1,10 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
-import { Box, Text, Flex, Stack, SimpleGrid, Divider } from "@chakra-ui/layout";
+import { Box, Flex, Stack } from "@chakra-ui/layout";
 import Question from "./Question";
+import questionsObject from "../../utils/QuestionsObject";
 
-// Questions will come from backend
-const questionsObject = [
-  {
-    questionID: 0,
-    questionText: "In the past 7 days, have you felt unwell?",
-    answerOptions: [{ answerText: "No" }, { answerText: "Yes" }],
-  },
-  {
-    questionID: 1,
-    questionText:
-      "In the past 7 days, have you had a fever (temperature higher than 36C)?",
-    answerOptions: [{ answerText: "No" }, { answerText: "Yes" }],
-  },
-  {
-    questionID: 2,
-    questionText:
-      "In the past 7 days, have you seen redness around your ulcer?",
-    answerOptions: [{ answerText: "No" }, { answerText: "Yes" }],
-  },
-  {
-    questionID: 3,
-    questionText:
-      "In the past 7 days, have you seen any puss around your ulcer?",
-    answerOptions: [{ answerText: "No" }, { answerText: "Yes" }],
-  },
-  {
-    questionID: 4,
-    questionText:
-      "In the past 7 days, has your ulcer been hotter to touch than usual?",
-    answerOptions: [{ answerText: "No" }, { answerText: "Yes" }],
-  },
-  {
-    questionID: 5,
-    questionText:
-      "In the past 7 days, has one foot been hotter to touch than the other?",
-    answerOptions: [{ answerText: "No" }, { answerText: "Yes" }],
-  },
-  {
-    questionID: 6,
-    questionText:
-      "In the past 7 days, have you noticed any unusual smells from the wound?",
-    answerOptions: [{ answerText: "No" }, { answerText: "Yes" }],
-  },
-  {
-    questionID: 7,
-    questionText: "Please add any other notes for your clinician (optional):",
-    answerOptions: [
-      { answerText: "No" },
-      { answerText: "Yes" },
-      //TODO: Figure a way to add a text field for this questions instead of Y/N
-    ],
-  },
-];
-
-const QuestionForm = ({ step, answers, setAnswers }) => {
+const QuestionForm = ({ isVisible, step, answers, setAnswers }) => {
   if (!answers.questionnaire[step + 1]) {
     answers.questionnaire[step + 1] = {};
   }
@@ -74,7 +21,7 @@ const QuestionForm = ({ step, answers, setAnswers }) => {
   };
 
   return (
-    <Box>
+    <Box hidden={!isVisible}>
       <Flex>
         <Stack w={"100%"} textAlign={"center"}>
           <Typography variant="h6" gutterBottom>
@@ -92,6 +39,8 @@ const QuestionForm = ({ step, answers, setAnswers }) => {
                 display={step === i ? "block" : "none"}
               >
                 <Question
+                  step={step}
+                  answers={answers}
                   question={questionsObject[i]}
                   onChangeOption={onChangeOption}
                   onChangeText={onChangeText}

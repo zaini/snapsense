@@ -4,25 +4,18 @@ const {
   AuthenticationError,
 } = require("apollo-server");
 const { verify } = require("jsonwebtoken");
-
 const isAuth = require("../../../utils/isAuth");
 const { createAccessToken } = require("./authTokens");
-const {
-  Admin,
-  Doctor,
-  Patient,
-  ScheduledEmail,
-} = require("../../../models/index");
-require("dotenv").config();
-
-const enqueueEmail = require("../../../utils/scheduledEmail");
+const { Admin, Doctor, Patient } = require("../../../models/index");
+require("dotenv").config({ path: "../.env" });
 const transactionalEmailSender = require("../../../utils/transactionalEmailSender");
 
 const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
+const FRONTEND_URL = process.env.FRONTEND_URL;
 
 const sendInviteEmail = async (inviteToken, user, email) => {
   // Set invite token URL for attaching in email
-  const inviteUrl = "http://localhost:3000/invites/show/" + inviteToken;
+  const inviteUrl = `${FRONTEND_URL}/invites/show/${inviteToken}`;
 
   // Set email parameters for the template
   const htmlParams = {
@@ -73,6 +66,9 @@ module.exports = {
           accountType,
           accountExists,
         } = verify(invitationToken, ACCESS_TOKEN_SECRET_KEY);
+
+        inviterEmail = inviterEmail.toLowerCase();
+        newAccountEmail = newAccountEmail.toLowerCase();
 
         let doctor;
         switch (accountType) {
@@ -136,7 +132,8 @@ module.exports = {
 
       // Logged in User
       const user = isAuth(context);
-      const userEmail = user.email;
+      const userEmail = user.email.toLowerCase();
+      email = email.toLowerCase();
 
       let accountType, doctor;
       let accountExists = false;

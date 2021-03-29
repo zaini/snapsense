@@ -25,6 +25,7 @@ export default function Hero({ title, subtitle, image, ...rest }) {
           fontWeight="bold"
           color="primary.800"
           textAlign={["center", "center", "left", "left"]}
+          data-testid="heroTitle"
         >
           {title}
         </Heading>
@@ -36,12 +37,13 @@ export default function Hero({ title, subtitle, image, ...rest }) {
           fontWeight="normal"
           lineHeight={1.5}
           textAlign={["center", "center", "left", "left"]}
+          data-testid="heroSubtitle"
         >
           {subtitle}
         </Heading>
       </Stack>
       <Box w={{ base: "80%", sm: "60%", md: "50%" }} mb={{ base: 12, md: 0 }}>
-        <Image src={image} size="100%" rounded="1rem" shadow="2xl" />
+        <Image src={image} size="100%" rounded="1rem" shadow="2xl" data-testid="heroImage"/>
       </Box>
     </Flex>
   );

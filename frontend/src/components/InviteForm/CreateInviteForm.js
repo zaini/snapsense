@@ -16,8 +16,7 @@ import {
 import Error from "../utils/Error";
 import CopyLink from "../utils/CopyLink";
 
-const URL_PREFIX =
-  process.env.REACT_APP_FRONTEND_URL_PREFIX || "http://localhost:3000";
+const URL_PREFIX = process.env.REACT_APP_FRONTEND_URL_PREFIX;
 
 const CreateInviteForm = () => {
   const {
@@ -31,12 +30,13 @@ const CreateInviteForm = () => {
 
   const [invitationToken, setInvitationToken] = useState("");
 
-  const [inviteUser, { loading, data }] = useMutation(INVITE_USER, {
+  const [inviteUser, { data }] = useMutation(INVITE_USER, {
     onCompleted({ inviteUser: invitationToken }) {
       setInvitationToken(invitationToken);
     },
     onError(err) {
-      const message = err.graphQLErrors[0].message;
+      const message =
+        (err.graphQLErrors && err.graphQLErrors[0].message) || err.message;
       // We have to assign this to a field in the form for it to let us resubmit after an error
       setError("email", { type: "manual", message });
       setInvitationToken("");
@@ -93,7 +93,7 @@ const CreateInviteForm = () => {
       {invitationToken && (
         <>
           <br />
-          <CopyLink link={URL_PREFIX + "/invites/show/" + invitationToken} />
+          <CopyLink link={`${URL_PREFIX}/invites/show/${invitationToken}`} />
         </>
       )}
     </Box>

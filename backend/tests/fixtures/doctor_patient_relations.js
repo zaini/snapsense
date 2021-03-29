@@ -1,21 +1,29 @@
 const { Doctor_Patient_Relation } = require("../../models/index");
 
 const seed = async () => {
-  await new Doctor_Patient_Relation({
+  await Doctor_Patient_Relation.create({
     id: 1,
-    patient_id: 1,
-    doctor_id: 1,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  }).save();
-
-  await new Doctor_Patient_Relation({
-    id: 2,
-    patient_id: 2,
     doctor_id: 2,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  }).save();
+    patient_id: 2,
+  });
+
+  await Doctor_Patient_Relation.create({
+    id: 2,
+    doctor_id: 3,
+    patient_id: 2,
+  });
+
+  await Doctor_Patient_Relation.create({
+    id: 3,
+    doctor_id: 4,
+    patient_id: 2,
+  });
+
+  await Doctor_Patient_Relation.create({
+    id: 4,
+    doctor_id: 1,
+    patient_id: 1,
+  });
 };
 
 module.exports = seed;

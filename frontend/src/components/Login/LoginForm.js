@@ -20,12 +20,13 @@ const LoginForm = ({ accountType }) => {
   const { register, handleSubmit, errors, setError, formState } = useForm();
   const { state } = useLocation();
 
-  const [login, { loading }] = useMutation(LOGIN_USER, {
+  const [login] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData } }) {
       context.login(userData);
     },
     onError(err) {
-      const message = err.graphQLErrors[0].message;
+      const message =
+        (err.graphQLErrors && err.graphQLErrors[0].message) || err.message;
       // We have to assign this to a field in the form for it to let us resubmit after an error
       setError("email", { type: "manual", message });
     },

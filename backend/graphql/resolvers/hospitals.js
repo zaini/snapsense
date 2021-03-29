@@ -1,9 +1,15 @@
+const { UserInputError } = require("apollo-server");
+
 const { Hospital } = require("../../models/index.js");
-const isAuth = require("../../utils/isAuth.js");
+const { getAuthenticatedSuperAdmin } = require("./utils/userAuthorisation");
 
 module.exports = {
   Query: {
-    getHospitals: async () => {
+    getHospitals: async (_, __, context) => {
+      // Authenticate the super admin
+      const superAdmin = await getAuthenticatedSuperAdmin(context);
+
+      // Get all hospitals
       try {
         const hospitals = await Hospital.findAll();
         return hospitals;
@@ -11,14 +17,46 @@ module.exports = {
         throw new Error(error);
       }
     },
+    getSpecificHospital: async (_, { hospital_id }, context) => {
+      // Authenticate the super admin
+      const superAdmin = await getAuthenticatedSuperAdmin(context);
+
+      // Get specific hospital
+      const hospital = await Hospital.findByPk(hospital_id);
+      if (!hospital) {
+        throw new UserInputError("Hospital does not exist");
+      }
+      return hospital;
+    },
   },
   Mutation: {
-    createHospital: async (_, hospital_details) => {
-      const hospital = new Hospital({
+    createHospital: async (_, hospital_details, context) => {
+      // Authenticate the super admin
+      const superAdmin = await getAuthenticatedSuperAdmin(context);
+
+      // Create the hospital
+      const hospital = await new Hospital({
         ...hospital_details,
         createdAt: new Date(),
-      });
-      return hospital.save();
+        updatedAt: new Date(),
+      }).save();
+
+      return hospital;
+    },
+    deleteHospital: async (_, { hospital_id }, context) => {
+      // Authenticate the super admin
+      const superAdmin = await getAuthenticatedSuperAdmin(context);
+
+      // Create the hospital
+      const hospital = await Hospital.findByPk(hospital_id);
+
+      if (!hospital) {
+        throw new UserInputError("Hospital does not exist");
+      }
+
+      await hospital.destroy();
+
+      return true;
     },
   },
 };

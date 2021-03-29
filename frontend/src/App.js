@@ -11,7 +11,10 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <PrivateRoute path="/my" accountTypes={["ADMIN", "DOCTOR", "PATIENT"]}>
+        <PrivateRoute
+          path="/my"
+          accountTypes={["SUPERADMIN", "ADMIN", "DOCTOR", "PATIENT"]}
+        >
           <MyLayout />
         </PrivateRoute>
 

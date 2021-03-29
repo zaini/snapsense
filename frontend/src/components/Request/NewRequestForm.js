@@ -13,19 +13,32 @@ import {
 import RequestTypeSelector from "./RequestTypeSelector";
 import RequestDatePicker from "./RequestDatePicker";
 import Error from "../utils/Error";
+import PeriodicSelector from "./PeriodicSelector";
 
-const NewRequestForm = ({ patient }) => {
+const NewRequestForm = ({ dateIn, testName, patient, periodic }) => {
   const { register, handleSubmit, control, getValues } = useForm();
 
   // Mutation hook with loading and error attributes
-  const [createRequest, { loading, error, data }] = useMutation(CREATE_REQUEST);
+  const [createRequest, { loading, error, data }] = useMutation(
+    CREATE_REQUEST,
+    {
+      onError(_) {}, // Error is handled below
+    }
+  );
 
-  const onSubmit = ({ requestType, submissionDate }) => {
+  const onSubmit = ({
+    requestType,
+    submissionDate,
+    requestInterval,
+    requestFrequency,
+  }) => {
     // When the form is submitted, send the request
     createRequest({
       variables: {
         patient_id: patient.id,
         request_type: parseInt(requestType),
+        interval: parseInt(requestInterval),
+        frequency: parseInt(requestFrequency),
         deadline: submissionDate.getTime().toString(),
       },
     });
@@ -36,7 +49,12 @@ const NewRequestForm = ({ patient }) => {
   if (loading) {
     // Display a spinner if loading
     markup = (
-      <Container p="7" borderRadius="lg" mt="20">
+      <Container
+        data-testid="formSubmitInnerLoader"
+        p="7"
+        borderRadius="lg"
+        mt="20"
+      >
         <Center>
           <Spinner size="xl" />
         </Center>
@@ -45,11 +63,18 @@ const NewRequestForm = ({ patient }) => {
   } else if (error) {
     // Display the error on error
     markup = (
-      <Container p="7" borderRadius="lg" mt="20">
+      <Container
+        data-testid="formSubmitInnerError"
+        p="7"
+        borderRadius="lg"
+        mt="20"
+      >
         <Error
           errors={[
             {
-              message: error.graphQLErrors[0].message,
+              message:
+                (error.graphQLErrors && error.graphQLErrors[0].message) ||
+                error.message,
             },
           ]}
         />
@@ -60,15 +85,33 @@ const NewRequestForm = ({ patient }) => {
     markup = (
       <form onSubmit={handleSubmit(onSubmit)}>
         {data && (
-          <Alert status="success" borderRadius="50px" mb={4} textAlign="center">
-            <AlertIcon />
-            Request has been sent to {patient.fname}
-          </Alert>
+          <div data-testid="formSubmitInnerSuccess">
+            <Alert
+              status="success"
+              borderRadius="50px"
+              mb={4}
+              textAlign="center"
+            >
+              <AlertIcon />
+              Request has been sent to {patient.fname}
+            </Alert>
+          </div>
         )}
         <RequestTypeSelector patient={patient} register={register} />
-        <RequestDatePicker control={control} />
+        <RequestDatePicker dateIn={dateIn} control={control} />
+
+        <PeriodicSelector
+          show={periodic}
+          patient={patient}
+          register={register}
+        />
         <Center>
-          <Button type="submit" mt={4} colorScheme="blue">
+          <Button
+            data-testid="formSubmit"
+            type="submit"
+            mt={4}
+            colorScheme="blue"
+          >
             Submit
           </Button>
         </Center>
@@ -76,22 +119,26 @@ const NewRequestForm = ({ patient }) => {
     );
   }
 
-  return markup;
+  return <div data-testid={testName}>{markup}</div>;
 };
 
 export default NewRequestForm;
 
 // Graphql mutation
-const CREATE_REQUEST = gql`
+export const CREATE_REQUEST = gql`
   mutation createRequest(
     $patient_id: ID!
     $request_type: Int!
     $deadline: String!
+    $interval: Int!
+    $frequency: Int!
   ) {
     createRequest(
       patient_id: $patient_id
       request_type: $request_type
       deadline: $deadline
+      frequency: $frequency
+      interval: $interval
     )
   }
 `;

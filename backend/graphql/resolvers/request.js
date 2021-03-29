@@ -3,13 +3,12 @@ const {
   UserInputError,
   ApolloError,
 } = require("apollo-server-core");
-
 const {
   Patient,
   Doctor,
   Request,
   Submission,
-  ScheduledEmail,
+  ScheduledRequest,
   Image,
   Answer,
   Question,
@@ -17,8 +16,8 @@ const {
 const isAuth = require("../../utils/isAuth.js");
 const { Sequelize } = require("../../models/index");
 const Op = Sequelize.Op;
-const enqueueEmail = require("../../utils/scheduledEmail.js");
 const transactionalEmailSender = require("../../utils/transactionalEmailSender.js");
+const { getDoctorById, getPatientById } = require("./utils/userAuthorisation");
 
 const sendRequestEmail = async (doctor, patient, request_type, deadline) => {
   // Set email parameters for the template
@@ -43,6 +42,30 @@ const sendRequestEmail = async (doctor, patient, request_type, deadline) => {
   await transactionalEmailSender(emailParams, htmlParams);
 };
 
+const requestScheduler = async (
+  request,
+  interval,
+  frequency,
+  doctor,
+  patient
+) => {
+  console.log(`Recurring Requests: ${interval} - ${frequency}`);
+  const startDate = new Date(request.deadline);
+  try {
+    const res = await new ScheduledRequest({
+      doctor_id: doctor.id,
+      patient_id: patient.id,
+      request_id: request.id,
+      interval,
+      frequency,
+      startDate,
+    }).save();
+    return res;
+  } catch (e) {
+    throw new ApolloError(e, 500);
+  }
+};
+
 module.exports = {
   Query: {
     getRequestsAsPatient: async (_, __, context) => {
@@ -54,17 +77,13 @@ module.exports = {
         );
       }
 
-      const patient = await Patient.findByPk(user.id);
+      const patient = await getPatientById(user.id);
 
-      if (!patient) {
-        throw new UserInputError("Invalid patient");
-      }
-
-      // const requests = await patient.getRequests();
       const requests = await Request.findAll({
         where: { patient_id: patient.id },
         include: [Doctor, Patient, Submission],
       });
+
       return requests || [];
     },
     getRequestsAsDoctor: async (_, __, context) => {
@@ -76,16 +95,13 @@ module.exports = {
         );
       }
 
-      const doctor = await Doctor.findByPk(user.id);
-
-      if (!doctor) {
-        throw new UserInputError("Invalid doctor");
-      }
+      const doctor = await getDoctorById(user.id);
 
       const requests = await Request.findAll({
         where: { doctor_id: doctor.id },
         include: [Doctor, Patient, Submission],
       });
+
       return requests || [];
     },
     getRequestsForReview: async (_, __, context) => {
@@ -97,14 +113,8 @@ module.exports = {
         );
       }
 
-      const doctor = await Doctor.findByPk(user.id);
+      const doctor = await getDoctorById(user.id);
 
-      if (!doctor) {
-        throw new UserInputError("Invalid doctor");
-      }
-
-      // TODO make it so that these requests also haven't been reviewed yet
-      // maybe instead of fulfilled check where submission isn't null?
       const requests = await Request.findAll({
         where: {
           doctor_id: doctor.id,
@@ -127,7 +137,7 @@ module.exports = {
   Mutation: {
     createRequest: async (
       _,
-      { request_type, deadline, patient_id },
+      { request_type, deadline, patient_id, interval, frequency },
       context
     ) => {
       // Authenticate user
@@ -136,20 +146,14 @@ module.exports = {
         throw new AuthenticationError("Invalid user credentials!");
       }
 
-      // Check that the doctor and patient both exist
-      const doctor = await Doctor.findByPk(user.id);
-      if (!doctor) {
-        throw new UserInputError("Invalid user!");
-      }
+      validateInterval(interval);
+      validateFrequency(frequency);
 
-      const patient = await Patient.findByPk(patient_id);
-      if (!patient) {
-        throw new UserInputError("Invalid patient!");
-      }
+      const doctor = await getDoctorById(user.id);
+      const patient = await getPatientById(patient_id);
 
-      // Check that the doctor 'has' this patient
       if (!(await doctor.hasPatient(patient))) {
-        throw new UserInputError("This patient does not belong to you!!");
+        throw new UserInputError("This patient does not belong to you!");
       }
 
       // Source for date format below: https://stackoverflow.com/questions/8362952/javascript-output-current-datetime-in-yyyy-mm-dd-hhmsec-format
@@ -169,6 +173,10 @@ module.exports = {
         // Assign the request to both the doctor and patient
         await doctor.addRequest(request);
         await patient.addRequest(request);
+
+        if (needsScheduling(interval, frequency)) {
+          await requestScheduler(request, interval, frequency, doctor, patient);
+        }
       } catch (error) {
         // An error will be thrown if the request is invalid as a result of a user input error
         throw new UserInputError(error);
@@ -176,8 +184,23 @@ module.exports = {
 
       await sendRequestEmail(doctor, patient, request_type, deadline);
 
-      // Everything was successful so return false
       return true;
     },
   },
+};
+
+const needsScheduling = (interval, frequency) => {
+  return interval > 0 && frequency > 0;
+};
+
+const validateFrequency = (frequency) => {
+  if (frequency < 0 || frequency > 20) {
+    throw new UserInputError("Invalid Frequency");
+  }
+};
+
+const validateInterval = (interval) => {
+  if (interval < 0 || interval > 20) {
+    throw new UserInputError("Invalid Interval");
+  }
 };

@@ -45,6 +45,7 @@ const GET_SUBMISSIONS = gql`
     getSubmissions(patient_id: $patient_id) {
       id
       flag
+      createdAt
       Patient {
         id
         fname
@@ -65,7 +66,6 @@ const GET_SUBMISSIONS = gql`
         value
         extra
       }
-      createdAt
     }
   }
 `;
