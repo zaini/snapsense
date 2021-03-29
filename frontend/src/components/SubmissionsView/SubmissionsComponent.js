@@ -32,7 +32,7 @@ const SubmissionsComponent = () => {
     );
   } else {
     const dataRows = data.getSubmissions;
-    markup = <SubmissionsViewSwitch data-testid="submissionComponent" data={dataRows} />;
+    markup = <SubmissionsViewSwitch data={dataRows} />;
   }
 
   return markup;
