@@ -25,7 +25,7 @@ const DoctorHomePanel = () => {
     markup = (
       <Alert status="error">
         <AlertIcon />
-        {(error) ? error.message : requests_error.message}
+        {error ? error.message : requests_error.message}
       </Alert>
     );
   } else {
@@ -45,10 +45,16 @@ const DoctorHomePanel = () => {
         data-testid="doctorHomeContainer"
       >
         <Stack>
-          <Text data-testid="doctorHomeTextOne">You have {submission_data.length} submissions to review.</Text>
-          <Text data-testid="doctorHomeTextTwo">You have {request_data.length} requests to review.</Text>
+          <Text data-testid="doctorHomeTextOne">
+            You have {submission_data.length} submissions to review.
+          </Text>
+          <Text data-testid="doctorHomeTextTwo">
+            You have {request_data.length} requests to review.
+          </Text>
           <Link to="/my/submissions/review">
-            <Button colorScheme="blue">Review My Patients</Button>
+            <Button data-testId="reviewPatientsButton" colorScheme="blue">
+              Review My Patients
+            </Button>
           </Link>
         </Stack>
       </Box>

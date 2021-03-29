@@ -37,11 +37,16 @@ const PatientHomePanel = () => {
         p="15px"
         fontWeight="bold"
         backgroundColor="blue.100"
+        data-testid="patientHomeContainer"
       >
         <Stack>
-          <Text>You have {request_data.length} request(s) to fulfil.</Text>
+          <Text data-testid="patientHomeText">
+            You have {request_data.length} request(s) to fulfil.
+          </Text>
           <Link to="/my/requests">
-            <Button colorScheme="blue">View My Requests</Button>
+            <Button data-testId="reviewRequestsButton" colorScheme="blue">
+              View My Requests
+            </Button>
           </Link>
         </Stack>
       </Box>
@@ -52,7 +57,9 @@ const PatientHomePanel = () => {
     <Container>
       <Center>
         <Link to="/my/submissions/new">
-          <Button colorScheme="blue">Create New Submission Now</Button>
+          <Button data-testId="newSubmissionButton" colorScheme="blue">
+            Create New Submission Now
+          </Button>
         </Link>
       </Center>
 
