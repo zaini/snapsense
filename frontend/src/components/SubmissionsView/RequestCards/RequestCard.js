@@ -1,4 +1,5 @@
 import React from "react";
+import { useMediaQuery } from "react-responsive";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { Box, Stack, Text, Center } from "@chakra-ui/react";
@@ -7,6 +8,9 @@ import ViewQuestionnaireResponse from "../../utils/ViewQuestionnaireResponse";
 import RequestCardOptions from "./RequestCardOptions";
 
 const RequestCard = ({ data, vertical, testID }) => {
+  const isTabletOrMobile = useMediaQuery({ maxWidth: 1600 });
+  vertical = vertical || isTabletOrMobile;
+
   const { Patient, Submission, deadline } = data;
 
   const deadline_date = new Date(parseInt(deadline)).toLocaleString();

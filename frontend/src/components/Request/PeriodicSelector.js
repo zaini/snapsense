@@ -21,15 +21,17 @@ const PeriodicSelector = ({ patient, register, show }) => {
       <Center>
         <Stack>
           <InputFieldProvider
+            testName={"inputInterval"}
             title="Interval"
             name={"requestInterval"}
             desc="Interval in days"
             register={register}
           />
           <InputFieldProvider
+            testName="inputFrequency"
             title="Frequency"
             name={"requestFrequency"}
-            desc="Frequncy of Cycles"
+            desc="Frequency of Cycles"
             register={register}
           />
         </Stack>
