@@ -1,8 +1,10 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { gql, useMutation } from "@apollo/client";
 import { NewSubmissionPage } from "../pages/My/NewSubmissionPage";
+import { act } from "react-dom/test-utils";
+import { Route, MemoryRouter } from "react-router";
 
-import { render, fireEvent, cleanup, screen } from "@testing-library/react";
+import { render, fireEvent, cleanup, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 afterEach(cleanup);
@@ -176,9 +178,23 @@ describe("page loading", () => {
   });
 
     test("has a submit button", async () => {
-    const button = screen.findAllByTestId("submitbutton");
+    const button = screen.findAllByTestId(
+      "submitbutton");
     expect(button).toBeTruthy();
   });
+
+  // test("Submit button works", () => {
+  // const submitButton = screen.getByTestId(
+  //   "submitbutton");
+  // act(() => {
+  //   fireEvent.click(submitButton);
+  // });
+  // await waitFor(() => {
+  //   expect(screen.getByText(
+  //     /Form has been submitted !/i))
+  //     .toBeInTheDocument();
+  // });
+
 });
 
 
