@@ -160,7 +160,7 @@ const setup = async () => {
       <MockedProvider mocks={mocks}>
         <MemoryRouter initialEntries={["/my/submissions/new"]}>
           <Route path="/my/submissions/new">
-            <ReviewSubmissions />
+            <NewSubmissionPage />
           </Route>
         </MemoryRouter>
       </MockedProvider>
@@ -174,11 +174,12 @@ describe("page loading", () => {
   it("renders without crashing", async () => {
     expect(setup).toBeTruthy();
   });
+    it("has a submit button", async () => {
+    const button = setup.findAllByTestId("submitbutton");
+    expect(button).toBeTruthy();
+  });
 });
-  // it("has a submit button", async () => {
-  //   const button = setup.findByText("submitbutton");
-  //   expect(button).toBeTruthy();
-  // });
+
 
 
 // it(" has submit button by default", async () => {
