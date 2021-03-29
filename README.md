@@ -99,8 +99,6 @@ To create the databases locally, ensure you have MySQL installed and then do the
 
 The database should now work. You'll probably also want to seed it by running `npx sequelize-cli db:seed:all`
 
-TODO Ayan: add more instructions for how to set this up on AWS
-
 ## Running Application
 
 To run the frontend, `cd frontend && npm start`
