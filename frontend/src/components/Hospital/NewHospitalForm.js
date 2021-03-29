@@ -137,7 +137,7 @@ export const CREATE_HOSPITAL = gql`
   }
 `;
 
-const GET_HOSPITALS = gql`
+export const GET_HOSPITALS = gql`
   query getHospitals {
     getHospitals {
       id
