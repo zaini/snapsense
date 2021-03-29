@@ -1,4 +1,5 @@
 import React from "react";
+import { useMediaQuery } from "react-responsive";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { Box, Stack, Text, Center } from "@chakra-ui/react";
@@ -6,7 +7,10 @@ import ImageSlideshow from "../../utils/ImageSlideshow";
 import ViewQuestionnaireResponse from "../../utils/ViewQuestionnaireResponse";
 import RequestCardOptions from "./RequestCardOptions";
 
-const RequestCard = ({ data, vertical }) => {
+const RequestCard = ({ data, vertical, testID }) => {
+  const isTabletOrMobile = useMediaQuery({ maxWidth: 1600 });
+  vertical = vertical || isTabletOrMobile;
+
   const { Patient, Submission, deadline } = data;
 
   const deadline_date = new Date(parseInt(deadline)).toLocaleString();
@@ -14,7 +18,7 @@ const RequestCard = ({ data, vertical }) => {
     parseInt(Submission.createdAt)
   ).toLocaleString();
 
-  const [flagSubmission] = useMutation(FLAG_SUBMISSION, {
+  const [flagSubmission, { loading }] = useMutation(FLAG_SUBMISSION, {
     onCompleted() {},
     onError(err) {},
     update(proxy) {
@@ -57,22 +61,30 @@ const RequestCard = ({ data, vertical }) => {
   });
 
   return (
-    <Box borderWidth="1px" borderRadius="lg" p="10px" m="5px">
+    <Box
+      data-testid={testID}
+      borderWidth="1px"
+      borderRadius="lg"
+      p="10px"
+      m="5px"
+    >
       {Submission.id}
       <Center p="10px">
         <Stack direction={vertical ? "column" : "row"}>
           <Box>
             {Submission.Images && Submission.Images.length === 0 ? (
-              <Text fontWeight="bold" fontSize="110%" pb="50%">
+              <Center>
                 <Box
                   w="220px"
                   h="100%"
                   overflow="hidden"
                   objectFit="scale-down"
                 >
-                  <Center>No Images</Center>
+                  <Text fontWeight="bold" fontSize="110%" pb="50%">
+                    No images
+                  </Text>
                 </Box>
-              </Text>
+              </Center>
             ) : (
               <ImageSlideshow images={Submission.Images} />
             )}
@@ -125,7 +137,7 @@ const RequestCard = ({ data, vertical }) => {
 
 export default RequestCard;
 
-const FLAG_SUBMISSION = gql`
+export const FLAG_SUBMISSION = gql`
   mutation flagSubmission($submission_id: ID!, $flag: Int!) {
     flagSubmission(submission_id: $submission_id, flag: $flag) {
       id
@@ -135,7 +147,7 @@ const FLAG_SUBMISSION = gql`
 `;
 
 const GET_REQUESTS = gql`
-  query getRequests {
+  query getRequestsForReview {
     getRequestsForReview {
       id
       type
@@ -177,7 +189,7 @@ const GET_REQUESTS = gql`
 `;
 
 const GET_SUBMISSIONS = gql`
-  query getSubmissions {
+  query getSubmissionsForReview {
     getSubmissionsForReview {
       id
       flag
