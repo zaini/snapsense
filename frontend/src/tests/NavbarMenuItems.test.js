@@ -37,7 +37,7 @@ describe("Renders the correct navbar for an admin", () => {
     await fireEvent.click(dashBoardOption);
   })
 
-  it("displays a my dashboard option on the navbar", () => {
+  it("displays a my dashboard option on the navbar", async () => {
     setup("ADMIN");
     const feedbackOption = screen.getByText(/Share Feedback/i);
     
@@ -45,9 +45,9 @@ describe("Renders the correct navbar for an admin", () => {
     await fireEvent.click(feedbackOption);
   })
 
-  it("displays a my dashboard option on the navbar", () => {
+  it("displays a my dashboard option on the navbar", async () => {
     setup("ADMIN");
-    const logoutOption = screen.getByText(/Logout/i)
+    const logoutOption = screen.getByText(/Logout/i);
 
     expect(logoutOption).toBeInTheDocument();
     await fireEvent.click(logoutOption);
@@ -62,19 +62,28 @@ describe("Renders the correct navbar for an doctor", () => {
     expect(screen.getByTestId(/navLogo/i)).toBeInTheDocument();
   });
 
-  it("displays a my dashboard option on the navbar", () => {
+  it("displays a my dashboard option on the navbar", async () => {
     setup("DOCTOR");
-    expect(screen.getByText(/My Dashboard/i)).toBeInTheDocument();
+    const dashBoardOption = screen.getByText(/My Dashboard/i);
+
+    expect(dashBoardOption).toBeInTheDocument();
+    await fireEvent.click(dashBoardOption);
   })
 
-  it("displays a my dashboard option on the navbar", () => {
+  it("displays a my dashboard option on the navbar", async () => {
     setup("DOCTOR");
-    expect(screen.getByText(/Share Feedback/i)).toBeInTheDocument();
+    const feedbackOption = screen.getByText(/Share Feedback/i);
+
+    expect(feedbackOption).toBeInTheDocument();
+    await fireEvent.click(feedbackOption);
   })
 
-  it("displays a my dashboard option on the navbar", () => {
+  it("displays a my dashboard option on the navbar", async () => {
     setup("DOCTOR");
+    const logoutOption = screen.getByText(/Logout/i);
+
     expect(screen.getByText(/Logout/i)).toBeInTheDocument();
+    await fireEvent.click(logoutOption);
   })
 
 })
