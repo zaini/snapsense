@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, cleanup, render } from "@testing-library/react";
+import { screen, cleanup, waitFor, render } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import ProfilePage from '../pages/My/ProfilePage';
 import { Route, MemoryRouter } from "react-router";
@@ -14,12 +14,15 @@ const submissionMock = [
     {
         request: {
             query: GET_SUBMISSIONS,
+            variables: {
+                patient_id: "1",
+            },
         },
         result: {
             data: {
                 getSubmissions: [
                     {
-                        id: "1", patient_id: "1",
+                        id: "1" //, patient_id: "1",
                     },
                 ],
             },
@@ -65,16 +68,15 @@ it("renders without crashing", () => {
     expect(screen.getByText(/My Profile/i)).toBeInTheDocument();
 });
 
-// it("should load doctor home page without crashing", async () => {
-//     setup();
-//     expect(screen.getByText(/My Profile/i)).toBeInTheDocument();
-//     await waitFor(() => {
-//         const submissionReview = screen.getByTestId("doctorHomeTextOne");
-//         const requestReview = screen.getByTestId("doctorHomeTextTwo");
-//         expect(screen.getByTestId("doctorHomeContainer")).toBeInTheDocument();
-//         expect(submissionReview).toBeInTheDocument();
-//         expect(requestReview).toBeInTheDocument();
-//         within(submissionReview).getByText(/You have 7 submissions to review./i);
-//         within(requestReview).getByText(/You have 1 requests to review./i);
-//     });
-// });
+
+it("should load patient profile page without crashing", async () => {
+    setup();
+    expect(screen.getByText(/My Profile/i)).toBeInTheDocument();
+    await waitFor(() => {
+        const changePWModalButton = screen.getByTestId("changePasswordButton");
+        const deleteAccountModalButton = screen.getByTestId("deleteAccountButton");
+        expect(changePWModalButton).toBeInTheDocument();
+        expect(deleteAccountModalButton).toBeInTheDocument();
+        expect(screen.getByTestId("submissionComponent")).toBeInTheDocument();
+    });
+});
