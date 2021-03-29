@@ -15,7 +15,7 @@ import RequestDatePicker from "./RequestDatePicker";
 import Error from "../utils/Error";
 import PeriodicSelector from "./PeriodicSelector";
 
-const NewRequestForm = ({ patient, periodic }) => {
+const NewRequestForm = ({ dateIn, testName, patient, periodic }) => {
   const { register, handleSubmit, control, getValues } = useForm();
 
   // Mutation hook with loading and error attributes
@@ -49,7 +49,12 @@ const NewRequestForm = ({ patient, periodic }) => {
   if (loading) {
     // Display a spinner if loading
     markup = (
-      <Container p="7" borderRadius="lg" mt="20">
+      <Container
+        data-testid="formSubmitInnerLoader"
+        p="7"
+        borderRadius="lg"
+        mt="20"
+      >
         <Center>
           <Spinner size="xl" />
         </Center>
@@ -58,11 +63,16 @@ const NewRequestForm = ({ patient, periodic }) => {
   } else if (error) {
     // Display the error on error
     markup = (
-      <Container p="7" borderRadius="lg" mt="20">
+      <Container
+        data-testid="formSubmitInnerError"
+        p="7"
+        borderRadius="lg"
+        mt="20"
+      >
         <Error
           errors={[
             {
-              message: error.graphQLErrors[0].message,
+              message: (err.graphQLErrors && err.graphQLErrors[0].message) || err.message,
             },
           ]}
         />
@@ -73,16 +83,33 @@ const NewRequestForm = ({ patient, periodic }) => {
     markup = (
       <form onSubmit={handleSubmit(onSubmit)}>
         {data && (
-          <Alert status="success" borderRadius="50px" mb={4} textAlign="center">
-            <AlertIcon />
-            Request has been sent to {patient.fname}
-          </Alert>
+          <div data-testid="formSubmitInnerSuccess">
+            <Alert
+              status="success"
+              borderRadius="50px"
+              mb={4}
+              textAlign="center"
+            >
+              <AlertIcon />
+              Request has been sent to {patient.fname}
+            </Alert>
+          </div>
         )}
         <RequestTypeSelector patient={patient} register={register} />
-        <RequestDatePicker control={control} />
-        <PeriodicSelector show={periodic} patient={patient} register={register} />
+        <RequestDatePicker dateIn={dateIn} control={control} />
+
+        <PeriodicSelector
+          show={periodic}
+          patient={patient}
+          register={register}
+        />
         <Center>
-          <Button type="submit" mt={4} colorScheme="blue">
+          <Button
+            data-testid="formSubmit"
+            type="submit"
+            mt={4}
+            colorScheme="blue"
+          >
             Submit
           </Button>
         </Center>
@@ -90,13 +117,13 @@ const NewRequestForm = ({ patient, periodic }) => {
     );
   }
 
-  return markup;
+  return <div data-testid={testName}>{markup}</div>;
 };
 
 export default NewRequestForm;
 
 // Graphql mutation
-const CREATE_REQUEST = gql`
+export const CREATE_REQUEST = gql`
   mutation createRequest(
     $patient_id: ID!
     $request_type: Int!

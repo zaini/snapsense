@@ -58,7 +58,7 @@ const RequestCardsTable = () => {
       markup = (
         <>
           {data_rows.map((e, i) => {
-            return <RequestCard key={e.Submission.id} data={e} />;
+            return <RequestCard key={`${e.Submission.id}-${i}`} data={e} />;
           })}
         </>
       );

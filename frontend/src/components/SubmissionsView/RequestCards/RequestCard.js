@@ -7,12 +7,14 @@ import ViewQuestionnaireResponse from "../../utils/ViewQuestionnaireResponse";
 import RequestCardOptions from "./RequestCardOptions";
 
 const RequestCard = ({ data, vertical }) => {
-  const { Patient, Submission, deadline, type } = data;
-  
-  const deadline_date = new Date(deadline);
-  const submission_date = new Date(Submission.createdAt);
+  const { Patient, Submission, deadline } = data;
 
-  const [flagSubmission, { loading }] = useMutation(FLAG_SUBMISSION, {
+  const deadline_date = new Date(parseInt(deadline)).toLocaleString();
+  const submission_date = new Date(
+    parseInt(Submission.createdAt)
+  ).toLocaleString();
+
+  const [flagSubmission] = useMutation(FLAG_SUBMISSION, {
     onCompleted() {
       // window.location.reload();
     },

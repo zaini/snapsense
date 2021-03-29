@@ -10,7 +10,7 @@ const InvitePatientExists = ({ invitation }) => {
   const history = useHistory();
   const { user, logout } = useContext(AuthContext);
 
-  const [addRelation, { loading }] = useMutation(ADD_PATIENT_TO_DOCTOR, {
+  const [addRelation] = useMutation(ADD_PATIENT_TO_DOCTOR, {
     onCompleted(data) {
       alert("You have accepted this invitation.");
       history.push("/");

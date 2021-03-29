@@ -20,7 +20,7 @@ const LoginForm = ({ accountType }) => {
   const { register, handleSubmit, errors, setError, formState } = useForm();
   const { state } = useLocation();
 
-  const [login, { loading }] = useMutation(LOGIN_USER, {
+  const [login] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData } }) {
       context.login(userData);
     },

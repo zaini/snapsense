@@ -53,13 +53,12 @@ const RequestCardOptions = ({
         <InputGroup mb="10px">
           <InputLeftAddon children={<BsFlag />} backgroundColor="#ABCAE7" />
           <Select
+            value={flagValue}
             onChange={(e) => {
               setFlagValue(e.target.value);
             }}
           >
-            <option value="-1" selected>
-              Review Submission
-            </option>
+            <option value="-1">Review Submission</option>
             <option value="1">Low Risk</option>
             <option value="2">Medium Risk</option>
             <option value="3">High Risk</option>

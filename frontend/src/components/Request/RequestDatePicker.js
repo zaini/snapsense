@@ -3,7 +3,7 @@ import { Center, FormControl, FormLabel } from "@chakra-ui/react";
 
 import FormDate from "../utils/FormDate";
 
-const RequestDatePicker = ({ control }) => {
+const RequestDatePicker = ({ control, dateIn }) => {
   return (
     <FormControl isRequired marginTop="10" marginBottom="5">
       <Center>
@@ -12,7 +12,7 @@ const RequestDatePicker = ({ control }) => {
         </FormLabel>
       </Center>
       <Center>
-        <FormDate control={control} />
+        <FormDate dateIn={dateIn} control={control} />
       </Center>
     </FormControl>
   );
