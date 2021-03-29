@@ -1,4 +1,5 @@
 import { Box, Stack, Text, Center } from "@chakra-ui/react";
+import { useMediaQuery } from "react-responsive";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../context/auth";
@@ -11,6 +12,8 @@ import SubmissionCardOptions from "./SubmissionCardOptions";
 const SubmissionCard = ({ data, vertical, redirect }) => {
   const { user } = useContext(AuthContext);
   const history = useHistory();
+  const isTabletOrMobile = useMediaQuery({ maxWidth: 1600 });
+  vertical = vertical || isTabletOrMobile;
 
   // data here is a submission object
   const { Patient, Images, Answers, createdAt, flag, id } = data;
