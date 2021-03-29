@@ -114,7 +114,6 @@ You can run the frontend tests by calling `npm test` in the frontend folder.
 You can run the backend tests by calling `npm test` in the backend folder.
 
 ## Simple Deployment
----
 ### Prerequisites
 * An Amazon AWS Account with up to date billing information.
 * An S3 Bucket with Public Read privileges
@@ -126,7 +125,7 @@ You can run the backend tests by calling `npm test` in the backend folder.
 ### Procedure
 * Setup RDS credentials
 * Store Database credentials and API endpoint in `config/config.json`
-* Make sure the root `.env` file contains the correct aws configuration details
+* Make sure the root `.env` file contains the correct **AWS** configuration details
 * Login to the EC2 and `git clone` the repo
 * `cd` into the folder (ex: snapsense)
 * run `cd frontend && npm i`
@@ -163,8 +162,7 @@ server {
 * run `systemctl sudo restart nginx`
 * run `cd /home/ubuntu/snapsense/backend/`
 * run `pm2 start server.js --name server`
-* The App should now we running on the EC2 public url
-
+* The App should now be running on the EC2 public url
 ## Other
 
 This project has a Trello board which can be viewed [here.](https://trello.com/b/RinZfAWQ/seg-large-group-project)
