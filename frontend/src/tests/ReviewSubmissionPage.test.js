@@ -66,7 +66,7 @@ const setupWithoutData = async () => {
   });
 };
 
-describe("page loading", () => {
+describe("screening page loading", () => {
   test("page renders without crashing", async () => {
     expect(setup).toBeTruthy();
   });
@@ -87,7 +87,7 @@ describe("page loading", () => {
   });
 });
 
-describe("fulfilled and unreviewed tab", () => {
+describe("fulfilled and unreviewed tab on screening page", () => {
   test("spinner shows up when tab is loaded", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
@@ -302,6 +302,7 @@ describe("fulfilled and unreviewed tab", () => {
     );
   });
 
+
   // TODO: Check if cache has been edited properly
   // TODO: Getting null error for request card called query
   test("submit button correctly submits form in card three", async () => {
@@ -340,7 +341,7 @@ describe("fulfilled and unreviewed tab", () => {
   });
 });
 
-describe("unreviewed submissions tab", () => {
+describe("unreviewed submissions tab screening page loading", () => {
   test("spinner shows up when tab is loaded", async () => {
     setup();
     const tab = screen.getByTestId("tabFulfillTwo");
