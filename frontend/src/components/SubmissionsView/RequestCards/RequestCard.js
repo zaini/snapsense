@@ -19,7 +19,6 @@ const RequestCard = ({ data, vertical, testID }) => {
       // window.location.reload();
     },
     onError(err) {
-      console.log(err);
     },
     update(proxy) {
       const data = proxy.readQuery({
