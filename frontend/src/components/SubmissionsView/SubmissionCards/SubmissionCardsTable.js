@@ -57,7 +57,7 @@ const SubmissionCardsTable = () => {
       markup = (
         <>
           {data_rows.map((e, i) => {
-            return <SubmissionCard key={`${e.id}-${i}`} data={e} />;
+            return <SubmissionCard testID={`submissionCard${i+1}`} key={`${e.id}-${i}`} data={e} />;
           })}
         </>
       );
