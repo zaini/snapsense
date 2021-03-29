@@ -16,7 +16,7 @@ import {
 import Error from "../utils/Error";
 
 
-export const NewHospitalForm = () => {
+const NewHospitalForm = () => {
   const { register, handleSubmit } = useForm();
 
   const [createHospital, { loading, error, data }] = useMutation(
@@ -72,12 +72,12 @@ export const NewHospitalForm = () => {
           <FormLabel>Hospital name</FormLabel>
           <Input data-testid="hospitalNewFormName" placeholder="Name" name="name" ref={register} />
         </FormControl>
-        <FormControl id="email" name="email" isRequired mb={4} data-testid='email-form'>
+        <FormControl id="email" name="email" isRequired mb={4}>
           <FormLabel>Contact email</FormLabel>
           <Input data-testid="hospitalNewFormEmail" type="email" name="email" placeholder="Email" ref={register} />
         </FormControl>
         <Center>
-          <Button type="submit" mt={4} colorScheme="blue" data-testid="submitbutton">
+          <Button type="submit" mt={4} colorScheme="blue" data-testid="submitButton">
             Submit
           </Button>
         </Center>
