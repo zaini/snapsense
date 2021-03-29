@@ -113,11 +113,57 @@ You can run the frontend tests by calling `npm test` in the frontend folder.
 
 You can run the backend tests by calling `npm test` in the backend folder.
 
-## Deployment
+## Simple Deployment
+---
+### Prerequisites
+* An Amazon AWS Account with up to date billing information.
+* An S3 Bucket with Public Read privileges
+* An EC2 Instance (Instructions for Ubuntu Instance)
+* An RDS Databse cluster with public endpoint access
+* All services must be in the same **REGION**
+* EC2 with `PM2`, `NGINX`, `NODE`, `NPM`, `GIT` installed 
 
-HOW TO DEPLOY
-
-TODO: for Ayan to write.
+### Procedure
+* Setup RDS credentials
+* Store Database credentials and API endpoint in `config/config.json`
+* Make sure the root `.env` file contains the correct aws configuration details
+* Login to the EC2 and `git clone` the repo
+* `cd` into the folder (ex: snapsense)
+* run `cd frontend && npm i`
+* run `npm run build`
+* run `cd ../ && cd backend && npm i`
+* run `cd /etc/nginx/sites-available`
+* run `sudo nano default`
+* Paste the following nginx configurations in the file
+```
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    client_max_body_size 100M;
+    
+    root /home/ubuntu/snapsense/frontend/build;
+    
+    index index.html index.htm index.nginx-debian.html;
+    
+    server_name _;
+    location / {
+        try_files $uri /index.html;
+    }
+    
+    location /graphql {
+        client_max_body_size 100M;
+        proxy_pass http://localhost:5000/graphql/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}
+```
+* Save the file
+* run `systemctl sudo restart nginx`
+* run `cd /home/ubuntu/snapsense/backend/`
+* run `pm2 start server.js --name server`
+* The App should now we running on the EC2 public url
 
 ## Other
 
