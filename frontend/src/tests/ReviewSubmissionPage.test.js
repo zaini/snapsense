@@ -102,7 +102,7 @@ describe("fulfilled and unreviewed tab", () => {
     });
   });
 
-  test("correct number of cards are displayed ", async () => {
+  test("correct number of cards are displayed", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
@@ -282,7 +282,7 @@ describe("fulfilled and unreviewed tab", () => {
     expect(viewLink).toHaveAttribute("href", "/my/submissions/show/11");
   });
 
-  test("make a new request redirects to correct page in card three ", async () => {
+  test("make a new request redirects to correct page in card three", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
@@ -350,7 +350,7 @@ describe("unreviewed submissions tab", () => {
     expect(screen.getByText(/Loading./i)).toBeInTheDocument();
   });
 
-  test("correct number of cards are displayed in second tab ", async () => {
+  test("correct number of cards are displayed in second tab", async () => {
     setup();
     const tab = screen.getByTestId("tabFulfillTwo");
     act(() => {
