@@ -94,6 +94,226 @@ describe("visit routes without being logged in", () => {
     );
     expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
   });
+
+  test("visit my profile page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/profile" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("visit new invites page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/invites/new" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("visit my doctors page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/doctors" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("visit my feedback page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/feedback" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("visit specific feedback page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/feedback/show/1" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("visit hospitals page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/hospitals" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("visit patients page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/patients" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("visit admins page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/admins" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("visit new hospital page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/hospitals/new" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("visit new admin for hospital page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/hospitals/1/admins/new" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("visit specific hospital page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/hospitals/show/1" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("visit specific admin page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/admins/show/1" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("visit specific patient page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/patients/show/1" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("view requests for patient page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/patients/1/requests" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("create new request for patient page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/patients/:patient_id/requests/new" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("view patients pending requests", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/requests" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("view all submissions page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/submissions" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("view review submissions page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/submissions/review" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("view create new submission page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/submissions/new" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
+  test("view specific submission page", () => {
+    renderWithRouter(
+      <AuthContext.Provider>
+        <ApolloProvider />
+      </AuthContext.Provider>,
+      { route: "/my/submissions/show/1" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
 });
 
 // describe("visit routes logged in as patient", () => {
