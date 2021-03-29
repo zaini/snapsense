@@ -27,7 +27,7 @@ const SubmissionsComponent = () => {
     markup = (
       <Alert status="error">
         <AlertIcon />
-        {error.graphQLErrors[0].message}
+        {error.graphQLErrors && error.graphQLErrors[0].message || error.message}
       </Alert>
     );
   } else {
