@@ -1,6 +1,6 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
-import { Box, Text, Flex, Stack, SimpleGrid, Divider } from "@chakra-ui/layout";
+import { Box, Flex, Stack } from "@chakra-ui/layout";
 import Question from "./Question";
 import questionsObject from "../../utils/QuestionsObject";
 

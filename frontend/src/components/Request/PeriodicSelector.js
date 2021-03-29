@@ -1,16 +1,5 @@
 import React from "react";
-import {
-  Center,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  HStack,
-  Radio,
-  Stack,
-  SimpleGrid,
-  Input,
-  Text,
-} from "@chakra-ui/react";
+import { Center, FormControl, FormLabel, Stack } from "@chakra-ui/react";
 import InputFieldProvider from "./InputFieldProvider";
 
 const PeriodicSelector = ({ patient, register, show }) => {
@@ -32,15 +21,17 @@ const PeriodicSelector = ({ patient, register, show }) => {
       <Center>
         <Stack>
           <InputFieldProvider
+            testName={"inputInterval"}
             title="Interval"
             name={"requestInterval"}
             desc="Interval in days"
             register={register}
           />
           <InputFieldProvider
+            testName="inputFrequency"
             title="Frequency"
             name={"requestFrequency"}
-            desc="Frequncy of Cycles"
+            desc="Frequency of Cycles"
             register={register}
           />
         </Stack>
