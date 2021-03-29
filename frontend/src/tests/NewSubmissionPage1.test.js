@@ -18,9 +18,110 @@ const mocks = [
         query: UPLOAD_SUBMISSION,
         variables: {
           submission_id: "1",
-          image: {id: '1', url:''},
-          answers: {
-            id: '1', Question: {id: '1', text: 'Text question' }, value: '', extra: ''},
+          Images: [
+            {
+              id: "6",
+              url:
+                "https://snapsensebucket.s3.ap-south-1.amazonaws.com/b3315c4f-8e76-4bcf-995a-324ca334f649.jpg",
+              __typename: "Image",
+            }],
+            Answers: [
+              {
+                id: "56",
+                Question: {
+                  id: "8",
+                  text:
+                    "Please add any other notes for your clinician (optional):",
+                  __typename: "Question",
+                },
+                value: true,
+                extra: "fsdfsd",
+                __typename: "Answer",
+              },
+              {
+                id: "55",
+                Question: {
+                  id: "7",
+                  text:
+                    "In the past 7 days, have you noticed any unusual smells from the wound?",
+                  __typename: "Question",
+                },
+                value: false,
+                extra: null,
+                __typename: "Answer",
+              },
+              {
+                id: "54",
+                Question: {
+                  id: "6",
+                  text:
+                    "In the past 7 days, has one foot been hotter to touch than the other?",
+                  __typename: "Question",
+                },
+                value: true,
+                extra: null,
+                __typename: "Answer",
+              },
+              {
+                id: "53",
+                Question: {
+                  id: "5",
+                  text:
+                    "In the past 7 days, has your ulcer been hotter to touch than usual?",
+                  __typename: "Question",
+                },
+                value: false,
+                extra: null,
+                __typename: "Answer",
+              },
+              {
+                id: "52",
+                Question: {
+                  id: "4",
+                  text:
+                    "In the past 7 days, have you seen any puss around your ulcer?",
+                  __typename: "Question",
+                },
+                value: true,
+                extra: "fds",
+                __typename: "Answer",
+              },
+              {
+                id: "51",
+                Question: {
+                  id: "3",
+                  text:
+                    "In the past 7 days, have you seen redness around your ulcer?",
+                  __typename: "Question",
+                },
+                value: true,
+                extra: null,
+                __typename: "Answer",
+              },
+              {
+                id: "50",
+                Question: {
+                  id: "2",
+                  text:
+                    "In the past 7 days, have you had a fever (temperature higher than 36C)?",
+                  __typename: "Question",
+                },
+                value: false,
+                extra: "dsfsdfds",
+                __typename: "Answer",
+              },
+              {
+                id: "49",
+                Question: {
+                  id: "1",
+                  text: "In the past 7 days, have you felt unwell?",
+                  __typename: "Question",
+                },
+                value: true,
+                extra: null,
+                __typename: "Answer",
+              },
+            ],
           }
         },
       result: { 
