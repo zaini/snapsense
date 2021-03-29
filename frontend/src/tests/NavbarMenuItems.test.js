@@ -111,3 +111,32 @@ describe("Renders the correct navbar for an patient", () => {
   })
 
 })
+
+describe("Renders the correct navbar for a user who is not logged in", () => {
+
+  it("displays a logo on the navbar", () => {
+    setup("");
+    expect(screen.getByTestId(/navLogo/i)).toBeInTheDocument();
+  });
+
+  it("displays a my dashboard option on the navbar", () => {
+    setup("");
+    expect(screen.getByText(/Home/i)).toBeInTheDocument();
+  })
+
+  it("displays a my dashboard option on the navbar", () => {
+    setup("");
+    expect(screen.getByText(/About Us/i)).toBeInTheDocument();
+  })
+
+  it("displays a my dashboard option on the navbar", () => {
+    setup("PATIENT");
+    expect(screen.getByText(/Share Feedback/i)).toBeInTheDocument();
+  })
+
+  it("displays a my dashboard option on the navbar", () => {
+    setup("");
+    expect(screen.getByText(/Login/i)).toBeInTheDocument();
+  })
+
+})
