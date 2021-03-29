@@ -108,7 +108,9 @@ describe("new request page renders properly", () => {
 
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
-      expect(screen.getByText(/This is an invalid patient/i)).toBeInTheDocument();
+      expect(
+        screen.getByText(/This is an invalid patient/i)
+      ).toBeInTheDocument();
     });
   });
 
@@ -204,7 +206,6 @@ describe("new request form submits properly", () => {
     act(() => {
       fireEvent.click(btnSubmit);
     });
-
     await waitFor(async () => {
       expect(screen.getByTestId("formSubmitInnerLoader")).toBeInTheDocument();
     });
@@ -218,7 +219,7 @@ describe("new request form submits properly", () => {
     ).toBeInTheDocument();
   });
 
-  test("form submit shows relevant error message on invalid input", async () => {
+  test("form does not submit on invalid input", async () => {
     setup();
 
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
@@ -242,7 +243,9 @@ describe("new request form submits properly", () => {
       fireEvent.click(btnSubmit);
     });
 
-    expect(screen.queryByTestId("formSubmitInnerLoader")).toBeNull(); // it doesn't exist
-    expect(screen.queryByTestId("formSubmitInnerSuccess")).toBeNull(); // it doesn't exist
+    await waitFor(async () => {
+      expect(screen.queryByTestId("formSubmitInnerLoader")).toBeNull();
+      expect(screen.queryByTestId("formSubmitInnerSuccess")).toBeNull();
+    });
   });
 });
