@@ -14,13 +14,15 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  Stack,
+  Text,
 } from "@chakra-ui/react";
 
 import NewRequestForm from "../../components/Request/NewRequestForm";
 import Error from "../../components/utils/Error";
 
 // Form for creating a new request for patients
-const NewRequestPage = () => {
+const NewRequestPage = ({dateIn}) => {
   const [errors, setError] = useState();
 
   // Get the patient id from the url params
@@ -40,7 +42,7 @@ const NewRequestPage = () => {
         //Set the error object to a graphql error
         setError([
           {
-            message: err.graphQLErrors[0].message,
+            message: (err.graphQLErrors && err.graphQLErrors[0].message) || err.message,
           },
         ]);
       },
@@ -82,10 +84,10 @@ const NewRequestPage = () => {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <NewRequestForm periodic={false} patient={patient} />
+                  <NewRequestForm dateIn={dateIn} testName="nonPeriodicForm" periodic={false} patient={patient} />
                 </TabPanel>
                 <TabPanel>
-                  <NewRequestForm periodic={true} patient={patient} />
+                  <NewRequestForm dateIn={dateIn} testName="periodicForm" periodic={true} patient={patient} />
                 </TabPanel>
               </TabPanels>
             </Tabs>
@@ -105,7 +107,7 @@ const NewRequestPage = () => {
 
 export default NewRequestPage;
 
-const GET_PATIENT_AS_DOCTOR = gql`
+export const GET_PATIENT_AS_DOCTOR = gql`
   query getPatientAsDoctor($patient_id: ID!) {
     getPatientAsDoctor(patient_id: $patient_id) {
       id

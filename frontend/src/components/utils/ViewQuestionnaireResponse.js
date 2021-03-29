@@ -24,18 +24,26 @@ const ViewQuestionnaireResponse = ({ answers }) => {
     let temp = [];
     answers.forEach((e, i) => {
       let component = (
-        <VStack key={i} w="500px">
+        <VStack data-testid="QuestionAnswer" key={i} w="500px">
           <InputGroup mb="3px">
             <InputLeftAddon children={<FaRegQuestionCircle />} />
-            <Input value={e.Question.text} isReadOnly={true} />
+            <Input
+              data-testid={`inputQuestion${i}`}
+              value={e.Question.text}
+              isReadOnly={true}
+            />
           </InputGroup>
           <InputGroup mb="3px">
             <InputLeftAddon children={<RiQuestionAnswerLine />} />
-            <Input value={e.value === true ? "Yes" : "No"} isReadOnly={true} />
+            <Input
+              data-testid={`inputAnswer${i}`}
+              value={e.value === true ? "Yes" : "No"}
+              isReadOnly={true}
+            />
           </InputGroup>
           <FormControl mb="3px">
             <FormLabel>Other notes</FormLabel>
-            <Textarea value={e.extra} isReadOnly={true} />
+            <Textarea value={e.extra || ""} isReadOnly={true} />
           </FormControl>
         </VStack>
       );
@@ -52,6 +60,7 @@ const ViewQuestionnaireResponse = ({ answers }) => {
       </Box>
       <HStack>
         <Button
+          data-testid="answerPrevBtn"
           isDisabled={index === 0}
           onClick={() => setIndex(index - 1)}
           colorScheme="blue"
@@ -59,6 +68,7 @@ const ViewQuestionnaireResponse = ({ answers }) => {
           Prev
         </Button>
         <Button
+          data-testid="answerNextBtn"
           isDisabled={index === answers.length - 1}
           onClick={() => setIndex(index + 1)}
           colorScheme="blue"

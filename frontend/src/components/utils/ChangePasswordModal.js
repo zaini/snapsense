@@ -26,7 +26,8 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
     onError(err) {
       setError("password", {
         type: "manual",
-        message: err.graphQLErrors[0].message,
+        message:
+          (err.graphQLErrors && err.graphQLErrors[0].message) || err.message,
       });
     },
   });

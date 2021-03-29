@@ -29,7 +29,8 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
       history.push("/login");
     },
     onError(err) {
-      const message = err.graphQLErrors[0].message;
+      const message =
+        (err.graphQLErrors && err.graphQLErrors[0].message) || err.message;
       setError("password", { type: "manual", message });
     },
   });

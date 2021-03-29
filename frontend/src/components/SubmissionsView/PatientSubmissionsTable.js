@@ -1,16 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Stack, Button } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 
 import Table from "../utils/Table";
-import { AuthContext } from "../../context/auth";
 import getFlagText from "../../utils/Flags";
 
 // Takes a list of submissions and shows them in the table and timeline view
 const PatientSubmissionsTable = ({ data }) => {
-  const { user } = useContext(AuthContext);
-
   const cols = [
     {
       field: "id",

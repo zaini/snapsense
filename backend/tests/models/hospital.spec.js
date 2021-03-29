@@ -95,15 +95,10 @@ describe("Hospital Model Test", () => {
   });
 
   it("should throw an error on duplicated email", async (done) => {
-    const hospital = await new Hospital({
-      name: "Test Hospital",
-      contact_email: "test_hospital@mail.com",
-    }).save();
-
     await expect(
       Hospital.create({
-        name: "Test Hospital 2",
-        contact_email: "test_hospital@mail.com",
+        name: "London Test Hospital",
+        contact_email: "london.hospital@mail.com",
       })
     ).rejects.toThrow();
     done();

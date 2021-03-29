@@ -1,4 +1,5 @@
 import { Box, Stack, Text, Center } from "@chakra-ui/react";
+import { useMediaQuery } from "react-responsive";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../context/auth";
@@ -8,9 +9,11 @@ import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import SubmissionCardOptions from "./SubmissionCardOptions";
 
-const SubmissionCard = ({ data, vertical, redirect }) => {
+const SubmissionCard = ({ testID, data, vertical, redirect }) => {
   const { user } = useContext(AuthContext);
   const history = useHistory();
+  const isTabletOrMobile = useMediaQuery({ maxWidth: 1600 });
+  vertical = vertical || isTabletOrMobile;
 
   // data here is a submission object
   const { Patient, Images, Answers, createdAt, flag, id } = data;
@@ -22,7 +25,7 @@ const SubmissionCard = ({ data, vertical, redirect }) => {
 
   const submission_date = new Date(createdAtDate).toLocaleString();
 
-  const [flagSubmission, { loading }] = useMutation(FLAG_SUBMISSION, {
+  const [flagSubmission] = useMutation(FLAG_SUBMISSION, {
     onCompleted() {
       redirect && history.push(redirect);
     },
@@ -58,22 +61,30 @@ const SubmissionCard = ({ data, vertical, redirect }) => {
   });
 
   return (
-    <Box borderWidth="1px" borderRadius="lg" p="10px" m="5px">
+    <Box
+      data-testid={testID}
+      borderWidth="1px"
+      borderRadius="lg"
+      p="10px"
+      m="5px"
+    >
       {id}
       <Center p="10px">
         <Stack direction={vertical ? "column" : "row"}>
           <Box>
             {Images && Images.length === 0 ? (
-              <Text fontWeight="bold" fontSize="110%" pb="50%">
+              <Center>
                 <Box
                   w="220px"
                   h="100%"
                   overflow="hidden"
                   objectFit="scale-down"
                 >
-                  <Center>No Images</Center>
+                  <Text fontWeight="bold" fontSize="110%" pb="50%">
+                    No images
+                  </Text>
                 </Box>
-              </Text>
+              </Center>
             ) : (
               <ImageSlideshow images={Images} />
             )}
@@ -88,7 +99,7 @@ const SubmissionCard = ({ data, vertical, redirect }) => {
           )}
 
           <Box>
-            {Answers.length === 0 ? (
+            {Answers && Answers.length === 0 ? (
               <Box w="500px">
                 <Center>
                   <Text fontWeight="bold" fontSize="110%" pb="50%">

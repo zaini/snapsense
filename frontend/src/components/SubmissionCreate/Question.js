@@ -1,6 +1,6 @@
-import { Divider, Box, SimpleGrid, Stack, Text } from "@chakra-ui/layout";
+import React from "react";
+import { Divider, SimpleGrid, Stack, Text } from "@chakra-ui/layout";
 import { TextField } from "@material-ui/core";
-import React, { useState } from "react";
 import Options from "./Options";
 
 const Question = ({

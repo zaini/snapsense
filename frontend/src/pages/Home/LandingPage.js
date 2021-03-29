@@ -10,6 +10,7 @@ const Landing = () => {
         title="Snapsense, welcomes you to the future"
         subtitle="Medical aid at the click of a button. Tele-medicine at its finest."
         image="https://source.unsplash.com/collection/1079213/800x600"
+        data-testid="landingHero"
       />
     </LandingLayout>
   );
