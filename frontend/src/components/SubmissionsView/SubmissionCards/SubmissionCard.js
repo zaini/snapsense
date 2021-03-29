@@ -58,22 +58,30 @@ const SubmissionCard = ({ testID, data, vertical, redirect }) => {
   });
 
   return (
-    <Box data-testid={testID} borderWidth="1px" borderRadius="lg" p="10px" m="5px">
+    <Box
+      data-testid={testID}
+      borderWidth="1px"
+      borderRadius="lg"
+      p="10px"
+      m="5px"
+    >
       {id}
       <Center p="10px">
         <Stack direction={vertical ? "column" : "row"}>
           <Box>
             {Images && Images.length === 0 ? (
-              <Text fontWeight="bold" fontSize="110%" pb="50%">
+              <Center>
                 <Box
                   w="220px"
                   h="100%"
                   overflow="hidden"
                   objectFit="scale-down"
                 >
-                  <Center>No Images</Center>
+                  <Text fontWeight="bold" fontSize="110%" pb="50%">
+                    No images
+                  </Text>
                 </Box>
-              </Text>
+              </Center>
             ) : (
               <ImageSlideshow images={Images} />
             )}

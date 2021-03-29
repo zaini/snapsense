@@ -59,10 +59,18 @@ const RequestCardOptions = ({
               setFlagValue(e.target.value);
             }}
           >
-            <option data-testid="selectOption" value="-1">Review Submission</option>
-            <option data-testid="selectOption" value="1">Low Risk</option>
-            <option data-testid="selectOption" value="2">Medium Risk</option>
-            <option data-testid="selectOption" value="3">High Risk</option>
+            <option data-testid="selectOption" value="-1">
+              Review Submission
+            </option>
+            <option data-testid="selectOption" value="1">
+              Low Risk
+            </option>
+            <option data-testid="selectOption" value="2">
+              Medium Risk
+            </option>
+            <option data-testid="selectOption" value="3">
+              High Risk
+            </option>
           </Select>
         </InputGroup>
         {/* TODO: this is not actaully linked to any API and is just mock data. */}
@@ -91,12 +99,18 @@ const RequestCardOptions = ({
         >
           Submit Review
         </Button>
-        <Link data-testid="viewLink" to={`/my/submissions/show/${submission.id}`}>
+        <Link
+          data-testid="viewLink"
+          to={`/my/submissions/show/${submission.id}`}
+        >
           <Button data-testid="viewSubBtnForm" colorScheme="blue">
             View Submission
           </Button>
         </Link>
-        <Link data-testid="newRequestLink" to={`/my/patients/${patient.id}/requests/new`}>
+        <Link
+          data-testid="newRequestLink"
+          to={`/my/patients/${patient.id}/requests/new`}
+        >
           <Button data-testid="requestSubBtnForm" colorScheme="blue">
             Make a new request
           </Button>
