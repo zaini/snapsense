@@ -13,6 +13,8 @@ import { Route, MemoryRouter } from "react-router";
 
 afterEach(cleanup);
 
+//TODO add toasts render test for invalid input
+
 const { CREATE_HOSPITAL } = require("../components/Hospital/NewHospitalForm");
 
 const mocks = [
@@ -105,6 +107,7 @@ describe("email form", () => {
   });
 });
 
+//gql testing 
 describe("Pressing submit button", () => {
     describe("With invalid input", () => {
         it("pops up a name warning and doesn't submit", () => {
@@ -124,8 +127,10 @@ describe("Pressing submit button", () => {
 
           const submit_button = screen.getByRole("button");
           act(() => {
-          fireEvent.click(submit_button);
+            fireEvent.click(submit_button);
           });
+
+          //ADD toast render test
 
           expect(screen.queryByTestId("formSubmitInnerLoader")).toBeNull(); // it doesn't exist
           expect(screen.queryByTestId("formSubmitInnerSuccess")).toBeNull(); // it doesn't exist
@@ -148,8 +153,10 @@ describe("Pressing submit button", () => {
 
           const submit_button = screen.getByRole("button");
           act(() => {
-          fireEvent.click(submit_button);
+            fireEvent.click(submit_button);
           });
+
+          //ADD toast render test
 
           expect(screen.queryByTestId("formSubmitInnerLoader")).toBeNull(); // it doesn't exist
           expect(screen.queryByTestId("formSubmitInnerSuccess")).toBeNull(); // it doesn't exist
