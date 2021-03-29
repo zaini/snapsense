@@ -24,10 +24,12 @@ const notLoggedIn = {
   user: {accountType: ""}
 };
 
-const setup = () => {
+const setup = (userType) => {
   act(() => {
     render(
-      <AuthContext.Provider value={admin}>
+      <AuthContext.Provider value={{
+        user: {accountType: userType}
+      }}>
         <BrowserRouter>
           <Route path="/">
               <MainNavbar />
@@ -41,22 +43,46 @@ const setup = () => {
 describe("Renders the correct navbar for an admin", () => {
 
   it("displays a logo on the navbar", () => {
-    setup();
+    setup("ADMIN");
     expect(screen.getByTestId(/navLogo/i)).toBeInTheDocument();
   });
 
   it("displays a my dashboard option on the navbar", () => {
-    setup();
+    setup("ADMIN");
     expect(screen.getByText(/My Dashboard/i)).toBeInTheDocument();
   })
 
   it("displays a my dashboard option on the navbar", () => {
-    setup();
+    setup("ADMIN");
     expect(screen.getByText(/Share Feedback/i)).toBeInTheDocument();
   })
 
   it("displays a my dashboard option on the navbar", () => {
-    setup();
+    setup("ADMIN");
+    expect(screen.getByText(/Logout/i)).toBeInTheDocument();
+  })
+
+})
+
+describe("Renders the correct navbar for an doctor", () => {
+
+  it("displays a logo on the navbar", () => {
+    setup("DOCTOR");
+    expect(screen.getByTestId(/navLogo/i)).toBeInTheDocument();
+  });
+
+  it("displays a my dashboard option on the navbar", () => {
+    setup("DOCTOR");
+    expect(screen.getByText(/My Dashboard/i)).toBeInTheDocument();
+  })
+
+  it("displays a my dashboard option on the navbar", () => {
+    setup("DOCTOR");
+    expect(screen.getByText(/Share Feedback/i)).toBeInTheDocument();
+  })
+
+  it("displays a my dashboard option on the navbar", () => {
+    setup("DOCTOR");
     expect(screen.getByText(/Logout/i)).toBeInTheDocument();
   })
 
