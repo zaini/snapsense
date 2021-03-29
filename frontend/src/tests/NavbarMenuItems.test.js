@@ -129,24 +129,37 @@ describe("Renders the correct navbar for a user who is not logged in", () => {
     expect(screen.getByTestId(/navLogo/i)).toBeInTheDocument();
   });
 
-  it("displays a my dashboard option on the navbar", () => {
+  it("displays a my dashboard option on the navbar", async () => {
     setup("");
-    expect(screen.getByText(/Home/i)).toBeInTheDocument();
+    const homeOption = screen.getByText(/Home/i);
+
+    expect(homeOption).toBeInTheDocument();
+    await fireEvent.click(homeOption);
   })
 
-  it("displays a my dashboard option on the navbar", () => {
+  it("displays a my dashboard option on the navbar", async () => {
     setup("");
-    expect(screen.getByText(/About Us/i)).toBeInTheDocument();
+    const aboutOption = screen.getByText(/About Us/i);
+
+    expect(aboutOption).toBeInTheDocument();
+    await fireEvent.click(aboutOption);
   })
 
-  it("displays a my dashboard option on the navbar", () => {
-    setup("PATIENT");
-    expect(screen.getByText(/Share Feedback/i)).toBeInTheDocument();
+  it("displays a my dashboard option on the navbar", async () => {
+    setup("");
+    const feedbackOption = screen.getByText(/Share Feedback/i);
+
+    expect(feedbackOption).toBeInTheDocument();
+    await fireEvent.click(feedbackOption);
+
   })
 
-  it("displays a my dashboard option on the navbar", () => {
+  it("displays a my dashboard option on the navbar", async () => {
     setup("");
-    expect(screen.getByText(/Login/i)).toBeInTheDocument();
+    const loginOption = screen.getByText(/Login/i);
+
+    expect(loginOption).toBeInTheDocument();
+    await fireEvent.click(loginOption);
   })
 
 })
