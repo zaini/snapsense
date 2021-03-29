@@ -8,7 +8,7 @@ import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import SubmissionCardOptions from "./SubmissionCardOptions";
 
-const SubmissionCard = ({ data, vertical, redirect }) => {
+const SubmissionCard = ({ testID, data, vertical, redirect }) => {
   const { user } = useContext(AuthContext);
   const history = useHistory();
 
@@ -58,7 +58,7 @@ const SubmissionCard = ({ data, vertical, redirect }) => {
   });
 
   return (
-    <Box borderWidth="1px" borderRadius="lg" p="10px" m="5px">
+    <Box data-testid={testID} borderWidth="1px" borderRadius="lg" p="10px" m="5px">
       {id}
       <Center p="10px">
         <Stack direction={vertical ? "column" : "row"}>
