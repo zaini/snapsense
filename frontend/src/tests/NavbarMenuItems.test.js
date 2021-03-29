@@ -1,7 +1,7 @@
-import {React} from 'react';
+import { React } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { fireEvent, waitFor, render, screen } from "@testing-library/react";
-import MainNavbar from '../components/utils/MainNavbar';
+import MainNavbar from "../components/utils/MainNavbar";
 import { AuthContext } from "../context/auth";
 import { Route } from "react-router";
 import { act } from "react-dom/test-utils";
@@ -9,21 +9,22 @@ import { act } from "react-dom/test-utils";
 const setup = (userType) => {
   act(() => {
     render(
-      <AuthContext.Provider value={{
-        user: {accountType: userType}
-      }}>
+      <AuthContext.Provider
+        value={{
+          user: { accountType: userType },
+        }}
+      >
         <BrowserRouter>
           <Route path="/">
-              <MainNavbar />
+            <MainNavbar />
           </Route>
         </BrowserRouter>
       </AuthContext.Provider>
     );
   });
-}
+};
 
 describe("Renders the correct navbar for a superadmin", () => {
-
   it("renders the correct logo on the navbar and is selectable", async () => {
     setup("SUPERADMIN");
     const logoOption = screen.getByTestId(/navLogo/i);
@@ -35,18 +36,18 @@ describe("Renders the correct navbar for a superadmin", () => {
   it("renders a my dashboard option on the navbar and is selectable", async () => {
     setup("SUPERADMIN");
     const dashBoardOption = screen.getByText(/My Dashboard/i);
-    
+
     expect(dashBoardOption).toBeInTheDocument();
     await fireEvent.click(dashBoardOption);
-  })
+  });
 
   it("renders a contact us option on the navbar and is selectable", async () => {
     setup("SUPERADMIN");
     const contactOption = screen.getByText(/Contact Us/i);
-    
+
     expect(contactOption).toBeInTheDocument();
     await fireEvent.click(contactOption);
-  })
+  });
 
   it("renders a logout option on the navbar and is selectable", async () => {
     setup("SUPERADMIN");
@@ -54,12 +55,10 @@ describe("Renders the correct navbar for a superadmin", () => {
 
     expect(logoutOption).toBeInTheDocument();
     await fireEvent.click(logoutOption);
-  })
+  });
+});
 
-})
-
-describe("renders the correct logo on the navbar and is selectable", async() => {
-
+describe("renders the correct logo on the navbar and is selectable", async () => {
   it("displays a logo on the navbar", async () => {
     setup("ADMIN");
     const logoOption = screen.getByTestId(/navLogo/i);
@@ -71,18 +70,18 @@ describe("renders the correct logo on the navbar and is selectable", async() => 
   it("renders a my dashboard option on the navbar and is selectable", async () => {
     setup("ADMIN");
     const dashBoardOption = screen.getByText(/My Dashboard/i);
-    
+
     expect(dashBoardOption).toBeInTheDocument();
     await fireEvent.click(dashBoardOption);
-  })
+  });
 
   it("renders a feedback option on the navbar and is selectable", async () => {
     setup("ADMIN");
     const feedbackOption = screen.getByText(/Share Feedback/i);
-    
+
     expect(feedbackOption).toBeInTheDocument();
     await fireEvent.click(feedbackOption);
-  })
+  });
 
   it("renders a logout option on the navbar and is selectable", async () => {
     setup("ADMIN");
@@ -90,13 +89,11 @@ describe("renders the correct logo on the navbar and is selectable", async() => 
 
     expect(logoutOption).toBeInTheDocument();
     await fireEvent.click(logoutOption);
-  })
-
-})
+  });
+});
 
 describe("Renders the correct navbar for an doctor", () => {
-
-  it("renders the correct logo on the navbar and is selectable", async() => {
+  it("renders the correct logo on the navbar and is selectable", async () => {
     setup("DOCTOR");
     const logoOption = screen.getByTestId(/navLogo/i);
 
@@ -110,7 +107,7 @@ describe("Renders the correct navbar for an doctor", () => {
 
     expect(dashBoardOption).toBeInTheDocument();
     await fireEvent.click(dashBoardOption);
-  })
+  });
 
   it("renders a feedback option on the navbar and is selectable", async () => {
     setup("DOCTOR");
@@ -118,7 +115,7 @@ describe("Renders the correct navbar for an doctor", () => {
 
     expect(feedbackOption).toBeInTheDocument();
     await fireEvent.click(feedbackOption);
-  })
+  });
 
   it("renders a logout option on the navbar and is selectable", async () => {
     setup("DOCTOR");
@@ -126,19 +123,16 @@ describe("Renders the correct navbar for an doctor", () => {
 
     expect(logoutOption).toBeInTheDocument();
     await fireEvent.click(logoutOption);
-  })
-
-})
+  });
+});
 
 describe("Renders the correct navbar for an patient", () => {
-
   it("renders the correct logo on the navbar and is selectable", async () => {
     setup("PATIENT");
     const logoOption = screen.getByTestId(/navLogo/i);
 
     expect(logoOption).toBeInTheDocument();
     await fireEvent.click(logoOption);
-
   });
 
   it("renders a my dashboard option on the navbar and is selectable", async () => {
@@ -147,7 +141,7 @@ describe("Renders the correct navbar for an patient", () => {
 
     expect(dashBoardOption).toBeInTheDocument();
     await fireEvent.click(dashBoardOption);
-  })
+  });
 
   it("renders a feedback option on the navbar and is selectable", async () => {
     setup("PATIENT");
@@ -155,7 +149,7 @@ describe("Renders the correct navbar for an patient", () => {
 
     expect(feedbackOption).toBeInTheDocument();
     await fireEvent.click(feedbackOption);
-  })
+  });
 
   it("renders a logout option on the navbar and is selectable", async () => {
     setup("PATIENT");
@@ -163,12 +157,10 @@ describe("Renders the correct navbar for an patient", () => {
 
     expect(logoutOption).toBeInTheDocument();
     await fireEvent.click(logoutOption);
-  })
-
-})
+  });
+});
 
 describe("Renders the correct navbar for a user who is not logged in", () => {
-
   it("renders the correct logo on the navbar and is selectable", async () => {
     setup("");
     const logoOption = screen.getByTestId(/navLogo/i);
@@ -183,7 +175,7 @@ describe("Renders the correct navbar for a user who is not logged in", () => {
 
     expect(homeOption).toBeInTheDocument();
     await fireEvent.click(homeOption);
-  })
+  });
 
   it("renders an about option on the navbar and is selectable", async () => {
     setup("");
@@ -191,7 +183,7 @@ describe("Renders the correct navbar for a user who is not logged in", () => {
 
     expect(aboutOption).toBeInTheDocument();
     await fireEvent.click(aboutOption);
-  })
+  });
 
   it("renders a feedback option on the navbar and is selectable", async () => {
     setup("");
@@ -199,8 +191,7 @@ describe("Renders the correct navbar for a user who is not logged in", () => {
 
     expect(feedbackOption).toBeInTheDocument();
     await fireEvent.click(feedbackOption);
-
-  })
+  });
 
   it("renders a login option on the navbar and is selectable", async () => {
     setup("");
@@ -208,6 +199,5 @@ describe("Renders the correct navbar for a user who is not logged in", () => {
 
     expect(loginOption).toBeInTheDocument();
     await fireEvent.click(loginOption);
-  })
-
-})
+  });
+});
