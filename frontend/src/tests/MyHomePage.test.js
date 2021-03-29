@@ -18,7 +18,11 @@ const {
   GET_REQUESTS,
   GET_SUBMISSIONS,
 } = require("../components/HomePage/DoctorHomePanel");
-//add testing for loading state and error states, fix auth for doctor vs patient
+//add testing for loading state and error states
+//fix auth for doctor vs patient 
+//test correct route is used for buttons
+//create patient mocks
+//test patient version
 
 const doctorMock = [
   {
@@ -102,21 +106,23 @@ const doctorSetup = async () => {
   });
 };
 
-it("should render without crashing for doctor", () => {
-  doctorSetup();
-  expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-});
+describe("Doctor panel", () => {
+  it("should render without crashing for doctor", () => {
+    doctorSetup();
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+  });
 
-it("should load doctor home page without crashing", async () => {
-  doctorSetup();
-  expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-  await waitFor(() => {
-    const submissionReview = screen.getByTestId("doctorHomeTextOne");
-    const requestReview = screen.getByTestId("doctorHomeTextTwo");
-    expect(screen.getByTestId("doctorHomeContainer")).toBeInTheDocument();
-    expect(submissionReview).toBeInTheDocument();
-    expect(requestReview).toBeInTheDocument();
-    within(submissionReview).getByText(/You have 7 submissions to review./i);
-    within(requestReview).getByText(/You have 1 requests to review./i);
+  it("should have requests to review number and submissions to review number", async () => {
+    doctorSetup();
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+    await waitFor(() => {
+      const submissionReview = screen.getByTestId("doctorHomeTextOne");
+      const requestReview = screen.getByTestId("doctorHomeTextTwo");
+      expect(screen.getByTestId("doctorHomeContainer")).toBeInTheDocument();
+      expect(submissionReview).toBeInTheDocument();
+      expect(requestReview).toBeInTheDocument();
+      within(submissionReview).getByText(/You have 7 submissions to review./i);
+      within(requestReview).getByText(/You have 1 requests to review./i);
+    });
   });
 });
