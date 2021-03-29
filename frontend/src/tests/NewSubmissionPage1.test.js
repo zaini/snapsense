@@ -171,11 +171,12 @@ const setup = async () => {
 /*------ Tests  -----*/
 describe("page loading", () => {
 
-  it("renders without crashing", async () => {
+  test("renders without crashing", async () => {
     expect(setup).toBeTruthy();
   });
-    it("has a submit button", async () => {
-    const button = setup.findAllByTestId("submitbutton");
+
+    test("has a submit button", async () => {
+    const button = screen.findAllByTestId("submitbutton");
     expect(button).toBeTruthy();
   });
 });
