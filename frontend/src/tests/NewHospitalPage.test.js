@@ -1,21 +1,42 @@
 import { React } from "react";
-import { fireEvent, render, screen, cleanup,act } from "@testing-library/react";
-import { MockedProvider } from "@apollo/client/testing";
 import {
-  CREATE_HOSPITAL,
-  NewHospitalForm,
-} from "../components/Hospital/NewHospitalForm";
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
+import { act } from "react-dom/test-utils";
+import { MockedProvider } from "@apollo/client/testing";
 import NewHospitalPage from "../pages/My/NewHospitalPage";
 import { Route, MemoryRouter } from "react-router";
 
 afterEach(cleanup);
 
+const { CREATE_HOSPITAL } = require("../components/Hospital/NewHospitalForm");
+
 const mocks = [
   {
     request: {
       query: CREATE_HOSPITAL,
+      variables: { name: "hospital", contact_email: "hospital@gmail.com" }, 
     },
+    result: { data: { createHospital: true } },
   },
+  // {
+  //   request: {
+  //     query: CREATE_HOSPITAL,
+  //     variables: { name: 'hospital1', contact_email: 'hospital' },
+  //   },
+  //   //toast?
+  // },
+  // {
+  //   request: {
+  //     query: CREATE_HOSPITAL,
+  //     variables: { name: '', contact_email: 'hospital1@gmail.com' },
+  //   },
+  //   //toast?
+  // },
 ];
 
 //Render component
@@ -60,17 +81,54 @@ describe("New Hospital page", () => {
   });
 });
 
-// it("shows loading spinner when opening the page", async () => {
-//     component();
-//     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-// });
+describe("name form", () => {
+  it("can take a value", () => {
+    setup();
+    const form = screen.getByTestId("hospitalNewFormName");
+    fireEvent.change(form, { target: { value: "Hospital" } });
+    expect(form.value).toBe("Hospital");
+  });
+});
 
-// describe("Pressing submit button", () => {
-//     describe("With invalid input", () => {
-//         it("pops up a name warning", () => {});
-//         it("pops up an email warning", () => {});
-//     });
-//     describe("With valid input", () => {
-//         it("pops up a success message", () => {});
-//     });
-// });
+describe("email form", () => {
+  it("can take a value", () => {
+    setup();
+    const form = screen.getByTestId("hospitalNewFormEmail");
+    fireEvent.change(form, { target: { value: "hospital@gmail.com" } });
+    expect(form.value).toBe("hospital@gmail.com");
+  });
+});
+
+describe("Pressing submit button", () => {
+    describe("With invalid input", () => {
+        it("pops up a name warning and doesn't submit", () => {
+          //toast test
+        });
+        it("pops up an email warning and doesn't submit", () => {
+          //toast test
+        });
+    });
+    describe("With valid input", () => {
+        it("pops up a success message", async () => {
+          setup();
+
+          const submit_button = screen.getByRole("button");
+
+          act(() => {
+          fireEvent.click(submit_button);
+          });
+
+          await waitFor(async () => {
+            expect(screen.getByTestId("formSubmitInnerLoader")).toBeInTheDocument();
+          });
+
+          await waitFor(async () => {
+            expect(screen.getByTestId("formSubmitInnerSuccess")).toBeInTheDocument();
+          });
+
+          expect(
+            screen.getByText(/Hospital successfully created!/i)
+          ).toBeInTheDocument();
+        });
+    });
+});
