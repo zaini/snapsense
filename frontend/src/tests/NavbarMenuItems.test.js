@@ -1,6 +1,6 @@
 import {React} from 'react';
 import { BrowserRouter } from "react-router-dom";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, waitFor, render, screen } from "@testing-library/react";
 import MainNavbar from '../components/utils/MainNavbar';
 import { AuthContext } from "../context/auth";
 import { Route } from "react-router";
@@ -29,19 +29,28 @@ describe("Renders the correct navbar for an admin", () => {
     expect(screen.getByTestId(/navLogo/i)).toBeInTheDocument();
   });
 
-  it("displays a my dashboard option on the navbar", () => {
+  it("displays a my dashboard option on the navbar", async () => {
     setup("ADMIN");
-    expect(screen.getByText(/My Dashboard/i)).toBeInTheDocument();
+    const dashBoardOption = screen.getByText(/My Dashboard/i);
+    
+    expect(dashBoardOption).toBeInTheDocument();
+    await fireEvent.click(dashBoardOption);
   })
 
   it("displays a my dashboard option on the navbar", () => {
     setup("ADMIN");
-    expect(screen.getByText(/Share Feedback/i)).toBeInTheDocument();
+    const feedbackOption = screen.getByText(/Share Feedback/i);
+    
+    expect(feedbackOption).toBeInTheDocument();
+    await fireEvent.click(feedbackOption);
   })
 
   it("displays a my dashboard option on the navbar", () => {
     setup("ADMIN");
-    expect(screen.getByText(/Logout/i)).toBeInTheDocument();
+    const logoutOption = screen.getByText(/Logout/i)
+
+    expect(logoutOption).toBeInTheDocument();
+    await fireEvent.click(logoutOption);
   })
 
 })
