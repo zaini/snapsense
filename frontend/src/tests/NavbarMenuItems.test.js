@@ -22,11 +22,50 @@ const setup = (userType) => {
   });
 }
 
+describe("Renders the correct navbar for an superadmin", () => {
+
+  it("displays a logo on the navbar", () => {
+    setup("SUPERADMIN");
+    const logoOption = screen.getByText(/My Dashboard/i);
+
+    expect(logoOption).toBeInTheDocument();
+    await fireEvent.click(logoOption);
+  });
+
+  it("displays a my dashboard option on the navbar", async () => {
+    setup("SUPERADMIN");
+    const dashBoardOption = screen.getByText(/My Dashboard/i);
+    
+    expect(dashBoardOption).toBeInTheDocument();
+    await fireEvent.click(dashBoardOption);
+  })
+
+  it("displays a my dashboard option on the navbar", async () => {
+    setup("SUPERADMIN");
+    const contactOption = screen.getByText(/Contact Us/i);
+    
+    expect(contactOption).toBeInTheDocument();
+    await fireEvent.click(contactOption);
+  })
+
+  it("displays a my dashboard option on the navbar", async () => {
+    setup("SUPERADMIN");
+    const logoutOption = screen.getByText(/Logout/i);
+
+    expect(logoutOption).toBeInTheDocument();
+    await fireEvent.click(logoutOption);
+  })
+
+})
+
 describe("Renders the correct navbar for an admin", () => {
 
   it("displays a logo on the navbar", () => {
     setup("ADMIN");
-    expect(screen.getByTestId(/navLogo/i)).toBeInTheDocument();
+    const logoOption = screen.getByText(/My Dashboard/i);
+
+    expect(logoOption).toBeInTheDocument();
+    await fireEvent.click(logoOption);
   });
 
   it("displays a my dashboard option on the navbar", async () => {
@@ -59,7 +98,10 @@ describe("Renders the correct navbar for an doctor", () => {
 
   it("displays a logo on the navbar", () => {
     setup("DOCTOR");
-    expect(screen.getByTestId(/navLogo/i)).toBeInTheDocument();
+    const logoOption = screen.getByText(/My Dashboard/i);
+
+    expect(logoOption).toBeInTheDocument();
+    await fireEvent.click(logoOption);
   });
 
   it("displays a my dashboard option on the navbar", async () => {
@@ -92,7 +134,10 @@ describe("Renders the correct navbar for an patient", () => {
 
   it("displays a logo on the navbar", () => {
     setup("PATIENT");
-    expect(screen.getByTestId(/navLogo/i)).toBeInTheDocument();
+    const logoOption = screen.getByText(/My Dashboard/i);
+
+    expect(logoOption).toBeInTheDocument();
+    await fireEvent.click(logoOption);
 
   });
 
@@ -126,7 +171,10 @@ describe("Renders the correct navbar for a user who is not logged in", () => {
 
   it("displays a logo on the navbar", () => {
     setup("");
-    expect(screen.getByTestId(/navLogo/i)).toBeInTheDocument();
+    const logoOption = screen.getByText(/My Dashboard/i);
+
+    expect(logoOption).toBeInTheDocument();
+    await fireEvent.click(logoOption);
   });
 
   it("displays a my dashboard option on the navbar", async () => {
