@@ -212,7 +212,6 @@ describe("hospitals resolvers", () => {
 							name: "KCL Hospital"
 							contact_email: "kcl.hospital@kcl.ac.uk"
 						) {
-							id
 							name
 							contact_email
 						}
@@ -226,7 +225,6 @@ describe("hospitals resolvers", () => {
     expect(body).toMatchObject({
       data: {
         createHospital: {
-          id: "4",
           name: "KCL Hospital",
           contact_email: "kcl.hospital@kcl.ac.uk",
         },
@@ -244,7 +242,6 @@ describe("hospitals resolvers", () => {
 							name: "KCL Hospital"
 							contact_email: "kcl.hospital@kcl.ac.uk"
 						) {
-							id
 							name
 							contact_email
 						}
@@ -268,7 +265,6 @@ describe("hospitals resolvers", () => {
 							name: "KCL Hospital"
 							contact_email: "kcl.hospital@kcl.ac.uk"
 						) {
-							id
 							name
 							contact_email
 						}
