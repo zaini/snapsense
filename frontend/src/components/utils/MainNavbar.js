@@ -23,6 +23,7 @@ export const Header = () => {
         <Logo
           w="100px"
           color={["white", "white", "primary.500", "primary.500"]}
+          data-testid="navLogo"
         />
       </Flex>
 
