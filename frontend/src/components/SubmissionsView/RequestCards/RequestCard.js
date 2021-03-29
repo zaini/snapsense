@@ -14,37 +14,45 @@ const RequestCard = ({ data, vertical, testID }) => {
     parseInt(Submission.createdAt)
   ).toLocaleString();
 
-  const [flagSubmission] = useMutation(FLAG_SUBMISSION, {
-    onCompleted() {
-      // window.location.reload();
-    },
-    onError(err) {
-    },
+  const [flagSubmission, { loading }] = useMutation(FLAG_SUBMISSION, {
+    onCompleted() {},
+    onError(err) {},
     update(proxy) {
-      const data = proxy.readQuery({
-        query: GET_REQUESTS,
-      });
-      proxy.writeQuery({
-        query: GET_REQUESTS,
-        data: {
-          getRequestsForReview: data.getRequestsForReview.filter((p) => {
-            return p.Submission.id !== Submission.id;
-          }),
-        },
-      });
-      const dataSubmission = proxy.readQuery({
-        query: GET_SUBMISSIONS,
-      });
-      proxy.writeQuery({
-        query: GET_SUBMISSIONS,
-        data: {
-          getSubmissionsForReview: dataSubmission.getSubmissionsForReview.filter(
-            (p) => {
-              return p.id !== Submission.id;
-            }
-          ),
-        },
-      });
+      try {
+        const data = proxy.readQuery({
+          query: GET_REQUESTS,
+        });
+        proxy.writeQuery({
+          query: GET_REQUESTS,
+          data: {
+            getRequestsForReview: data.getRequestsForReview.filter((p) => {
+              return p.Submission.id !== Submission.id;
+            }),
+          },
+        });
+      } catch (error) {
+        // Cache is empty, so don't update
+        // Try catch is needed due to a limitation in the apollo libraries
+      }
+
+      try {
+        const dataSubmission = proxy.readQuery({
+          query: GET_SUBMISSIONS,
+        });
+        proxy.writeQuery({
+          query: GET_SUBMISSIONS,
+          data: {
+            getSubmissionsForReview: dataSubmission.getSubmissionsForReview.filter(
+              (p) => {
+                return p.id !== Submission.id;
+              }
+            ),
+          },
+        });
+      } catch (error) {
+        // Cache is empty, so don't update
+        // Try catch is needed due to a limitation in the apollo libraries
+      }
     },
   });
 
