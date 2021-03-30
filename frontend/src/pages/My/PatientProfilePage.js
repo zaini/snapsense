@@ -7,8 +7,12 @@ import PatientInfo from "../../components/PatientInfo";
 const PatientProfilePage = () => {
   return (
     <>
-      <PatientInfo />
-      <SubmissionsComponent />
+      <div data-testid="patientProfileContainer">
+        <PatientInfo />
+      </div>
+      <div data-testid="patientSubmissionContainer">
+        <SubmissionsComponent />
+      </div>
     </>
   );
 };
