@@ -10,6 +10,7 @@ export const Header = () => {
 
   return (
     <Flex
+    data-testid="MainNavbarID"
       as="nav"
       align="center"
       justify="space-between"

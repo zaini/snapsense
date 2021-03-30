@@ -18,7 +18,5 @@ test("Home layout renders the main navbar", async () => {
       <HomeLayout />
     </BrowserRouter>
   );
-  await waitFor(() => {
-    expect(wrapper.findAllByRole("MainNavbar")).toBeTruthy();
-  });
+  expect(wrapper.getByTestId("MainNavbarID")).toBeInTheDocument();
 });
