@@ -18,9 +18,9 @@ const SubmissionsViewSwitch = ({ data }) => {
         mb="10px"
       />
       {viewTimeline ? (
-        <PatientSubmissionsTimeline data={data} />
+        <PatientSubmissionsTimeline data-testid="patientSubmissionTable" data={data} />
       ) : (
-        <PatientSubmissionsTable data={data} />
+        <PatientSubmissionsTable data-testid="patientSubmissionTable" data={data} />
       )}
     </>
   );

@@ -86,7 +86,6 @@ it("renders without crashing for PATIENT", () => {
 
 it("should load UserInfo in profile page without crashing", async () => {
     setup();
-    expect(screen.getByText(/My Profile/i)).toBeInTheDocument();
     await waitFor(() => {
         const changePWModalButton = screen.getByTestId("changePasswordButton");
         const deleteAccountModalButton = screen.getByTestId("deleteAccountButton");
@@ -97,12 +96,5 @@ it("should load UserInfo in profile page without crashing", async () => {
 
 it("should load SubmissionsComponent in profile page for PATIENT without crashing", async () => {
     setup();
-    expect(screen.getByText(/My Submissions/i)).toBeInTheDocument();
-    await waitFor(() => {
-        // const changePWModalButton = screen.getByTestId("changePasswordButton");
-        // const deleteAccountModalButton = screen.getByTestId("deleteAccountButton");
-        // expect(changePWModalButton).toBeInTheDocument();
-        // expect(deleteAccountModalButton).toBeInTheDocument();
-        // expect(screen.getByTestId("submissionComponent")).toBeInTheDocument();
-    });
+    expect(screen.getByTestId("patientSubmissionTable")).toBeInTheDocument();
 });
