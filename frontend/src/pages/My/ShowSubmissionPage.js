@@ -27,7 +27,10 @@ const ShowSubmissionPage = () => {
     markup = (
       <Alert status="error">
         <AlertIcon />
-        {error.graphQLErrors[0].message}
+        {(error.graphQLErrors &&
+          error.graphQLErrors[0] &&
+          error.graphQLErrors[0].message) ||
+          error.message}
       </Alert>
     );
   } else {
@@ -48,7 +51,7 @@ const ShowSubmissionPage = () => {
 
 export default ShowSubmissionPage;
 
-const GET_SUBMISSION = gql`
+export const GET_SUBMISSION = gql`
   query getSubmission($submission_id: ID!) {
     getSubmission(submission_id: $submission_id) {
       id

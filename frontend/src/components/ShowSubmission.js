@@ -12,6 +12,7 @@ const ShowSubmission = ({ submission }) => {
         <SubmissionCard data={submission} vertical={true} />
       ) : (
         <SubmissionCard
+          testID="submissionCardContainer"
           data={submission}
           vertical={true}
           redirect={`/my/patients/show/${submission.Patient.id}`}

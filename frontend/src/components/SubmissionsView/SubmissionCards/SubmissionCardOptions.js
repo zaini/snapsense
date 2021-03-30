@@ -46,15 +46,24 @@ const SubmissionCardOptions = ({
           <InputLeftAddon children={<BsFlag />} backgroundColor="#ABCAE7" />
           {user.accountType === "DOCTOR" ? (
             <Select
+              data-testid="requestRiskSelect"
               value={flagValue}
               onChange={(e) => {
                 setFlagValue(e.target.value);
               }}
             >
-              <option value="-1">Review Submission</option>
-              <option value="1">Low Risk</option>
-              <option value="2">Medium Risk</option>
-              <option value="3">High Risk</option>
+              <option data-testid="selectOption" value="-1">
+                Review Submission
+              </option>
+              <option data-testid="selectOption" value="1">
+                Low Risk
+              </option>
+              <option data-testid="selectOption" value="2">
+                Medium Risk
+              </option>
+              <option data-testid="selectOption" value="3">
+                High Risk
+              </option>
             </Select>
           ) : (
             <Input value={getFlagText(flag)} isReadOnly={true} />
@@ -72,6 +81,7 @@ const SubmissionCardOptions = ({
       {user.accountType === "DOCTOR" && (
         <HStack>
           <Button
+            data-testid="submitBtnForm"
             colorScheme="blue"
             isDisabled={parseInt(flagValue) === -1}
             onClick={() => {
@@ -86,11 +96,21 @@ const SubmissionCardOptions = ({
           >
             Submit Review
           </Button>
-          <Link to={`/my/submissions/show/${submission_id}`}>
-            <Button colorScheme="blue">View Submission</Button>
+          <Link
+            data-testid="viewLink"
+            to={`/my/submissions/show/${submission_id}`}
+          >
+            <Button data-testid="viewSubBtnForm" colorScheme="blue">
+              View Submission
+            </Button>
           </Link>
-          <Link to={`/my/patients/${patient.id}/requests/new`}>
-            <Button colorScheme="blue">Request Submission</Button>
+          <Link
+            data-testid="newRequestLink"
+            to={`/my/patients/${patient.id}/requests/new`}
+          >
+            <Button data-testid="requestSubBtnForm" colorScheme="blue">
+              Request Submission
+            </Button>
           </Link>
         </HStack>
       )}
