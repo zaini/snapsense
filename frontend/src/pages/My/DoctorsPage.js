@@ -42,7 +42,7 @@ const DoctorsPage = () => {
   return (
     <>
       <Center>
-        <Heading>My Doctors</Heading>
+        <Heading data-testid="doctors-header">My Doctors</Heading>
       </Center>
       <br />
       <hr />

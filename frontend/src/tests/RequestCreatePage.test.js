@@ -119,7 +119,7 @@ describe("new request page renders properly", () => {
 
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
-      expect(screen.getByText(/Submission Request for /i)).toBeInTheDocument();
+      expect(screen.getByText(/Submission Request/i)).toBeInTheDocument();
     });
   });
 

@@ -5,6 +5,7 @@ import gql from "graphql-tag";
 import {
   Alert,
   AlertIcon,
+  Box,
   Button,
   Center,
   Container,
@@ -76,7 +77,7 @@ const HospitalPage = (props) => {
     );
   }
 
-  return markup;
+  return <Box data-testid="hospital-page">{markup}</Box>;
 };
 
 export default HospitalPage;
