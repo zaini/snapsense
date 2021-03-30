@@ -13,7 +13,6 @@ import { act } from "react-dom/test-utils";
 import { Route, MemoryRouter } from "react-router";
 
 jest.mock("../components/utils/Table", () => (params) => {
-  console.log(params.data[0]);
   return <div data-testid="renderedTable">{JSON.stringify(params)}</div>;
 });
 
