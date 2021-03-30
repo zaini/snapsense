@@ -6,7 +6,7 @@ import { Alert, AlertIcon, Spinner, Box, Button, Text } from "@chakra-ui/react";
 import { Center, Container, Stack } from "@chakra-ui/layout";
 
 const PatientHomePanel = () => {
-  const { loading, data, error } = useQuery(GET_REQUESTS);
+  const { loading, data, error } = useQuery(GET_REQUESTS_PATIENT_PAGE);
 
   let markup;
 
@@ -20,7 +20,7 @@ const PatientHomePanel = () => {
     markup = (
       <Alert status="error">
         <AlertIcon />
-        {error.graphQLErrors[0].message}
+        {error.graphQLErrors && error.graphQLErrors[0] && error.graphQLErrors[0].message || error.message}
       </Alert>
     );
   } else {
@@ -71,7 +71,7 @@ const PatientHomePanel = () => {
 
 export default PatientHomePanel;
 
-export const GET_REQUESTS = gql`
+export const GET_REQUESTS_PATIENT_PAGE = gql`
   query getRequestsAsPatient {
     getRequestsAsPatient {
       id

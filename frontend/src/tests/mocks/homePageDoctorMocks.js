@@ -1,10 +1,13 @@
-import { GET_REQUESTS,GET_SUBMISSIONS } from "../../components/HomePage/DoctorHomePanel";
+import {
+  GET_REQUESTS,
+  GET_SUBMISSIONS,
+} from "../../components/HomePage/DoctorHomePanel";
 
-export const doctorMocks = [
+const doctorMocks = [
   {
     request: {
       query: GET_REQUESTS,
-      variables: {}
+      variables: {},
     },
     result: {
       data: {
@@ -19,7 +22,7 @@ export const doctorMocks = [
   {
     request: {
       query: GET_SUBMISSIONS,
-      variables: {}
+      variables: {},
     },
     result: {
       data: {
@@ -50,3 +53,5 @@ export const doctorMocks = [
     },
   },
 ];
+
+export default doctorMocks;
