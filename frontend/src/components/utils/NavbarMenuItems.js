@@ -3,7 +3,7 @@ import MenuItem from "./MenuItem";
 import { Button } from "@chakra-ui/react";
 import { AuthContext } from "../../context/auth";
 
-export const NavbarMenuItems = () => {
+const NavbarMenuItems = () => {
   const { user } = useContext(AuthContext);
 
   if (user) {

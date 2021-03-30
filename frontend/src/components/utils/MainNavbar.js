@@ -4,7 +4,7 @@ import Logo from "./Logo";
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import NavbarMenuItems from "./NavbarMenuItems";
 
-export const Header = () => {
+const Header = () => {
   const [show, setShow] = useState(false);
   const toggleMenu = () => setShow(!show);
 
