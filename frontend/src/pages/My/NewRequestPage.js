@@ -22,7 +22,7 @@ import NewRequestForm from "../../components/Request/NewRequestForm";
 import Error from "../../components/utils/Error";
 
 // Form for creating a new request for patients
-const NewRequestPage = ({dateIn}) => {
+const NewRequestPage = ({ dateIn }) => {
   const [errors, setError] = useState();
 
   // Get the patient id from the url params
@@ -42,7 +42,9 @@ const NewRequestPage = ({dateIn}) => {
         //Set the error object to a graphql error
         setError([
           {
-            message: (err.graphQLErrors && err.graphQLErrors[0].message) || err.message,
+            message:
+              (err.graphQLErrors && err.graphQLErrors[0].message) ||
+              err.message,
           },
         ]);
       },
@@ -52,9 +54,11 @@ const NewRequestPage = ({dateIn}) => {
     }
   );
 
+  let markup;
+
   if (loading) {
     // Display a spinner
-    return (
+    markup = (
       <Container p="7" borderRadius="lg" mt="20">
         <Center>
           <Spinner size="xl" />
@@ -63,7 +67,7 @@ const NewRequestPage = ({dateIn}) => {
     );
   } else if (errors) {
     // Display the errors object
-    return (
+    markup = (
       <Container p="7" borderRadius="lg" mt="20">
         <Error errors={errors} />
       </Container>
@@ -71,10 +75,10 @@ const NewRequestPage = ({dateIn}) => {
   } else {
     // Display the request form
     if (patient) {
-      return (
+      markup = (
         <Container maxW="container.xl">
           <Heading textAlign="center">
-            Submission Request for {patient.fname} {patient.lname}
+            for {patient.fname} {patient.lname}
           </Heading>
           <Container p="7" borderWidth="1px" borderRadius="lg" mt="20">
             <Tabs>
@@ -84,10 +88,20 @@ const NewRequestPage = ({dateIn}) => {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <NewRequestForm dateIn={dateIn} testName="nonPeriodicForm" periodic={false} patient={patient} />
+                  <NewRequestForm
+                    dateIn={dateIn}
+                    testName="nonPeriodicForm"
+                    periodic={false}
+                    patient={patient}
+                  />
                 </TabPanel>
                 <TabPanel>
-                  <NewRequestForm dateIn={dateIn} testName="periodicForm" periodic={true} patient={patient} />
+                  <NewRequestForm
+                    dateIn={dateIn}
+                    testName="periodicForm"
+                    periodic={true}
+                    patient={patient}
+                  />
                 </TabPanel>
               </TabPanels>
             </Tabs>
@@ -95,7 +109,7 @@ const NewRequestPage = ({dateIn}) => {
         </Container>
       );
     } else {
-      return (
+      markup = (
         <Alert status="error" borderRadius="50px" mb={4} textAlign="center">
           <AlertIcon />
           Invalid Patient!
@@ -103,6 +117,12 @@ const NewRequestPage = ({dateIn}) => {
       );
     }
   }
+  return (
+    <>
+      <Heading textAlign="center">Submission Request</Heading>
+      {markup}
+    </>
+  );
 };
 
 export default NewRequestPage;

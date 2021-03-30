@@ -11,7 +11,7 @@ const UserDetails = ({ user }) => {
       <>
         <FormControl id="name">
           <FormLabel>Name</FormLabel>
-          <Input value={user.name} isReadOnly />
+          <Input data-testid="profile-name" value={user.name} isReadOnly />
         </FormControl>
         <br />
         <br />
@@ -22,12 +22,20 @@ const UserDetails = ({ user }) => {
       <>
         <FormControl id="first_name">
           <FormLabel>First name</FormLabel>
-          <Input value={user.fname} isReadOnly />
+          <Input
+            data-testid="profile-first-name"
+            value={user.fname}
+            isReadOnly
+          />
         </FormControl>
         <br />
         <FormControl id="last_name">
           <FormLabel>Last name</FormLabel>
-          <Input value={user.lname} isReadOnly />
+          <Input
+            data-testid="profile-last-name"
+            value={user.lname}
+            isReadOnly
+          />
         </FormControl>
         <br />
       </>

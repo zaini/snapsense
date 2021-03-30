@@ -67,16 +67,16 @@ const setupWithoutData = async () => {
 };
 
 describe("screening page loading", () => {
-  test("page renders without crashing", async () => {
+  test("if page renders without crashing", async () => {
     expect(setup).toBeTruthy();
   });
 
-  test("correct heading is displayed when page is loaded", async () => {
+  test("if correct heading is displayed when page is loaded", async () => {
     setup();
     expect(screen.getByText(/Review Patient Submissions/i)).toBeInTheDocument();
   });
 
-  test("correct tabs are displayed when page is loaded", async () => {
+  test("if correct tabs are displayed when page is loaded", async () => {
     setup();
     expect(screen.getByTestId("tabFulfillOne")).toBeInTheDocument();
     expect(screen.getByTestId("tabFulfillTwo")).toBeInTheDocument();
@@ -88,12 +88,12 @@ describe("screening page loading", () => {
 });
 
 describe("fulfilled and unreviewed tab on screening page", () => {
-  test("spinner shows up when tab is loaded", async () => {
+  test("if spinner shows up when tab is loaded", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
   });
 
-  test("correct message is displayed for no data", async () => {
+  test("if correct message is displayed for no data", async () => {
     setupWithoutData();
     await waitFor(() => {
       expect(
@@ -102,7 +102,7 @@ describe("fulfilled and unreviewed tab on screening page", () => {
     });
   });
 
-  test("correct number of cards are displayed", async () => {
+  test("if correct number of cards are displayed", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
@@ -112,7 +112,7 @@ describe("fulfilled and unreviewed tab on screening page", () => {
     });
   });
 
-  test("first card only shows images", async () => {
+  test("if first card only shows images", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
@@ -123,7 +123,7 @@ describe("fulfilled and unreviewed tab on screening page", () => {
     within(requestCard).getByText(/No questionnaire/i);
   });
 
-  test("second card only shows answers", async () => {
+  test("if second card only shows answers", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
@@ -134,7 +134,7 @@ describe("fulfilled and unreviewed tab on screening page", () => {
     within(requestCard).getByText(/No Images/i);
   });
 
-  test("third card shows both images and answers", async () => {
+  test("if third card shows both images and answers", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
@@ -146,7 +146,7 @@ describe("fulfilled and unreviewed tab on screening page", () => {
   });
 
   //TODO: Check Image URLS
-  test("images in slideshow and buttons are in the correct state in card three", async () => {
+  test("if images in slideshow and buttons are in the correct state in card three", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
@@ -175,7 +175,7 @@ describe("fulfilled and unreviewed tab on screening page", () => {
     expect(nextBtn.disabled).toBeTruthy();
   });
 
-  test("number of answers and button are in the correct state in card three", async () => {
+  test("if number of answers and button are in the correct state in card three", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
@@ -207,7 +207,7 @@ describe("fulfilled and unreviewed tab on screening page", () => {
     expect(nextBtn.disabled).toBeTruthy();
   });
 
-  test("correct questions and respective answers and notes are displayed in card three", async () => {
+  test("if correct questions and respective answers and notes are displayed in card three", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
@@ -239,7 +239,7 @@ describe("fulfilled and unreviewed tab on screening page", () => {
     }
   });
 
-  test("accurate patient and submission information is loaded in card three", async () => {
+  test("if accurate patient and submission information is loaded in card three", async () => {
     // check button is disabled
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
@@ -266,7 +266,7 @@ describe("fulfilled and unreviewed tab on screening page", () => {
     expect(!requestSubmissionBtn.disabled).toBeTruthy();
   });
 
-  test("view submission redirect to correct page in card three", async () => {
+  test("if view submission redirect to correct page in card three", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
@@ -282,7 +282,7 @@ describe("fulfilled and unreviewed tab on screening page", () => {
     expect(viewLink).toHaveAttribute("href", "/my/submissions/show/11");
   });
 
-  test("make a new request redirects to correct page in card three", async () => {
+  test("if make a new request redirects to correct page in card three", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
@@ -305,7 +305,7 @@ describe("fulfilled and unreviewed tab on screening page", () => {
 
   // TODO: Check if cache has been edited properly
   // TODO: Getting null error for request card called query
-  test("submit button correctly submits form in card three", async () => {
+  test("if submit button correctly submits form in card three", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
@@ -342,7 +342,7 @@ describe("fulfilled and unreviewed tab on screening page", () => {
 });
 
 describe("unreviewed submissions tab screening page loading", () => {
-  test("spinner shows up when tab is loaded", async () => {
+  test("if spinner shows up when tab is loaded", async () => {
     setup();
     const tab = screen.getByTestId("tabFulfillTwo");
     act(() => {
@@ -351,7 +351,7 @@ describe("unreviewed submissions tab screening page loading", () => {
     expect(screen.getByText(/Loading./i)).toBeInTheDocument();
   });
 
-  test("correct number of cards are displayed in second tab", async () => {
+  test("if correct number of cards are displayed in second tab", async () => {
     setup();
     const tab = screen.getByTestId("tabFulfillTwo");
     act(() => {

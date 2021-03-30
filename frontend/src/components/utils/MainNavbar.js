@@ -10,6 +10,7 @@ const Header = () => {
 
   return (
     <Flex
+    data-testid="MainNavbarID"
       as="nav"
       align="center"
       justify="space-between"
@@ -23,6 +24,7 @@ const Header = () => {
         <Logo
           w="100px"
           color={["white", "white", "primary.500", "primary.500"]}
+          data-testid="navLogo"
         />
       </Flex>
 
@@ -40,7 +42,7 @@ const Header = () => {
           direction={["column", "row", "row", "row"]}
           pt={[4, 4, 0, 0]}
         >
-          <NavbarMenuItems />
+          <NavbarMenuItems testName="navbarItems"/>
         </Flex>
       </Box>
     </Flex>

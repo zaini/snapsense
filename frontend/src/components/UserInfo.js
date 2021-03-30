@@ -23,12 +23,12 @@ const UserInfo = () => {
   return (
     <Container>
       <Center>
-        <Heading>My Profile</Heading>
+        <Heading data-testid="profile-header">My Profile</Heading>
       </Center>
       <br />
       <hr />
       <br />
-      <UserDetails user={user}/>
+      <UserDetails user={user} />
       <br />
 
       <Center>

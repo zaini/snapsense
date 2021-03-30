@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { Alert, AlertIcon, Spinner } from "@chakra-ui/react";
-import { Center } from "@chakra-ui/layout";
+import { Center, Heading } from "@chakra-ui/layout";
 import Submission from "../../components/ShowSubmission";
 
 // Viewing a specific submission
@@ -35,7 +35,15 @@ const ShowSubmissionPage = () => {
     markup = <Submission submission={submission} />;
   }
 
-  return markup;
+  return (
+    <>
+      <Center>
+        <Heading>View Submission</Heading>
+      </Center>
+      <br />
+      {markup}
+    </>
+  );
 };
 
 export default ShowSubmissionPage;

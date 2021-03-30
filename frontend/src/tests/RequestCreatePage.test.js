@@ -82,18 +82,18 @@ const setup = async () => {
 };
 
 describe("page loading", () => {
-  test("page renders without crashing", async () => {
+  test("if page renders without crashing", async () => {
     expect(setup).toBeTruthy();
   });
 
-  test("loading spinner shows when opening new requests page", async () => {
+  test("if loading spinner shows when opening new requests page", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
   });
 });
 
 describe("new request page renders properly", () => {
-  test("new request page shows warning text if patient doesnt exist", async () => {
+  test("if new request page shows warning text if patient doesnt exist", async () => {
     act(() => {
       render(
         <MockedProvider mocks={mocks} addTypename={false}>
@@ -114,16 +114,16 @@ describe("new request page renders properly", () => {
     });
   });
 
-  test("new request page loads new request form on gql query success", async () => {
+  test("if new request page loads new request form on gql query success", async () => {
     setup();
 
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
-      expect(screen.getByText(/Submission Request for /i)).toBeInTheDocument();
+      expect(screen.getByText(/Submission Request/i)).toBeInTheDocument();
     });
   });
 
-  test("new request page loads non periodic form by default", async () => {
+  test("if new request page loads non periodic form by default", async () => {
     setup();
 
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
@@ -138,7 +138,7 @@ describe("new request page renders properly", () => {
 });
 
 describe("new request form renders properly", () => {
-  test("schedule tab on request page loads periodic form", async () => {
+  test("if schedule tab on request page loads periodic form", async () => {
     setup();
 
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
@@ -163,7 +163,7 @@ describe("new request form renders properly", () => {
     });
   });
 
-  test("interval on schedule form on request page allows values within 0 and 20 inclusive", async () => {
+  test("if interval on schedule form on request page allows values within 0 and 20 inclusive", async () => {
     setup();
 
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
@@ -192,7 +192,7 @@ describe("new request form renders properly", () => {
 });
 
 describe("new request form submits properly", () => {
-  test("form submit gives success message", async () => {
+  test("if form submit gives success message", async () => {
     setup();
 
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
@@ -219,7 +219,7 @@ describe("new request form submits properly", () => {
     ).toBeInTheDocument();
   });
 
-  test("form does not submit on invalid input", async () => {
+  test("if form does not submit on invalid input", async () => {
     setup();
 
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
