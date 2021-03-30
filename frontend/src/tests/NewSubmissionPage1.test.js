@@ -197,6 +197,12 @@ describe("page loading", () => {
     expect(header).toBeTruthy();
   });
 
+  test("contains upload header", async () => {
+    const header = screen.findAllByTestId("uploadHeader");
+    expect(header).toBeTruthy();
+  });
+
+
   // test("Submit button works", () => {
   // const submitButton = screen.getByTestId(
   //   "submitbutton");
