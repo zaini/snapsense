@@ -128,7 +128,7 @@ const mocks = [
         },
       result: { 
         data: {
-           uploadSubmission: true } 
+           createSubmission: true } 
           },
   },
   // {
@@ -156,7 +156,7 @@ const mocks = [
 // });
 
 //Render setup
-const setup = () => {
+const setup = async () => {
   act(() => {
     render(
       <MockedProvider mocks={mocks}>
@@ -177,9 +177,13 @@ describe("page loading", () => {
     expect(setup).toBeTruthy();
   });
 
+  // test("if loading spinner shows when opening new requests page", async () => {
+  //   setup();
+  //   expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+  // });
+
     test("has a submit button", async () => {
-    const button = screen.findAllByTestId(
-      "submitbutton");
+    const button = screen.findAllByTestId("submitbutton");
     expect(button).toBeTruthy();
   });
 
