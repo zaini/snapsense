@@ -25,7 +25,7 @@ const setup = (userType) => {
 };
 
 describe("Renders the correct navbar for a superadmin", () => {
-  it("renders the correct logo on the navbar and is selectable", async () => {
+  test("if the correct logo on the navbar renders and is selectable", async () => {
     setup("SUPERADMIN");
     const logoOption = screen.getByTestId(/navLogo/i);
 
@@ -33,7 +33,7 @@ describe("Renders the correct navbar for a superadmin", () => {
     fireEvent.click(logoOption);
   });
 
-  it("renders a my dashboard option on the navbar and is selectable", async () => {
+  test("if a my dashboard option renders on the navbar and is selectable", async () => {
     setup("SUPERADMIN");
     const dashBoardOption = screen.getByText(/My Dashboard/i);
 
@@ -41,7 +41,7 @@ describe("Renders the correct navbar for a superadmin", () => {
     fireEvent.click(dashBoardOption);
   });
 
-  it("renders a contact us option on the navbar and is selectable", async () => {
+  test("if a contact us option renders on the navbar and is selectable", async () => {
     setup("SUPERADMIN");
     const contactOption = screen.getByText(/Contact Us/i);
 
@@ -49,7 +49,7 @@ describe("Renders the correct navbar for a superadmin", () => {
     fireEvent.click(contactOption);
   });
 
-  it("renders a logout option on the navbar and is selectable", async () => {
+  test("if a logout option renders on the navbar and is selectable", async () => {
     setup("SUPERADMIN");
     const logoutOption = screen.getByText(/Logout/i);
 
@@ -59,7 +59,7 @@ describe("Renders the correct navbar for a superadmin", () => {
 });
 
 describe("renders the correct logo on the navbar and is selectable", () => {
-  it("displays a logo on the navbar", async () => {
+  test("if the correct logo on the navbar renders and is selectable", async () => {
     setup("ADMIN");
     const logoOption = screen.getByTestId(/navLogo/i);
 
@@ -67,7 +67,7 @@ describe("renders the correct logo on the navbar and is selectable", () => {
     fireEvent.click(logoOption);
   });
 
-  it("renders a my dashboard option on the navbar and is selectable", async () => {
+  test("if a my dashboard option renders on the navbar and is selectable", async () => {
     setup("ADMIN");
     const dashBoardOption = screen.getByText(/My Dashboard/i);
 
@@ -75,7 +75,7 @@ describe("renders the correct logo on the navbar and is selectable", () => {
     fireEvent.click(dashBoardOption);
   });
 
-  it("renders a feedback option on the navbar and is selectable", async () => {
+  test("if a feedback option renders on the navbar and is selectable", async () => {
     setup("ADMIN");
     const feedbackOption = screen.getByText(/Share Feedback/i);
 
@@ -83,7 +83,7 @@ describe("renders the correct logo on the navbar and is selectable", () => {
     fireEvent.click(feedbackOption);
   });
 
-  it("renders a logout option on the navbar and is selectable", async () => {
+  test("if a logout option renders on the navbar and is selectable", async () => {
     setup("ADMIN");
     const logoutOption = screen.getByText(/Logout/i);
 
@@ -93,7 +93,7 @@ describe("renders the correct logo on the navbar and is selectable", () => {
 });
 
 describe("Renders the correct navbar for an doctor", () => {
-  it("renders the correct logo on the navbar and is selectable", async () => {
+  test("if the correct logo renders on the navbar and is selectable", async () => {
     setup("DOCTOR");
     const logoOption = screen.getByTestId(/navLogo/i);
 
@@ -101,7 +101,7 @@ describe("Renders the correct navbar for an doctor", () => {
     fireEvent.click(logoOption);
   });
 
-  it("renders a my dashboard option on the navbar and is selectable", async () => {
+  test("if a my dashboard option renders on the navbar and is selectable", async () => {
     setup("DOCTOR");
     const dashBoardOption = screen.getByText(/My Dashboard/i);
 
@@ -109,7 +109,7 @@ describe("Renders the correct navbar for an doctor", () => {
     fireEvent.click(dashBoardOption);
   });
 
-  it("renders a feedback option on the navbar and is selectable", async () => {
+  test("if a feedback option renders on the navbar and is selectable", async () => {
     setup("DOCTOR");
     const feedbackOption = screen.getByText(/Share Feedback/i);
 
@@ -117,7 +117,7 @@ describe("Renders the correct navbar for an doctor", () => {
     fireEvent.click(feedbackOption);
   });
 
-  it("renders a logout option on the navbar and is selectable", async () => {
+  test("if a logout option renders on the navbar and is selectable", async () => {
     setup("DOCTOR");
     const logoutOption = screen.getByText(/Logout/i);
 
@@ -127,7 +127,7 @@ describe("Renders the correct navbar for an doctor", () => {
 });
 
 describe("Renders the correct navbar for an patient", () => {
-  it("renders the correct logo on the navbar and is selectable", async () => {
+  test("if the correct logo renders on the navbar and is selectable", async () => {
     setup("PATIENT");
     const logoOption = screen.getByTestId(/navLogo/i);
 
@@ -135,7 +135,7 @@ describe("Renders the correct navbar for an patient", () => {
     fireEvent.click(logoOption);
   });
 
-  it("renders a my dashboard option on the navbar and is selectable", async () => {
+  test("if a my dashboard option renders on the navbar and is selectable", async () => {
     setup("PATIENT");
     const dashBoardOption = screen.getByText(/My Dashboard/i);
 
@@ -143,7 +143,7 @@ describe("Renders the correct navbar for an patient", () => {
     fireEvent.click(dashBoardOption);
   });
 
-  it("renders a feedback option on the navbar and is selectable", async () => {
+  test("if a feedback option renders on the navbar and is selectable", async () => {
     setup("PATIENT");
     const feedbackOption = screen.getByText(/Share Feedback/i);
 
@@ -151,7 +151,7 @@ describe("Renders the correct navbar for an patient", () => {
     fireEvent.click(feedbackOption);
   });
 
-  it("renders a logout option on the navbar and is selectable", async () => {
+  test("if a logout option renders on the navbar and is selectable", async () => {
     setup("PATIENT");
     const logoutOption = screen.getByText(/Logout/i);
 
@@ -161,7 +161,7 @@ describe("Renders the correct navbar for an patient", () => {
 });
 
 describe("Renders the correct navbar for a user who is not logged in", () => {
-  it("renders the correct logo on the navbar and is selectable", async () => {
+  test("if the correct logo renders on the navbar and is selectable", async () => {
     setup("");
     const logoOption = screen.getByTestId(/navLogo/i);
 
@@ -169,7 +169,7 @@ describe("Renders the correct navbar for a user who is not logged in", () => {
     fireEvent.click(logoOption);
   });
 
-  it("renders a home option on the navbar and is selectable", async () => {
+  test("if a home option renders on the navbar and is selectable", async () => {
     setup("");
     const homeOption = screen.getByText(/Home/i);
 
@@ -177,7 +177,7 @@ describe("Renders the correct navbar for a user who is not logged in", () => {
     fireEvent.click(homeOption);
   });
 
-  it("renders an about option on the navbar and is selectable", async () => {
+  test("if an about option renders on the navbar and is selectable", async () => {
     setup("");
     const aboutOption = screen.getByText(/About Us/i);
 
@@ -185,7 +185,7 @@ describe("Renders the correct navbar for a user who is not logged in", () => {
     fireEvent.click(aboutOption);
   });
 
-  it("renders a feedback option on the navbar and is selectable", async () => {
+  test("if a feedback option renders on the navbar and is selectable", async () => {
     setup("");
     const feedbackOption = screen.getByText(/Share Feedback/i);
 
@@ -193,7 +193,7 @@ describe("Renders the correct navbar for a user who is not logged in", () => {
     fireEvent.click(feedbackOption);
   });
 
-  it("renders a login option on the navbar and is selectable", async () => {
+  test("if a login option renders on the navbar and is selectable", async () => {
     setup("");
     const loginOption = screen.getByText(/Login/i);
 
