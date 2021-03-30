@@ -12,6 +12,7 @@ import {
   AlertIcon,
   Spinner,
   Button,
+  Box,
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 import CopyLink from "./utils/CopyLink";
@@ -43,7 +44,7 @@ const PatientInfo = () => {
     markup = (
       <Container>
         <Center>
-          <Heading>{user.fname}'s Profile</Heading>
+          <Heading data-testid="patient-header">{user.fname}'s Profile</Heading>
         </Center>
         <br />
         <hr />
@@ -78,7 +79,7 @@ const PatientInfo = () => {
     );
   }
 
-  return markup;
+  return <Box data-testid="patient-profile">{markup}</Box>;
 };
 
 export default PatientInfo;
