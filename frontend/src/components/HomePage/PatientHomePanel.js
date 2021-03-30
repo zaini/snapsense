@@ -10,7 +10,7 @@ const PatientHomePanel = () => {
 
   let markup;
 
-  if (loading ) {
+  if (loading) {
     markup = (
       <Center>
         <Spinner size="xl" />
@@ -43,7 +43,7 @@ const PatientHomePanel = () => {
           <Text data-testid="patientHomeText">
             You have {request_data.length} request(s) to fulfil.
           </Text>
-          <Link to="/my/requests">
+          <Link data-testid="reviewLink" to="/my/requests">
             <Button data-testid="reviewRequestsButton" colorScheme="blue">
               View My Requests
             </Button>
@@ -56,7 +56,7 @@ const PatientHomePanel = () => {
   return (
     <Container>
       <Center>
-        <Link to="/my/submissions/new">
+        <Link data-testid="newSubmissionLink" to="/my/submissions/new">
           <Button data-testid="newSubmissionButton" colorScheme="blue">
             Create New Submission Now
           </Button>
