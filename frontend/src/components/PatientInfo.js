@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import {
@@ -11,13 +11,16 @@ import {
   Alert,
   AlertIcon,
   Spinner,
+  Button,
 } from "@chakra-ui/react";
+import { ViewIcon } from "@chakra-ui/icons";
 import CopyLink from "./utils/CopyLink";
 
-const PatientInfo = (props) => {
+const PatientInfo = () => {
   const location = useParams();
+  const patient_id = location.patient_id;
   const { loading, data, error } = useQuery(GET_PATIENT_AS_DOCTOR, {
-    variables: { patient_id: location.patient_id },
+    variables: { patient_id },
   });
 
   let markup;
@@ -59,6 +62,14 @@ const PatientInfo = (props) => {
           <FormLabel>Email address</FormLabel>
           <CopyLink link={user.email} />
         </FormControl>
+        <br />
+        <Center>
+          <Link to={`/my/patients/${patient_id}/requests`}>
+            <Button leftIcon={<ViewIcon />} colorScheme="blue">
+              View Requests
+            </Button>
+          </Link>
+        </Center>
         <br />
         <br />
         <hr />
