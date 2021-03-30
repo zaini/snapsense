@@ -117,21 +117,17 @@ const MyLayout = () => {
 
         <PrivateRoute
           exact
-          path="/my/patients/:patient_id/requests"
-          accountTypes={["DOCTOR"]}
-        >
-          <RequestsPage />
-        </PrivateRoute>
-
-        <PrivateRoute
-          exact
           path="/my/patients/:patient_id/requests/new"
           accountTypes={["DOCTOR"]}
         >
           <NewRequestPage />
         </PrivateRoute>
 
-        <PrivateRoute exact path="/my/requests" accountTypes={["PATIENT"]}>
+        <PrivateRoute
+          exact
+          path="/my/requests"
+          accountTypes={["PATIENT", "DOCTOR"]}
+        >
           <RequestsPage />
         </PrivateRoute>
 

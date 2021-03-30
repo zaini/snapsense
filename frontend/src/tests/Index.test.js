@@ -708,9 +708,9 @@ describe("visit routes while logged in as patient", () => {
           <App />
         </MockedProvider>
       </AuthContext.Provider>,
-      { route: "/my/patients/1/requests" }
+      { route: "/my/requests" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByText("My Requests")).toBeInTheDocument();
   });
 
   test("create new request for patient page", () => {
@@ -1061,12 +1061,12 @@ describe("visit routes while logged in as doctor", () => {
     renderWithRouter(
       <AuthContext.Provider value={{ user, login, logout }}>
         <MockedProvider>
-          <Route path="/my/patients/:patient_id/requests">
+          <Route path="/my/requests">
             <App />
           </Route>
         </MockedProvider>
       </AuthContext.Provider>,
-      { route: "/my/patients/1/requests" }
+      { route: "/my/requests" }
     );
     expect(screen.getByText("My Requests")).toBeInTheDocument();
   });
@@ -1092,7 +1092,7 @@ describe("visit routes while logged in as doctor", () => {
       </AuthContext.Provider>,
       { route: "/my/requests" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByText("My Requests")).toBeInTheDocument();
   });
 
   test("view all submissions page", () => {
@@ -1415,12 +1415,12 @@ describe("visit routes while logged in as an admin", () => {
     renderWithRouter(
       <AuthContext.Provider value={{ user, login, logout }}>
         <MockedProvider>
-          <Route path="/my/patients/:patient_id/requests">
+          <Route path="/my/requests">
             <App />
           </Route>
         </MockedProvider>
       </AuthContext.Provider>,
-      { route: "/my/patients/1/requests" }
+      { route: "/my/requests" }
     );
     expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
   });
@@ -1768,12 +1768,10 @@ describe("visit routes while logged in as a superadmin", () => {
     renderWithRouter(
       <AuthContext.Provider value={{ user, login, logout }}>
         <MockedProvider>
-          <Route path="/my/patients/:patient_id/requests">
-            <App />
-          </Route>
+          <App />
         </MockedProvider>
       </AuthContext.Provider>,
-      { route: "/my/patients/1/requests" }
+      { route: "/my/requests" }
     );
     expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
   });

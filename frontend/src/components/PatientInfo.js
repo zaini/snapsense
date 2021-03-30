@@ -64,14 +64,6 @@ const PatientInfo = () => {
           <CopyLink link={user.email} />
         </FormControl>
         <br />
-        <Center>
-          <Link to={`/my/patients/${patient_id}/requests`}>
-            <Button leftIcon={<ViewIcon />} colorScheme="blue">
-              View Requests
-            </Button>
-          </Link>
-        </Center>
-        <br />
         <br />
         <hr />
         <br />
