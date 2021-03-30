@@ -1,8 +1,6 @@
-import MyHomePage from "../pages/My/MyHomePage";
 import { MockedProvider } from "@apollo/client/testing";
 
 import {
-  fireEvent,
   waitFor,
   within,
   render,
