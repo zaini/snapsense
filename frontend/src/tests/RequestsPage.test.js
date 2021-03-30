@@ -77,21 +77,21 @@ const setupPatient = async () => {
 };
 
 describe("viewing requests page as a patient", () => {
-  test("page renders without crashing", async () => {
+  test("if page renders without crashing", async () => {
     expect(setupPatient).toBeTruthy();
   });
 
-  test("spinner shows on page load", async () => {
+  test("if spinner shows on page load", async () => {
     setupPatient();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
   });
 
-  test("correct title is displayed", async () => {
+  test("if correct title is displayed", async () => {
     setupPatient();
     expect(screen.getByText(/My Requests/i)).toBeInTheDocument();
   });
 
-  test("table is rendered correctly", async () => {
+  test("if table is rendered correctly", async () => {
     setupPatient();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
@@ -99,7 +99,7 @@ describe("viewing requests page as a patient", () => {
     });
   });
 
-  test("correct columns are displayed in the table", async () => {
+  test("if correct columns are displayed in the table", async () => {
     setupPatient();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
@@ -118,7 +118,7 @@ describe("viewing requests page as a patient", () => {
     expect(data.cols[5].headerName).toEqual("Submission");
   });
 
-  test("correct number of rows exist in the table", async () => {
+  test("if correct number of rows exist in the table", async () => {
     setupPatient();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
@@ -130,7 +130,7 @@ describe("viewing requests page as a patient", () => {
     expect(data.data.length).toEqual(3);
   });
 
-  test("correct information is rendered in row 1", async () => {
+  test("if correct information is rendered in row 1", async () => {
     setupPatient();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
@@ -147,7 +147,7 @@ describe("viewing requests page as a patient", () => {
     expect(data.data[0].Doctor.email).toEqual("doctor1@nhs.net");
   });
 
-  test("correct information is rendered in row 3", async () => {
+  test("if correct information is rendered in row 3", async () => {
     setupPatient();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
@@ -166,21 +166,21 @@ describe("viewing requests page as a patient", () => {
 });
 
 describe("viewing requests page as a doctor", () => {
-  test("page renders without crashing", async () => {
+  test("if page renders without crashing", async () => {
     expect(setupDoctor).toBeTruthy();
   });
 
-  test("spinner shows on page load", async () => {
+  test("if spinner shows on page load", async () => {
     setupDoctor();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
   });
 
-  test("correct title is displayed", async () => {
+  test("if correct title is displayed", async () => {
     setupDoctor();
     expect(screen.getByText(/My Requests/i)).toBeInTheDocument();
   });
 
-  test("correct number of rows and cols are loaded", async () => {
+  test("if correct number of rows and cols are loaded", async () => {
     setupDoctor();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
