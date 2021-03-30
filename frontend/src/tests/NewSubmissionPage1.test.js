@@ -156,7 +156,7 @@ const mocks = [
 // });
 
 //Render setup
-const setup = async () => {
+const setup = () => {
   act(() => {
     render(
       <MockedProvider mocks={mocks}>
