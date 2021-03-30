@@ -13,4 +13,13 @@ export const mocksWithData = [
       },
     },
   },
+  {
+    request: {
+      query: INVITE_USER,
+      variables: { email: "doctor@gmail.com" },
+    },
+    error: {
+      message: "Only NHS Emails Allowed",
+    },
+  },
 ];

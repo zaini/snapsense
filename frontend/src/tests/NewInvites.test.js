@@ -182,6 +182,33 @@ describe("invite doctor as an admin", () => {
     });
   });
 
+  test("if form only allows NHS emails and throws valid error", async () => {
+    setupAdmin();
+    const emailInput = screen.getByTestId("inviteEmail");
+    const emailInputRepeat = screen.getByTestId("inviteEmailRepeat");
+    const submitBtn = screen.getByTestId("inviteSubmit");
+
+    act(() => {
+      fireEvent.change(emailInput, {
+        target: { value: "doctor@gmail.com" },
+      });
+    });
+
+    act(() => {
+      fireEvent.change(emailInputRepeat, {
+        target: { value: "doctor@gmail.com" },
+      });
+    });
+
+    act(() => {
+      fireEvent.click(submitBtn);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText(/Only NHS Emails Allowed/i)).toBeInTheDocument();
+    });
+  });
+
   test("if form correctly submits when emails match", async () => {
     setupAdmin();
     const emailInput = screen.getByTestId("inviteEmail");
