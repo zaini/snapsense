@@ -178,7 +178,7 @@ export const NewSubmissionPage = () => {
     body = (
       <Box className={classes.layout}>
         <Stack>
-          <Alert status="info">
+          <Alert data-testid="alert" status="info">
             <AlertIcon />
             Open the tabs to add your images or questionnaire or both!
           </Alert>
@@ -189,7 +189,7 @@ export const NewSubmissionPage = () => {
             </TabList>
             <TabPanel>
               <Paper className={classes.paper}>
-                <Heading style={{ textAlign: "center" }}>Image Upload</Heading>
+                <Heading style={{ textAlign: "center" }} data-testid="uploadHeader">Image Upload</Heading>
                 <ImageUpload data-testid="imageUpload" setImages={setImages} />
               </Paper>
             </TabPanel>

@@ -182,9 +182,19 @@ describe("page loading", () => {
   //   expect(screen.getByText(/Loading/i)).toBeInTheDocument();
   // });
 
-    test("has a submit button", async () => {
+  test("has a submit button", async () => {
     const button = screen.findAllByTestId("submitbutton");
     expect(button).toBeTruthy();
+  });
+
+  test("contains alert text", async () => {
+    const alert = screen.findAllByTestId("alert");
+    expect(alert).toBeTruthy();
+  });
+
+  test("contains upload header", async () => {
+    const header = screen.findAllByTestId("uploadHeader");
+    expect(header).toBeTruthy();
   });
 
   // test("Submit button works", () => {
