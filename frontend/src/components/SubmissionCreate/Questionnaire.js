@@ -31,6 +31,7 @@ const QuestionForm = ({ isVisible, step, answers, setAnswers }) => {
           <Flex>
             {questionsObject.map((e, i) => (
               <Box
+                key={i}
                 borderWidth="1px"
                 borderRadius="lg"
                 width={"100%"}

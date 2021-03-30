@@ -87,7 +87,7 @@ const Feedback = () => {
               {[...Array(5)].map((star, i) => {
                 const ratingValue = i + 1;
                 return (
-                  <label>
+                  <label key={i}>
                     <input
                       type="radio"
                       name="rating"
@@ -117,7 +117,7 @@ const Feedback = () => {
               <form>
                 <Text mb="8px">Additional Feedback</Text>
                 <Textarea
-                  isFullWidth="True"
+                  isFullWidth={true}
                   value={value}
                   onChange={handleInputChange}
                   placeholder="Enter here"
