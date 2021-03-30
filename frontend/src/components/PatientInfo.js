@@ -84,7 +84,7 @@ const PatientInfo = () => {
 
 export default PatientInfo;
 
-const GET_PATIENT_AS_DOCTOR = gql`
+export const GET_PATIENT_AS_DOCTOR = gql`
   query getPatientAsDoctor($patient_id: ID!) {
     getPatientAsDoctor(patient_id: $patient_id) {
       id
