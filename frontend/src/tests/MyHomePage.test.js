@@ -18,9 +18,9 @@ const {
   GET_SUBMISSIONS,
 } = require("../components/HomePage/DoctorHomePanel");
 
-//add testing for loading state and error states
-//fix auth for doctor vs patient
 //test correct route is used for buttons
+
+afterEach(cleanup);
 
 const doctorMock = [
   {
@@ -80,10 +80,10 @@ const patientMock = [
       data: {
         getRequestsAsPatient: [
           {
-            id: "4",
+            id: "1",
           },
           {
-            id: "5",
+            id: "2",
           },
         ],
       },
@@ -91,10 +91,7 @@ const patientMock = [
   },
 ];
 
-afterEach(cleanup);
-
-const doctorSetup = async () => {
-  const doc = {
+const doctor = {
     id: 1,
     fname: "Doctor",
     lname: "One",
@@ -105,14 +102,12 @@ const doctorSetup = async () => {
     accountType: "DOCTOR",
   };
 
-  const toRet = {
-    user: doc,
-  };
 
+const doctorSetup = async () => {
   act(() => {
     render(
-      <AuthContext.Provider value={toRet}>
-        <MockedProvider mocks={doctorMock} addTypename={false}>
+      <AuthContext.Provider value={{ user: doctor }}>
+        <MockedProvider mocks={doctorMock}>
           <MemoryRouter initialEntries={["/my"]}>
             <Route path="/my">
               <MyHomePage />
@@ -124,26 +119,22 @@ const doctorSetup = async () => {
   });
 };
 
-const patientSetup = async () => {
-  const pat = {
+const patient = {
     id: 1,
-    fname: "Doctor",
+    fname: "Patient",
     lname: "One",
-    email: "patient1@nhs.net",
+    email: "patient1@gmail.com",
     hospital_id: 1,
-    createdAt: "2021-03-25T17:42:58.000Z",
-    updatedAt: "2021-03-25T17:42:58.000Z",
+    createdAt: "2021-03-25T17:43:00.000Z",
+    updatedAt: "2021-03-25T17:43:00.000Z",
     accountType: "PATIENT",
   };
 
-  const toRet = {
-    user: pat,
-  };
-
-  act(() => {
+  const patientSetup = async () => {
+    act(() => {
     render(
-      <AuthContext.Provider value={toRet}>
-        <MockedProvider mocks={patientMock} addTypename={false}>
+      <AuthContext.Provider value={{ user: patient }}>
+        <MockedProvider mocks={patientMock}>
           <MemoryRouter initialEntries={["/my"]}>
             <Route path="/my">
               <MyHomePage />
@@ -157,12 +148,17 @@ const patientSetup = async () => {
 
 //doctor panel tests
 describe("Doctor panel", () => {
-  it("should render without crashing for doctor", () => {
+  it("should render without crashing for doctor", async () => {
+    doctorSetup();
+    expect(doctorSetup()).toBeTruthy();
+  });
+
+  it("spinner shows on page load", async () => {
     doctorSetup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
   });
 
-  it("should have correct heading", () => {
+  it("should have correct heading", async () => {
     doctorSetup();
     expect(screen.getByText(/My Home/i)).toBeInTheDocument();
   });
@@ -181,21 +177,35 @@ describe("Doctor panel", () => {
     });
   });
 
-  it("should have review patients button", () => {
+  it("should have review patients button", async () => {
     doctorSetup();
-    expect(screen.getByTestId("reviewPatientsButton")).toBeInTheDocument();
-    screen.debug();
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByTestId("reviewPatientsButton")).toBeInTheDocument();
+    });
   });
 });
 
+// it("clicking review patients button renders correct url", async () => {
+//   doctorSetup();
+//   expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+//   const reviewButton = screen.getByTestId("reviewPatientsButton");
+//   const reviewLink = ;
+// });
+
 //patient panel tests
 describe("Patient panel", () => {
-  it("should render without crashing for patient", () => {
+  it("should render without crashing for doctor", async () => {
+    patientSetup();
+    expect(patientSetup()).toBeTruthy();
+  });
+
+  it("spinner shows on page load", async () => {
     patientSetup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
   });
 
-  it("should have correct heading", () => {
+  it("should have correct heading", async () => {
     patientSetup();
     expect(screen.getByText(/My Home/i)).toBeInTheDocument();
   });
@@ -204,17 +214,20 @@ describe("Patient panel", () => {
     patientSetup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
-      const requestsToFulfill = screen.getByTestId("patientHomeText");
+      const submissionReview = screen.getByTestId("patientHomeText");
       expect(screen.getByTestId("patientHomeContainer")).toBeInTheDocument();
-      expect(requestsToFulfill).toBeInTheDocument();
-      within(requestsToFulfill).getByText(/You have 2 submissions to review./i);
+      expect(submissionReview).toBeInTheDocument();
+      within(submissionReview).getByText(/You have 2 requests to fulfil./i);
     });
+    screen.debug();
   });
 
-  it("should have review requests button", () => {
-    patientSetup();
-    expect(screen.getByTestId("reviewRequestsButton")).toBeInTheDocument();
-  });
+  // it("should have review requests button", async () => {
+  //   patientSetup();
+  //   await waitFor(() => {
+  //     expect(screen.getByTestId("reviewRequestsButton")).toBeInTheDocument();
+  //   });
+  // });
 
   it("should have create new submission button", () => {
     patientSetup();

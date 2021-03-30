@@ -52,7 +52,7 @@ const DoctorHomePanel = () => {
             You have {request_data.length} requests to review.
           </Text>
           <Link to="/my/submissions/review">
-            <Button data-testId="reviewPatientsButton" colorScheme="blue">
+            <Button data-testid="reviewPatientsButton" colorScheme="blue">
               Review My Patients
             </Button>
           </Link>
