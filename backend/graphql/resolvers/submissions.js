@@ -284,11 +284,16 @@ const isFlagValid = (flag) => {
 
 const requestIsFulfilled = (images, answers, request) => {
   return (
-    (images !== undefined && images.length > 0 && answers !== undefined) ||
+    (images !== undefined &&
+      images.length > 0 &&
+      answers !== undefined &&
+      Object.keys(answers.questionnaire).length > 1) ||
     (images !== undefined &&
       images.length > 0 &&
       request.getDataValue("type") === 1) ||
-    (answers !== undefined && request.getDataValue("type") === 2)
+    (answers !== undefined &&
+      Object.keys(answers.questionnaire).length > 1 &&
+      request.getDataValue("type") === 2)
   );
 };
 
