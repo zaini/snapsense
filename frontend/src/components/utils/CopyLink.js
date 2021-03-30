@@ -20,7 +20,13 @@ const CopyLink = ({ link }) => {
             </CopyToClipboard>
           }
         />
-        <Input type="text" name="id" value={link} isReadOnly={true} />
+        <Input
+          data-testid="inviteLink"
+          type="text"
+          name="id"
+          value={link}
+          isReadOnly={true}
+        />
       </InputGroup>
     </Flex>
   );
