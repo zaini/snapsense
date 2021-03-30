@@ -57,7 +57,7 @@ const RequestsPage = () => {
 
 export default RequestsPage;
 
-const GET_REQUESTS_AS_PATIENT = gql`
+export const GET_REQUESTS_AS_PATIENT = gql`
   query {
     getRequestsAsPatient {
       id
@@ -95,7 +95,7 @@ const GET_REQUESTS_AS_PATIENT = gql`
   }
 `;
 
-const GET_REQUESTS_AS_DOCTOR = gql`
+export const GET_REQUESTS_AS_DOCTOR = gql`
   query {
     getRequestsAsDoctor {
       id
