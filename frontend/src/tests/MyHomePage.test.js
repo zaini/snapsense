@@ -221,25 +221,24 @@ describe("Patient panel", () => {
   //     expect(submissionReview).toBeInTheDocument();
   //     within(submissionReview).getByText(/You have 2 requests to fulfil./i);
   //   });
-  //   screen.debug();
   // });
 
   // it("should have review requests button", async () => {
   //   patientSetup();
+  //   expect(screen.getByText(/Loading/i)).toBeInTheDocument();
   //   await waitFor(() => {
   //     expect(screen.getByTestId("reviewRequestsButton")).toBeInTheDocument();
   //   });
   // });
 
-  it("should have create new submission button", () => {
+  it("should have create new submission button", async () => {
     patientSetup();
     expect(screen.getByTestId("newSubmissionButton")).toBeInTheDocument();
   });
 });
 
-test("clicking create new submission button gives correct new page url", () => {
+test("clicking create new submission button gives correct new page url", async () => {
   patientSetup();
-  expect(screen.getByText(/Loading/i)).toBeInTheDocument();
   const newSubLink = screen.getByTestId("newSubmissionLink");
   expect(newSubLink).toBeInTheDocument();
   expect(newSubLink).toHaveAttribute("href", "/my/submissions/new");
