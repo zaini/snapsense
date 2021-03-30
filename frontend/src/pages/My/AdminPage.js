@@ -1,7 +1,14 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import { Alert, AlertIcon, Center, Heading, Spinner } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertIcon,
+  Box,
+  Center,
+  Heading,
+  Spinner,
+} from "@chakra-ui/react";
 
 import ViewAdmin from "../../components/Admin/ViewAdmin";
 
@@ -39,7 +46,7 @@ const AdminPage = () => {
     );
   }
 
-  return markup;
+  return <Box data-testid="admin-profile">{markup}</Box>;
 };
 
 export default AdminPage;

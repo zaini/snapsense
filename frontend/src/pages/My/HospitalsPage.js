@@ -41,7 +41,7 @@ const HospitalsPage = () => {
   }
 
   return (
-    <Stack spacing={4}>
+    <Stack spacing={4} data-testid="hospitals-page">
       <Center>
         <Heading>Hospitals</Heading>
       </Center>

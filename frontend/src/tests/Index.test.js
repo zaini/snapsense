@@ -264,6 +264,19 @@ describe("visit routes without being logged in", () => {
     expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
   });
 
+  test("visit doctors page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/doctors" }
+    );
+    // Redirect to login
+    expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+  });
+
   test("visit new hospital page", () => {
     renderWithRouter(
       <AuthContext.Provider value={{ user, login, logout }}>
@@ -616,6 +629,18 @@ describe("visit routes while logged in as patient", () => {
     expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
   });
 
+  test("visit doctors page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/doctors" }
+    );
+    expect(screen.getByTestId("doctors-header")).toBeInTheDocument();
+  });
+
   test("visit new hospital page", () => {
     renderWithRouter(
       <AuthContext.Provider value={{ user, login, logout }}>
@@ -960,6 +985,18 @@ describe("visit routes while logged in as doctor", () => {
     expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
   });
 
+  test("visit doctors page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/doctors" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
   test("visit new hospital page", () => {
     renderWithRouter(
       <AuthContext.Provider value={{ user, login, logout }}>
@@ -1104,5 +1141,712 @@ describe("visit routes while logged in as doctor", () => {
       { route: "/my/submissions/show/1" }
     );
     expect(screen.getByText("View Submission")).toBeInTheDocument();
+  });
+});
+
+describe("visit routes while logged in as an admin", () => {
+  let user = admin;
+
+  test("home page route", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>
+    );
+    expect(
+      screen.getByText("Snapsense, welcomes you to the future")
+    ).toBeInTheDocument();
+    expect(screen.getByText("My Dashboard")).toBeInTheDocument();
+  });
+
+  test("about us page route", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/about" }
+    );
+    expect(screen.getByText("ABOUT US")).toBeInTheDocument();
+    expect(screen.getByText("My Dashboard")).toBeInTheDocument();
+  });
+
+  test("feedback page route", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/feedback" }
+    );
+    expect(
+      screen.getByText("How would you rate your experience with SnapSense?")
+    ).toBeInTheDocument();
+    expect(screen.getByText("My Dashboard")).toBeInTheDocument();
+  });
+
+  test("login page route", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/login" }
+    );
+    expect(
+      screen.getByText("Snapsense, welcomes you to the future")
+    ).toBeInTheDocument();
+    expect(screen.getByText("My Dashboard")).toBeInTheDocument();
+  });
+
+  test("my page route", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("show invite page route", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/invites/show/1" }
+    );
+    expect(screen.getByText("You have an invite!")).toBeInTheDocument();
+    expect(screen.getByText("My Dashboard")).toBeInTheDocument();
+  });
+
+  test("show error page route", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/error" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("visit my profile page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/profile" }
+    );
+    expect(screen.getByTestId("profile-header")).toBeInTheDocument();
+    expect(screen.getByTestId("profile-first-name").value).toBe(user.fname);
+    expect(screen.getByTestId("profile-last-name").value).toBe(user.lname);
+  });
+
+  test("visit new invites page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/invites/new" }
+    );
+    expect(screen.getByText("Create Invitation")).toBeInTheDocument();
+  });
+
+  test("visit my doctors page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/doctors" }
+    );
+    expect(screen.getByText("My Doctors")).toBeInTheDocument();
+  });
+
+  test("visit my feedback page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/feedback" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("visit specific feedback page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/feedback/show/1" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("visit hospitals page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/hospitals" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("visit patients page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/patients" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("visit admins page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/admins" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("visit doctors page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/doctors" }
+    );
+    expect(screen.getByText("My Doctors")).toBeInTheDocument();
+  });
+
+  test("visit new hospital page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/hospitals/new" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("visit new admin for hospital page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/hospitals/1/admins/new" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("visit specific hospital page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/hospitals/show/1" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("visit specific admin page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/admins/show/1" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("visit specific patient page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/patients/show/1" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("view requests for patient page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <Route path="/my/patients/:patient_id/requests">
+            <App />
+          </Route>
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/patients/1/requests" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("create new request for patient page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/patients/1/requests/new" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("view patients pending requests", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/requests" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("view all submissions page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/submissions" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("view review submissions page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/submissions/review" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("view create new submission page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/submissions/new" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("view specific submission page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/submissions/show/1" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+});
+
+describe("visit routes while logged in as a superadmin", () => {
+  let user = superadmin;
+
+  test("home page route", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>
+    );
+    expect(
+      screen.getByText("Snapsense, welcomes you to the future")
+    ).toBeInTheDocument();
+    expect(screen.getByText("My Dashboard")).toBeInTheDocument();
+  });
+
+  test("about us page route", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/about" }
+    );
+    expect(screen.getByText("ABOUT US")).toBeInTheDocument();
+    expect(screen.getByText("My Dashboard")).toBeInTheDocument();
+  });
+
+  test("feedback page route", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/feedback" }
+    );
+    expect(
+      screen.getByText("How would you rate your experience with SnapSense?")
+    ).toBeInTheDocument();
+    expect(screen.getByText("My Dashboard")).toBeInTheDocument();
+  });
+
+  test("login page route", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/login" }
+    );
+    expect(
+      screen.getByText("Snapsense, welcomes you to the future")
+    ).toBeInTheDocument();
+    expect(screen.getByText("My Dashboard")).toBeInTheDocument();
+  });
+
+  test("my page route", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("show invite page route", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/invites/show/1" }
+    );
+    expect(screen.getByText("You have an invite!")).toBeInTheDocument();
+    expect(screen.getByText("My Dashboard")).toBeInTheDocument();
+  });
+
+  test("show error page route", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/error" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("visit my profile page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/profile" }
+    );
+    expect(screen.getByTestId("profile-header")).toBeInTheDocument();
+    expect(screen.getByTestId("profile-name").value).toBe(user.name);
+  });
+
+  test("visit new invites page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/invites/new" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("visit my doctors page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/doctors" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("visit my feedback page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/feedback" }
+    );
+    expect(screen.getByText("All Feedback")).toBeInTheDocument();
+  });
+
+  test("visit specific feedback page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/feedback/show/1" }
+    );
+    expect(screen.getByTestId("view-feedback-page")).toBeInTheDocument();
+  });
+
+  test("visit hospitals page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/hospitals" }
+    );
+    expect(screen.getByTestId("hospitals-page")).toBeInTheDocument();
+  });
+
+  test("visit patients page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/patients" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("visit admins page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/admins" }
+    );
+    expect(screen.getByTestId("admins-page")).toBeInTheDocument();
+  });
+
+  test("visit doctors page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/doctors" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("visit new hospital page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/hospitals/new" }
+    );
+    expect(screen.getByText("Create a Hospital")).toBeInTheDocument();
+  });
+
+  test("visit new admin for hospital page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/hospitals/1/admins/new" }
+    );
+    expect(screen.getByText("Create an Admin")).toBeInTheDocument();
+  });
+
+  test("visit specific hospital page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/hospitals/show/1" }
+    );
+    expect(screen.getByTestId("hospital-page")).toBeInTheDocument();
+  });
+
+  test("visit specific admin page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/admins/show/1" }
+    );
+    expect(screen.getByTestId("admin-profile")).toBeInTheDocument();
+  });
+
+  test("visit specific patient page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/patients/show/1" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("view requests for patient page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <Route path="/my/patients/:patient_id/requests">
+            <App />
+          </Route>
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/patients/1/requests" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("create new request for patient page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/patients/1/requests/new" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("view patients pending requests", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/requests" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("view all submissions page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/submissions" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("view review submissions page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/submissions/review" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("view create new submission page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/submissions/new" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+  });
+
+  test("view specific submission page", () => {
+    renderWithRouter(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider>
+          <App />
+        </MockedProvider>
+      </AuthContext.Provider>,
+      { route: "/my/submissions/show/1" }
+    );
+    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
   });
 });
