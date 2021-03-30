@@ -25,7 +25,7 @@ const DoctorHomePanel = () => {
     markup = (
       <Alert status="error">
         <AlertIcon />
-        {error.graphQLErrors[0].message}
+        {error ? error.message : requests_error.message}
       </Alert>
     );
   } else {
@@ -42,12 +42,19 @@ const DoctorHomePanel = () => {
         p="15px"
         fontWeight="bold"
         backgroundColor="blue.100"
+        data-testid="doctorHomeContainer"
       >
         <Stack>
-          <Text>You have {submission_data.length} submissions to review.</Text>
-          <Text>You have {request_data.length} requests to review.</Text>
-          <Link to="/my/submissions/review">
-            <Button colorScheme="blue" data-testid="review-patients-button">Review My Patients</Button>
+          <Text data-testid="doctorHomeTextOne">
+            You have {submission_data.length} submissions to review.
+          </Text>
+          <Text data-testid="doctorHomeTextTwo">
+            You have {request_data.length} requests to review.
+          </Text>
+          <Link data-testid="reviewPatientLink" to="/my/submissions/review">
+            <Button data-testid="reviewPatientsButton" colorScheme="blue">
+              Review My Patients
+            </Button>
           </Link>
         </Stack>
       </Box>
@@ -63,16 +70,16 @@ const DoctorHomePanel = () => {
 
 export default DoctorHomePanel;
 
-const GET_SUBMISSIONS = gql`
-  query getSubmissions {
+export const GET_SUBMISSIONS = gql`
+  query getSubmissionsForReview {
     getSubmissionsForReview {
       id
     }
   }
 `;
 
-const GET_REQUESTS = gql`
-  query getRequests {
+export const GET_REQUESTS = gql`
+  query getRequestsForReview {
     getRequestsForReview {
       id
     }
