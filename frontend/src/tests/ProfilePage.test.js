@@ -22,7 +22,18 @@ const submissionMock = [
             data: {
                 getSubmissions: [
                     {
-                        id: "1" //, patient_id: "1",
+                        id: "1", flag: "", createdAt: "1234567890", Patient: {
+                            id: "1", fname: "first", lname: "last", email: "patient1@gmail.com", flag: ""
+                        }, Images: {
+                            id: "1", url: ""
+                        }, Answers: {
+                            id: "1",
+                            Question: {
+                                id: "1",
+                                text: ""
+                            }
+                        }, value: "",
+                        extra: "",
                     },
                 ],
             },
@@ -68,6 +79,11 @@ it("renders without crashing", () => {
     expect(screen.getByText(/My Profile/i)).toBeInTheDocument();
 });
 
+it("renders without crashing for PATIENT", () => {
+    setup();
+    expect(screen.getByText(/My Submissions/i)).toBeInTheDocument();
+});
+
 it("should load UserInfo in profile page without crashing", async () => {
     setup();
     expect(screen.getByText(/My Profile/i)).toBeInTheDocument();
@@ -76,6 +92,17 @@ it("should load UserInfo in profile page without crashing", async () => {
         const deleteAccountModalButton = screen.getByTestId("deleteAccountButton");
         expect(changePWModalButton).toBeInTheDocument();
         expect(deleteAccountModalButton).toBeInTheDocument();
+    });
+});
+
+it("should load SubmissionsComponent in profile page for PATIENT without crashing", async () => {
+    setup();
+    expect(screen.getByText(/My Submissions/i)).toBeInTheDocument();
+    await waitFor(() => {
+        // const changePWModalButton = screen.getByTestId("changePasswordButton");
+        // const deleteAccountModalButton = screen.getByTestId("deleteAccountButton");
+        // expect(changePWModalButton).toBeInTheDocument();
+        // expect(deleteAccountModalButton).toBeInTheDocument();
         // expect(screen.getByTestId("submissionComponent")).toBeInTheDocument();
     });
 });
