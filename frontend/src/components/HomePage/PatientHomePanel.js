@@ -71,8 +71,8 @@ const PatientHomePanel = () => {
 
 export default PatientHomePanel;
 
-const GET_REQUESTS = gql`
-  query getRequests {
+export const GET_REQUESTS = gql`
+  query getRequestsAsPatient {
     getRequestsAsPatient {
       id
       fulfilled
