@@ -2,45 +2,13 @@ const request = require("supertest");
 
 const app = require("../../index");
 
-let superAdminToken;
-let adminToken;
+let superAdminToken, adminToken;
 
 describe("hospitals resolvers", () => {
   beforeAll(async (done) => {
-    // Login and get the access tokens for various users needed in this test suite
-    superAdminToken = await request(app).post("/graphql").send({
-      query: `
-				mutation {
-					login(
-						email: "snapsense@gmail.com"
-						password: "Password123"
-						account_type: "SUPERADMIN"
-					)	
-					{
-						accessToken
-					}
-				}
-			`,
-    });
-
-    superAdminToken = superAdminToken.body.data.login.accessToken;
-
-    adminToken = await request(app).post("/graphql").send({
-      query: `
-				mutation {
-					login(
-						email: "admin1@gmail.com"
-						password: "Password123"
-						account_type: "ADMIN"
-					)	
-					{
-						accessToken
-					}
-				}
-			`,
-    });
-
-    adminToken = adminToken.body.data.login.accessToken;
+    const { superAdmin, admin } = await require("./util/authTokens");
+    superAdminToken = superAdmin;
+    adminToken = admin;
 
     done();
   });
@@ -167,7 +135,7 @@ describe("hospitals resolvers", () => {
 
     const errorMessage = response.body.errors[0].message;
 
-    expect(errorMessage).toMatch("Hospital does not exist");
+    expect(errorMessage).toMatch("Hospital does not exist.");
     done();
   });
 
