@@ -114,35 +114,13 @@ describe("Placeholder for stars", () => {
 });
 
 //gql testing
-describe("Submitting form with invalid input", () => {
-  it("Users can only rate between 0 and 5", async () => {
-    setup();
-
-    const starInput = screen.getByTestId("starRate1");
-    act(() => {
-      fireEvent.change(starInput, { target: { value: 6 } });
-    });
-    expect(starInput.value).toBe("6");
-
-    const submitButton = screen.getByRole("button");
-    act(() => {
-      fireEvent.click(submitButton);
-    });
-
-    await waitFor(() => {
-      expect(screen.queryByTestId("formSubmitInnerLoader")).toBeNull();
-      expect(screen.queryByTestId("formSubmitInnerSuccess")).toBeNull();
-    });
-  });
-});
-
 describe("Submitting form with valid input", () => {
   it("pops up a success message", async () => {
     setup();
 
     const starInput = screen.getByTestId("starRate1");
     act(() => {
-      fireEvent.change(starInput, { target: { value: 1 } });
+      fireEvent.click(starInput);
     });
 
     expect(starInput.value).toBe("1");
