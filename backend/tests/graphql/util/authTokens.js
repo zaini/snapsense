@@ -7,7 +7,9 @@ let superAdminToken,
   adminToken,
   doctorOneToken,
   patientOneToken,
-  patientTwoToken;
+  patientTwoToken,
+  patientThreeToken,
+  patientFourToken;
 
 module.exports = (async () => {
   superAdminToken = await request(app).post("/graphql").send({
@@ -94,11 +96,47 @@ module.exports = (async () => {
 
   patientTwoToken = patientTwoToken.body.data.login.accessToken;
 
+  patientThreeToken = await request(app).post("/graphql").send({
+    query: `
+			mutation {
+				login(
+					email: "ben.parker@marvel.com"
+					password: "Password123"
+					account_type: "PATIENT"
+				)	
+				{
+					accessToken
+				}
+			}
+		`,
+  });
+
+  patientThreeToken = patientThreeToken.body.data.login.accessToken;
+
+  patientFourToken = await request(app).post("/graphql").send({
+    query: `
+			mutation {
+				login(
+					email: "patient4@gmail.com"
+					password: "Password123"
+					account_type: "PATIENT"
+				)	
+				{
+					accessToken
+				}
+			}
+		`,
+  });
+
+  patientFourToken = patientFourToken.body.data.login.accessToken;
+
   return {
     superAdmin: superAdminToken,
     admin: adminToken,
     doctorOne: doctorOneToken,
     patientOne: patientOneToken,
     patientTwo: patientTwoToken,
+    patientThree: patientThreeToken,
+    patientFour: patientFourToken,
   };
 })();
