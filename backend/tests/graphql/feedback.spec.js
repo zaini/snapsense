@@ -44,5 +44,43 @@ describe("feedback resolvers", () => {
     done();
   });
 
+	test("should not get all feedback if not logged in", async (done) => {
+    const response = await request(app).post("/graphql").send({
+      query: `
+				query {
+					getFeedback {
+						stars
+						extra
+					}
+				}			
+			`,
+    });
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Missing Authorization Header");
+    done();
+  });
+
+  test("should not get all feedback if not logged in as a super admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					query {
+						getFeedback {
+							stars
+							extra
+						}
+					}			
+				`,
+      })
+      .set("authorization", `Bearer ${adminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Invalid user account type!");
+    done();
+  });
   
 });
