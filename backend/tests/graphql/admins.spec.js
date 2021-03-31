@@ -157,7 +157,11 @@ describe("admins resolvers", () => {
       })
       .set("authorization", `Bearer ${superAdminToken}`);
 
-    const { body: { data: { deleteAdmin }} } = response;
+    const {
+      body: {
+        data: { deleteAdmin },
+      },
+    } = response;
 
     expect(deleteAdmin).toBe(true);
     done();
@@ -206,6 +210,76 @@ describe("admins resolvers", () => {
 					deleteAdmin(admin_id: "1")
 				}
 			`,
+    });
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Missing Authorization Header");
+    done();
+  });
+
+  test("should get all admins as a super-admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					query {
+						getAdmins{
+							fname
+							lname
+							email
+						}
+					}					
+				`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const { body } = response;
+
+    expect(body).toMatchObject({
+      data: {
+        getAdmins: [
+          { fname: "Admin", lname: "Two", email: "admin2@gmail.com" },
+        ],
+      },
+    });
+
+    done();
+  });
+
+  test("should not get all admins if not logged in as a super-admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					query {
+						getAdmins{
+							fname
+							lname
+							email
+						}
+					}					
+				`,
+      })
+      .set("authorization", `Bearer ${adminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Invalid user account type!");
+    done();
+  });
+
+  test("should not get all admins if not logged", async (done) => {
+    const response = await request(app).post("/graphql").send({
+      query: `
+					query {
+						getAdmins{
+							fname
+							lname
+							email
+						}
+					}					
+				`,
     });
 
     const errorMessage = response.body.errors[0].message;
