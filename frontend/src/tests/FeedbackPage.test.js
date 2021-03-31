@@ -1,60 +1,56 @@
-import { React } from "react";
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import Feedback, { CREATE_FEEDBACK } from "../components/Feedback/Feedback";
+import { GET_SPECIFIC_FEEDBACK } from "../components/Feedback/ViewFeedback";
 import { MockedProvider } from "@apollo/client/testing";
+import {
+  render,
+  cleanup,
+  screen,
+  fireEvent,
+  waitFor,
+} from "@testing-library/react";
+import { Route, MemoryRouter } from "react-router";
 import { act } from "react-dom/test-utils";
 
-import { Route, MemoryRouter } from "react-router";
-
-jest.mock("../components/utils/Table", () => (params) => {
-  return <div data-testid="renderedTable">{JSON.stringify(params)}</div>;
-});
-
-import FeedbackPage from "../pages/My/FeedbackPage";
-
+/* Essential */
 afterEach(cleanup);
 
-//TODO test to check that buttons render in row, test that buttons lead to correct URL
-
-const { GET_FEEDBACK } = require("../pages/My/FeedbackPage");
-
+//Creating mock data
 const mocks = [
   {
     request: {
-      query: GET_FEEDBACK,
+      query: CREATE_FEEDBACK,
+      variables: {
+        stars: 1,
+        extra: "This is a random feedback.",
+      },
+    },
+    result: { data: { createFeedback: true } },
+  },
+  {
+    request: {
+      query: GET_SPECIFIC_FEEDBACK,
       variables: {},
     },
     result: {
       data: {
-        getFeedback: [
-          {
-            id: "1",
-            stars: 5,
-            extra: "Long live bluej blues",
-          },
-          {
-            id: "2",
-            stars: 4,
-            extra: "Nice website",
-          },
-          {
-            id: "3",
-            stars: 0,
-            extra: null,
-          },
-        ],
+        getSpecificFeedback: {
+          id: "1",
+          stars: 1,
+          extra: "This is a random feedback.",
+        },
       },
     },
   },
 ];
 
-//Render component
-const setup = () => {
+// Render
+const setup = async () => {
   act(() => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <MemoryRouter initialEntries={["/my/feedback"]}>
-          <Route path="/my/feedback">
-            <FeedbackPage />
+        <MemoryRouter initialEntries={["/feedback"]}>
+          <Route path="/feedback">
+            <Feedback />
           </Route>
         </MemoryRouter>
       </MockedProvider>
@@ -62,86 +58,88 @@ const setup = () => {
   });
 };
 
-describe("Feedback table page", () => {
-  it("doesn't crash", async () => {
+/*------ Tests  -----*/
+// Feedback page general tests
+describe("New feedback page", () => {
+  test("should render without crashing", () => {
     expect(setup).toBeTruthy();
   });
 
-  it("shows loading spinner on page load", async () => {
+  test("has a star rate option", async () => {
     setup();
-    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-  });
-
-  it("has correct title", async () => {
-    setup();
-    expect(screen.getByText(/All Feedback/i)).toBeInTheDocument();
-  });
-
-  it("renders table correctly", async () => {
-    setup();
-    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
-      expect(screen.getByTestId("renderedTable")).toBeInTheDocument();
+      expect(screen.getByTestId("starRate1")).toBeInTheDocument();
+      expect(screen.getByTestId("starRate2")).toBeInTheDocument();
+      expect(screen.getByTestId("starRate3")).toBeInTheDocument();
+      expect(screen.getByTestId("starRate4")).toBeInTheDocument();
+      expect(screen.getByTestId("starRate5")).toBeInTheDocument();
     });
+  });
+
+  test("has a name text area for additional feedback", async () => {
+    setup();
+    expect(screen.getByTestId("textArea")).toBeInTheDocument();
+  });
+
+  test("has a submit button", async () => {
+    setup();
+    expect(screen.getByRole("button")).toBeInTheDocument();
   });
 });
 
-describe("Table component", () => {
-  it("displays correct number of rows and columns", async () => {
+describe("Placeholder for Enter Here", () => {
+  it("can have text written in it", () => {
     setup();
-    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-    await waitFor(() => {
-      expect(screen.getByTestId("renderedTable")).toBeInTheDocument();
+    const textInput = screen.getByTestId("textArea");
+
+    act(() => {
+      fireEvent.change(textInput, { target: { value: "This is a feedback" } });
     });
-
-    const container = screen.getByTestId("renderedTable");
-    const data = JSON.parse(container.innerHTML);
-
-    expect(data.data.length).toEqual(3);
-    expect(data.cols.length).toEqual(4);
+    expect(textInput.value).toBe("This is a feedback");
   });
+});
 
-  it("displays correct column headers", async () => {
+describe("Placeholder for stars", () => {
+  it("users can rate stars", async () => {
     setup();
-    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-    await waitFor(() => {
-      expect(screen.getByTestId("renderedTable")).toBeInTheDocument();
+    const starInput = screen.getByTestId("starRate1");
+
+    act(() => {
+      fireEvent.change(starInput, {
+        target: { value: 1 },
+      });
     });
-
-    const container = screen.getByTestId("renderedTable");
-    const data = JSON.parse(container.innerHTML);
-
-    expect(data.cols[0].headerName).toEqual("ID");
-    expect(data.cols[1].headerName).toEqual("Number of Stars");
-    expect(data.cols[2].headerName).toEqual("Extra Information");
-    expect(data.cols[3].headerName).toEqual("View");
+    expect(starInput.value).toBe("1");
   });
+});
 
-  it("displays correct information in row 1", async () => {
+//gql testing
+describe("Submitting form with valid input", () => {
+  it("pops up a success message", async () => {
     setup();
-    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-    await waitFor(() => {
-      expect(screen.getByTestId("renderedTable")).toBeInTheDocument();
+
+    const starInput = screen.getByTestId("starRate1");
+    act(() => {
+      fireEvent.click(starInput);
     });
 
-    const container = screen.getByTestId("renderedTable");
-    const data = JSON.parse(container.innerHTML);
-    expect(data.data[0].id).toEqual("1");
-    expect(data.data[0].stars).toEqual(5);
-    expect(data.data[0].extra).toEqual("Long live bluej blues");
-  });
+    expect(starInput.value).toBe("1");
 
-  it("displays correct information in row 3", async () => {
-    setup();
-    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-    await waitFor(() => {
-      expect(screen.getByTestId("renderedTable")).toBeInTheDocument();
+    const textInput = screen.getByTestId("textArea");
+    act(() => {
+      fireEvent.change(textInput, {
+        target: { value: "This is a random feedback." },
+      });
+    });
+    expect(textInput.value).toBe("This is a random feedback.");
+
+    const submitBtn = screen.getByTestId("submitButton");
+    act(() => {
+      fireEvent.click(submitBtn);
     });
 
-    const container = screen.getByTestId("renderedTable");
-    const data = JSON.parse(container.innerHTML);
-    expect(data.data[2].id).toEqual("3");
-    expect(data.data[2].stars).toEqual(0);
-    expect(data.data[2].extra).toEqual(null);
+    await waitFor(() => {
+      expect(screen.getByTestId("formSubmitInnerLoader")).toBeInTheDocument();
+    });
   });
 });

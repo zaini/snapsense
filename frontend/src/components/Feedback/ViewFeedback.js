@@ -87,7 +87,7 @@ const ViewFeedback = (props) => {
 
 export default ViewFeedback;
 
-const GET_SPECIFIC_FEEDBACK = gql`
+export const GET_SPECIFIC_FEEDBACK = gql`
   query getSpecificFeedback($feedback_id: ID!) {
     getSpecificFeedback(feedback_id: $feedback_id) {
       id
