@@ -227,7 +227,7 @@ describe("doctors resolvers", () => {
       .send({
         query: `
 					query {
-						getDoctorsAsPatient {
+						getDoctorsAsAdmin {
 							fname
 							lname
 							email
