@@ -291,5 +291,54 @@ describe("hospitals resolvers", () => {
     done();
   });
 
-  
+  test("should throw error if trying to delete invalid hospital", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					mutation {
+						deleteHospital(hospital_id: "100")
+					}
+			`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Hospital does not exist.");
+    done();
+  });
+
+  test("should not delete hospital if not logged in as a super admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					mutation {
+						deleteHospital(hospital_id: "1")
+					}
+			`,
+      })
+      .set("authorization", `Bearer ${adminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Invalid user account type!");
+    done();
+  });
+
+  test("should not delete hospital if not logged in", async (done) => {
+    const response = await request(app).post("/graphql").send({
+      query: `
+				mutation {
+					deleteHospital(hospital_id: "1")
+				}
+			`,
+    });
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Missing Authorization Header");
+    done();
+  });
 });
