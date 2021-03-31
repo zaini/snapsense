@@ -5,7 +5,7 @@ const app = require("../../index");
 // Access tokens for various users that are needed
 let doctorOneToken, patientOneToken, patientTwoToken;
 
-describe("patient resolvers", () => {
+describe("patients resolvers", () => {
   beforeAll(async (done) => {
   	const {
       doctorOne,
