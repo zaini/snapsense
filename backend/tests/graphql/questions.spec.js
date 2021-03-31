@@ -2,7 +2,16 @@ const request = require("supertest");
 
 const app = require("../../index");
 
+let patientOneToken;
+
 describe("questions resolvers", () => {
+	beforeAll(async (done) => {
+		const { patientOne } = await require("./util/authTokens");
+		patientOneToken = patientOne;
+
+		done();
+	});
+
   test("should not get questionnaire if not logged in", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
@@ -21,24 +30,6 @@ describe("questions resolvers", () => {
   });
 
   test("should get questionnaire if logged in", async (done) => {
-    // Login
-    const loginRes = await request(app).post("/graphql").send({
-      query: `
-				mutation {
-					login(
-						email: "patient1@gmail.com"
-						password: "Password123"
-						account_type: "PATIENT"
-					)	
-					{
-						accessToken
-					}
-				}
-			`,
-    });
-
-    const patientOneToken = loginRes.body.data.login.accessToken;
-
     const response = await request(app)
       .post("/graphql")
       .send({
