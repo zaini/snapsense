@@ -61,10 +61,34 @@ const setup = () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <MemoryRouter initialEntries={["/my/patients"]}>
             <Route path="/my/patients">
-              <HospitalsPage />
+              <PatientsPage />
             </Route>
           </MemoryRouter>
         </MockedProvider>
       );
     });
   };
+
+  describe("The patients table page renders correctly", () => {
+    test("that the page renders", async () => {
+        expect(setup).toBeTruthy();
+    });
+
+    test("if the loading spinner shows on page load", async () => {
+        setup();
+        expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+      });
+
+    test("if the page has the correct title", async () => {
+        setup();
+        expect(screen.getByText(/My Patients/i)).toBeInTheDocument();
+    });
+
+    test("if the table renders correctly", async () => {
+        setup();
+        expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+        await waitFor(() => {
+          expect(screen.getByTestId("renderedTable")).toBeInTheDocument();
+        });
+      });
+    });
