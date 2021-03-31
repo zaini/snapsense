@@ -1,3 +1,4 @@
+
 # SnapSense 🤳
 
 # A web application for the automated management and recognition of diabetic wounds. 🏥
@@ -182,12 +183,16 @@ server {
     }
 }
 ```
-
 - Save the file
-- run `systemctl sudo restart nginx`
+- run `cd /home/ubuntu/`
+- run `mkdir  snapsense_production`
+-  run `cd /home/ubuntu/snapsense/frontend`
+-  run `cp –r build/* /home/ubuntu/snapsense_production/
+-  run  `git  stash`
+- run `systemctl  sudo restart nginx`
 - run `cd /home/ubuntu/snapsense/backend/`
 - run `pm2 start server.js --name server`
-- The App should now be running on the EC2 public url
+- The App should now be running on the EC2 public URL
 
 ### Continuous Deployment / Integration (_Optional_)
 
@@ -235,14 +240,20 @@ jobs:
 
 ```
 #!/bin/sh
-eval `ssh-agent -s`
-ssh-add {add_path_to_your_ssh_keys}
+eval ssh-agent -s
+ssh-add /home/ubuntu/keys/id_snap_gmail
+sudo systemctl restart nginx
+pm2 stop server
 git pull
 cd backend
 npm install
+cd ../ && cd frontend && npm  I
+npm run build
+rm –rf /home/ubuntu/snapsense_production
+mkdir /home/ubuntu/snapsense_production
+cp –r build/* /home/ubuntu/snapsense_production/
 git stash
 pm2 restart server
-sudo systemctl restart nginx
 ```
 
 - And continuous integration is now setup.
