@@ -131,18 +131,18 @@ You can run the frontend tests by calling `npm test` in the frontend folder.
 
 You can run the backend tests by calling `npm test` in the backend folder.
 
-## Simple Deployment
+## Simple Deployment (AWS Free Tier)
 
 The client has particular deployment needs, so deployment can be more tricky to setup but this guide covers it in detail. You can also find guides for some of these steps online.
 
 ### Prerequisites
 
 - An Amazon AWS Account with up to date billing information.
-- An S3 Bucket with Public Read privileges
-- An EC2 Instance (Instructions for Ubuntu Instance)
-- An RDS Database cluster with public endpoint access
+- An S3 Bucket with Public Read privileges [Support Link](https://aws.amazon.com/premiumsupport/knowledge-center/read-access-objects-s3-bucket/)
+- An EC2 Instance (Instructions for Ubuntu Instance) [Support Link](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html)
+- An RDS Databse cluster with public endpoint access [Support Link](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateDBInstance.html)
 - All services must be in the same **REGION**
-- EC2 with `PM2`, `NGINX`, `NODE`, `NPM`, `GIT` installed
+- EC2 with `PM2`, `NGINX`, `NODE`, `NPM`, `GIT` installed [Support Link](https://www.youtube.com/watch?v=rE8mJ1OYjmM&t=1660s)
 
 ### Procedure
 
@@ -188,6 +188,64 @@ server {
 - run `cd /home/ubuntu/snapsense/backend/`
 - run `pm2 start server.js --name server`
 - The App should now be running on the EC2 public url
+
+### Continuous Deployment / Integration (_Optional_)
+
+(_Optional_) You could even go further and setup CI/CD for your application. For continuous deployment we are using github actions to connect to the AWS EC2 instance on any changes to our master branch and then we perform a series of commands on the server itself.
+
+In order to setup CD from GITHUB:
+
+- Add the **AWS_REGION**, **ACCESS_KEY_ID**, **AWS_SECRET_ACCESS_KEY** , **INSTANCE_ID** secrets to Github Secrets for your repository.
+- In your server make sure you have setup ssh keys for your git account
+- Go to the Actions tab and setup a new Workflow
+- Name the new file `deploy.yml` and paste the following in it
+
+```name: AWS SSM Send-Command Example
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  start:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: AWS SSM Send-Command
+        uses: peterkimzz/aws-ssm-send-command@master
+        id: ssm
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          instance-ids: ${{ secrets.INSTANCE_ID }}
+
+          working-directory: /home/ubuntu/snapsense
+          command: /bin/sh ./deploy.sh
+          comment: Done Gracefully
+
+      # Catch SSM outputs
+      - name: Get the outputs
+        run: echo "The Command id is ${{ steps.ssm.outputs.command-id }}"
+```
+
+- Add a new file named `deploy.sh` in the root of the repository and add the following commands in it
+
+```
+#!/bin/sh
+eval `ssh-agent -s`
+ssh-add {add_path_to_your_ssh_keys}
+git pull
+cd backend
+npm install
+git stash
+pm2 restart server
+sudo systemctl restart nginx
+```
+
+- And continous integration is now setup.
 
 ## Default Access Credentials
 
