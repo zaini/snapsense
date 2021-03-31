@@ -144,4 +144,73 @@ describe("admins resolvers", () => {
     expect(errorMessage).toMatch("Invalid user account type!");
     done();
   });
+
+  test("should delete valid admin as super admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					mutation {
+						deleteAdmin(admin_id: "1")
+					}
+			`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const { body: { data: { deleteAdmin }} } = response;
+
+    expect(deleteAdmin).toBe(true);
+    done();
+  });
+
+  test("should throw error if trying to delete invalid admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					mutation {
+						deleteAdmin(admin_id: "100")
+					}
+			`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("This admin does not exist.");
+    done();
+  });
+
+  test("should not delete admin if not logged in as a super admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					mutation {
+						deleteAdmin(admin_id: "1")
+					}
+			`,
+      })
+      .set("authorization", `Bearer ${adminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Invalid user account type!");
+    done();
+  });
+
+  test("should not delete admin if not logged in", async (done) => {
+    const response = await request(app).post("/graphql").send({
+      query: `
+				mutation {
+					deleteAdmin(admin_id: "1")
+				}
+			`,
+    });
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Missing Authorization Header");
+    done();
+  });
 });
