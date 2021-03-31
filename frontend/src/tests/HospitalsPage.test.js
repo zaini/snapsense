@@ -144,8 +144,9 @@ describe("Table component", () => {
       //   });
       //   const container = screen.getByTestId("renderedTable");
       //   const data = JSON.parse(container.innerHTML);
-      //   within(data).getByTestId("viewButton");
-      //   within(data).getByTestId("createAdminButton");
+      //   const row = data.data[0];
+      //   within(row).getByTestId("viewButton");
+      //   within(row).getByTestId("createAdminButton");
       // });
 });
 
