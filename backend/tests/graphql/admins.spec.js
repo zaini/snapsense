@@ -320,6 +320,28 @@ describe("admins resolvers", () => {
     done();
   });
 
+  test("should throw error on get admin by ID where admin is invalid", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					query {
+						getAdminById(admin_id: "100") {
+							fname
+							lname
+							email
+						}
+					}								
+				`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatchObject("Admin does not exist!");
+
+    done();
+  });
+
   test("should not get admin by ID if not logged in as a super-admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
