@@ -148,4 +148,59 @@ describe("feedback resolvers", () => {
     done();
   });
 
+	test("should create feedback if logged in", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					mutation {
+						createFeedback(stars: 1 extra:"Great web app! Love the features!") {
+							stars
+							extra
+						}
+					}						
+				`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const { body } = response;
+
+    expect(body).toMatchObject({
+      data: {
+        createFeedback: {
+          stars: 1,
+          extra: "Great web app! Love the features!",
+        },
+      },
+    });
+
+    done();
+  });
+
+  test("should create feedback if not logged in", async (done) => {
+    const response = await request(app).post("/graphql").send({
+      query: `
+					mutation {
+						createFeedback(stars: 1 extra:"Great web app! Love the features!") {
+							stars
+							extra
+						}
+					}						
+				`,
+    });
+
+    const { body } = response;
+
+    expect(body).toMatchObject({
+      data: {
+        createFeedback: {
+          stars: 1,
+          extra: "Great web app! Love the features!",
+        },
+      },
+    });
+
+    done();
+  });
+
 });
