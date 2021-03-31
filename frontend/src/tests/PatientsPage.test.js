@@ -21,53 +21,51 @@ afterEach(cleanup);
 
 //TODO test to check that buttons render in row, test that buttons lead to correct URL
 
-const {
-  GET_PATIENTS_AS_DOCTOR,
-  } = require("../pages/My/PatientsPage");
+const { GET_PATIENTS_AS_DOCTOR } = require("../pages/My/PatientsPage");
 
-  const mocks = [
-    {
-      request: {
-        query: GET_PATIENTS_AS_DOCTOR,
-        variables: {},
-      },
-      result: {
-        data: {
-          getPatientsAsDoctor: [
-            {
-              id: "1",
-              flag: "1",
-              fname: "Patient",
-              lname: "One",
-              email: "PatientOne@email.com"
-            },
-            {
-              id: "2",
-              flag: "2",
-              fname: "Patient",
-              lname: "One",
-              email: "PatientOne@email.com"
-            },
-          ],
-        },
+const mocks = [
+  {
+    request: {
+      query: GET_PATIENTS_AS_DOCTOR,
+      variables: {},
+    },
+    result: {
+      data: {
+        getPatientsAsDoctor: [
+          {
+            id: "1",
+            flag: "1",
+            fname: "Patient",
+            lname: "One",
+            email: "PatientOne@email.com",
+          },
+          {
+            id: "2",
+            flag: "2",
+            fname: "Patient",
+            lname: "One",
+            email: "PatientOne@email.com",
+          },
+        ],
       },
     },
-  ];
+  },
+];
 
 //Render component
 const setup = () => {
-    act(() => {
-      render(
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <MemoryRouter initialEntries={["/my/patients"]}>
-            <Route path="/my/patients">
-              <PatientsPage />
-            </Route>
-          </MemoryRouter>
-        </MockedProvider>
-      );
-    });
-  };
+  act(() => {
+    render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <MemoryRouter initialEntries={["/my/patients"]}>
+          <Route path="/my/patients">
+            <PatientsPage />
+          </Route>
+        </MemoryRouter>
+      </MockedProvider>
+    );
+  });
+};
 
 describe("The patients table page renders correctly", () => {
   test("that the page renders", async () => {
