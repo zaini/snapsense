@@ -239,6 +239,7 @@ describe("admins resolvers", () => {
     expect(body).toMatchObject({
       data: {
         getAdmins: [
+          { fname: "Admin", lname: "One", email: "admin1@gmail.com" },
           { fname: "Admin", lname: "Two", email: "admin2@gmail.com" },
         ],
       },
