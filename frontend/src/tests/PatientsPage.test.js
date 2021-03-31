@@ -91,7 +91,7 @@ describe("The patients table page renders correctly", () => {
   });
 });
 
-describe("Table component", () => {
+describe("The table component renders correctly with data", () => {
   test("if it displays correct number of rows and columns", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
