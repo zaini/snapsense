@@ -7,6 +7,7 @@ import {
   within,
 } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
+import { AuthContext } from "../context/auth";
 import { act } from "react-dom/test-utils";
 
 import { Route, MemoryRouter } from "react-router";
@@ -56,13 +57,43 @@ const {
 const setup = () => {
     act(() => {
       render(
+        <AuthContext.Provider
+        value={{
+          user: { accountType: "PATIENT" },
+        }}
+        >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <MemoryRouter initialEntries={["/my/hospitals"]}>
-            <Route path="/my/hospitals">
-              <HospitalsPage />
+          <MemoryRouter initialEntries={["/my/doctors"]}>
+            <Route path="/my/doctors">
+              <DoctorsPage />
             </Route>
           </MemoryRouter>
-        </MockedProvider>
+          </MockedProvider>
+          </AuthContext.Provider>
       );
     });
   };
+
+  describe("The doctors page displaying renders correctly", () => {
+    test("that the page renders", async () => {
+      expect(setup).toBeTruthy();
+    });
+  
+    test("if the loading spinner shows on page load", async () => {
+      setup();
+      expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+    });
+  
+    test("if the page has the correct title", async () => {
+      setup();
+      expect(screen.getByText(/My Doctors/i)).toBeInTheDocument();
+    });
+  
+    test("if the table renders correctly", async () => {
+      setup();
+      expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByTestId("renderedTable")).toBeInTheDocument();
+      });
+    });
+  });
