@@ -245,7 +245,7 @@ describe("hospitals resolvers", () => {
     done();
   });
 
-  test("should should not create hospital if not logged in as a super-admin", async (done) => {
+  test("should not create hospital if not logged in as a super-admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -268,4 +268,28 @@ describe("hospitals resolvers", () => {
     expect(errorMessage).toMatch("Invalid user account type!");
     done();
   });
+
+  test("should delete valid hospital as super", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					mutation {
+						deleteHospital(hospital_id: "1")
+					}
+			`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const {
+      body: {
+        data: { deleteHospital },
+      },
+    } = response;
+
+    expect(deleteHospital).toBe(true);
+    done();
+  });
+
+  
 });
