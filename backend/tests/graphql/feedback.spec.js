@@ -44,7 +44,7 @@ describe("feedback resolvers", () => {
     done();
   });
 
-	test("should not get all feedback if not logged in", async (done) => {
+  test("should not get all feedback if not logged in", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 				query {
@@ -82,8 +82,8 @@ describe("feedback resolvers", () => {
     expect(errorMessage).toMatch("Invalid user account type!");
     done();
   });
-  
-	test("should get specific feedback as super admin", async (done) => {
+
+  test("should get specific feedback as super admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -109,7 +109,7 @@ describe("feedback resolvers", () => {
     done();
   });
 
-	test("should not get specific feedback if not logged in", async (done) => {
+  test("should not get specific feedback if not logged in", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 					query {
@@ -148,7 +148,7 @@ describe("feedback resolvers", () => {
     done();
   });
 
-	test("should create feedback if logged in", async (done) => {
+  test("should create feedback if logged in", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -203,4 +203,29 @@ describe("feedback resolvers", () => {
     done();
   });
 
+  test("should create feedback if extra information is empty", async (done) => {
+    const response = await request(app).post("/graphql").send({
+      query: `
+					mutation {
+						createFeedback(stars: 4) {
+							stars
+							extra
+						}
+					}						
+				`,
+    });
+
+    const { body } = response;
+
+    expect(body).toMatchObject({
+      data: {
+        createFeedback: {
+          stars: 4,
+          extra: null,
+        },
+      },
+    });
+
+    done();
+  });
 });
