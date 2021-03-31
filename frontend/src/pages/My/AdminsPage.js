@@ -53,7 +53,7 @@ const HospitalsPage = () => {
 
 export default HospitalsPage;
 
-const GET_ADMINS = gql`
+export const GET_ADMINS = gql`
   query getAdmins {
     getAdmins {
       id
