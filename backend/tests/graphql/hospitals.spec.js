@@ -135,7 +135,7 @@ describe("hospitals resolvers", () => {
 
     const errorMessage = response.body.errors[0].message;
 
-    expect(errorMessage).toMatch("Hospital does not exist.");
+    expect(errorMessage).toMatch("Hospital does not exist");
     done();
   });
 
@@ -273,7 +273,7 @@ describe("hospitals resolvers", () => {
 
     const errorMessage = response.body.errors[0].message;
 
-    expect(errorMessage).toMatch("Hospital does not exist.");
+    expect(errorMessage).toMatch("Hospital does not exist");
     done();
   });
 
