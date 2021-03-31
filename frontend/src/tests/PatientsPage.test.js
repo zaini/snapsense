@@ -125,4 +125,18 @@ describe("Table component", () => {
     expect(data.cols[3].headerName).toEqual("Last Name");
     expect(data.cols[4].headerName).toEqual("Actions");
   });
+
+  test("if it displays correct information rendered in row 1", async () => {
+    setup();
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByTestId("renderedTable")).toBeInTheDocument();
+    });
+
+    const container = screen.getByTestId("renderedTable");
+    const data = JSON.parse(container.innerHTML);
+    expect(data.data[0].flag).toEqual("1");
+    expect(data.data[0].fname).toEqual("Patient");
+    expect(data.data[0].lname).toEqual("One");
+  });
 });
