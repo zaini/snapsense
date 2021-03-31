@@ -20,18 +20,18 @@ describe("hospitals resolvers", () => {
   });
 
   test("should get all doctors as super admin", async (done) => {
-    const response = request(app)
+    const response = await request(app)
       .post("/graphql")
       .send({
         query: `
-				query {
-					getDoctorsAsAdmin {
-						fname
-						lname
-						email
-					}
-				}			
-			`,
+					query {
+						getDoctorsAsAdmin {
+							fname
+							lname
+							email
+						}
+					}			
+				`,
       })
       .set("authorization", `Bearer ${adminToken}`);
 
