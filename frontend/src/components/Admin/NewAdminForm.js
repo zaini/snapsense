@@ -52,7 +52,7 @@ const NewAdminForm = ({ hospital }) => {
 
   if (loading) {
     markup = (
-      <Container p="7" borderRadius="lg" mt="20">
+      <Container data-testid="formSubmitInnerLoader" p="7" borderRadius="lg" mt="20">
         <Center>
           <Spinner size="xl" />
         </Center>
@@ -62,7 +62,7 @@ const NewAdminForm = ({ hospital }) => {
     markup = (
       <form onSubmit={handleSubmit(onSubmit)}>
         {error && (
-          <Container p="7" borderRadius="lg">
+          <Container data-testid="formSubmitInnerError" p="7" borderRadius="lg">
             <Error
               errors={[
                 {
@@ -73,26 +73,29 @@ const NewAdminForm = ({ hospital }) => {
           </Container>
         )}
         {data && (
-          <Alert status="success" borderRadius="50px" mb={4} textAlign="center">
-            <AlertIcon />
-            Admin successfully created!
-          </Alert>
+          <div data-testid="formSubmitInnerSuccess">
+            <Alert status="success" borderRadius="50px" mb={4} textAlign="center">
+              <AlertIcon />
+              Admin successfully created!
+            </Alert>
+          </div>
         )}
         <FormControl id="fname" isRequired mb={4}>
           <FormLabel>First name</FormLabel>
-          <Input placeholder="First Name" name="fname" ref={register} />
+          <Input data-testid="adminNameInput" placeholder="First Name" name="fname" ref={register} />
         </FormControl>
         <FormControl id="lname" isRequired mb={4}>
           <FormLabel>Last name</FormLabel>
-          <Input placeholder="Last Name" name="lname" ref={register} />
+          <Input data-testid="adminLNameInput" placeholder="Last Name" name="lname" ref={register} />
         </FormControl>
         <FormControl id="email" name="email" isRequired mb={4}>
           <FormLabel>Email</FormLabel>
-          <Input type="email" name="email" placeholder="Email" ref={register} />
+          <Input data-testid="adminEmailInput" type="email" name="email" placeholder="Email" ref={register} />
         </FormControl>
         <FormControl id="password" name="password" isRequired mb={4}>
           <FormLabel>Password</FormLabel>
           <Input
+            data-testid="adminPasswordInput"
             type="password"
             name="password"
             placeholder="Password"
@@ -100,7 +103,7 @@ const NewAdminForm = ({ hospital }) => {
           />
         </FormControl>
         <Center>
-          <Button type="submit" mt={4} colorScheme="blue">
+          <Button data-testid="submitButton" type="submit" mt={4} colorScheme="blue">
             Submit
           </Button>
         </Center>
@@ -113,7 +116,7 @@ const NewAdminForm = ({ hospital }) => {
 
 export default NewAdminForm;
 
-const CREATE_ADMIN = gql`
+export const CREATE_ADMIN = gql`
   mutation createAdmin(
     $fname: String!
     $lname: String!
@@ -134,7 +137,7 @@ const CREATE_ADMIN = gql`
   }
 `;
 
-const GET_ADMINS = gql`
+export const GET_ADMINS = gql`
   query getAdmins {
     getAdmins {
       id

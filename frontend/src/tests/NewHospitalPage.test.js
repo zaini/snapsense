@@ -72,7 +72,7 @@ describe("New Hospital page", () => {
     expect(setup).toBeTruthy();
   });
 
-  it("has a header", () => {
+  it("has a correct header", () => {
     setup();
     expect(screen.getByTestId("hospitalNewHeading")).toBeInTheDocument();
   });

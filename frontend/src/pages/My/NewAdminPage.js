@@ -57,7 +57,7 @@ const NewAdminPage = () => {
 
 export default NewAdminPage;
 
-const GET_HOSPITAL = gql`
+export const GET_HOSPITAL = gql`
   query getSpecificHospital($hospital_id: ID!) {
     getSpecificHospital(hospital_id: $hospital_id) {
       id
