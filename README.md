@@ -80,23 +80,23 @@ REACT_APP_BACKEND_URL = http://localhost:5000/graphql
 4. In the root of the project, add the following `.env` with your data. Ensure it is also in the `.gitignore`.
 
 ```
-DATABASE_CONNECTION = 'db_connection_ip'
-DATABASE_USERNAME = 'username'
-DATABASE_PASSWORD = 'password'
-DATABASE_SCHEMA = 'schema_name'
+DATABASE_CONNECTION = 'AWS RDS IP address e.g. 123.123.123.123'
+DATABASE_USERNAME = `AWS RDS MySQL username'
+DATABASE_PASSWORD = ' AWS RDS MySQL password'
+DATABASE_SCHEMA = 'snapsense or whatever you called it'
 
-AWS_ACCESS_KEY_ID = 'key'
-AWS_SECRET_ACCESS_KEY = 'secretaccesskey'
+AWS_ACCESS_KEY_ID = 'e.g. AKIAIOSFODNN7EXAMPLE '
+AWS_SECRET_ACCESS_KEY = `e.g. wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY '
 AWS_REGION = 'e.g. ap-south-1'
-AWS_S3_BUCKET = 'bucketname'
+AWS_S3_BUCKET = 'e.g. snapsensebucket'
 
-MAIL_AUTH_EMAIL = 'gmail for sending emails e.g. email@gmail.com'
-MAIL_AUTH_PW = 'password for that gmail'
+MAIL_AUTH_EMAIL = 'e.g. snapsense@gmail.com'
+MAIL_AUTH_PW = 'e.g. gmailpassword123'
 
-ACCESS_TOKEN_SECRET_KEY = 'secret token key'
+ACCESS_TOKEN_SECRET_KEY = 'e.g. random stuff fsdlkfsdlfjsd'
 
 FRONTEND_URL = http://localhost:3000
-BACKEND_URL = `http://localhost:5000/graphql
+BACKEND_URL = http://localhost:5000/graphql
 ```
 
 5. Ensure you have the latest packages installed by running `npm install` within both the `frontend` and `backend`.
@@ -140,7 +140,7 @@ The client has particular deployment needs, so deployment can be more tricky to 
 - An Amazon AWS Account with up to date billing information.
 - An S3 Bucket with Public Read privileges
 - An EC2 Instance (Instructions for Ubuntu Instance)
-- An RDS Databse cluster with public endpoint access
+- An RDS Database cluster with public endpoint access
 - All services must be in the same **REGION**
 - EC2 with `PM2`, `NGINX`, `NODE`, `NPM`, `GIT` installed
 
