@@ -2,47 +2,15 @@ const request = require("supertest");
 
 const app = require("../../index");
 
-let superAdminToken;
-let adminToken;
+let superAdminToken, adminToken;
 
 describe("admins resolvers", () => {
   beforeAll(async (done) => {
-    // Login and get the access tokens for various users needed in this test suite
-    superAdminToken = await request(app).post("/graphql").send({
-      query: `
-				mutation {
-					login(
-						email: "snapsense@gmail.com"
-						password: "Password123"
-						account_type: "SUPERADMIN"
-					)	
-					{
-						accessToken
-					}
-				}
-			`,
-    });
+    const { superAdmin, admin } = await require("./util/authTokens");
+    superAdminToken = superAdmin;
+    adminToken = admin;
 
-    superAdminToken = superAdminToken.body.data.login.accessToken;
-
-    adminToken = await request(app).post("/graphql").send({
-      query: `
-				mutation {
-					login(
-						email: "admin1@gmail.com"
-						password: "Password123"
-						account_type: "ADMIN"
-					)	
-					{
-						accessToken
-					}
-				}
-			`,
-    });
-
-    adminToken = adminToken.body.data.login.accessToken;
-
-    done();
+		done();
   });
 
   test("should create admin as a super-admin", async (done) => {
