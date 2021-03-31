@@ -4,7 +4,7 @@ const app = require("../../index");
 
 let superAdminToken, adminToken, patientOneToken;
 
-describe("hospitals resolvers", () => {
+describe("doctors resolvers", () => {
   beforeAll(async (done) => {
     const {
       superAdmin,
@@ -42,16 +42,9 @@ describe("hospitals resolvers", () => {
         getDoctorsAsAdmin: [
           {
             fname: "Doctor",
-            lname: "Two",
-            email: "doctor2@nhs.net",
+            lname: "One",
+            email: "doctor1@nhs.net",
           },
-          {
-            fname: "Doctor",
-            lname: "Two",
-            email: "doctor2@nhs.net",
-            password: "Password123",
-          },
-          { fname: "Jarvis", lname: "Smith", email: "jarvis.smith@nhs.net" },
         ],
       },
     });
