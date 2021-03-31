@@ -180,8 +180,8 @@ describe("admins resolvers", () => {
       .set("authorization", `Bearer ${superAdminToken}`);
 
     const errorMessage = response.body.errors[0].message;
-
     expect(errorMessage).toMatch("This admin does not exist.");
+
     done();
   });
 
@@ -337,7 +337,7 @@ describe("admins resolvers", () => {
       .set("authorization", `Bearer ${superAdminToken}`);
 
     const errorMessage = response.body.errors[0].message;
-    expect(errorMessage).toMatchObject("Admin does not exist!");
+    expect(errorMessage).toMatch("Admin does not exist!");
 
     done();
   });
