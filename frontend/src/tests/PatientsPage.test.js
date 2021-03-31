@@ -107,4 +107,22 @@ describe("Table component", () => {
     expect(data.data.length).toEqual(2);
     expect(data.cols.length).toEqual(5);
   });
+
+  test("if it displays correct column headers", async () => {
+    setup();
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByTestId("renderedTable")).toBeInTheDocument();
+    });
+
+    const container = screen.getByTestId("renderedTable");
+    const data = JSON.parse(container.innerHTML);
+
+    expect(data.cols.length).toEqual(5);
+
+    expect(data.cols[1].headerName).toEqual("Flag");
+    expect(data.cols[2].headerName).toEqual("First Name");
+    expect(data.cols[3].headerName).toEqual("Last Name");
+    expect(data.cols[4].headerName).toEqual("Actions");
+  });
 });
