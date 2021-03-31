@@ -150,7 +150,7 @@ describe("Table component", () => {
       // });
 });
 
-// test("view hospital button in row 1 leads to a correct link on click", async () => {
+// it("view hospital button in row 1 leads to a correct link on click", async () => {
 //   setup();
 //   expect(screen.getByText(/Loading/i)).toBeInTheDocument();
 //   await waitFor(() => {
@@ -167,4 +167,4 @@ describe("Table component", () => {
 //   });
 // });
 
-// test("create admin button in row 1 leads to a correct link", () => {});
+// it("create admin button in row 1 leads to a correct link", () => {});
