@@ -69,26 +69,42 @@ const setup = () => {
     });
   };
 
-  describe("The patients table page renders correctly", () => {
-    test("that the page renders", async () => {
-        expect(setup).toBeTruthy();
+describe("The patients table page renders correctly", () => {
+  test("that the page renders", async () => {
+    expect(setup).toBeTruthy();
+  });
+
+  test("if the loading spinner shows on page load", async () => {
+    setup();
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+  });
+
+  test("if the page has the correct title", async () => {
+    setup();
+    expect(screen.getByText(/My Patients/i)).toBeInTheDocument();
+  });
+
+  test("if the table renders correctly", async () => {
+    setup();
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByTestId("renderedTable")).toBeInTheDocument();
+    });
+  });
+});
+
+describe("Table component", () => {
+  test("if it displays correct number of rows and columns", async () => {
+    setup();
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByTestId("renderedTable")).toBeInTheDocument();
     });
 
-    test("if the loading spinner shows on page load", async () => {
-        setup();
-        expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-      });
+    const container = screen.getByTestId("renderedTable");
+    const data = JSON.parse(container.innerHTML);
 
-    test("if the page has the correct title", async () => {
-        setup();
-        expect(screen.getByText(/My Patients/i)).toBeInTheDocument();
-    });
-
-    test("if the table renders correctly", async () => {
-        setup();
-        expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-        await waitFor(() => {
-          expect(screen.getByTestId("renderedTable")).toBeInTheDocument();
-        });
-      });
-    });
+    expect(data.data.length).toEqual(2);
+    expect(data.cols.length).toEqual(5);
+  });
+});
