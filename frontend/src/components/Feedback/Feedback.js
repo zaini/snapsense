@@ -45,7 +45,12 @@ const Feedback = () => {
 
   if (loading) {
     markup = (
-      <Container p="7" borderRadius="lg" mt="20">
+      <Container
+        data-testid="formSubmitInnerLoader"
+        p="7"
+        borderRadius="lg"
+        mt="20"
+      >
         <Center>
           <Spinner size="xl" />
         </Center>
@@ -53,11 +58,20 @@ const Feedback = () => {
     );
   } else if (error) {
     markup = (
-      <Container p="7" borderRadius="lg" mt="20">
+      <Container
+        data-testid="formSubmitInnerError"
+        p="7"
+        borderRadius="lg"
+        mt="20"
+      >
         <Error
           errors={[
             {
-              message: error.graphQLErrors[0].message,
+              message:
+                (error.graphQLErrors &&
+                  error.graphQLErrors[0] &&
+                  error.graphQLErrors[0].message) ||
+                error.message,
             },
           ]}
         />
@@ -65,7 +79,7 @@ const Feedback = () => {
     );
   } else {
     markup = (
-      <>
+      <div data-testid="formSubmitInnerSuccess">
         {data && (
           <Alert status="success" borderRadius="50px" mb={4} textAlign="center">
             <AlertIcon />
@@ -89,6 +103,7 @@ const Feedback = () => {
                 return (
                   <label key={i}>
                     <input
+                      data-testid={`starRate${i + 1}`}
                       type="radio"
                       name="rating"
                       value={ratingValue}
@@ -96,7 +111,6 @@ const Feedback = () => {
                       style={{ display: "none" }}
                     />
                     <FaStar
-                      data-testid="starrate"
                       size={30}
                       color={
                         ratingValue <= (hover || rating) ? "#ffc107" : "#a9a9a9"
@@ -118,7 +132,7 @@ const Feedback = () => {
               <form>
                 <Text mb="8px">Additional Feedback</Text>
                 <Textarea
-                  data-testid="textarea"
+                  data-testid="textArea"
                   isfullwidth="True"
                   value={value}
                   onChange={handleInputChange}
@@ -128,7 +142,7 @@ const Feedback = () => {
                 <br />
                 <Center>
                   <Button
-                    data-testid="submitbutton"
+                    data-testid="submitButton"
                     mt={4}
                     colorScheme="blue"
                     rightIcon={<CheckCircleIcon />}
@@ -142,7 +156,7 @@ const Feedback = () => {
             </Box>
           </Grid>
         </Container>
-      </>
+      </div>
     );
   }
 
