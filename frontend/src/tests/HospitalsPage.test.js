@@ -19,6 +19,8 @@ import HospitalsPage from "../pages/My/HospitalsPage";
 
 afterEach(cleanup);
 
+//TODO test to check that buttons render in row, test that buttons lead to correct URL
+
 const {
     GET_HOSPITALS,
   } = require("../pages/My/HospitalsPage");
