@@ -97,3 +97,19 @@ const setup = () => {
       });
     });
   });
+
+  describe("The table component renders correctly with data", () => {
+    test("if it displays correct number of rows and columns", async () => {
+      setup();
+      expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByTestId("renderedTable")).toBeInTheDocument();
+      });
+  
+      const container = screen.getByTestId("renderedTable");
+      const data = JSON.parse(container.innerHTML);
+  
+      expect(data.data.length).toEqual(2);
+      expect(data.cols.length).toEqual(4);
+    });
+  });
