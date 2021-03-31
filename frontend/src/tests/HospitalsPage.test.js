@@ -114,8 +114,6 @@ describe("Table component", () => {
         const container = screen.getByTestId("renderedTable");
         const data = JSON.parse(container.innerHTML);
 
-        expect(data.cols.length).toEqual(4);
-
         expect(data.cols[0].headerName).toEqual("ID");
         expect(data.cols[1].headerName).toEqual("Hospital Name");
         expect(data.cols[2].headerName).toEqual("Contact Email");
