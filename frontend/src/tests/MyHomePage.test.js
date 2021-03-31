@@ -78,15 +78,15 @@ describe("Doctor panel", () => {
       expect(screen.getByTestId("reviewPatientsButton")).toBeInTheDocument();
     });
   });
+});
 
-  it("gives correct page url on click", async () => {
-    doctorSetup();
-    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-    await waitFor(() => {
-      const reviewLink = screen.getByTestId("reviewPatientLink");
-      expect(reviewLink).toBeInTheDocument();
-      expect(reviewLink).toHaveAttribute("href", "/my/submissions/review");
-    });
+test("review patients button gives correct page url on click", async () => {
+  doctorSetup();
+  expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+  await waitFor(() => {
+    const reviewLink = screen.getByTestId("reviewPatientLink");
+    expect(reviewLink).toBeInTheDocument();
+    expect(reviewLink).toHaveAttribute("href", "/my/submissions/review");
   });
 });
 
@@ -126,23 +126,23 @@ describe("Patient panel", () => {
       expect(screen.getByTestId("newSubmissionButton")).toBeInTheDocument();
     });
   });
+});
 
-  it("gives correct new page url on clicking submissions button", async () => {
-    patientSetup();
-    await waitFor(() => {
-      const newSubLink = screen.getByTestId("newSubmissionLink");
-      expect(newSubLink).toBeInTheDocument();
-      expect(newSubLink).toHaveAttribute("href", "/my/submissions/new");
-    });
+test("submission button gives correct new page url on click", async () => {
+  patientSetup();
+  await waitFor(() => {
+    const newSubLink = screen.getByTestId("newSubmissionLink");
+    expect(newSubLink).toBeInTheDocument();
+    expect(newSubLink).toHaveAttribute("href", "/my/submissions/new");
   });
+});
 
-  it("leads to correct new page url on clicking review requests button", async () => {
-    patientSetup();
-    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-    await waitFor(() => {
-      const reviewLink = screen.getByTestId("reviewLink");
-      expect(reviewLink).toBeInTheDocument();
-      expect(reviewLink).toHaveAttribute("href", "/my/requests");
-    });
+test("review requests button leads to correct new page url on click", async () => {
+  patientSetup();
+  expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+  await waitFor(() => {
+    const reviewLink = screen.getByTestId("reviewLink");
+    expect(reviewLink).toBeInTheDocument();
+    expect(reviewLink).toHaveAttribute("href", "/my/requests");
   });
 });
