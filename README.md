@@ -9,7 +9,7 @@ Developed by Ali Zaini, Mohammad Albinhassan, Ayan Ahmad, Sonia Baileys, Mahsum 
 ## Features
 
 - Superadmin can create hospitals and admins for those hospitals
-- Superadmins can manage their hospitals and admins
+- Superadmin can manage their hospitals and admins
 - Admins can login and send invites to doctors
 - Admins can manage (view, delete, etc.) their doctors
 - Doctors can invite and manage patients
@@ -17,9 +17,9 @@ Developed by Ali Zaini, Mohammad Albinhassan, Ayan Ahmad, Sonia Baileys, Mahsum 
 - Doctors can send requests for patients to make a submission
 - Doctors can view their patients submissions and review/flag them
 - Send requests for patients to send you responses
-- Considerations for accessiblity and mobile use have been made where possible
+- Considerations for accessability and mobile use have been made where possible
 - There is validation and testing throughout the application
-- Well documented for future extensibilty, implementing all features for the client as well as documenting the development progress
+- Well documented for future extendibility, implementing all features for the client as well as documenting the development progress
 - And much much more...
 
 ## Quick Setup Guide
@@ -245,7 +245,7 @@ pm2 restart server
 sudo systemctl restart nginx
 ```
 
-- And continous integration is now setup.
+- And continuous integration is now setup.
 
 ## Default Access Credentials
 
