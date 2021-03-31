@@ -109,6 +109,28 @@ describe("feedback resolvers", () => {
     done();
   });
 
+	test("should throw an error when trying to get a specific feedback that does not exist", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					query {
+						getSpecificFeedback(feedback_id: "100") {
+							stars
+							extra
+						}
+					}						
+				`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const { body } = response;
+
+    expect(body).toMatch("Feedback does not exist!");
+
+    done();
+  });
+
   test("should not get specific feedback if not logged in", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
