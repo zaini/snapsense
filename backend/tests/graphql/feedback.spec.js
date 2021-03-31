@@ -83,4 +83,30 @@ describe("feedback resolvers", () => {
     done();
   });
   
+	test("should get specific feedback as super admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					query {
+						getSpecificFeedback(feedback_id: "1") {
+							stars
+							extra
+						}
+					}						
+				`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const { body } = response;
+
+    expect(body).toMatchObject({
+      data: {
+        getSpecificFeedback: { stars: 5, extra: "I love SnapSense so much!" },
+      },
+    });
+
+    done();
+  });
+
 });
