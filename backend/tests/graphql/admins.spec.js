@@ -270,7 +270,7 @@ describe("admins resolvers", () => {
     done();
   });
 
-  test("should not get all admins if not logged", async (done) => {
+  test("should not get all admins if not logged in", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 					query {
@@ -281,6 +281,78 @@ describe("admins resolvers", () => {
 						}
 					}					
 				`,
+    });
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Missing Authorization Header");
+    done();
+  });
+
+  test("should get admin by ID as a super-admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					query {
+						getAdminById(admin_id: "1") {
+							fname
+							lname
+							email
+						}
+					}								
+				`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const { body } = response;
+
+    expect(body).toMatchObject({
+      data: {
+        getAdminById: {
+          fname: "Admin",
+          lname: "One",
+          email: "admin1@gmail.com",
+        },
+      },
+    });
+
+    done();
+  });
+
+  test("should not get admin by ID if not logged in as a super-admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					query {
+						getAdminById(admin_id: "1") {
+							fname
+							lname
+							email
+						}
+					}								
+				`,
+      })
+      .set("authorization", `Bearer ${adminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Invalid user account type!");
+    done();
+  });
+
+  test("should not get an admin by ID if not logged in", async (done) => {
+    const response = await request(app).post("/graphql").send({
+      query: `
+				query {
+					getAdminById(admin_id: "1") {
+						fname
+						lname
+						email
+					}
+				}							
+			`,
     });
 
     const errorMessage = response.body.errors[0].message;
