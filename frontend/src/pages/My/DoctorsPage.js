@@ -65,7 +65,7 @@ export const GET_DOCTORS_AS_PATIENT = gql`
   }
 `;
 
-const GET_DOCTORS_AS_ADMIN = gql`
+export const GET_DOCTORS_AS_ADMIN = gql`
   query {
     getDoctorsAsAdmin {
       id
