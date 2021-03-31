@@ -1,82 +1,167 @@
 import Feedback, { CREATE_FEEDBACK } from "../components/Feedback/Feedback";
+import { GET_SPECIFIC_FEEDBACK } from "../components/Feedback/ViewFeedback";
 import { MockedProvider } from "@apollo/client/testing";
 import {
   render,
   cleanup,
   screen,
-  waitFor,
   fireEvent,
+  waitFor,
 } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-
-//Render component
-const component = render(
-  <MockedProvider
-    customResolvers={{
-      Mutation: () => ({
-        createFeedback: () => ({ id: 1, stars: 5, extra: "go to the store" }),
-      }),
-    }}
-  >
-    <Feedback />
-  </MockedProvider>
-);
+import { Route, MemoryRouter } from "react-router";
+import { act } from "react-dom/test-utils";
 
 /* Essential */
-afterEach(async () => {
-  await cleanup();
-});
+afterEach(cleanup);
+
+//Creating mock data
+const mocks = [
+  {
+    request: {
+      query: CREATE_FEEDBACK,
+      variables: {
+        stars: 1,
+        extra: "This is a random feedback.",
+      },
+    },
+    result: { data: { createFeedback: true } },
+  },
+  {
+    request: {
+      query: GET_SPECIFIC_FEEDBACK,
+      variables: {},
+    },
+    result: {
+      data: {
+        getSpecificFeedback: {
+          id: "1",
+          stars: 1,
+          extra: "This is a random feedback.",
+        },
+      },
+    },
+  },
+];
+
+// Render
+const setup = async () => {
+  act(() => {
+    render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <MemoryRouter initialEntries={["/feedback"]}>
+          <Route path="/feedback">
+            <Feedback />
+          </Route>
+        </MemoryRouter>
+      </MockedProvider>
+    );
+  });
+};
 
 /*------ Tests  -----*/
 // Feedback page general tests
-describe("A user can input in textarea to make a feedback", () => {
-  userEvent.type(
-    screen.getByTestId("text-area"),
-    "The website was really useful and easy to use. Therefore I do not need to visit the hospital. Thanks!"
-  );
-  expect(screen.getByTestId("text-area")).toHaveValue(
-    "The website was really useful and easy to use. Therefore I do not need to visit the hospital. Thanks!"
-  );
-});
+describe("New feedback page", () => {
+  test("should render without crashing", () => {
+    expect(setup).toBeTruthy();
+  });
 
-describe("FeedbackPage", () => {
-  it("A user can submit a written feedback", async () => {
-    const additionalFeedback = screen.getByPlaceholderText("Enter here");
-    const submitButton = component.getByTestId("submit-button");
-
-    fireEvent.change(additionalFeedback, {
-      target: { value: "Hello World" },
+  test("has a star rate option", async () => {
+    setup();
+    await waitFor(() => {
+      expect(screen.getByTestId("starRate1")).toBeInTheDocument();
+      expect(screen.getByTestId("starRate2")).toBeInTheDocument();
+      expect(screen.getByTestId("starRate3")).toBeInTheDocument();
+      expect(screen.getByTestId("starRate4")).toBeInTheDocument();
+      expect(screen.getByTestId("starRate5")).toBeInTheDocument();
     });
-    fireEvent.click(submitButton);
-
-    await waitFor(() => screen.getByText("Hello World"));
   });
 
-  it("renders without crashing", () => {
-    expect(component).toBeTruthy();
+  test("has a name text area for additional feedback", async () => {
+    setup();
+    expect(screen.getByTestId("textArea")).toBeInTheDocument();
   });
-});
 
-//Submit button exist
-describe("Submit button", () => {
-  it("Page has a submit button", () => {
-    const button = component.findAllByTestId("submit-button");
-    expect(button).toBeTruthy();
+  test("has a submit button", async () => {
+    setup();
+    expect(screen.getByRole("button")).toBeInTheDocument();
   });
 });
 
-//Input text exist
-describe("Feedback textbox", () => {
-  it("Textarea exist", () => {
-    const TextArea = component.findAllByTestId("text-area");
-    expect(TextArea).toBeTruthy();
+describe("Placeholder for Enter Here", () => {
+  it("can have text written in it", () => {
+    setup();
+    const textInput = screen.getByTestId("textArea");
+
+    act(() => {
+      fireEvent.change(textInput, { target: { value: "This is a feedback" } });
+    });
+    expect(textInput.value).toBe("This is a feedback");
   });
 });
 
-//Star Rate exist
-describe("Star Rating", () => {
-  it("Start rating exist", () => {
-    const StarRate = component.findAllByTestId("star-rate");
-    expect(StarRate).toBeTruthy();
+describe("Placeholder for stars", () => {
+  it("users can rate stars", async () => {
+    setup();
+    const starInput = screen.getByTestId("starRate1");
+
+    act(() => {
+      fireEvent.change(starInput, {
+        target: { value: 1 },
+      });
+    });
+    expect(starInput.value).toBe("1");
+  });
+});
+
+//gql testing
+describe("Submitting form with invalid input", () => {
+  it("Users can only rate between 0 and 5", async () => {
+    setup();
+
+    const starInput = screen.getByTestId("starRate1");
+    act(() => {
+      fireEvent.change(starInput, { target: { value: 6 } });
+    });
+    expect(starInput.value).toBe("6");
+
+    const submitButton = screen.getByRole("button");
+    act(() => {
+      fireEvent.click(submitButton);
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByTestId("formSubmitInnerLoader")).toBeNull();
+      expect(screen.queryByTestId("formSubmitInnerSuccess")).toBeNull();
+    });
+  });
+});
+
+describe("Submitting form with valid input", () => {
+  it("pops up a success message", async () => {
+    setup();
+
+    const starInput = screen.getByTestId("starRate1");
+    act(() => {
+      fireEvent.change(starInput, { target: { value: 1 } });
+    });
+
+    expect(starInput.value).toBe("1");
+
+    const textInput = screen.getByTestId("textArea");
+    act(() => {
+      fireEvent.change(textInput, {
+        target: { value: "This is a random feedback." },
+      });
+    });
+    expect(textInput.value).toBe("This is a random feedback.");
+
+    const submitBtn = screen.getByTestId("submitButton");
+    act(() => {
+      fireEvent.click(submitBtn);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId("formSubmitInnerLoader")).toBeInTheDocument();
+    });
   });
 });
