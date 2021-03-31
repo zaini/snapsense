@@ -140,7 +140,7 @@ The client has particular deployment needs, so deployment can be more tricky to 
 - An Amazon AWS Account with up to date billing information.
 - An S3 Bucket with Public Read privileges [Support Link](https://aws.amazon.com/premiumsupport/knowledge-center/read-access-objects-s3-bucket/)
 - An EC2 Instance (Instructions for Ubuntu Instance) [Support Link](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html)
-- An RDS Databse cluster with public endpoint access [Support Link](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateDBInstance.html)
+- An RDS Database cluster with public endpoint access [Support Link](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateDBInstance.html)
 - All services must be in the same **REGION**
 - EC2 with `PM2`, `NGINX`, `NODE`, `NPM`, `GIT` installed [Support Link](https://www.youtube.com/watch?v=rE8mJ1OYjmM&t=1660s)
 
@@ -191,11 +191,11 @@ server {
 
 ### Continuous Deployment / Integration (_Optional_)
 
-(_Optional_) You could even go further and setup CI/CD for your application. For continuous deployment we are using github actions to connect to the AWS EC2 instance on any changes to our master branch and then we perform a series of commands on the server itself.
+(_Optional_) You could even go further and setup CI/CD for your application. For continuous deployment we are using GitHub actions to connect to the AWS EC2 instance on any changes to our master branch and then we perform a series of commands on the server itself.
 
-In order to setup CD from GITHUB:
+In order to setup CD from GitHub:
 
-- Add the **AWS_REGION**, **ACCESS_KEY_ID**, **AWS_SECRET_ACCESS_KEY** , **INSTANCE_ID** secrets to Github Secrets for your repository.
+- Add the **AWS_REGION**, **ACCESS_KEY_ID**, **AWS_SECRET_ACCESS_KEY** , **INSTANCE_ID** secrets to GitHub Secrets for your repository.
 - In your server make sure you have setup ssh keys for your git account
 - Go to the Actions tab and setup a new Workflow
 - Name the new file `deploy.yml` and paste the following in it
