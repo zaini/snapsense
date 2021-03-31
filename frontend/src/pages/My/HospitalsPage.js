@@ -53,7 +53,7 @@ const HospitalsPage = () => {
 
 export default HospitalsPage;
 
-const GET_HOSPITALS = gql`
+export const GET_HOSPITALS = gql`
   query getHospitals {
     getHospitals {
       id
@@ -89,13 +89,13 @@ const cols = [
       let id = row.id;
       return (
         <Stack direction="row" spacing={4}>
-          <Link to={`/my/hospitals/show/${id}`}>
-            <Button leftIcon={<ViewIcon />} colorScheme="blue">
+          <Link data-testid="hospitalShowLink" to={`/my/hospitals/show/${id}`}>
+            <Button data-testid="viewButton" leftIcon={<ViewIcon />} colorScheme="blue">
               View Hospital
             </Button>
           </Link>
-          <Link to={`/my/hospitals/${id}/admins/new`}>
-            <Button leftIcon={<AddIcon />} colorScheme="blue">
+          <Link data-testid="newAdminLink" to={`/my/hospitals/${id}/admins/new`}>
+            <Button data-testid="createAdminButton" leftIcon={<AddIcon />} colorScheme="blue">
               Create Admin
             </Button>
           </Link>
