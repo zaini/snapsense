@@ -2,11 +2,7 @@ const request = require("supertest");
 
 const app = require("../../index");
 
-let superAdminToken,
-  adminToken,
-  patientOneToken,
-  patientTwoToken,
-  patientFourToken;
+let adminToken, patientOneToken, patientTwoToken, patientFourToken;
 
 describe("doctors resolvers", () => {
   beforeAll(async (done) => {
