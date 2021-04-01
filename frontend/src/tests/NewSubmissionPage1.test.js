@@ -13,7 +13,7 @@ const { UPLOAD_SUBMISSION } = require("../pages/My/NewSubmissionPage");
 const {GET_SUBMISSION}= require("../components/SubmissionsView/SubmissionsComponent.js")
 
 
-const mocks = [
+const mocksWithData = [
   {
     
       request: {
@@ -130,7 +130,44 @@ const mocks = [
         data: {
            createSubmission: true } 
           },
-  },
+  },];
+
+  const mocksWithoutData = [
+    {
+      
+        request: {
+          query: UPLOAD_SUBMISSION,
+          variables: {
+            submission_id: "1",
+            Images: [
+              {
+                id: "6",
+                url:
+                  "",
+                __typename: "Image",
+              }],
+              Answers: [
+                {
+                  id: "56",
+                  Question: {
+                    id: "8",
+                    text:
+                      "Please add any other notes for your clinician (optional):",
+                    __typename: "Question",
+                  },
+                  value: true,
+                  extra: "fsdfsd",
+                  __typename: "Answer",
+                },
+              ],
+            }
+          },
+        result: { 
+          data: {
+             createSubmission: true } 
+            },
+    },
+  ];
   // {
   //   request: {
   //     query: GET_SUBMISSION,
@@ -147,7 +184,7 @@ const mocks = [
   //   },
   // },
 
-];
+
 
 
 // /*------ Essential  -----*/
@@ -159,7 +196,21 @@ const mocks = [
 const setup = async () => {
   act(() => {
     render(
-      <MockedProvider mocks={mocks}>
+      <MockedProvider mocks={mocksWithData}>
+        <MemoryRouter initialEntries={["/my/submissions/new"]}>
+          <Route path="/my/submissions/new">
+            <NewSubmissionPage />
+          </Route>
+        </MemoryRouter>
+      </MockedProvider>
+    );
+  });
+};
+
+const setupWithoutData = async () => {
+  act(() => {
+    render(
+      <MockedProvider mocks={mocksWithoutData}>
         <MemoryRouter initialEntries={["/my/submissions/new"]}>
           <Route path="/my/submissions/new">
             <NewSubmissionPage />
@@ -217,13 +268,22 @@ describe("page loading", () => {
 
 });
 
+// describe("new submission submits properly", () => {
+//   test("if form submit gives success message", async () => {
+//     setup();
 
+//     const btnSubmit = screen.getByText("Submit");
+//     act(() => {
+//       fireEvent.click(btnSubmit);
+//     });
 
-// it(" has submit button by default", async () => {
-//   setup();
-//   await waitFor(() => {
-//     expect(screen.getByTestId("submitbutton")).toBeInTheDocument();
+//     expect(
+//       screen.getByText("Success")
+//     ).toBeInTheDocument();
+//   });
 // });
+
+
   
 // describe("ImageUpload", () => {
 //   it("has a imageUpload", () => {
