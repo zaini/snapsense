@@ -79,7 +79,7 @@ const LoginForm = ({ accountType }) => {
 
 export default LoginForm;
 
-const LOGIN_USER = gql`
+export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!, $account_type: String!) {
     login(email: $email, password: $password, account_type: $account_type) {
       accessToken
