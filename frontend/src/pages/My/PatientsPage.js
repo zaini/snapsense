@@ -42,7 +42,7 @@ const PatientsPage = () => {
 
 export default PatientsPage;
 
-const GET_PATIENTS_AS_DOCTOR = gql`
+export const GET_PATIENTS_AS_DOCTOR = gql`
   query {
     getPatientsAsDoctor {
       id
