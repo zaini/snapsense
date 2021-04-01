@@ -11,19 +11,12 @@ import {
   renderHook,
 } from "@testing-library/react";
 import gql from "graphql-tag";
+import { AuthContext } from "../context/auth";
 
 import LoginPage from "../pages/Home/LoginPage.js";
 import { LOGIN_USER, LoginForm } from "../components/Login/LoginForm";
 
 afterEach(cleanup);
-
-const fakeAdmin = { email: "admin@gmail.com", password: "Password123" };
-const fakeSuperAdmin = {
-  email: "superadmin@gmail.com",
-  password: "Password123",
-};
-const fakePatient = { email: "patient@gmail.com", password: "Password123" };
-const fakeDoctor = { email: "doctor@gmail.com", password: "Password123" };
 
 // valid login as patient, doctor, admin, superadmin
 // invalid login - password, email, type to email?
@@ -36,8 +29,21 @@ const mocks = [
     request: {
       query: LOGIN_USER,
       variables: {
+        email: "patient@gmail.com",
+        password: "ABCPassword123.",
+        account_type: "PATIENT",
+      },
+    },
+    error: {
+      message: "Invalid Credentials",
+    },
+  },
+  {
+    request: {
+      query: LOGIN_USER,
+      variables: {
         email: "patient1@gmail.com",
-        password: "Password123",
+        password: "ABCPassword123.",
         account_type: "PATIENT",
       },
     },
@@ -54,64 +60,174 @@ const mocks = [
 //Render component
 const setup = () => {
   act(() => {
+    let user,
+      login,
+      logout = null;
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <MemoryRouter initialEntries={["/login"]}>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-        </MemoryRouter>
-      </MockedProvider>
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <MemoryRouter initialEntries={["/login"]}>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+          </MemoryRouter>
+        </MockedProvider>
+      </AuthContext.Provider>
     );
   });
 };
 
-describe("LoginPage", () => {
+describe("Login Form Wrapper contents", () => {
   it("should render without crashing", () => {
     expect(setup).toBeTruthy();
   });
 
-  // it('should have radio buttons', () => {
+  it("should have correct heading", () => {
+    setup();
+    expect(screen.getByText(/Choose Account Type/i)).toBeInTheDocument();
+    expect(screen.getByTestId("formHelper")).toBeInTheDocument();
+  });
 
-  //   screen.debug();
-  // });
+  it("should have all account types and radio buttons and submit buttons", () => {
+    setup();
+    const toCheck = [
+      "labelPatient",
+      "labelDoctor",
+      "labelAdmin",
+      "labelSuperAdmin",
+      "btnPatient",
+      "btnDoctor",
+      "btnAdmin",
+      "btnSuperAdmin",
+      "btnSubmit",
+    ];
+    for (let i = 0; i < toCheck.length; i++) {
+      expect(screen.getByTestId(toCheck[i])).toBeInTheDocument();
+    }
+  });
 
   it("should have email and password form", () => {
     setup();
-    expect(screen.getByText(/Choose Account Type/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Email")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Password")).toBeInTheDocument();
-    expect(screen.getByTestId("email-test")).toBeInTheDocument();
-    expect(screen.getByTestId("password-test")).toBeInTheDocument();
+    expect(screen.getByTestId("inputEmail")).toBeInTheDocument();
+    expect(screen.getByTestId("inputPassword")).toBeInTheDocument();
+  });
+});
+
+describe("Login Form Functionality", () => {
+  it("should maintain helper text state on changing account", () => {
+    setup();
+    expect(screen.getByTestId("formHelper")).toBeInTheDocument();
+    const helperText = screen.getByTestId("formHelper");
+    expect(
+      helperText.innerHTML ==
+        "Hello patient! Please fill out the form below to get started"
+    ).toBeTruthy();
+
+    const superAdminBtn = screen.getByTestId("btnSuperAdmin");
+    const adminBtn = screen.getByTestId("btnAdmin");
+    const patientBtn = screen.getByTestId("btnPatient");
+    const doctorBtn = screen.getByTestId("btnDoctor");
+
+    act(() => {
+      fireEvent.click(superAdminBtn);
+    });
+    expect(
+      helperText.innerHTML ==
+        "Hello superadmin! Please fill out the form below to get started"
+    ).toBeTruthy();
+
+    act(() => {
+      fireEvent.click(adminBtn);
+    });
+    expect(
+      helperText.innerHTML ==
+        "Hello admin! Please fill out the form below to get started"
+    ).toBeTruthy();
+
+    act(() => {
+      fireEvent.click(doctorBtn);
+    });
+    expect(
+      helperText.innerHTML ==
+        "Hello doctor! Please fill out the form below to get started"
+    ).toBeTruthy();
+
+    act(() => {
+      fireEvent.click(patientBtn);
+    });
+    expect(
+      helperText.innerHTML ==
+        "Hello patient! Please fill out the form below to get started"
+    ).toBeTruthy();
   });
 
-  // it('should have login button', () => {
-  //   screen.debug();
-  // });
-  // });
+  it("should not login invalid users and display error message", async () => {
+    setup();
+    expect(screen.getByTestId("formHelper")).toBeInTheDocument();
+    const email = screen.getByTestId("inputEmail");
+    const pw = screen.getByTestId("inputPassword");
 
-  // describe('Radio buttons', () => {
-  //   it('should change user type', () => {
-  //     screen.debug();
-  //   });
-  // });
+    fireEvent.change(email, { target: { value: "patient@gmail.com" } });
+    expect(email.value).toBe("patient@gmail.com");
 
-  // describe('Login', () => {
-  //   describe('with valid input', () => {
-  //     it('calls on the submit event', async () => {
-  //       screen.debug();
-  //     })
+    fireEvent.change(pw, { target: { value: "ABCPassword123." } });
+    expect(pw.value).toBe("ABCPassword123.");
 
-  //   });
+    act(() => {
+      fireEvent.click(screen.getByTestId("btnSubmit"));
+    });
+    await waitFor(() => {
+      expect(screen.getByText(/Invalid Credentials/i)).toBeInTheDocument();
+    });
+  });
 
-  // describe('with invalid email', () => {
-  //   it('renders invalid credentials error', async () => {
-  //     screen.debug();
-  //   });
-  // });
-  // describe('with invalid password', () => {
-  //   it('renders invalid credentials error', async () => {
-  //     screen.debug();
-  //   });
-  // });
+  it("should login valid users and redirect to correct page", async () => {
+    setup();
+
+    expect(screen.getByTestId("formHelper")).toBeInTheDocument();
+    const email = screen.getByTestId("inputEmail");
+    const pw = screen.getByTestId("inputPassword");
+
+    fireEvent.change(email, { target: { value: "patient1@gmail.com" } });
+    expect(email.value).toBe("patient1@gmail.com");
+
+    fireEvent.change(pw, { target: { value: "ABCPassword123." } });
+    expect(pw.value).toBe("ABCPassword123.");
+
+    await waitFor(() => {
+      act(() => {
+        fireEvent.click(screen.getByTestId("btnSubmit"));
+      });
+    });
+
+    cleanup();
+
+    let testHistory, testLocation;
+    let user = {
+      fname: "ABC",
+    };
+    let login,
+      logout = null;
+
+    render(
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <MemoryRouter initialEntries={["/login"]}>
+            <LoginPage />
+            <Route
+              path="*"
+              render={({ history, location }) => {
+                testHistory = history;
+                testLocation = location;
+                return null;
+              }}
+            ></Route>
+          </MemoryRouter>
+        </MockedProvider>
+      </AuthContext.Provider>
+    );
+    expect(testLocation.pathname).toBe("/");
+  });
 });
