@@ -24,10 +24,10 @@ describe("Admin Model Test", () => {
     done();
   });
 
-  it("should throw an error on null first name", async (done) => {
+  it("should throw an error on short first name", async (done) => {
     await expect(
       Admin.create({
-        fname: null,
+        fname: "A",
         lname: "Alexovich",
         email: "alex.alexovich@mail.com",
         password: "AdminPassword123",
@@ -37,11 +37,24 @@ describe("Admin Model Test", () => {
     done();
   });
 
-  it("should throw an error on null last name", async (done) => {
+  it("should throw an error on long first name", async (done) => {
     await expect(
       Admin.create({
-        fname: "Alex",
-        lname: null,
+        fname: "AVeryLongFirstNameForThisModelTesting",
+        lname: "Alexovich",
+        email: "alex.alexovich@mail.com",
+        password: "AdminPassword123",
+        hospital_id: 1,
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
+  it("should throw an error on null first name", async (done) => {
+    await expect(
+      Admin.create({
+        fname: null,
+        lname: "Alexovich",
         email: "alex.alexovich@mail.com",
         password: "AdminPassword123",
         hospital_id: 1,
@@ -63,11 +76,76 @@ describe("Admin Model Test", () => {
     done();
   });
 
+  it("should throw an error on first name containing illegal characters", async (done) => {
+    await expect(
+      Admin.create({
+        fname: "@L3x",
+        lname: "Alexovich",
+        email: "alex.alexovich@mail.com",
+        password: "AdminPassword123",
+        hospital_id: 1,
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
+  it("should throw an error on short last name", async (done) => {
+    await expect(
+      Admin.create({
+        fname: "Alex",
+        lname: "L",
+        email: "alex.alexovich@mail.com",
+        password: "AdminPassword123",
+        hospital_id: 1,
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
+  it("should throw an error on long last name", async (done) => {
+    await expect(
+      Admin.create({
+        fname: "Alex",
+        lname: "AVeryLongLastNameForThisModelTestingAdmin",
+        email: "alex.alexovich@mail.com",
+        password: "AdminPassword123",
+        hospital_id: 1,
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
+  it("should throw an error on null last name", async (done) => {
+    await expect(
+      Admin.create({
+        fname: "Alex",
+        lname: null,
+        email: "alex.alexovich@mail.com",
+        password: "AdminPassword123",
+        hospital_id: 1,
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
   it("should throw an error on empty last name", async (done) => {
     await expect(
       Admin.create({
         fname: "Alex",
         lname: "",
+        email: "alex.alexovich@mail.com",
+        password: "AdminPassword123",
+        hospital_id: 1,
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
+  it("should throw an error on last name containing illegal characters", async (done) => {
+    await expect(
+      Admin.create({
+        fname: "Alex",
+        lname: "@L3xovich",
         email: "alex.alexovich@mail.com",
         password: "AdminPassword123",
         hospital_id: 1,
