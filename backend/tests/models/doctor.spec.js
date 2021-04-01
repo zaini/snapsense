@@ -26,10 +26,10 @@ describe("Doctor Model Test", () => {
     done();
   });
 
-  it("should throw an error on null first name", async (done) => {
+  it("should throw an error on short first name", async (done) => {
     await expect(
       Doctor.create({
-        fname: null,
+        fname: "I",
         lname: "Ivanov",
         email: "ivan.ivanov@nhs.net",
         password: "Abradabra123",
@@ -39,11 +39,24 @@ describe("Doctor Model Test", () => {
     done();
   });
 
-  it("should throw an error on null last name", async (done) => {
+  it("should throw an error on long first name", async (done) => {
     await expect(
       Doctor.create({
-        fname: "Ivan",
-        lname: null,
+        fname: "Ivankjeajsjasjdnxjajsdakqweiqgwjehjqwkles",
+        lname: "Ivanov",
+        email: "ivan.ivanov@nhs.net",
+        password: "Abradabra123",
+        hospital_id: 1,
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
+  it("should throw an error on null first name", async (done) => {
+    await expect(
+      Doctor.create({
+        fname: null,
+        lname: "Ivanov",
         email: "ivan.ivanov@nhs.net",
         password: "Abradabra123",
         hospital_id: 1,
@@ -65,11 +78,76 @@ describe("Doctor Model Test", () => {
     done();
   });
 
+  it("should throw an error on first name containing illegal characters", async (done) => {
+    await expect(
+      Doctor.create({
+        fname: "1v@n",
+        lname: "Ivanov",
+        email: "ivan.ivanov@nhs.net",
+        password: "Abradabra123",
+        hospital_id: 1,
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
+  it("should throw an error on short last name", async (done) => {
+    await expect(
+      Doctor.create({
+        fname: "Ivan",
+        lname: "V",
+        email: "ivan.ivanov@nhs.net",
+        password: "Abradabra123",
+        hospital_id: 1,
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
+  it("should throw an error on long last name", async (done) => {
+    await expect(
+      Doctor.create({
+        fname: "Ivan",
+        lname: "Ivanovkkasdkhaksdhbak;shjdas",
+        email: "ivan.ivanov@nhs.net",
+        password: "Abradabra123",
+        hospital_id: 1,
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
+  it("should throw an error on null last name", async (done) => {
+    await expect(
+      Doctor.create({
+        fname: "Ivan",
+        lname: null,
+        email: "ivan.ivanov@nhs.net",
+        password: "Abradabra123",
+        hospital_id: 1,
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
   it("should throw an error on empty last name", async (done) => {
     await expect(
       Doctor.create({
         fname: "Ivan",
         lname: "",
+        email: "ivan.ivanov@nhs.net",
+        password: "Abradabra123",
+        hospital_id: 1,
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
+  it("should throw an error on last name containing illegal characters", async (done) => {
+    await expect(
+      Doctor.create({
+        fname: "Ivan",
+        lname: "Ivan0v",
         email: "ivan.ivanov@nhs.net",
         password: "Abradabra123",
         hospital_id: 1,
