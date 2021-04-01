@@ -103,7 +103,7 @@ const setup = (userType, mockNum) => {
   });
 };
 
-describe("The doctors page displaying renders correctly for patient", () => {
+describe("The doctors page for patient", () => {
   test("that the page renders", async () => {
     expect(setup).toBeTruthy();
   });
@@ -127,7 +127,7 @@ describe("The doctors page displaying renders correctly for patient", () => {
   });
 });
 
-describe("The doctors page displaying renders correctly for Admin", () => {
+describe("The doctors page for Admin", () => {
   test("that the page renders", async () => {
     expect(setup).toBeTruthy();
   });
@@ -151,7 +151,7 @@ describe("The doctors page displaying renders correctly for Admin", () => {
   });
 });
 
-describe("The table component renders correctly with data for patient", () => {
+describe("The table component in the page for patient", () => {
   test("if it displays correct number of rows and columns", async () => {
     setup("PATIENT", 0);
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
@@ -198,7 +198,7 @@ describe("The table component renders correctly with data for patient", () => {
   });
 });
 
-describe("The table component renders correctly with data for Admin", () => {
+describe("The table component in the page for Admin", () => {
   test("if it displays correct number of rows and columns", async () => {
     setup("ADMIN", 1);
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
