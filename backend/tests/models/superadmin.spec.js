@@ -136,7 +136,7 @@ describe("Super Admin Model Test", () => {
       SuperAdmin.create({
         name: "SuperAdmin",
         email: "superadmin@mail.com",
-        password: "AdminPass123",
+        password: "128312312",
       })
     ).rejects.toThrow();
     done();
@@ -147,7 +147,7 @@ describe("Super Admin Model Test", () => {
       SuperAdmin.create({
         name: "SuperAdmin",
         email: "superadmin@mail.com",
-        password: "AdminPass123",
+        password: "Shrt1",
       })
     ).rejects.toThrow();
     done();
@@ -158,7 +158,7 @@ describe("Super Admin Model Test", () => {
       SuperAdmin.create({
         name: "SuperAdmin",
         email: "superadmin@mail.com",
-        password: "AdminPass123",
+        password: "LongPassword1235618120",
       })
     ).rejects.toThrow();
     done();
