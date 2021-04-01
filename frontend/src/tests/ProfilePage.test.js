@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, cleanup, waitFor, render } from "@testing-library/react";
+import { screen, cleanup, waitFor, render, fireEvent } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import ProfilePage from '../pages/My/ProfilePage';
 import { Route, MemoryRouter } from "react-router";
@@ -97,4 +97,16 @@ it("should load UserInfo in profile page without crashing", async () => {
 it("should show loading spinner in profile page for PATIENT without crashing", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+});
+
+it("should be able to open change password form and submit with corret inputs", async () => {
+    setup();
+
+    const changePWModalButton = screen.getByTestId("changePasswordButton");
+    act(() => {
+        fireEvent.click(changePWModalButton);
+    });
+
+    // expect(screen.getByTestId("changePasswordModal")).toBeInTheDocument();
+
 });

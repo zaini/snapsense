@@ -39,7 +39,7 @@ const UserInfo = () => {
           Delete my account
         </Button>
       </Center>
-      <ChangePasswordModal isOpen={isOpen} onClose={onClose} />
+      <ChangePasswordModal testName="changePasswordModal" isOpen={isOpen} onClose={onClose} />
       <DeleteAccountModal isOpen={isDeleteOpen} onClose={onDeleteClose} />
 
       <br />
