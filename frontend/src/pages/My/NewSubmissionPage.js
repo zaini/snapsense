@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Review"];
 
-export const NewSubmissionPage = () => {
+const NewSubmissionPage = () => {
   const [images, setImages] = useState([]);
   const [answers, setAnswers] = useState({ questionnaire: {} });
   const [activeStep, setActiveStep] = useState(0);
@@ -77,7 +77,7 @@ export const NewSubmissionPage = () => {
   let body;
   if (loading) {
     body = (
-      <Center py={6}>
+      <Center py={6} data-testid="formSubmitInnerLoader">
         <Box
           maxW={"445px"}
           w={"full"}
@@ -106,7 +106,7 @@ export const NewSubmissionPage = () => {
     );
   } else if (error) {
     body = (
-      <Center py={6}>
+      <Center py={6} data-testid="formSubmitInnerError">
         <Box
           maxW={"445px"}
           w={"full"}
@@ -133,7 +133,11 @@ export const NewSubmissionPage = () => {
               <Error
                 errors={[
                   {
-                    message: error.graphQLErrors[0].message,
+                    message:
+                      (error.graphQLErrors &&
+                        error.graphQLErrors[0] &&
+                        error.graphQLErrors[0].message) ||
+                      error.message,
                   },
                 ]}
               />
@@ -144,7 +148,7 @@ export const NewSubmissionPage = () => {
     );
   } else if (data) {
     body = (
-      <Center py={6}>
+      <Center py={6} data-testid="formSubmitInnerSuccess">
         <Box
           maxW={"445px"}
           w={"full"}
@@ -184,12 +188,17 @@ export const NewSubmissionPage = () => {
           </Alert>
           <Tabs>
             <TabList>
-              <Tab >Image</Tab>
+              <Tab>Image</Tab>
               <Tab>Questionnaire</Tab>
             </TabList>
             <TabPanel>
               <Paper className={classes.paper}>
-                <Heading style={{ textAlign: "center" }} data-testid="uploadHeader">Image Upload</Heading>
+                <Heading
+                  style={{ textAlign: "center" }}
+                  data-testid="uploadHeader"
+                >
+                  Image Upload
+                </Heading>
                 <ImageUpload data-testid="imageUpload" setImages={setImages} />
               </Paper>
             </TabPanel>
@@ -207,7 +216,7 @@ export const NewSubmissionPage = () => {
                   <Stack>
                     {activeStep < 8 ? (
                       <QuestionForm
-                      data-testid="questionnaireForm"
+                        data-testid={`questionnaireForm${i + 1}`}
                         step={activeStep}
                         answers={answers}
                         setAnswers={setAnswers}
@@ -217,11 +226,13 @@ export const NewSubmissionPage = () => {
                     )}
                     <Center columns={[2]}>
                       <BackButton
+                        data-testid="backButton"
                         activeStep={activeStep}
                         handleBack={handleBack}
                         classes={classes}
                       />
                       <NextButton
+                        data-testid="nextButton"
                         activeStep={activeStep}
                         handleNext={handleNext}
                         classes={classes}
@@ -236,7 +247,7 @@ export const NewSubmissionPage = () => {
           <Paper className={classes.paper}>
             <Center>
               <Button
-                data-testid="submitbutton"
+                data-testid="submitButton"
                 righticon={<CheckCircleIcon />}
                 variant="contained"
                 color="primary"
