@@ -23,7 +23,7 @@ const submissionMock = [
                 getSubmissions: [
                     {
                         id: "1", flag: "High Risk", createdAt: "1234567890", Patient: {
-                            id: "1", fname: "first", lname: "last", email: "patient1@gmail.com", flag: ""
+                            id: "1", fname: "first", lname: "last", email: "patient1@gmail.com", flag: "asdfghjk"
                         }, Images: {
                             id: "1", url: "asdfghjk"
                         }, Answers: {
@@ -94,10 +94,7 @@ it("should load UserInfo in profile page without crashing", async () => {
     });
 });
 
-it("should load SubmissionsComponent in profile page for PATIENT without crashing", async () => {
+it("should show loading spinner in profile page for PATIENT without crashing", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-    await waitFor(() => {
-        expect(screen.getByTestId("submissionsViewSwitch")).toBeInTheDocument();
-    });
 });
