@@ -120,7 +120,7 @@ describe("Admin Model Test", () => {
       Admin.create({
         fname: "Alex",
         lname: "Alexovich",
-        email: "jane.smith@mail.com",
+        email: "admin1@gmail.com",
         password: "AdminPassword123",
         hospital_id: 1,
       })

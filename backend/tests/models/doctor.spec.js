@@ -135,7 +135,7 @@ describe("Doctor Model Test", () => {
       Doctor.create({
         fname: "Ivan",
         lname: "Ivanov",
-        email: "john.smith@nhs.net",
+        email: "doctor1@nhs.net",
         password: "Abradabra123",
         hospital_id: 1,
       })

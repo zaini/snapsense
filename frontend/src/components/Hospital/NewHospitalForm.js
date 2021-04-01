@@ -21,6 +21,19 @@ const NewHospitalForm = () => {
   const [createHospital, { loading, error, data }] = useMutation(
     CREATE_HOSPITAL,
     {
+      update(proxy, result) {
+        // Write to cache
+        const data = proxy.readQuery({
+          query: GET_HOSPITALS,
+        });
+        data.getHospitals = [result.data.createHospital, ...data.getHospitals];
+        proxy.writeQuery({
+          query: GET_HOSPITALS,
+          data: {
+            getHospitals: [result.data.createHospital, ...data.getHospitals],
+          },
+        });
+      },
       onError(_) {}, // Error is handled below
     }
   );
@@ -90,6 +103,16 @@ export default NewHospitalForm;
 const CREATE_HOSPITAL = gql`
   mutation createHospital($name: String!, $contact_email: String!) {
     createHospital(name: $name, contact_email: $contact_email) {
+      name
+      contact_email
+    }
+  }
+`;
+
+const GET_HOSPITALS = gql`
+  query getHospitals {
+    getHospitals {
+      id
       name
       contact_email
     }

@@ -57,7 +57,7 @@ const SubmissionCardsTable = () => {
       markup = (
         <>
           {data_rows.map((e, i) => {
-            return <SubmissionCard key={`${e.id}-${i}`} data={e} />;
+            return <SubmissionCard testID={`submissionCard${i+1}`} key={`${e.id}-${i}`} data={e} />;
           })}
         </>
       );
@@ -69,8 +69,8 @@ const SubmissionCardsTable = () => {
 
 export default SubmissionCardsTable;
 
-const GET_SUBMISSIONS = gql`
-  query getSubmissions {
+export const GET_SUBMISSIONS = gql`
+  query getSubmissionsForReview {
     getSubmissionsForReview {
       id
       flag
