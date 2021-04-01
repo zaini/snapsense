@@ -3,63 +3,21 @@ const request = require("supertest");
 const app = require("../../index");
 
 // Access tokens for various users that are needed
-let doctorOneToken;
-let patientOneToken;
-let patientTwoToken;
+let doctorOneToken, patientOneToken, patientTwoToken;
 
-describe("patient resolvers", () => {
+describe("patients resolvers", () => {
   beforeAll(async (done) => {
-    // Login and get the access tokens for various users needed in this test suite
-    doctorOneToken = await request(app).post("/graphql").send({
-      query: `
-				mutation {
-					login(
-						email: "doctor1@nhs.net"
-						password: "Password123"
-						account_type: "DOCTOR"
-					)	
-					{
-						accessToken
-					}
-				}
-			`,
-    });
+  	const {
+      doctorOne,
+      patientOne,
+      patientTwo
+    } = await require("./util/authTokens");
 
-    doctorOneToken = doctorOneToken.body.data.login.accessToken;
+		doctorOneToken = doctorOne;
+		patientOneToken = patientOne;
+		patientTwoToken = patientTwo;
 
-    patientOneToken = await request(app).post("/graphql").send({
-      query: `
-				mutation {
-					login(
-						email: "patient1@gmail.com"
-						password: "Password123"
-						account_type: "PATIENT"
-					)	
-					{
-						accessToken
-					}
-				}
-			`,
-    });
-    patientOneToken = patientOneToken.body.data.login.accessToken;
-
-    patientTwoToken = await request(app).post("/graphql").send({
-      query: `
-				mutation {
-					login(
-						email: "patient2@gmail.com"
-						password: "Password123"
-						account_type: "PATIENT"
-					)	
-					{
-						accessToken
-					}
-				}
-			`,
-    });
-
-    patientTwoToken = patientTwoToken.body.data.login.accessToken;
-    done();
+		done()
   });
 
   test("should get a patient as a doctor where the patient belongs to the doctor", async (done) => {

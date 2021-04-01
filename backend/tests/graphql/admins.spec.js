@@ -2,47 +2,15 @@ const request = require("supertest");
 
 const app = require("../../index");
 
-let superAdminToken;
-let adminToken;
+let superAdminToken, adminToken;
 
 describe("admins resolvers", () => {
   beforeAll(async (done) => {
-    // Login and get the access tokens for various users needed in this test suite
-    superAdminToken = await request(app).post("/graphql").send({
-      query: `
-				mutation {
-					login(
-						email: "snapsense@gmail.com"
-						password: "Password123"
-						account_type: "SUPERADMIN"
-					)	
-					{
-						accessToken
-					}
-				}
-			`,
-    });
+    const { superAdmin, admin } = await require("./util/authTokens");
+    superAdminToken = superAdmin;
+    adminToken = admin;
 
-    superAdminToken = superAdminToken.body.data.login.accessToken;
-
-    adminToken = await request(app).post("/graphql").send({
-      query: `
-				mutation {
-					login(
-						email: "admin1@gmail.com"
-						password: "Password123"
-						account_type: "ADMIN"
-					)	
-					{
-						accessToken
-					}
-				}
-			`,
-    });
-
-    adminToken = adminToken.body.data.login.accessToken;
-
-    done();
+		done();
   });
 
   test("should create admin as a super-admin", async (done) => {
@@ -142,6 +110,244 @@ describe("admins resolvers", () => {
     const errorMessage = response.body.errors[0].message;
 
     expect(errorMessage).toMatch("Invalid user account type!");
+    done();
+  });
+
+  test("should delete valid admin as super admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					mutation {
+						deleteAdmin(admin_id: "1")
+					}
+			`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const {
+      body: {
+        data: { deleteAdmin },
+      },
+    } = response;
+
+    expect(deleteAdmin).toBe(true);
+    done();
+  });
+
+  test("should throw error if trying to delete invalid admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					mutation {
+						deleteAdmin(admin_id: "100")
+					}
+			`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("This admin does not exist.");
+
+    done();
+  });
+
+  test("should not delete admin if not logged in as a super admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					mutation {
+						deleteAdmin(admin_id: "1")
+					}
+			`,
+      })
+      .set("authorization", `Bearer ${adminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Invalid user account type!");
+    done();
+  });
+
+  test("should not delete admin if not logged in", async (done) => {
+    const response = await request(app).post("/graphql").send({
+      query: `
+				mutation {
+					deleteAdmin(admin_id: "1")
+				}
+			`,
+    });
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Missing Authorization Header");
+    done();
+  });
+
+  test("should get all admins as a super-admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					query {
+						getAdmins{
+							fname
+							lname
+							email
+						}
+					}					
+				`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const { body } = response;
+
+    expect(body).toMatchObject({
+      data: {
+        getAdmins: [
+          { fname: "Admin", lname: "One", email: "admin1@gmail.com" },
+          { fname: "Admin", lname: "Two", email: "admin2@gmail.com" },
+        ],
+      },
+    });
+
+    done();
+  });
+
+  test("should not get all admins if not logged in as a super-admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					query {
+						getAdmins{
+							fname
+							lname
+							email
+						}
+					}					
+				`,
+      })
+      .set("authorization", `Bearer ${adminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Invalid user account type!");
+    done();
+  });
+
+  test("should not get all admins if not logged in", async (done) => {
+    const response = await request(app).post("/graphql").send({
+      query: `
+					query {
+						getAdmins{
+							fname
+							lname
+							email
+						}
+					}					
+				`,
+    });
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Missing Authorization Header");
+    done();
+  });
+
+  test("should get admin by ID as a super-admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					query {
+						getAdminById(admin_id: "1") {
+							fname
+							lname
+							email
+						}
+					}								
+				`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const { body } = response;
+
+    expect(body).toMatchObject({
+      data: {
+        getAdminById: {
+          fname: "Admin",
+          lname: "One",
+          email: "admin1@gmail.com",
+        },
+      },
+    });
+
+    done();
+  });
+
+  test("should throw error on get admin by ID where admin is invalid", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					query {
+						getAdminById(admin_id: "100") {
+							fname
+							lname
+							email
+						}
+					}								
+				`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Admin does not exist!");
+
+    done();
+  });
+
+  test("should not get admin by ID if not logged in as a super-admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					query {
+						getAdminById(admin_id: "1") {
+							fname
+							lname
+							email
+						}
+					}								
+				`,
+      })
+      .set("authorization", `Bearer ${adminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Invalid user account type!");
+    done();
+  });
+
+  test("should not get an admin by ID if not logged in", async (done) => {
+    const response = await request(app).post("/graphql").send({
+      query: `
+				query {
+					getAdminById(admin_id: "1") {
+						fname
+						lname
+						email
+					}
+				}							
+			`,
+    });
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Missing Authorization Header");
     done();
   });
 });
