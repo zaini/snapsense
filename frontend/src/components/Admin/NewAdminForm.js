@@ -66,7 +66,7 @@ const NewAdminForm = ({ hospital }) => {
             <Error
               errors={[
                 {
-                  message: error.graphQLErrors[0].message,
+                  message: error.message,
                 },
               ]}
             />
