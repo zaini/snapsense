@@ -139,7 +139,6 @@ module.exports = gql`
     getHospitals: [Hospital!]
     getSpecificHospital(hospital_id: ID!): Hospital!
     getAdmins: [Admin!]
-    getDoctors: [Doctor!]
     getPatients: [Patient!]
     getDoctorsAsAdmin: [Doctor!]
     getDoctorsAsPatient: [Doctor!]

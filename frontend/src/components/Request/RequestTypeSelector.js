@@ -10,7 +10,7 @@ import {
 
 const RequestTypeSelector = ({ patient, register }) => {
   return (
-    <FormControl isRequired>
+    <FormControl isRequired data-testid="request-form">
       <Center>
         <FormLabel as="header" textAlign="center">
           Ask {patient.fname} to upload a picture, questionnaire or both

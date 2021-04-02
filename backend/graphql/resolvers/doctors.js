@@ -5,14 +5,6 @@ const isAuth = require("../../utils/isAuth");
 
 module.exports = {
   Query: {
-    getDoctors: async () => {
-      try {
-        const doctors = await Doctor.findAll();
-        return doctors;
-      } catch (error) {
-        throw new Error(error);
-      }
-    },
     getDoctorsAsAdmin: async (_, __, context) => {
       const user = isAuth(context);
 

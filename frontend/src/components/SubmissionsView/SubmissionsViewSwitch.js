@@ -12,6 +12,7 @@ const SubmissionsViewSwitch = ({ data }) => {
         Enable timeline view?
       </FormLabel>
       <Switch
+        data-testid="timelineToggle"
         id="toggle"
         size="md"
         onChange={() => setViewTimeline(!viewTimeline)}

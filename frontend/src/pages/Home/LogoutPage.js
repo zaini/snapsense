@@ -4,7 +4,6 @@ import { AuthContext } from "../../context/auth";
 const LogoutPage = (props) => {
   const { logout } = useContext(AuthContext);
 
-  // TODO logout properly
   useEffect(() => {
     (async () => {
       await logout();

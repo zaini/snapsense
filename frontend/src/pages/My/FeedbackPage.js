@@ -16,7 +16,7 @@ import { ViewIcon } from "@chakra-ui/icons";
 
 import Table from "../../components/utils/Table";
 
-// Show all the hospitals (for the admin)
+// Shows all feedback to the superadmin
 const FeedbackPage = () => {
   const { loading, data: { getFeedback: feedback } = {}, error } = useQuery(
     GET_FEEDBACK
@@ -54,7 +54,7 @@ const FeedbackPage = () => {
 
 export default FeedbackPage;
 
-const GET_FEEDBACK = gql`
+export const GET_FEEDBACK = gql`
   query getFeedback {
     getFeedback {
       id

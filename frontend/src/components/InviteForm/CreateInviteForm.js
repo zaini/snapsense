@@ -36,7 +36,7 @@ const CreateInviteForm = () => {
     },
     onError(err) {
       const message =
-        (err.graphQLErrors && err.graphQLErrors[0].message) || err.message;
+        (err.graphQLErrors && err.graphQLErrors[0] && err.graphQLErrors[0].message) || err.message;
       // We have to assign this to a field in the form for it to let us resubmit after an error
       setError("email", { type: "manual", message });
       setInvitationToken("");
@@ -67,13 +67,21 @@ const CreateInviteForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl id="email" isRequired>
           <FormLabel htmlFor="email">Email</FormLabel>
-          <Input name="email" placeholder="Email" ref={register} />
+          <Input
+            data-testid="inviteEmail"
+            name="email"
+            type="email"
+            placeholder="Email"
+            ref={register}
+          />
         </FormControl>
         <br />
         <FormControl id="repeat_email" isRequired>
           <FormLabel htmlFor="repeat_email">Repeat Email</FormLabel>
           <Input
+            data-testid="inviteEmailRepeat"
             name="repeat_email"
+            type="email"
             placeholder="Repeat email"
             ref={register}
           />
@@ -81,6 +89,7 @@ const CreateInviteForm = () => {
         <br />
         <Center>
           <Button
+            data-testid="inviteSubmit"
             mt={4}
             colorScheme="blue"
             type="submit"
@@ -102,7 +111,7 @@ const CreateInviteForm = () => {
 
 export default CreateInviteForm;
 
-const INVITE_USER = gql`
+export const INVITE_USER = gql`
   mutation inviteUser($email: String!) {
     inviteUser(email: $email)
   }

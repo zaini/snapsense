@@ -10,7 +10,6 @@ const SubmissionsComponent = () => {
   const location = useParams();
 
   const patient_id = location.patient_id;
-
   const { loading, data, error } = useQuery(GET_SUBMISSIONS, {
     variables: { patient_id: patient_id },
   });
@@ -27,7 +26,10 @@ const SubmissionsComponent = () => {
     markup = (
       <Alert status="error">
         <AlertIcon />
-        {error.graphQLErrors && error.graphQLErrors[0].message || error.message}
+        {(error.graphQLErrors &&
+          error.graphQLErrors[0] &&
+          error.graphQLErrors[0].message) ||
+          error.message}
       </Alert>
     );
   } else {

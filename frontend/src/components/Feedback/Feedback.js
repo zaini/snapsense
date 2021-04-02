@@ -45,7 +45,12 @@ const Feedback = () => {
 
   if (loading) {
     markup = (
-      <Container p="7" borderRadius="lg" mt="20">
+      <Container
+        data-testid="formSubmitInnerLoader"
+        p="7"
+        borderRadius="lg"
+        mt="20"
+      >
         <Center>
           <Spinner size="xl" />
         </Center>
@@ -53,11 +58,20 @@ const Feedback = () => {
     );
   } else if (error) {
     markup = (
-      <Container p="7" borderRadius="lg" mt="20">
+      <Container
+        data-testid="formSubmitInnerError"
+        p="7"
+        borderRadius="lg"
+        mt="20"
+      >
         <Error
           errors={[
             {
-              message: error.graphQLErrors[0].message,
+              message:
+                (error.graphQLErrors &&
+                  error.graphQLErrors[0] &&
+                  error.graphQLErrors[0].message) ||
+                error.message,
             },
           ]}
         />
@@ -65,7 +79,7 @@ const Feedback = () => {
     );
   } else {
     markup = (
-      <>
+      <div data-testid="formSubmitInnerSuccess">
         {data && (
           <Alert status="success" borderRadius="50px" mb={4} textAlign="center">
             <AlertIcon />
@@ -74,7 +88,7 @@ const Feedback = () => {
         )}
         <Container p="10" borderWidth="2em" borderRadius="lg" mt="10">
           <Grid
-            container
+            container="true"
             justify="center"
             direction="column"
             alignItems="center"
@@ -87,8 +101,9 @@ const Feedback = () => {
               {[...Array(5)].map((star, i) => {
                 const ratingValue = i + 1;
                 return (
-                  <label>
+                  <label key={i}>
                     <input
+                      data-testid={`starRate${i + 1}`}
                       type="radio"
                       name="rating"
                       value={ratingValue}
@@ -117,7 +132,8 @@ const Feedback = () => {
               <form>
                 <Text mb="8px">Additional Feedback</Text>
                 <Textarea
-                  isFullWidth="True"
+                  data-testid="textArea"
+                  isfullwidth="True"
                   value={value}
                   onChange={handleInputChange}
                   placeholder="Enter here"
@@ -126,6 +142,7 @@ const Feedback = () => {
                 <br />
                 <Center>
                   <Button
+                    data-testid="submitButton"
                     mt={4}
                     colorScheme="blue"
                     rightIcon={<CheckCircleIcon />}
@@ -139,16 +156,15 @@ const Feedback = () => {
             </Box>
           </Grid>
         </Container>
-      </>
+      </div>
     );
   }
 
   return markup;
 };
-
 export default Feedback;
 
-const CREATE_FEEDBACK = gql`
+export const CREATE_FEEDBACK = gql`
   mutation createFeedback($stars: Int!, $extra: String) {
     createFeedback(stars: $stars, extra: $extra) {
       id

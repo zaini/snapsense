@@ -2,45 +2,13 @@ const request = require("supertest");
 
 const app = require("../../index");
 
-let superAdminToken;
-let adminToken;
+let superAdminToken, adminToken;
 
 describe("hospitals resolvers", () => {
   beforeAll(async (done) => {
-    // Login and get the access tokens for various users needed in this test suite
-    superAdminToken = await request(app).post("/graphql").send({
-      query: `
-				mutation {
-					login(
-						email: "snapsense@gmail.com"
-						password: "Password123"
-						account_type: "SUPERADMIN"
-					)	
-					{
-						accessToken
-					}
-				}
-			`,
-    });
-
-    superAdminToken = superAdminToken.body.data.login.accessToken;
-
-    adminToken = await request(app).post("/graphql").send({
-      query: `
-				mutation {
-					login(
-						email: "admin1@gmail.com"
-						password: "Password123"
-						account_type: "ADMIN"
-					)	
-					{
-						accessToken
-					}
-				}
-			`,
-    });
-
-    adminToken = adminToken.body.data.login.accessToken;
+    const { superAdmin, admin } = await require("./util/authTokens");
+    superAdminToken = superAdmin;
+    adminToken = admin;
 
     done();
   });
@@ -52,7 +20,6 @@ describe("hospitals resolvers", () => {
         query: `
 					query {
 						getHospitals {
-							id
 							name
 							contact_email
 						}
@@ -67,17 +34,14 @@ describe("hospitals resolvers", () => {
       data: {
         getHospitals: [
           {
-            id: "1",
             name: "London Hospital",
             contact_email: "london.hospital@mail.com",
           },
           {
-            id: "2",
             name: "London Hospital 2",
             contact_email: "london.hospital.two@mail.com",
           },
           {
-            id: "3",
             name: "London Hospital 3",
             contact_email: "london.hospital.three@mail.com",
           },
@@ -92,7 +56,6 @@ describe("hospitals resolvers", () => {
       query: `
 					query {
 						getHospitals {
-							id
 							name
 							contact_email
 						}
@@ -113,7 +76,6 @@ describe("hospitals resolvers", () => {
         query: `
 					query {
 						getHospitals {
-							id
 							name
 							contact_email
 						}
@@ -135,7 +97,6 @@ describe("hospitals resolvers", () => {
         query: `
 					query {
 						getSpecificHospital(hospital_id: "1") {
-							id
 							name
 							contact_email
 						}
@@ -149,7 +110,6 @@ describe("hospitals resolvers", () => {
     expect(body).toMatchObject({
       data: {
         getSpecificHospital: {
-          id: "1",
           name: "London Hospital",
           contact_email: "london.hospital@mail.com",
         },
@@ -165,7 +125,6 @@ describe("hospitals resolvers", () => {
         query: `
 					query {
 						getSpecificHospital(hospital_id: "100") {
-							id
 							name
 							contact_email
 						}
@@ -187,7 +146,6 @@ describe("hospitals resolvers", () => {
         query: `
 					query {
 						getSpecificHospital(hospital_id: "100") {
-							id
 							name
 							contact_email
 						}
@@ -255,7 +213,7 @@ describe("hospitals resolvers", () => {
     done();
   });
 
-  test("should should not create hospital if not logged in as a super-admin", async (done) => {
+  test("should not create hospital if not logged in as a super-admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -276,6 +234,79 @@ describe("hospitals resolvers", () => {
     const errorMessage = response.body.errors[0].message;
 
     expect(errorMessage).toMatch("Invalid user account type!");
+    done();
+  });
+
+  test("should delete valid hospital as super", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					mutation {
+						deleteHospital(hospital_id: "1")
+					}
+			`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const {
+      body: {
+        data: { deleteHospital },
+      },
+    } = response;
+
+    expect(deleteHospital).toBe(true);
+    done();
+  });
+
+  test("should throw error if trying to delete invalid hospital", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					mutation {
+						deleteHospital(hospital_id: "100")
+					}
+			`,
+      })
+      .set("authorization", `Bearer ${superAdminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Hospital does not exist");
+    done();
+  });
+
+  test("should not delete hospital if not logged in as a super admin", async (done) => {
+    const response = await request(app)
+      .post("/graphql")
+      .send({
+        query: `
+					mutation {
+						deleteHospital(hospital_id: "1")
+					}
+			`,
+      })
+      .set("authorization", `Bearer ${adminToken}`);
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Invalid user account type!");
+    done();
+  });
+
+  test("should not delete hospital if not logged in", async (done) => {
+    const response = await request(app).post("/graphql").send({
+      query: `
+				mutation {
+					deleteHospital(hospital_id: "1")
+				}
+			`,
+    });
+
+    const errorMessage = response.body.errors[0].message;
+
+    expect(errorMessage).toMatch("Missing Authorization Header");
     done();
   });
 });
