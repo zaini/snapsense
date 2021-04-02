@@ -26,6 +26,19 @@ describe("Doctor Model Test", () => {
     done();
   });
 
+  it("should throw an error on invalid hospital id", async (done) => {
+    await expect(
+      Doctor.create({
+        fname: "Ivan",
+        lname: "Ivanov",
+        email: "ivan.ivanov@nhs.net",
+        password: "Abradabra123",
+        hospital_id: 15,
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
   it("should throw an error on short first name", async (done) => {
     await expect(
       Doctor.create({
