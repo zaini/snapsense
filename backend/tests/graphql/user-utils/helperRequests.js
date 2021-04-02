@@ -1,3 +1,6 @@
+// File containing helper post requests for the user util testing 
+// Util functionality includes password change or account deletion 
+
 const request = require("supertest");
 
 const app = require("../../../index");
