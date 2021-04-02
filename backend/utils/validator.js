@@ -1,6 +1,9 @@
 module.exports = {
   Validator: () => {
     class validator {
+      static isWithinRange(value, lowerBound, higherBound) {
+          return value >= lowerBound && value <= higherBound;
+      }
       static isEmpty(value) {
         return String(value) === "";
       }
