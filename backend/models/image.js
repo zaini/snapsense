@@ -21,8 +21,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isNotEmpty(value) {
-            if (ModelValidator.isEmpty(value)) {
+          isImage(value) {
+            if (!ModelValidator.isImage(value)) {
               throw new ValidationError("Invalid image url");
             }
           },
