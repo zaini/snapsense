@@ -11,7 +11,7 @@ import {
   Text,
   Alert,
   Spinner,
-  AlertIcon,
+  AlertIcon
 } from "@chakra-ui/react";
 import { CheckCircleIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
@@ -24,31 +24,31 @@ import BackButton from "../../components/SubmissionCreate/BackButtton";
 import NextButton from "../../components/SubmissionCreate/NextButton";
 import Error from "../../components/utils/Error";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   layout: {
     marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(2)
   },
   paper: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
+    padding: theme.spacing(2)
   },
   stepper: {
     padding: theme.spacing(3, 0, 5),
     overflowY: "visible",
     [theme.breakpoints.down(1000 + theme.spacing(3) * 2)]: {
-      display: "none",
-    },
+      display: "none"
+    }
   },
   buttons: {
     display: "flex",
-    justifyContent: "flex-end",
+    justifyContent: "flex-end"
   },
   button: {
     marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1),
-  },
+    marginLeft: theme.spacing(1)
+  }
 }));
 
 const steps = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Review"];
@@ -60,7 +60,7 @@ const NewSubmissionPage = () => {
   const [uploadSubmission, { loading, error, data }] = useMutation(
     UPLOAD_SUBMISSION,
     {
-      onError(e) {},
+      onError(e) {}
     }
   );
   const classes = useStyles();
@@ -73,7 +73,6 @@ const NewSubmissionPage = () => {
     const temp = activeStep - 1;
     setActiveStep(temp);
   };
-
   let body;
   if (loading) {
     body = (
@@ -137,8 +136,8 @@ const NewSubmissionPage = () => {
                       (error.graphQLErrors &&
                         error.graphQLErrors[0] &&
                         error.graphQLErrors[0].message) ||
-                      error.message,
-                  },
+                      error.message
+                  }
                 ]}
               />
             </Heading>
@@ -188,8 +187,8 @@ const NewSubmissionPage = () => {
           </Alert>
           <Tabs>
             <TabList>
-              <Tab>Image</Tab>
-              <Tab>Questionnaire</Tab>
+              <Tab data-testid="imageTab">Image</Tab>
+              <Tab data-testid="questionnaireTab">Questionnaire</Tab>
             </TabList>
             <TabPanel>
               <Paper className={classes.paper}>
@@ -206,7 +205,7 @@ const NewSubmissionPage = () => {
               <Paper className={classes.paper}>
                 <Heading style={{ textAlign: "center" }}>Questionnaire</Heading>
                 <Stepper activeStep={activeStep} className={classes.stepper}>
-                  {steps.map((label) => (
+                  {steps.map(label => (
                     <Step key={label}>
                       <StepLabel>{label}</StepLabel>
                     </Step>
@@ -216,7 +215,6 @@ const NewSubmissionPage = () => {
                   <Stack>
                     {activeStep < 8 ? (
                       <QuestionForm
-                        data-testid={`questionnaireForm${i + 1}`}
                         step={activeStep}
                         answers={answers}
                         setAnswers={setAnswers}
@@ -256,8 +254,8 @@ const NewSubmissionPage = () => {
                   uploadSubmission({
                     variables: {
                       images,
-                      answers: JSON.stringify(answers),
-                    },
+                      answers: JSON.stringify(answers)
+                    }
                   });
                 }}
               >
