@@ -8,8 +8,8 @@ const NextButton = ({ activeStep, handleNext, classes }) => {
     name = "Submit";
     params = {
       disabled: true,
-      style:{
-          display:"none"
+      style: {
+        display: "none"
       }
     };
   } else if (activeStep === 7) {
@@ -21,6 +21,7 @@ const NextButton = ({ activeStep, handleNext, classes }) => {
 
   return (
     <Button
+      data-testid="nextButton"
       {...params}
       variant="contained"
       color="primary"

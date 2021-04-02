@@ -73,7 +73,7 @@ const QuestionForm = ({ step, answers, setAnswers }) => {
     setAnswers(temp);
   };
   return (
-    <Box>
+    <Box data-testid="Questionnaire">
       <Flex>
         <Stack w={"100%"} textAlign={"center"}>
           <Typography variant="h6" gutterBottom>
