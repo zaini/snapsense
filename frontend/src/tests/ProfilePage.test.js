@@ -9,8 +9,11 @@ import { MockedProvider } from "@apollo/client/testing";
 const {
     GET_SUBMISSIONS,
 } = require("../components/SubmissionsView/SubmissionsComponent");
+const {
+    CHANGE_PASSWORD,
+} = require("../components/utils/ChangePasswordModal");
 
-const submissionMock = [
+const Mock = [
     {
         request: {
             query: GET_SUBMISSIONS,
@@ -39,6 +42,16 @@ const submissionMock = [
             },
         },
     },
+    {
+        request: {
+            query: CHANGE_PASSWORD,
+            variables: {
+                password: "Password000",
+                password_confirmation: "Password000"
+            },
+        },
+        result: { data: { changePassword: true } },
+    },
 ]
 
 afterEach(cleanup);
@@ -61,7 +74,7 @@ const setup = async () => {
     act(() => {
         render(
             <AuthContext.Provider value={toRet}>
-                <MockedProvider mocks={submissionMock} addTypename={false}>
+                <MockedProvider mocks={Mock} addTypename={false}>
                     <MemoryRouter initialEntries={["/my/profile"]}>
                         <Route path="/my/profile">
                             <ProfilePage />
@@ -106,4 +119,19 @@ it("should be able to open change password form", async () => {
         fireEvent.click(changePWModalButton);
     });
     expect(screen.getByText(/Enter your new password/i)).toBeInTheDocument();
+});
+
+it("should be able to submit form", async () => {
+    setup();
+    const changePWModalButton = screen.getByTestId("changePasswordButton");
+    act(() => {
+        fireEvent.click(changePWModalButton);
+    });
+
+    const btnSubmit = screen.getByText(/Change Password/i);
+    act(() => {
+        fireEvent.click(btnSubmit);
+    });
+
+    // expect(screen.getByText(/Password has been updated!/i)).toBeInTheDocument();
 });
