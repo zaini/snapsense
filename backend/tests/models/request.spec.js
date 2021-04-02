@@ -22,7 +22,7 @@ describe("Request Model Test", () => {
     done();
   });
 
-  it("should return a valid deadline date", async (done) => {
+  it("should return a valid fulfilled date", async (done) => {
     const request = await Request.findByPk(4);
     expect(request.fulfilled).toMatchObject(
       new Date(new Date().getFullYear(), 0, 8)
