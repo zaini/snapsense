@@ -19,7 +19,7 @@ import {
 import Error from "./Error";
 import PasswordConfirmationForm from "./PasswordConfirmationForm";
 
-const ChangePasswordModal = ({ isOpen, onClose }) => {
+const ChangePasswordModal = ({ testName, isOpen, onClose }) => {
   const { register, handleSubmit, errors, setError, formState } = useForm();
 
   const [changePassword, { loading, data }] = useMutation(CHANGE_PASSWORD, {
@@ -49,7 +49,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal data-testid={testName} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
@@ -93,7 +93,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
 
 export default ChangePasswordModal;
 
-const CHANGE_PASSWORD = gql`
+export const CHANGE_PASSWORD = gql`
   mutation changePassword($password: String!, $password_confirmation: String!) {
     changePassword(
       password: $password
