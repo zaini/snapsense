@@ -24,7 +24,7 @@ const loginRequest = (email, password, accountType) => {
     });
 };
 
-describe("authorisation resolver", () => {
+describe("patients authorisation resolver", () => {
 
   test("should login as a patient with valid credentials", async (done) => {
     const response = await loginRequest(
