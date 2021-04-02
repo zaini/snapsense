@@ -99,14 +99,11 @@ it("should show loading spinner in profile page for PATIENT without crashing", a
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
 });
 
-it("should be able to open change password form and submit with corret inputs", async () => {
+it("should be able to open change password form", async () => {
     setup();
-
     const changePWModalButton = screen.getByTestId("changePasswordButton");
     act(() => {
         fireEvent.click(changePWModalButton);
     });
-
-    // expect(screen.getByTestId("changePasswordModal")).toBeInTheDocument();
-
+    expect(screen.getByText(/Enter your new password/i)).toBeInTheDocument();
 });
