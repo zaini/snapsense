@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ImageUploader from "react-images-upload";
 import { Box } from "@chakra-ui/react";
 
@@ -11,8 +11,8 @@ const ImageUpload = ({ setImages }) => {
         withPreview={true}
         buttonText="Choose images to Upload"
         onChange={setImages}
-        imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-        maxFileSize={5242880}
+        imgExtension={[".jpg", ".jpeg", ".gif", ".png", ".gif"]}
+        maxFileSize={3024000}
       />
     </Box>
   );

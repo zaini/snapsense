@@ -17,21 +17,21 @@ const InviteNewUser = ({ invitation }) => {
   const { register, handleSubmit, errors, setError, formState } = useForm();
   const history = useHistory();
 
-  const [registerUser, { data, loading }] = useMutation(REGISTER_USER, {
+  const [registerUser] = useMutation(REGISTER_USER, {
     onCompleted(res) {
-      console.log(res);
+      alert("You have created an account and accepted this invitation.");
       history.push("/login");
     },
     onError(err) {
       setError("graphql", {
         type: "manual",
-        message: err.graphQLErrors[0].message,
+        message:
+          (err.graphQLErrors && err.graphQLErrors[0].message) || err.message,
       });
     },
   });
 
   const onSubmit = ({ first_name, last_name, password, repeat_password }) => {
-    console.log("submitting again");
     if (password === repeat_password) {
       registerUser({
         variables: {

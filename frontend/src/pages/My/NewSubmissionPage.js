@@ -2,27 +2,26 @@ import React from "react";
 import { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, StepLabel, Step, Paper, Stepper } from "@material-ui/core";
 import {
   Heading,
   Stack,
   Box,
-  Center,
-  Text,
   Alert,
   Spinner,
-  AlertIcon
+  AlertIcon,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel
 } from "@chakra-ui/react";
-import { CheckCircleIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
+import { CheckIcon } from "@chakra-ui/icons";
 
-import QuestionForm from "../../components/SubmissionCreate/Questionnaire";
-import Review from "../../components/SubmissionCreate/Review";
-import ImageUpload from "../../components/SubmissionCreate/ImageUpload";
-import BackButton from "../../components/SubmissionCreate/BackButtton";
-import NextButton from "../../components/SubmissionCreate/NextButton";
 import Error from "../../components/utils/Error";
+import InformationCard from "../../components/InformationCard";
+import ImageUploadPanel from "../../components/SubmissionCreate/ImageUploadPanel";
+import QuestionnairePanel from "../../components/SubmissionCreate/QuestionnairePanel";
+import SubmitButtonPanel from "../../components/SubmissionCreate/SubmitButtonPanel";
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -59,6 +58,25 @@ const NewSubmissionPage = () => {
   const [uploadSubmission, { loading, error, data }] = useMutation(
     UPLOAD_SUBMISSION,
     {
+      update(proxy, result) {
+        // Write to cache
+        const data = proxy.readQuery({
+          query: GET_SUBMISSIONS
+        });
+        data.getSubmissions = [
+          result.data.createSubmission,
+          ...data.getSubmissions
+        ];
+        proxy.writeQuery({
+          query: GET_SUBMISSIONS,
+          data: {
+            getSubmissions: [
+              result.data.createSubmission,
+              ...data.getSubmissions
+            ]
+          }
+        });
+      },
       onError(e) {}
     }
   );
@@ -75,192 +93,81 @@ const NewSubmissionPage = () => {
   let body;
   if (loading) {
     body = (
-      <Center py={6} data-testid="formSubmitInnerLoader">
-        <Box
-          maxW={"445px"}
-          w={"full"}
-          bg={"white"}
-          boxShadow={"2xl"}
-          rounded={"md"}
-          p={6}
-          overflow={"hidden"}
-        >
-          <Stack>
-            <Heading>
-              <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="blue.500"
-                size="xl"
-              />
-            </Heading>
-            <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
-              Loading...
-            </Heading>
-          </Stack>
-        </Box>
-      </Center>
-    );
-  } else if (error) {
-    body = (
-      <Center py={6} data-testid="formSubmitInnerError">
-        <Box
-          maxW={"445px"}
-          w={"full"}
-          bg={"white"}
-          boxShadow={"2xl"}
-          rounded={"md"}
-          p={6}
-          overflow={"hidden"}
-        >
-          <Stack>
-            <Heading>
-              <CloseIcon />
-            </Heading>
-            <Text
-              color={"red.500"}
-              textTransform={"uppercase"}
-              fontWeight={800}
-              fontSize={"sm"}
-              letterSpacing={1.1}
-            >
-              Failed :(
-            </Text>
-            <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
-              <Error
-                errors={[
-                  {
-                    message:
-                      (error.graphQLErrors &&
-                        error.graphQLErrors[0] &&
-                        error.graphQLErrors[0].message) ||
-                      error.message
-                  }
-                ]}
-              />
-            </Heading>
-          </Stack>
-        </Box>
-      </Center>
+      <InformationCard
+        data-testid="formSubmitInnerLoader"
+        head={
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        }
+        body={
+          <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
+            Uploading...
+          </Heading>
+        }
+      />
     );
   } else if (data) {
     body = (
-      <Center py={6} data-testid="formSubmitInnerSuccess">
-        <Box
-          maxW={"445px"}
-          w={"full"}
-          bg={"white"}
-          boxShadow={"2xl"}
-          rounded={"md"}
-          p={6}
-          overflow={"hidden"}
-        >
-          <Stack>
-            <Heading>
-              <CheckIcon />
-            </Heading>
-            <Text
-              color={"green.500"}
-              textTransform={"uppercase"}
-              fontWeight={800}
-              fontSize={"sm"}
-              letterSpacing={1.1}
-            >
-              Success
-            </Text>
-            <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
-              Form has been submitted !
-            </Heading>
-          </Stack>
-        </Box>
-      </Center>
+      <InformationCard
+        data-testid="formSubmitInnerSuccess"
+        head={<CheckIcon />}
+        body={
+          <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
+            Form has been submitted !
+          </Heading>
+        }
+      />
     );
   } else {
     body = (
       <Box className={classes.layout}>
         <Stack>
-          <Alert data-testid="alert" status="info">
+          {error && (
+            <Error
+              data-testid="formSubmitInnerError"
+              errors={[
+                {
+                  message: error.graphQLErrors[0].message
+                }
+              ]}
+            />
+          )}
+          <Alert status="info">
             <AlertIcon />
             Open the tabs to add your images or questionnaire or both!
           </Alert>
-          <Tabs>
+          <Tabs variant="enclosed">
             <TabList>
               <Tab data-testid="imageTab">Image</Tab>
               <Tab data-testid="questionnaireTab">Questionnaire</Tab>
             </TabList>
-            <TabPanel>
-              <Paper className={classes.paper}>
-                <Heading
-                  style={{ textAlign: "center" }}
-                  data-testid="uploadHeader"
-                >
-                  Image Upload
-                </Heading>
-                <ImageUpload setImages={setImages} />
-              </Paper>
-            </TabPanel>
-            <TabPanel>
-              <Paper className={classes.paper}>
-                <Heading style={{ textAlign: "center" }}>Questionnaire</Heading>
-                <Stepper activeStep={activeStep} className={classes.stepper}>
-                  {steps.map(label => (
-                    <Step key={label} className="QuestionnaireSteps">
-                      <StepLabel>{label}</StepLabel>
-                    </Step>
-                  ))}
-                </Stepper>
-                <Box>
-                  <Stack>
-                    {activeStep < steps.length - 1 ? (
-                      <QuestionForm
-                        step={activeStep}
-                        answers={answers}
-                        setAnswers={setAnswers}
-                      />
-                    ) : (
-                      <Review answers={answers} />
-                    )}
-                    <Center columns={[2]}>
-                      <BackButton
-                        data-testid="backButton"
-                        activeStep={activeStep}
-                        handleBack={handleBack}
-                        classes={classes}
-                      />
-                      <NextButton
-                        activeStep={activeStep}
-                        handleNext={handleNext}
-                        classes={classes}
-                      />
-                    </Center>
-                  </Stack>
-                </Box>
-              </Paper>
-            </TabPanel>
+            <TabPanels>
+              <TabPanel>
+                <ImageUploadPanel classes={classes} setImages={setImages} />
+              </TabPanel>
+              <TabPanel>
+                <QuestionnairePanel
+                  classes={classes}
+                  activeStep={activeStep}
+                  answers={answers}
+                  handleBack={handleBack}
+                  handleNext={handleNext}
+                  setAnswers={setAnswers}
+                />
+              </TabPanel>
+            </TabPanels>
           </Tabs>
-
-          <Paper className={classes.paper}>
-            <Center>
-              <Button
-                data-testid="submitButton"
-                righticon={<CheckCircleIcon />}
-                variant="contained"
-                color="primary"
-                colorscheme="teal"
-                onClick={() => {
-                  uploadSubmission({
-                    variables: {
-                      images,
-                      answers: JSON.stringify(answers)
-                    }
-                  });
-                }}
-              >
-                Submit
-              </Button>
-            </Center>
-          </Paper>
+          <SubmitButtonPanel
+            answers={answers}
+            images={images}
+            classes={classes}
+            uploadSubmission={uploadSubmission}
+          />
         </Stack>
       </Box>
     );
@@ -274,5 +181,35 @@ export default NewSubmissionPage;
 export const UPLOAD_SUBMISSION = gql`
   mutation createSubmission($images: [Upload!], $answers: String!) {
     createSubmission(images: $images, answers: $answers)
+  }
+`;
+
+const GET_SUBMISSIONS = gql`
+  query getSubmissions($patient_id: ID) {
+    getSubmissions(patient_id: $patient_id) {
+      id
+      flag
+      createdAt
+      Patient {
+        id
+        fname
+        lname
+        email
+        flag
+      }
+      Images {
+        id
+        url
+      }
+      Answers {
+        id
+        Question {
+          id
+          text
+        }
+        value
+        extra
+      }
+    }
   }
 `;

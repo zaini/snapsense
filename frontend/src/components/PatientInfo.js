@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import {
@@ -11,13 +11,17 @@ import {
   Alert,
   AlertIcon,
   Spinner,
+  Button,
+  Box,
 } from "@chakra-ui/react";
+import { ViewIcon } from "@chakra-ui/icons";
 import CopyLink from "./utils/CopyLink";
 
-const PatientInfo = (props) => {
+const PatientInfo = () => {
   const location = useParams();
+  const patient_id = location.patient_id;
   const { loading, data, error } = useQuery(GET_PATIENT_AS_DOCTOR, {
-    variables: { patient_id: location.patient_id },
+    variables: { patient_id },
   });
 
   let markup;
@@ -40,7 +44,7 @@ const PatientInfo = (props) => {
     markup = (
       <Container>
         <Center>
-          <Heading>{user.fname}'s Profile</Heading>
+          <Heading data-testid="patient-header">{user.fname}'s Profile</Heading>
         </Center>
         <br />
         <hr />
@@ -67,12 +71,12 @@ const PatientInfo = (props) => {
     );
   }
 
-  return markup;
+  return <Box data-testid="patient-profile">{markup}</Box>;
 };
 
 export default PatientInfo;
 
-const GET_PATIENT_AS_DOCTOR = gql`
+export const GET_PATIENT_AS_DOCTOR = gql`
   query getPatientAsDoctor($patient_id: ID!) {
     getPatientAsDoctor(patient_id: $patient_id) {
       id

@@ -1,5 +1,5 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, ValidationError } = require("sequelize");
 const { Validator } = require("../utils/validator");
 const argon2 = require("argon2");
 
@@ -79,9 +79,14 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Patient",
     }
   );
-  Patient.beforeSave(async (user) => {
-    user.password = await argon2.hash(user.password);
-    console.log(user);
+
+  Patient.beforeSave(async (user, options) => {
+    options.validate = false;
+    user.email = user.email.toLowerCase();
+    if (user.changed("password")) {
+      user.password = await argon2.hash(user.password);
+    }
   });
+
   return Patient;
 };

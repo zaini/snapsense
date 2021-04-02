@@ -42,8 +42,10 @@ const DoctorsPage = () => {
   return (
     <>
       <Center>
-        <Heading>My Doctors</Heading>
+        <Heading data-testid="doctors-header">My Doctors</Heading>
       </Center>
+      <br />
+      <hr />
       <br />
       {markup}
     </>
@@ -52,7 +54,7 @@ const DoctorsPage = () => {
 
 export default DoctorsPage;
 
-const GET_DOCTORS_AS_PATIENT = gql`
+export const GET_DOCTORS_AS_PATIENT = gql`
   query {
     getDoctorsAsPatient {
       id
@@ -63,7 +65,7 @@ const GET_DOCTORS_AS_PATIENT = gql`
   }
 `;
 
-const GET_DOCTORS_AS_ADMIN = gql`
+export const GET_DOCTORS_AS_ADMIN = gql`
   query {
     getDoctorsAsAdmin {
       id
@@ -81,6 +83,7 @@ const cols = [
     headerName: "ID",
     sortable: true,
     flex: 0.3,
+    hide: true,
   },
   {
     field: "fname",

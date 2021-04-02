@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
+import { Link } from "react-router-dom";
 import gql from "graphql-tag";
 import Table from "../../components/utils/Table";
 import { Center, Heading } from "@chakra-ui/layout";
-import { Alert, AlertIcon, Spinner, Stack } from "@chakra-ui/react";
+import { Alert, AlertIcon, Spinner, Button } from "@chakra-ui/react";
 import { AuthContext } from "../../context/auth";
-import { FiImage, FiList } from "react-icons/fi";
 
 // If patient: shows all requests that have been made in a table
 // If doctor: shows all requests made in a table
@@ -35,7 +35,6 @@ const RequestsPage = () => {
       </Alert>
     );
   } else {
-    console.log(data);
     let data_rows =
       accountType === "PATIENT"
         ? data.getRequestsAsPatient
@@ -49,6 +48,8 @@ const RequestsPage = () => {
         <Heading>My Requests</Heading>
       </Center>
       <br />
+      <hr />
+      <br />
       {markup}
     </>
   );
@@ -56,7 +57,7 @@ const RequestsPage = () => {
 
 export default RequestsPage;
 
-const GET_REQUESTS_AS_PATIENT = gql`
+export const GET_REQUESTS_AS_PATIENT = gql`
   query {
     getRequestsAsPatient {
       id
@@ -94,7 +95,7 @@ const GET_REQUESTS_AS_PATIENT = gql`
   }
 `;
 
-const GET_REQUESTS_AS_DOCTOR = gql`
+export const GET_REQUESTS_AS_DOCTOR = gql`
   query {
     getRequestsAsDoctor {
       id
@@ -138,6 +139,7 @@ const cols = [
     type: "number",
     headerName: "ID",
     flex: 0.2,
+    hide: true,
   },
   {
     field: "doctor",
@@ -145,7 +147,7 @@ const cols = [
     flex: 0.2,
     renderCell: ({ row }) => {
       const doctor = row.Doctor;
-      const { fname, lname, email } = doctor;
+      const { fname, lname } = doctor;
       return (
         <p>
           {fname} {lname}
@@ -159,7 +161,7 @@ const cols = [
     flex: 0.2,
     renderCell: ({ row }) => {
       const patient = row.Patient;
-      const { fname, lname, email } = patient;
+      const { fname, lname } = patient;
       return (
         <p>
           {fname} {lname}
@@ -178,44 +180,37 @@ const cols = [
     },
   },
   {
-    field: "submission",
-    headerName: "Submission",
-    flex: 0.2,
+    field: "type",
+    headerName: "Requested Submission Type",
+    flex: 0.5,
     renderCell: ({ row }) => {
-      const submission = row.Submission;
-      // const { fname, lname, email } = submission;
-      // TODO instead of showing submission ID, show a button to view the actual submission
-      // This button will depend on the account type you are logged in as
-      return <p>{"No Submission Made" || submission.id}</p>;
+      return (
+        <p>
+          {row.type === 1 && "📷"} {row.type === 2 && "📝"}{" "}
+          {row.type === 3 && "📷📝"}
+        </p>
+      );
     },
   },
   {
-    field: "type",
-    headerName: "Type",
-    flex: 0.5,
+    field: "submission",
+    headerName: "Submission",
+    flex: 0.4,
     renderCell: ({ row }) => {
-      let type;
-      switch (row.type) {
-        case 1:
-          // Image only
-          type = <FiImage />;
-          break;
-        case 2:
-          // Questionnaire only
-          type = <FiList />;
-          break;
-        case 3:
-          // Both image and questionnaire
-          type = (
-            <Stack direction="row" spacing={4}>
-              <FiImage /> <FiList />
-            </Stack>
-          );
-          break;
-        default:
-          break;
+      const submission = row.Submission;
+      if (submission) {
+        return (
+          <Button
+            as={Link}
+            to={`/my/submissions/show/${submission.id}`}
+            colorScheme="blue"
+          >
+            View Submission
+          </Button>
+        );
+      } else {
+        return <p>No Submission Made</p>;
       }
-      return type;
     },
   },
 ];

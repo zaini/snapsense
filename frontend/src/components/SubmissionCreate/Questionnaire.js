@@ -1,7 +1,8 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
-import { Box, Text, Flex, Stack, SimpleGrid, Divider } from "@chakra-ui/layout";
+import { Box, Flex, Stack } from "@chakra-ui/layout";
 import Question from "./Question";
+import questionsObject from "../../utils/QuestionsObject";
 
 // Questions will come from backend
 const questionsObject = [
@@ -57,7 +58,7 @@ const questionsObject = [
   }
 ];
 
-const QuestionForm = ({ step, answers, setAnswers }) => {
+const QuestionForm = ({ isVisible, step, answers, setAnswers }) => {
   if (!answers.questionnaire[step + 1]) {
     answers.questionnaire[step + 1] = {};
   }
@@ -73,7 +74,11 @@ const QuestionForm = ({ step, answers, setAnswers }) => {
     setAnswers(temp);
   };
   return (
+<<<<<<< HEAD
     <Box data-testid="Questionnaire">
+=======
+    <Box hidden={!isVisible}>
+>>>>>>> fa13a11f6f30c6827802ab2999c837cecf9d3620
       <Flex>
         <Stack w={"100%"} textAlign={"center"}>
           <Typography variant="h6" gutterBottom>
@@ -83,6 +88,7 @@ const QuestionForm = ({ step, answers, setAnswers }) => {
           <Flex>
             {questionsObject.map((e, i) => (
               <Box
+                key={i}
                 borderWidth="1px"
                 borderRadius="lg"
                 width={"100%"}
@@ -92,6 +98,8 @@ const QuestionForm = ({ step, answers, setAnswers }) => {
                 key={`Questionnaire-${i}`}
               >
                 <Question
+                  step={step}
+                  answers={answers}
                   question={questionsObject[i]}
                   onChangeOption={onChangeOption}
                   onChangeText={onChangeText}

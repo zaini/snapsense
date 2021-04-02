@@ -1,18 +1,15 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/auth";
 import {
-  FormControl,
-  FormLabel,
   Container,
-  Input,
   Heading,
   Button,
   useDisclosure,
   Center,
 } from "@chakra-ui/react";
-import CopyLink from "./utils/CopyLink";
 import ChangePasswordModal from "./utils/ChangePasswordModal";
 import DeleteAccountModal from "./utils/DeleteAccountModal";
+import UserDetails from "./UserDetails";
 
 const UserInfo = () => {
   const { user } = useContext(AuthContext);
@@ -26,25 +23,12 @@ const UserInfo = () => {
   return (
     <Container>
       <Center>
-        <Heading>My Profile</Heading>
+        <Heading data-testid="profile-header">My Profile</Heading>
       </Center>
       <br />
       <hr />
       <br />
-      <FormControl id="first_name">
-        <FormLabel>First name</FormLabel>
-        <Input value={user.fname} isReadOnly />
-      </FormControl>
-      <br />
-      <FormControl id="last_name">
-        <FormLabel>Last name</FormLabel>
-        <Input value={user.lname} isReadOnly />
-      </FormControl>
-      <br />
-      <FormControl id="email">
-        <FormLabel>Email address</FormLabel>
-        <CopyLink link={user.email} />
-      </FormControl>
+      <UserDetails user={user} />
       <br />
 
       <Center>

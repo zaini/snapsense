@@ -9,23 +9,23 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import MenuIcon from "@material-ui/icons/Menu";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { InfoIcon, PhoneIcon, PlusSquareIcon } from "@chakra-ui/icons";
-import { Flex, Box } from "@chakra-ui/react";
+import { makeStyles } from "@material-ui/core/styles";
+import { InfoIcon } from "@chakra-ui/icons";
+import { Box } from "@chakra-ui/react";
 import { SidebarData } from "./SidebarData";
 import { AuthContext } from "../../../context/auth";
 import { Link } from "react-router-dom";
-
+import FeedbackOutlinedIcon from "@material-ui/icons/FeedbackOutlined";
 const drawerWidth = 250;
 
 // When resizing the main content can go behind the sidebar. Someone should fix that.
 const MySidebar = (props) => {
   const { window } = props;
   const classes = useStyles();
-  const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const { user } = useContext(AuthContext);
 
@@ -39,7 +39,7 @@ const MySidebar = (props) => {
       <Divider />
       <List>
         {SidebarData[user.accountType].map(({ title, path, icon }, i) => (
-          <Link to={path}>
+          <Link to={path} key={i}>
             <ListItem button key={i}>
               <ListItemIcon>{icon}</ListItemIcon>
               <ListItemText primary={title} />
@@ -52,18 +52,18 @@ const MySidebar = (props) => {
         <Link to={"/logout"}>
           <ListItem button>
             <ListItemIcon>
-              <PlusSquareIcon />
+              <ExitToAppIcon />
             </ListItemIcon>
             <ListItemText primary={"Logout"} />
           </ListItem>
         </Link>
 
-        <Link to={"/contact"}>
+        <Link to={"/feedback"}>
           <ListItem button>
             <ListItemIcon>
-              <PhoneIcon />
+              <FeedbackOutlinedIcon />
             </ListItemIcon>
-            <ListItemText primary={"Contact"} />
+            <ListItemText primary={"Feedback"} />
           </ListItem>
         </Link>
 
@@ -101,15 +101,6 @@ const MySidebar = (props) => {
           </Typography>
         </Toolbar>
       </AppBar>
-      {/* <IconButton
-        color="inherit"
-        aria-label="open drawer"
-        edge="start"
-        onClick={handleDrawerToggle}
-        className={classes.menuButton}
-      >
-        <MenuIcon />
-      </IconButton> */}
       <nav className={classes.drawer} aria-label="mailbox folders">
         <Hidden smUp implementation="css">
           <Drawer

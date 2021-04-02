@@ -6,11 +6,13 @@
   "scripts": {
     "serve": "node server.js",
     "start": "nodemon server.js",
-    "test": "jest --config ./tests/jest.config.js --forceExit --detectOpenHandles",
+		"db:setup": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "test-debug": "cross-env NODE_ENV=test npm run db:test && jest --config ./tests/jest.config.js --forceExit --detectOpenHandles",
+		"test": "cross-env NODE_ENV=test npm run db:test && jest --silent --verbose --config ./tests/jest.config.js --forceExit --detectOpenHandles",
     "db:drop:test": "cross-env NODE_ENV=test npx sequelize-cli db:drop",
     "db:create:test": "cross-env NODE_ENV=test npx sequelize-cli db:create",
     "db:migrate:test": "cross-env NODE_ENV=test npx sequelize-cli db:migrate",
-    "db:seed:test": "cross-env NODE_ENV=test  npx sequelize-cli db:seed:all",
+    "db:seed:test": "cross-env NODE_ENV=test npx sequelize-cli db:seed:all",
     "db:test": "npm run db:drop:test && npm run db:create:test && npm run db:migrate:test"
   },
   "author": "",
@@ -32,6 +34,7 @@
     "graphql": "^15.5.0",
     "graphql-middleware": "^6.0.4",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
     "mysql2": "^2.2.5",
     "node-cron": "^3.0.0",
     "nodemailer": "^6.4.18",
