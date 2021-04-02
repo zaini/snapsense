@@ -53,6 +53,8 @@ const useStyles = makeStyles(theme => ({
 export const steps = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Review"];
 const NewSubmissionPage = () => {
   const [images, setImages] = useState([]);
+  const [isQuestionnaireVisible, setIsQuestionnaireVisible] = useState(true);
+
   const [answers, setAnswers] = useState({ questionnaire: {} });
   const [activeStep, setActiveStep] = useState(0);
   const [uploadSubmission, { loading, error, data }] = useMutation(
@@ -83,18 +85,27 @@ const NewSubmissionPage = () => {
   const classes = useStyles();
 
   const handleNext = () => {
-    const temp = activeStep + 1;
-    setActiveStep(temp);
+    const newStep = activeStep + 1;
+    if (newStep === 8) {
+      setIsQuestionnaireVisible(false);
+    }
+    setActiveStep(newStep);
   };
+
   const handleBack = () => {
-    const temp = activeStep - 1;
-    setActiveStep(temp);
+    const newStep = activeStep - 1;
+    if (newStep <= 7) {
+      setIsQuestionnaireVisible(true);
+    }
+    setActiveStep(newStep);
   };
+
   let body;
+
   if (loading) {
     body = (
       <InformationCard
-        data-testid="formSubmitInnerLoader"
+        dataTestId="formSubmitInnerLoader"
         head={
           <Spinner
             thickness="4px"
@@ -114,7 +125,7 @@ const NewSubmissionPage = () => {
   } else if (data) {
     body = (
       <InformationCard
-        data-testid="formSubmitInnerSuccess"
+        dataTestId="formSubmitInnerSuccess"
         head={<CheckIcon />}
         body={
           <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
@@ -152,6 +163,7 @@ const NewSubmissionPage = () => {
               </TabPanel>
               <TabPanel>
                 <QuestionnairePanel
+                  isQuestionnaireVisible={isQuestionnaireVisible}
                   classes={classes}
                   activeStep={activeStep}
                   answers={answers}

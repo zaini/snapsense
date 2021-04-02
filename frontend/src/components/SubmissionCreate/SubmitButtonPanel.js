@@ -22,6 +22,7 @@ const SubmitButtonPanel = ({ answers, images, classes, uploadSubmission }) => {
     <Paper className={classes.paper}>
       <Center>
         <Button
+          data-testid="submitButton"
           disabled={
             !imageUploadExists && !(answerUploadExists && validateAnswers)
           }
@@ -33,8 +34,8 @@ const SubmitButtonPanel = ({ answers, images, classes, uploadSubmission }) => {
             uploadSubmission({
               variables: {
                 images,
-                answers: JSON.stringify(answers),
-              },
+                answers: JSON.stringify(answers)
+              }
             });
           }}
         >

@@ -1,23 +1,14 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 
-const BackButton = ({ activeStep, handleBack, classes }) => {
-  let params;
-  if (activeStep > 0) {
-    params = {};
-  } else {
-    params = {
-      disabled: true,
-    };
-  }
-
+const BackButton = ({ activeStep, handleBack, classes, disabled = false }) => {
   return (
     <Button
-      {...params}
       variant="contained"
       color="secondary"
       onClick={handleBack}
       className={classes.button}
+      disabled={disabled}
     >
       Back
     </Button>

@@ -4,12 +4,13 @@ import { Heading, Stack, Box, Center } from "@chakra-ui/react";
 
 import QuestionForm from "./Questionnaire";
 import Review from "./Review";
-import BackButton from "./BackButtton";
+import BackButton from "./BackButton";
 import NextButton from "./NextButton";
 
 const steps = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Review"];
 
 const QuestionnairePanel = ({
+  isQuestionnaireVisible,
   classes,
   activeStep,
   answers,
@@ -17,7 +18,8 @@ const QuestionnairePanel = ({
   handleBack,
   handleNext
 }) => {
-  const [reviewBtn, setReviewBtn] = useState(false);
+  console.log(isQuestionnaireVisible)
+  console.log(activeStep);
   return (
     <Paper className={classes.paper}>
       <Heading style={{ textAlign: "center" }}>Questionnaire</Heading>
@@ -30,27 +32,41 @@ const QuestionnairePanel = ({
       </Stepper>
       <Box>
         <Stack>
-          <QuestionForm
-            isVisible={!reviewBtn}
-            step={activeStep}
-            answers={answers}
-            setAnswers={setAnswers}
-          />
-
-          <Review isVisible={reviewBtn} answers={answers} />
+          {isQuestionnaireVisible ? (
+            <QuestionForm
+              step={activeStep}
+              answers={answers}
+              setAnswers={setAnswers}
+            />
+          ) : (
+            <Review answers={answers} />
+          )}
 
           <Center columns={[2]}>
-            <BackButton
-              activeStep={activeStep}
-              handleBack={handleBack}
-              classes={classes}
-            />
-            <NextButton
-              activeStep={activeStep}
-              handleNext={handleNext}
-              classes={classes}
-              setReviewBtn={setReviewBtn}
-            />
+            {activeStep > 0 ? (
+              <BackButton
+                activeStep={activeStep}
+                handleBack={handleBack}
+                classes={classes}
+              />
+            ) : (
+              <BackButton
+                activeStep={activeStep}
+                handleBack={handleBack}
+                classes={classes}
+                disabled
+              />
+            )}
+            {activeStep < 7 && (
+              <NextButton handleNext={handleNext} classes={classes.button} />
+            )}
+            {activeStep === 7 && (
+              <NextButton
+                name="Review"
+                handleNext={handleNext}
+                classes={classes.button}
+              />
+            )}
           </Center>
         </Stack>
       </Box>

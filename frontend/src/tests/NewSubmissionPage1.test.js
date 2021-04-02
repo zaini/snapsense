@@ -327,7 +327,7 @@ describe("New submission page", () => {
       fit("displays the review page when all questions are answered", async () => {
         const { container, findByTestId, debug } = await setup(mockSuccess);
         fireEvent.click(await findByTestId("questionnaireTab"));
-        for (let i = 0; i < steps.length; i += 1) {
+        for (let i = 0; i < steps.length - 1; i += 1) {
           fireEvent.click(await findByTestId("nextButton"));
         }
         expect(await findByTestId("ReviewPane")).toBeTruthy();

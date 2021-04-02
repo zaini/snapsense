@@ -1,35 +1,15 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 
-const NextButton = ({ setReviewBtn, activeStep, handleNext, classes }) => {
-  let params;
-  let name = "Next";
-  if (activeStep === 8) {
-    setReviewBtn(true);
-    name = "Submit";
-    params = {
-      disabled: true,
-      style: {
-        display: "none",
-      },
-    };
-  } else if (activeStep === 7) {
-    setReviewBtn(false);
-    name = "Review";
-    params = {};
-  } else {
-    setReviewBtn(false);
-    params = {};
-  }
-
+const NextButton = ({ handleNext, classes, name, disabled = false }) => {
   return (
     <Button
       data-testid="nextButton"
-      {...params}
       variant="contained"
       color="primary"
       onClick={handleNext}
-      className={classes.button}
+      className={classes}
+      disabled={disabled}
     >
       {name}
     </Button>

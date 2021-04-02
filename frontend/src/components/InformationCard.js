@@ -1,9 +1,9 @@
 import React from "react";
 import { Heading, Stack, Box, Center } from "@chakra-ui/react";
 
-const InformationCard = ({ head, body }) => {
+const InformationCard = ({ head, body, dataTestId }) => {
   return (
-    <Center py={6}>
+    <Center py={6} data-testid={dataTestId}>
       <Box
         maxW={"445px"}
         w={"full"}
