@@ -41,6 +41,15 @@ module.exports = {
         const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
         return re.test(password);
       }
+
+      static isImage(url) {
+        const fileExtensions = ["jpg", "jpeg", "jpe", "png", "webp" ];
+        const fileExtension = url.substring(url.length - 3, url.length);
+        if (fileExtensions.includes(fileExtension, 0)) {
+            return true;
+        }
+        return false;
+      }
     }
     return validator;
   },
