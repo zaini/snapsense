@@ -7,13 +7,6 @@ module.exports = {
       static isEmpty(value) {
         return String(value) === "";
       }
-      static isShort(value, minLength) {
-        return String(value).length < minLength;
-      }
-
-      static isLong(value, maxLength) {
-        return String(value).length > maxLength;
-      }
       
       static isName(name) {
         /*
