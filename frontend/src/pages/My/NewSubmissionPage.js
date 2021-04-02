@@ -51,8 +51,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const steps = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Review"];
-
+export const steps = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Review"];
 const NewSubmissionPage = () => {
   const [images, setImages] = useState([]);
   const [answers, setAnswers] = useState({ questionnaire: {} });
@@ -198,7 +197,7 @@ const NewSubmissionPage = () => {
                 >
                   Image Upload
                 </Heading>
-                <ImageUpload data-testid="imageUpload" setImages={setImages} />
+                <ImageUpload setImages={setImages} />
               </Paper>
             </TabPanel>
             <TabPanel>
@@ -206,14 +205,14 @@ const NewSubmissionPage = () => {
                 <Heading style={{ textAlign: "center" }}>Questionnaire</Heading>
                 <Stepper activeStep={activeStep} className={classes.stepper}>
                   {steps.map(label => (
-                    <Step key={label}>
+                    <Step key={label} className="QuestionnaireSteps">
                       <StepLabel>{label}</StepLabel>
                     </Step>
                   ))}
                 </Stepper>
                 <Box>
                   <Stack>
-                    {activeStep < 8 ? (
+                    {activeStep < steps.length - 1 ? (
                       <QuestionForm
                         step={activeStep}
                         answers={answers}
@@ -230,7 +229,6 @@ const NewSubmissionPage = () => {
                         classes={classes}
                       />
                       <NextButton
-                        data-testid="nextButton"
                         activeStep={activeStep}
                         handleNext={handleNext}
                         classes={classes}
