@@ -49,9 +49,9 @@ const ChangePasswordModal = ({ testName, isOpen, onClose }) => {
   };
 
   return (
-    <Modal data-testid={testName} isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent data-testid={testName} >
         <ModalHeader>
           Change your password
           <Text fontSize="xs" pt="5px">
@@ -63,7 +63,7 @@ const ChangePasswordModal = ({ testName, isOpen, onClose }) => {
         <ModalBody pb={6}>
           <Error errors={errors} mb="4" />
           {Object.keys(errors).length === 0 && data && (
-            <Alert status="success" variant="subtle" mb="4">
+            <Alert data-testid="updateAlert" status="success" variant="subtle" mb="4">
               <AlertIcon />
               Password has been updated!
             </Alert>
