@@ -21,15 +21,15 @@ const HospitalDetails = ({ hospital }) => {
         <hr />
         <FormControl id="id">
           <FormLabel>ID</FormLabel>
-          <Input value={hospital.id} isReadOnly />
+          <Input data-testid="hospitaIDHolder" value={hospital.id} isReadOnly />
         </FormControl>
         <FormControl id="name">
           <FormLabel>Hospital name</FormLabel>
-          <Input value={hospital.name} isReadOnly />
+          <Input data-testid="hospitalNameHolder" value={hospital.name} isReadOnly />
         </FormControl>
         <FormControl id="email">
           <FormLabel>Contact Email</FormLabel>
-          <CopyLink link={hospital.contact_email} />
+          <CopyLink data-testid="hospitalNameHolder" link={hospital.contact_email} />
         </FormControl>
         <hr />
       </Stack>
