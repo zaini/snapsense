@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, cleanup, waitFor, render, fireEvent } from "@testing-library/react";
+import { screen, cleanup, waitFor, render, fireEvent, within } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import ProfilePage from '../pages/My/ProfilePage';
 import { Route, MemoryRouter } from "react-router";
@@ -114,24 +114,40 @@ it("should show loading spinner in profile page for PATIENT without crashing", a
 
 it("should be able to open change password form", async () => {
     setup();
-    const changePWModalButton = screen.getByTestId("changePasswordButton");
     act(() => {
-        fireEvent.click(changePWModalButton);
+        fireEvent(
+            screen.getByTestId("changePasswordButton"),
+            new MouseEvent("click", {
+                bubbles: true,
+                cancelable: true,
+            })
+        );
     });
-    expect(screen.getByText(/Enter your new password/i)).toBeInTheDocument();
+
+    expect(screen.getByTestId("changePasswordModal")).toBeInTheDocument();
 });
 
 it("should be able to submit form", async () => {
     setup();
-    const changePWModalButton = screen.getByTestId("changePasswordButton");
     act(() => {
-        fireEvent.click(changePWModalButton);
+        fireEvent(
+            screen.getByTestId("changePasswordButton"),
+            new MouseEvent("click", {
+                bubbles: true,
+                cancelable: true,
+            })
+        );
     });
 
-    const btnSubmit = screen.getByText(/Change Password/i);
+    const form = screen.getByTestId("changePasswordModal");
+    const btnSubmit = within(form).getByText(/Change Password/i);
+
+    jest.spyOn(window, "alert").mockImplementation(() => { });
     act(() => {
         fireEvent.click(btnSubmit);
     });
 
-    // expect(screen.getByText(/Password has been updated!/i)).toBeInTheDocument();
+    expect(screen.alert).toBeCalledWith(
+        "Password has been updated!"
+    );
 });
