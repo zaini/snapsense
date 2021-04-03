@@ -82,7 +82,7 @@ const HospitalPage = (props) => {
 
 export default HospitalPage;
 
-const GET_HOSPITAL = gql`
+export const GET_HOSPITAL = gql`
   query getSpecificHospital($hospital_id: ID!) {
     getSpecificHospital(hospital_id: $hospital_id) {
       id
