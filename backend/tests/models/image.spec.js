@@ -37,6 +37,16 @@ describe("Image Model Test", () => {
     done();
   });
 
+  it("should save image with valid url", async (done) => {
+    await expect(
+      Image.create({
+        url: "image.jpe",
+        submission_id: 1,
+      })
+    ).toBeTruthy();
+    done();
+  });
+
   it("should delete image if submission is deleted", async (done) => {
     await Submission.destroy({ where: { id: 1 } });
     const image = await Image.findByPk(1);
