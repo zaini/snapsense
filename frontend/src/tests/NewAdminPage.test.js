@@ -11,7 +11,6 @@ import { MockedProvider } from "@apollo/client/testing";
 import { act } from "react-dom/test-utils";
 
 import NewAdminPage from "../pages/My/NewAdminPage";
-import NewAdminForm from "../components/Admin/NewAdminForm";
 import { Route, MemoryRouter } from "react-router";
 
 afterEach(cleanup);
@@ -363,49 +362,49 @@ describe("Submitting form with invalid input", () => {
   });
 });
 
-// describe("Submitting form with valid input", () => {
-//   it("submits the information and pops up a success message", async () => {
-//     setup();
+describe("Submitting form with valid input", () => {
+  it("submits the information and pops up a success message", async () => {
+    setup();
 
-//     await waitFor(() => {
-//       const nameInput = screen.getByTestId("adminNameInput");
-//       act(() => {
-//         fireEvent.change(nameInput, { target: { value: "Admin" } });
-//       });
-//       expect(nameInput.value).toBe("Admin");
+    await waitFor(() => {
+      const nameInput = screen.getByTestId("adminNameInput");
+      act(() => {
+        fireEvent.change(nameInput, { target: { value: "Admin" } });
+      });
+      expect(nameInput.value).toBe("Admin");
 
-//       const fnameInput = screen.getByTestId("adminLNameInput");
-//       act(() => {
-//         fireEvent.change(fnameInput, {
-//           target: { value: "One" },
-//         });
-//       });
-//       expect(fnameInput.value).toBe("One");
+      const fnameInput = screen.getByTestId("adminLNameInput");
+      act(() => {
+        fireEvent.change(fnameInput, {
+          target: { value: "One" },
+        });
+      });
+      expect(fnameInput.value).toBe("One");
 
-//       const emailInput = screen.getByTestId("adminEmailInput");
-//       act(() => {
-//         fireEvent.change(emailInput, {
-//           target: { value: "admin1@gmail.com" },
-//         });
-//       });
-//       expect(emailInput.value).toBe("admin1@gmail.com");
+      const emailInput = screen.getByTestId("adminEmailInput");
+      act(() => {
+        fireEvent.change(emailInput, {
+          target: { value: "admin1@gmail.com" },
+        });
+      });
+      expect(emailInput.value).toBe("admin1@gmail.com");
 
-//       const passwordInput = screen.getByTestId("adminPasswordInput");
-//       act(() => {
-//         fireEvent.change(passwordInput, {
-//           target: { value: "Password123" },
-//         });
-//       });
-//       expect(passwordInput.value).toBe("Password123");
+      const passwordInput = screen.getByTestId("adminPasswordInput");
+      act(() => {
+        fireEvent.change(passwordInput, {
+          target: { value: "Password123" },
+        });
+      });
+      expect(passwordInput.value).toBe("Password123");
 
-//       const submitButton = screen.getByRole("button");
-//       act(() => {
-//         fireEvent.click(submitButton);
-//       });
-//     });
+      const submitButton = screen.getByRole("button");
+      act(() => {
+        fireEvent.click(submitButton);
+      });
+    });
 
-//     await waitFor(() => {
-//       expect(screen.getByTestId("formSubmitInnerLoader")).toBeInTheDocument();
-//     });
-//   });
-// });
+    await waitFor(() => {
+      expect(screen.getByTestId("formSubmitInnerLoader")).toBeInTheDocument();
+    });
+  });
+});
