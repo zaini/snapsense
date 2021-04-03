@@ -62,10 +62,49 @@ const mocks = [
         lname: "One",
         email: "admin1@gmail.com",
         password: "Password123",
-        hospital_id: "1",
+        hospital_id: 1,
       },
     },
     result: { data: { createAdmin: true } },
+  },
+  {
+    request: {
+      query: GET_ADMINS,
+      variables: { id: "2" },
+    },
+    result: {
+      data: {
+        getAdmins: [
+          {
+            id: "1",
+            fname: "Admin",
+            lname: "One",
+            email: "admin1@gmail.com",
+            Hospital: {
+              name: "Hospital One",
+            },
+          },
+          {
+            id: "2",
+            fname: "Admin",
+            lname: "Two",
+            email: "admin2@gmail.com",
+            Hospital: {
+              name: "Hospital Two",
+            },
+          },
+          {
+            id: "3",
+            fname: "Admin ",
+            lname: "Three",
+            email: "admin.three@gmail.com",
+            Hospital: {
+              name: "Hospital One",
+            },
+          },
+        ],
+      },
+    },
   },
 ];
 
@@ -131,9 +170,7 @@ describe("New admin page", () => {
 
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
-      expect(
-        screen.getByText(/Hospital does not exist/i)
-      ).toBeInTheDocument();
+      expect(screen.getByText(/Hospital does not exist/i)).toBeInTheDocument();
     });
   });
 });
@@ -372,38 +409,38 @@ describe("Submitting form with valid input", () => {
         fireEvent.change(nameInput, { target: { value: "Admin" } });
       });
       expect(nameInput.value).toBe("Admin");
+    });
 
-      const fnameInput = screen.getByTestId("adminLNameInput");
-      act(() => {
-        fireEvent.change(fnameInput, {
-          target: { value: "One" },
-        });
+    const fnameInput = screen.getByTestId("adminLNameInput");
+    act(() => {
+      fireEvent.change(fnameInput, {
+        target: { value: "One" },
       });
-      expect(fnameInput.value).toBe("One");
+    });
+    expect(fnameInput.value).toBe("One");
 
-      const emailInput = screen.getByTestId("adminEmailInput");
-      act(() => {
-        fireEvent.change(emailInput, {
-          target: { value: "admin1@gmail.com" },
-        });
+    const emailInput = screen.getByTestId("adminEmailInput");
+    act(() => {
+      fireEvent.change(emailInput, {
+        target: { value: "admin1@gmail.com" },
       });
-      expect(emailInput.value).toBe("admin1@gmail.com");
+    });
+    expect(emailInput.value).toBe("admin1@gmail.com");
 
-      const passwordInput = screen.getByTestId("adminPasswordInput");
-      act(() => {
-        fireEvent.change(passwordInput, {
-          target: { value: "Password123" },
-        });
+    const passwordInput = screen.getByTestId("adminPasswordInput");
+    act(() => {
+      fireEvent.change(passwordInput, {
+        target: { value: "Password123" },
       });
-      expect(passwordInput.value).toBe("Password123");
+    });
+    expect(passwordInput.value).toBe("Password123");
 
-      const submitButton = screen.getByRole("button");
+    const submitButton = screen.getByRole("button");
+
+    await waitFor(() => {
       act(() => {
         fireEvent.click(submitButton);
       });
-    });
-
-    await waitFor(() => {
       expect(screen.getByTestId("formSubmitInnerLoader")).toBeInTheDocument();
     });
   });
