@@ -13,7 +13,7 @@ import {
   TabList,
   TabPanels,
   Tab,
-  TabPanel
+  TabPanel,
 } from "@chakra-ui/react";
 import { CheckIcon } from "@chakra-ui/icons";
 
@@ -23,31 +23,31 @@ import ImageUploadPanel from "../../components/SubmissionCreate/ImageUploadPanel
 import QuestionnairePanel from "../../components/SubmissionCreate/QuestionnairePanel";
 import SubmitButtonPanel from "../../components/SubmissionCreate/SubmitButtonPanel";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   layout: {
     marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   paper: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
   },
   stepper: {
     padding: theme.spacing(3, 0, 5),
     overflowY: "visible",
     [theme.breakpoints.down(1000 + theme.spacing(3) * 2)]: {
-      display: "none"
-    }
+      display: "none",
+    },
   },
   buttons: {
     display: "flex",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   button: {
     marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1)
-  }
+    marginLeft: theme.spacing(1),
+  },
 }));
 
 export const steps = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Review"];
@@ -63,23 +63,23 @@ const NewSubmissionPage = () => {
       update(proxy, result) {
         // Write to cache
         const data = proxy.readQuery({
-          query: GET_SUBMISSIONS
+          query: GET_SUBMISSIONS,
         });
         data.getSubmissions = [
           result.data.createSubmission,
-          ...data.getSubmissions
+          ...data.getSubmissions,
         ];
         proxy.writeQuery({
           query: GET_SUBMISSIONS,
           data: {
             getSubmissions: [
               result.data.createSubmission,
-              ...data.getSubmissions
-            ]
-          }
+              ...data.getSubmissions,
+            ],
+          },
         });
       },
-      onError(e) {}
+      onError(e) {},
     }
   );
   const classes = useStyles();
@@ -105,7 +105,6 @@ const NewSubmissionPage = () => {
   if (loading) {
     body = (
       <InformationCard
-        dataTestId="formSubmitInnerLoader"
         head={
           <Spinner
             thickness="4px"
@@ -125,7 +124,7 @@ const NewSubmissionPage = () => {
   } else if (data) {
     body = (
       <InformationCard
-        dataTestId="formSubmitInnerSuccess"
+        data-testid="formSubmitInnerSuccess"
         head={<CheckIcon />}
         body={
           <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
@@ -143,8 +142,12 @@ const NewSubmissionPage = () => {
               data-testid="formSubmitInnerError"
               errors={[
                 {
-                  message: error.graphQLErrors[0].message
-                }
+                  message:
+                    (error.graphQLErrors &&
+                      error.graphQLErrors[0] &&
+                      error.graphQLErrors[0].message) ||
+                    error.message,
+                },
               ]}
             />
           )}
@@ -154,8 +157,8 @@ const NewSubmissionPage = () => {
           </Alert>
           <Tabs variant="enclosed">
             <TabList>
-              <Tab data-testid="imageTab">Image</Tab>
-              <Tab data-testid="questionnaireTab">Questionnaire</Tab>
+              <Tab>Image</Tab>
+              <Tab>Questionnaire</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
