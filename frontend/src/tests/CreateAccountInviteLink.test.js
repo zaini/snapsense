@@ -66,7 +66,7 @@ const setupNew = async () => {
   });
 };
 
-describe("viewing invite for a new user patient", () => {
+describe("viewing invite for a new user", () => {
   test("if page renders without crashing", async () => {
     expect(setupNew).toBeTruthy();
   });
@@ -100,7 +100,7 @@ describe("viewing invite for a new user patient", () => {
   });
 });
 
-describe("submitting invite form for a new user patient", () => {
+describe("submitting invite form for a new user", () => {
   test("if form shows valid validation messages", async () => {
     setupNew();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
@@ -271,3 +271,6 @@ describe("taking action on invite form for existing user patient", () => {
     });
   });
 });
+
+// Cases for Existing doctors get handled from backend
+// Case for new doctors get are taken care of in the New User Block
