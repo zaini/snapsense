@@ -4,6 +4,7 @@ import { Button } from "@material-ui/core";
 const BackButton = ({ activeStep, handleBack, classes, disabled = false }) => {
   return (
     <Button
+      data-testid="backButton"
       variant="contained"
       color="secondary"
       onClick={handleBack}

@@ -8,19 +8,19 @@ const QuestionForm = ({ step, answers, setAnswers }) => {
   if (!answers.questionnaire[step + 1]) {
     answers.questionnaire[step + 1] = {};
   }
-  const onChangeOption = optionIndex => {
+  const onChangeOption = (optionIndex) => {
     let temp = answers;
     temp.questionnaire[step + 1].val = optionIndex;
     setAnswers(temp);
   };
 
-  const onChangeText = extraInfo => {
+  const onChangeText = (extraInfo) => {
     let temp = answers;
     temp.questionnaire[step + 1].extra = extraInfo;
     setAnswers(temp);
   };
   return (
-    <Box data-testid="Questionnaire">
+    <Box>
       <Flex>
         <Stack w={"100%"} textAlign={"center"}>
           <Typography variant="h6" gutterBottom>
@@ -37,7 +37,7 @@ const QuestionForm = ({ step, answers, setAnswers }) => {
                 overflow="hidden"
                 padding="4"
                 display={step === i ? "block" : "none"}
-                key={`Questionnaire-${i}`}
+                data-testid={`Questionnaire${i + 1}`}
               >
                 <Question
                   step={step}

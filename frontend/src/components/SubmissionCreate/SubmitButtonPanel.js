@@ -26,16 +26,16 @@ const SubmitButtonPanel = ({ answers, images, classes, uploadSubmission }) => {
           disabled={
             !imageUploadExists && !(answerUploadExists && validateAnswers)
           }
-          rightIcon={<CheckCircleIcon />}
+          righticon={<CheckCircleIcon />}
           variant="contained"
           color="primary"
-          colorScheme="blue"
+          colorscheme="blue"
           onClick={() => {
             uploadSubmission({
               variables: {
                 images,
-                answers: JSON.stringify(answers)
-              }
+                answers: JSON.stringify(answers),
+              },
             });
           }}
         >
