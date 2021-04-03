@@ -44,7 +44,7 @@ const mocks = [
     request: {
       query: GET_HOSPITAL,
       variables: {
-        patient_id: "2",
+        hospital_id: "2",
       },
     },
     error: {
@@ -117,26 +117,26 @@ describe("New admin page", () => {
     });
   });
 
-  // it("shows warning text if hospital doesn't exist", async () => {
-  //   act(() => {
-  //     render(
-  //       <MockedProvider mocks={mocks} addTypename={false}>
-  //         <MemoryRouter initialEntries={["/my/hospitals/2/admins/new"]}>
-  //           <Route path="/my/hospitals/:hospital_id/admins/new">
-  //             <NewAdminPage />
-  //           </Route>
-  //         </MemoryRouter>
-  //       </MockedProvider>
-  //     );
-  //   });
+  it("shows warning text if hospital doesn't exist", async () => {
+    act(() => {
+      render(
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <MemoryRouter initialEntries={["/my/hospitals/2/admins/new"]}>
+            <Route path="/my/hospitals/:hospital_id/admins/new">
+              <NewAdminPage />
+            </Route>
+          </MemoryRouter>
+        </MockedProvider>
+      );
+    });
 
-  //   expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-  //   await waitFor(() => {
-  //     expect(
-  //       screen.getByText(/Hospital does not exist/i)
-  //     ).toBeInTheDocument();
-  //   });
-  // });
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Hospital does not exist/i)
+      ).toBeInTheDocument();
+    });
+  });
 });
 
 describe("Placeholders can have text written in it", () => {
