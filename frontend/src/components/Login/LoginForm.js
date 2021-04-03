@@ -26,7 +26,10 @@ const LoginForm = ({ accountType }) => {
     },
     onError(err) {
       const message =
-        (err.graphQLErrors && err.graphQLErrors[0] && err.graphQLErrors[0].message) || err.message;
+        (err.graphQLErrors &&
+          err.graphQLErrors[0] &&
+          err.graphQLErrors[0].message) ||
+        err.message;
       // We have to assign this to a field in the form for it to let us resubmit after an error
       setError("email", { type: "manual", message });
     },
@@ -40,6 +43,7 @@ const LoginForm = ({ accountType }) => {
 
   if (context.user) {
     // https://ui.dev/react-router-v5-protected-routes-authentication/
+
     return <Redirect to={state?.from || "/"} />;
   }
 
@@ -49,12 +53,18 @@ const LoginForm = ({ accountType }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl id="email" isRequired>
           <FormLabel htmlFor="email">Email</FormLabel>
-          <Input name="email" placeholder="Email" ref={register} />
+          <Input
+            data-testid="inputEmail"
+            name="email"
+            placeholder="Email"
+            ref={register}
+          />
         </FormControl>
         <br />
         <FormControl id="password" isRequired>
           <FormLabel htmlFor="password">Password</FormLabel>
           <Input
+            data-testid="inputPassword"
             type="password"
             name="password"
             placeholder="Password"
@@ -64,6 +74,7 @@ const LoginForm = ({ accountType }) => {
         <br />
         <Center>
           <Button
+            data-testid="btnSubmit"
             mt={4}
             colorScheme="blue"
             type="submit"
@@ -79,7 +90,7 @@ const LoginForm = ({ accountType }) => {
 
 export default LoginForm;
 
-const LOGIN_USER = gql`
+export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!, $account_type: String!) {
     login(email: $email, password: $password, account_type: $account_type) {
       accessToken

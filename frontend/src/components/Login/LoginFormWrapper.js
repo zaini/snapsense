@@ -25,7 +25,7 @@ const LoginFormWrapper = () => {
           accountType={accountType}
         />
 
-        <h4>
+        <h4 data-testid="formHelper">
           Hello {accountType.toLowerCase()}! Please fill out the form below to
           get started
         </h4>
