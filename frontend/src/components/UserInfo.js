@@ -40,7 +40,7 @@ const UserInfo = () => {
         </Button>
       </Center>
       <ChangePasswordModal testName="changePasswordModal" isOpen={isOpen} onClose={onClose} />
-      <DeleteAccountModal isOpen={isDeleteOpen} onClose={onDeleteClose} />
+      <DeleteAccountModal testName="deleteAccountModal" isOpen={isDeleteOpen} onClose={onDeleteClose} />
 
       <br />
 
