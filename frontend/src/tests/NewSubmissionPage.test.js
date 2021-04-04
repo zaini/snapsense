@@ -1,8 +1,4 @@
 import { MockedProvider } from "@apollo/client/testing";
-import NewSubmissionPage, {
-  UPLOAD_SUBMISSION,
-} from "../pages/My/NewSubmissionPage";
-import { GET_SUBMISSIONS } from "../components/SubmissionsView/SubmissionsComponent.js";
 import { Route, MemoryRouter } from "react-router";
 import {
   render,
@@ -14,233 +10,19 @@ import {
 } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 
+import questionsObject from "../utils/QuestionsObject";
+import NewSubmissionPage from "../pages/My/NewSubmissionPage";
+
+import { mockSuccess } from "./mocks/newSubmissionPageMocks";
+
 /* Essential */
 afterEach(cleanup);
-
-//Creating mock data
-const mockSuccess = [
-  {
-    request: {
-      query: UPLOAD_SUBMISSION,
-      variables: {
-        images: [new Blob(["abc"], { type: "text/plain" })],
-        answers: JSON.stringify([
-          {
-            id: "56",
-            Question: {
-              id: "8",
-              text: "Please add any other notes for your clinician (optional):",
-              __typename: "Question",
-            },
-            value: true,
-            extra: "fsdfsd",
-            __typename: "Answer",
-          },
-          {
-            id: "55",
-            Question: {
-              id: "7",
-              text:
-                "In the past 7 days, have you noticed any unusual smells from the wound?",
-              __typename: "Question",
-            },
-            value: false,
-            extra: null,
-            __typename: "Answer",
-          },
-          {
-            id: "54",
-            Question: {
-              id: "6",
-              text:
-                "In the past 7 days, has one foot been hotter to touch than the other?",
-              __typename: "Question",
-            },
-            value: true,
-            extra: null,
-            __typename: "Answer",
-          },
-          {
-            id: "53",
-            Question: {
-              id: "5",
-              text:
-                "In the past 7 days, has your ulcer been hotter to touch than usual?",
-              __typename: "Question",
-            },
-            value: false,
-            extra: null,
-            __typename: "Answer",
-          },
-          {
-            id: "52",
-            Question: {
-              id: "4",
-              text:
-                "In the past 7 days, have you seen any puss around your ulcer?",
-              __typename: "Question",
-            },
-            value: true,
-            extra: "fds",
-            __typename: "Answer",
-          },
-          {
-            id: "51",
-            Question: {
-              id: "3",
-              text:
-                "In the past 7 days, have you seen redness around your ulcer?",
-              __typename: "Question",
-            },
-            value: true,
-            extra: null,
-            __typename: "Answer",
-          },
-          {
-            id: "50",
-            Question: {
-              id: "2",
-              text:
-                "In the past 7 days, have you had a fever (temperature higher than 36C)?",
-              __typename: "Question",
-            },
-            value: false,
-            extra: "dsfsdfds",
-            __typename: "Answer",
-          },
-          {
-            id: "49",
-            Question: {
-              id: "1",
-              text: "In the past 7 days, have you felt unwell?",
-              __typename: "Question",
-            },
-            value: true,
-            extra: null,
-            __typename: "Answer",
-          },
-        ]),
-      },
-    },
-    result: { data: { createSubmission: true } },
-  },
-  {
-    request: {
-      query: GET_SUBMISSIONS,
-      variables: {},
-    },
-    result: {
-      data: {
-        getSubmissions: {
-          images: [new Blob(["abc"], { type: "text/plain" })],
-          answers: JSON.stringify([
-            {
-              id: "56",
-              Question: {
-                id: "8",
-                text:
-                  "Please add any other notes for your clinician (optional):",
-                __typename: "Question",
-              },
-              value: true,
-              extra: "fsdfsd",
-              __typename: "Answer",
-            },
-            {
-              id: "55",
-              Question: {
-                id: "7",
-                text:
-                  "In the past 7 days, have you noticed any unusual smells from the wound?",
-                __typename: "Question",
-              },
-              value: false,
-              extra: null,
-              __typename: "Answer",
-            },
-            {
-              id: "54",
-              Question: {
-                id: "6",
-                text:
-                  "In the past 7 days, has one foot been hotter to touch than the other?",
-                __typename: "Question",
-              },
-              value: true,
-              extra: null,
-              __typename: "Answer",
-            },
-            {
-              id: "53",
-              Question: {
-                id: "5",
-                text:
-                  "In the past 7 days, has your ulcer been hotter to touch than usual?",
-                __typename: "Question",
-              },
-              value: false,
-              extra: null,
-              __typename: "Answer",
-            },
-            {
-              id: "52",
-              Question: {
-                id: "4",
-                text:
-                  "In the past 7 days, have you seen any puss around your ulcer?",
-                __typename: "Question",
-              },
-              value: true,
-              extra: "fds",
-              __typename: "Answer",
-            },
-            {
-              id: "51",
-              Question: {
-                id: "3",
-                text:
-                  "In the past 7 days, have you seen redness around your ulcer?",
-                __typename: "Question",
-              },
-              value: true,
-              extra: null,
-              __typename: "Answer",
-            },
-            {
-              id: "50",
-              Question: {
-                id: "2",
-                text:
-                  "In the past 7 days, have you had a fever (temperature higher than 36C)?",
-                __typename: "Question",
-              },
-              value: false,
-              extra: "dsfsdfds",
-              __typename: "Answer",
-            },
-            {
-              id: "49",
-              Question: {
-                id: "1",
-                text: "In the past 7 days, have you felt unwell?",
-                __typename: "Question",
-              },
-              value: true,
-              extra: null,
-              __typename: "Answer",
-            },
-          ]),
-        },
-      },
-    },
-  },
-];
 
 // Render
 const setup = async () => {
   act(() => {
     render(
-      <MockedProvider mocks={mockSuccess}>
+      <MockedProvider mocks={mockSuccess} addTypename={false}>
         <MemoryRouter initialEntries={["/my/submissions/new"]}>
           <Route path="/my/submissions/new">
             <NewSubmissionPage />
@@ -342,7 +124,7 @@ describe("Questionnaire Form", () => {
     const steps = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Review"];
 
     expect(within(tabPanel).getByTestId("stepperHolder")).toBeInTheDocument();
-    steps.map((label) => {
+    steps.forEach((label) => {
       expect(
         within(tabPanel).getByTestId(`stepperInnerHolder${label}`)
       ).toBeInTheDocument();
@@ -357,5 +139,90 @@ describe("Questionnaire Form", () => {
     });
   });
 
-  
+  it("has buttons in correct state on load", async () => {
+    const tabPanel = actions();
+    const nextButton = within(tabPanel).getByTestId("nextButton");
+    const backButtton = within(tabPanel).getByTestId("backButton");
+    const submitButton = screen.getByTestId("submitButton");
+    expect(nextButton.disabled).toBe(false);
+    expect(backButtton.disabled).toBe(true);
+    expect(submitButton.disabled).toBe(true);
+  });
+
+  it("has all questions rendered correctly", async () => {
+    const tabPanel = actions();
+    const maxQIndex = 7;
+    const maxAIndex = 1;
+
+    expect(screen.getByTestId(`questionMaster`)).toBeInTheDocument();
+
+    for (let q = 0; q <= maxQIndex; q++) {
+      expect(screen.getByTestId(`qText${q}`)).toBeInTheDocument();
+      expect(screen.getByTestId(`qExtra${q}`)).toBeInTheDocument();
+      expect(screen.getByTestId(`qText${q}`).innerHTML).toBe(
+        questionsObject[q].questionText
+      );
+      for (let a = 0; a <= maxAIndex; a++) {
+        expect(screen.getByTestId(`q${q}Option${a}`)).toBeInTheDocument();
+      }
+    }
+  });
+
+  it("shows correct information on the review page", async () => {
+    const tabPanel = actions();
+    const backButtton = within(tabPanel).getByTestId("backButton");
+    const submitButton = screen.getByTestId("submitButton");
+    const maxQIndex = 7;
+    expect(submitButton.disabled).toBe(true);
+    for (let q = 0; q <= maxQIndex; q++) {
+      const nextButton = within(tabPanel).getByTestId("nextButton");
+      const qRadioYes = screen.getByTestId(`q${q}Option1`);
+      act(() => {
+        fireEvent.click(qRadioYes);
+      });
+
+      act(() => {
+        fireEvent.click(nextButton);
+      });
+    }
+    expect(submitButton.disabled).toBe(false);
+
+    expect(within(tabPanel).getByTestId("reviewPage")).toBeInTheDocument();
+
+    for (let q = 1; q <= maxQIndex + 1; q++) {
+      expect(within(tabPanel).getByTestId(`aOption${q}`).innerHTML).toBe("Yes");
+    }
+  });
+
+  it("submits data correctly", async () => {
+    const tabPanel = actions();
+    const backButtton = within(tabPanel).getByTestId("backButton");
+    const submitButton = screen.getByTestId("submitButton");
+    const maxQIndex = 7;
+    expect(submitButton.disabled).toBe(true);
+    for (let q = 0; q <= maxQIndex; q++) {
+      const nextButton = within(tabPanel).getByTestId("nextButton");
+      const qRadioYes = screen.getByTestId(`q${q}Option1`);
+      act(() => {
+        fireEvent.click(qRadioYes);
+      });
+
+      act(() => {
+        fireEvent.click(nextButton);
+      });
+    }
+
+    expect(submitButton.disabled).toBe(false);
+    act(() => {
+      fireEvent.click(submitButton);
+    });
+
+    expect(screen.getAllByText(/Loading../i)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/Loading../i)[1]).toBeInTheDocument();
+
+    // TODO: Fix This
+    await waitFor(() => {
+      expect(screen.getByTestId("formDone")).toBeInTheDocument();
+    });
+  });
 });
