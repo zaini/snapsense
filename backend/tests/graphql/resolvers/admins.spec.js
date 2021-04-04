@@ -13,7 +13,7 @@ describe("admins resolvers", () => {
 		done();
   });
 
-  test("should create admin as a super-admin", async (done) => {
+  it("should create admin as a super-admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -54,7 +54,7 @@ describe("admins resolvers", () => {
     done();
   });
 
-  test("should should not create admin if not logged in", async (done) => {
+  it("should should not create admin if not logged in", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 					mutation {
@@ -82,7 +82,7 @@ describe("admins resolvers", () => {
     done();
   });
 
-  test("should should not create admin if not logged in as a super-admin", async (done) => {
+  it("should should not create admin if not logged in as a super-admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -113,7 +113,7 @@ describe("admins resolvers", () => {
     done();
   });
 
-  test("should delete valid admin as super admin", async (done) => {
+  it("should delete valid admin as super admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -135,7 +135,7 @@ describe("admins resolvers", () => {
     done();
   });
 
-  test("should throw error if trying to delete invalid admin", async (done) => {
+  it("should throw error if trying to delete invalid admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -153,7 +153,7 @@ describe("admins resolvers", () => {
     done();
   });
 
-  test("should not delete admin if not logged in as a super admin", async (done) => {
+  it("should not delete admin if not logged in as a super admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -171,7 +171,7 @@ describe("admins resolvers", () => {
     done();
   });
 
-  test("should not delete admin if not logged in", async (done) => {
+  it("should not delete admin if not logged in", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 				mutation {
@@ -186,7 +186,7 @@ describe("admins resolvers", () => {
     done();
   });
 
-  test("should get all admins as a super-admin", async (done) => {
+  it("should get all admins as a super-admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -216,7 +216,7 @@ describe("admins resolvers", () => {
     done();
   });
 
-  test("should not get all admins if not logged in as a super-admin", async (done) => {
+  it("should not get all admins if not logged in as a super-admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -238,7 +238,7 @@ describe("admins resolvers", () => {
     done();
   });
 
-  test("should not get all admins if not logged in", async (done) => {
+  it("should not get all admins if not logged in", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 					query {
@@ -257,7 +257,7 @@ describe("admins resolvers", () => {
     done();
   });
 
-  test("should get admin by ID as a super-admin", async (done) => {
+  it("should get admin by ID as a super-admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -288,7 +288,7 @@ describe("admins resolvers", () => {
     done();
   });
 
-  test("should throw error on get admin by ID where admin is invalid", async (done) => {
+  it("should throw error on get admin by ID where admin is invalid", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -310,7 +310,7 @@ describe("admins resolvers", () => {
     done();
   });
 
-  test("should not get admin by ID if not logged in as a super-admin", async (done) => {
+  it("should not get admin by ID if not logged in as a super-admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -332,7 +332,7 @@ describe("admins resolvers", () => {
     done();
   });
 
-  test("should not get an admin by ID if not logged in", async (done) => {
+  it("should not get an admin by ID if not logged in", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 				query {

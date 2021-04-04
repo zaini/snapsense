@@ -12,7 +12,7 @@ describe("questions resolvers", () => {
 		done();
 	});
 
-  test("should not get questionnaire if not logged in", async (done) => {
+  it("should not get questionnaire if not logged in", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 				query {
@@ -29,7 +29,7 @@ describe("questions resolvers", () => {
     done();
   });
 
-  test("should get questionnaire if logged in", async (done) => {
+  it("should get questionnaire if logged in", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({

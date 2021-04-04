@@ -23,7 +23,7 @@ describe("doctors resolvers", () => {
     done();
   });
 
-  test("should get the logged in admin's doctors", async (done) => {
+  it("should get the logged in admin's doctors", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -55,7 +55,7 @@ describe("doctors resolvers", () => {
     done();
   });
 
-  test("should throw error if not logged in and trying to get doctors as an admin", async (done) => {
+  it("should throw error if not logged in and trying to get doctors as an admin", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 					query {
@@ -74,7 +74,7 @@ describe("doctors resolvers", () => {
     done();
   });
 
-  test("should get the logged in patient's doctors #1", async (done) => {
+  it("should get the logged in patient's doctors #1", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -106,7 +106,7 @@ describe("doctors resolvers", () => {
     done();
   });
 
-  test("should get the logged in patient's doctors #2", async (done) => {
+  it("should get the logged in patient's doctors #2", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -148,7 +148,7 @@ describe("doctors resolvers", () => {
     done();
   });
 
-  test("should return empty array if patient has no doctors and gets all their doctors", async (done) => {
+  it("should return empty array if patient has no doctors and gets all their doctors", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -174,7 +174,7 @@ describe("doctors resolvers", () => {
     done();
   });
 
-  test("should throw error if not logged in and trying to get doctors as a patient", async (done) => {
+  it("should throw error if not logged in and trying to get doctors as a patient", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 					query {
@@ -193,7 +193,7 @@ describe("doctors resolvers", () => {
     done();
   });
 
-  test("should throw error if not logged in as a patient and trying to get doctors as a patient", async (done) => {
+  it("should throw error if not logged in as a patient and trying to get doctors as a patient", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -217,7 +217,7 @@ describe("doctors resolvers", () => {
     done();
   });
 
-  test("should throw error if not logged in as an admin and trying to get doctors as an admin", async (done) => {
+  it("should throw error if not logged in as an admin and trying to get doctors as an admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
