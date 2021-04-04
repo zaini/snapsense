@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { MockedProvider } from "@apollo/client/testing";
 import { Route, MemoryRouter } from "react-router";
 import {
@@ -8,9 +8,7 @@ import {
   fireEvent,
   waitFor,
   act,
-  renderHook,
 } from "@testing-library/react";
-import gql from "graphql-tag";
 import { AuthContext } from "../context/auth";
 
 import LoginPage from "../pages/Home/LoginPage.js";
@@ -134,7 +132,7 @@ describe("Login Form Functionality", () => {
       fireEvent.click(superAdminBtn);
     });
     expect(
-      helperText.innerHTML ==
+      helperText.innerHTML ===
         "Hello superadmin! Please fill out the form below to get started"
     ).toBeTruthy();
 
@@ -142,7 +140,7 @@ describe("Login Form Functionality", () => {
       fireEvent.click(adminBtn);
     });
     expect(
-      helperText.innerHTML ==
+      helperText.innerHTML ===
         "Hello admin! Please fill out the form below to get started"
     ).toBeTruthy();
 
@@ -150,7 +148,7 @@ describe("Login Form Functionality", () => {
       fireEvent.click(doctorBtn);
     });
     expect(
-      helperText.innerHTML ==
+      helperText.innerHTML ===
         "Hello doctor! Please fill out the form below to get started"
     ).toBeTruthy();
 
@@ -158,7 +156,7 @@ describe("Login Form Functionality", () => {
       fireEvent.click(patientBtn);
     });
     expect(
-      helperText.innerHTML ==
+      helperText.innerHTML ===
         "Hello patient! Please fill out the form below to get started"
     ).toBeTruthy();
   });
