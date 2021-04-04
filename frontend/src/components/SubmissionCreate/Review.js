@@ -6,7 +6,7 @@ import ReviewListItem from "./ReviewListItem";
 
 const Review = ({ answers }) => {
   return (
-    <Box>
+    <Box data-testid="reviewPage">
       <Stack style={{ margin: "3px" }}>
         <Typography style={{ marginLeft: "5px" }} variant="h5" gutterBottom>
           Submission Summary

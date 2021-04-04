@@ -20,7 +20,7 @@ const QuestionForm = ({ step, answers, setAnswers }) => {
     setAnswers(temp);
   };
   return (
-    <Box>
+    <Box data-testid="questionMaster">
       <Flex>
         <Stack w={"100%"} textAlign={"center"}>
           <Typography variant="h6" gutterBottom>
@@ -40,7 +40,7 @@ const QuestionForm = ({ step, answers, setAnswers }) => {
                 data-testid={`Questionnaire${i + 1}`}
               >
                 <Question
-                  step={step}
+                  step={i}
                   answers={answers}
                   question={questionsObject[i]}
                   onChangeOption={onChangeOption}
