@@ -7,6 +7,7 @@ const PasswordConfirmationForm = ({ register, onSubmit, handleSubmit }) => {
       <FormControl id="password" isRequired>
         <FormLabel htmlFor="password">Password</FormLabel>
         <Input
+          data-testid="password"
           type="password"
           name="password"
           placeholder="Password"
@@ -17,6 +18,7 @@ const PasswordConfirmationForm = ({ register, onSubmit, handleSubmit }) => {
       <FormControl id="repeat_password" isRequired>
         <FormLabel htmlFor="repeat_password">Repeat Password</FormLabel>
         <Input
+          data-testid="passwordRepeat"
           type="password"
           name="repeat_password"
           placeholder="Repeat password"

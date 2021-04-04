@@ -19,7 +19,7 @@ import {
 import Error from "./Error";
 import PasswordConfirmationForm from "./PasswordConfirmationForm";
 
-const ChangePasswordModal = ({ testName, isOpen, onClose }) => {
+const ChangePasswordModal = ({ isOpen, onClose }) => {
   const { register, handleSubmit, errors, setError, formState } = useForm();
 
   const [changePassword, { loading, data }] = useMutation(CHANGE_PASSWORD, {
@@ -27,7 +27,10 @@ const ChangePasswordModal = ({ testName, isOpen, onClose }) => {
       setError("password", {
         type: "manual",
         message:
-          (err.graphQLErrors && err.graphQLErrors[0].message) || err.message,
+          (err.graphQLErrors &&
+            err.graphQLErrors[0] &&
+            err.graphQLErrors[0].message) ||
+          err.message,
       });
     },
   });
@@ -51,7 +54,7 @@ const ChangePasswordModal = ({ testName, isOpen, onClose }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent data-testid={testName} >
+      <ModalContent data-testid="changePasswordModal">
         <ModalHeader>
           Change your password
           <Text fontSize="xs" pt="5px">
@@ -63,7 +66,7 @@ const ChangePasswordModal = ({ testName, isOpen, onClose }) => {
         <ModalBody pb={6}>
           <Error errors={errors} mb="4" />
           {Object.keys(errors).length === 0 && data && (
-            <Alert data-testid="updateAlert" status="success" variant="subtle" mb="4">
+            <Alert status="success" variant="subtle" mb="4">
               <AlertIcon />
               Password has been updated!
             </Alert>
@@ -77,6 +80,7 @@ const ChangePasswordModal = ({ testName, isOpen, onClose }) => {
         <ModalFooter>
           <Button
             mr={3}
+            data-testid="submitChangePassword"
             colorScheme="blue"
             type="submit"
             isLoading={formState.isSubmitting || loading}

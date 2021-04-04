@@ -32,15 +32,24 @@ const UserInfo = () => {
       <br />
 
       <Center>
-        <Button data-testid="changePasswordButton" onClick={onOpen} colorScheme="blue" mr={4}>
+        <Button
+          data-testid="changePasswordButton"
+          onClick={onOpen}
+          colorScheme="blue"
+          mr={4}
+        >
           Change my password
         </Button>
-        <Button data-testid="deleteAccountButton" onClick={onDeleteOpen} colorScheme="red">
+        <Button
+          data-testid="deleteAccountButton"
+          onClick={onDeleteOpen}
+          colorScheme="red"
+        >
           Delete my account
         </Button>
       </Center>
-      <ChangePasswordModal testName="changePasswordModal" isOpen={isOpen} onClose={onClose} />
-      <DeleteAccountModal testName="deleteAccountModal" isOpen={isDeleteOpen} onClose={onDeleteClose} />
+      <ChangePasswordModal isOpen={isOpen} onClose={onClose} />
+      <DeleteAccountModal isOpen={isDeleteOpen} onClose={onDeleteClose} />
 
       <br />
 

@@ -30,7 +30,10 @@ const ChangePasswordModal = ({ testName, isOpen, onClose }) => {
     },
     onError(err) {
       const message =
-        (err.graphQLErrors && err.graphQLErrors[0].message) || err.message;
+        (err.graphQLErrors &&
+          err.graphQLErrors[0] &&
+          err.graphQLErrors[0].message) ||
+        err.message;
       setError("password", { type: "manual", message });
     },
   });
@@ -54,7 +57,7 @@ const ChangePasswordModal = ({ testName, isOpen, onClose }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent data-testid={testName}>
+      <ModalContent data-testid="deleteAccountModal">
         <ModalHeader>Delete your account</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
@@ -68,7 +71,7 @@ const ChangePasswordModal = ({ testName, isOpen, onClose }) => {
         <ModalFooter>
           <Button
             mr={3}
-            data-testid="formDeleteAccount"
+            data-testid="submitDeleteAccount"
             colorScheme="red"
             type="submit"
             isLoading={formState.isSubmitting || loading}
