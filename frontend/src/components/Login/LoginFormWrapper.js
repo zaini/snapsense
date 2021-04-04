@@ -11,8 +11,7 @@ const LoginFormWrapper = () => {
 
   return (
     <Container p="7" borderWidth="1px" borderRadius="lg" mt="20">
-      <Grid
-        container
+      <Container
         justify="center"
         direction="column"
         alignItems="center"
@@ -33,7 +32,7 @@ const LoginFormWrapper = () => {
         <br />
 
         <LoginForm accountType={accountType} />
-      </Grid>
+      </Container>
     </Container>
   );
 };

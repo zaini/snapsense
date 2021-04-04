@@ -88,7 +88,6 @@ const Feedback = () => {
         )}
         <Container p="10" borderWidth="2em" borderRadius="lg" mt="10">
           <Grid
-            container="true"
             justify="center"
             direction="column"
             alignItems="center"
