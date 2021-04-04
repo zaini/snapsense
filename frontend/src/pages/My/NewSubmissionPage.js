@@ -158,13 +158,13 @@ const NewSubmissionPage = () => {
           <Tabs variant="enclosed">
             <TabList>
               <Tab>Image</Tab>
-              <Tab>Questionnaire</Tab>
+              <Tab data-testid="tabQuestion">Questionnaire</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
                 <ImageUploadPanel classes={classes} setImages={setImages} />
               </TabPanel>
-              <TabPanel>
+              <TabPanel data-testid="tabPanel">
                 <QuestionnairePanel
                   isQuestionnaireVisible={isQuestionnaireVisible}
                   classes={classes}

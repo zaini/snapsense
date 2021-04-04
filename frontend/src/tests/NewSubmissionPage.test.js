@@ -10,6 +10,7 @@ import {
   cleanup,
   screen,
   waitFor,
+  within,
 } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 
@@ -239,9 +240,9 @@ const mockSuccess = [
 const setup = async () => {
   act(() => {
     render(
-      <MockedProvider mocks={mockSuccess} addTypename={false}>
-        <MemoryRouter initialEntries={["/my/newsubmission"]}>
-          <Route path="/my/newsubmission">
+      <MockedProvider mocks={mockSuccess}>
+        <MemoryRouter initialEntries={["/my/submissions/new"]}>
+          <Route path="/my/submissions/new">
             <NewSubmissionPage />
           </Route>
         </MemoryRouter>
@@ -251,18 +252,19 @@ const setup = async () => {
 };
 
 /*------ Tests  -----*/
+
 // New Submission page general tests
 describe("New submission page", () => {
-  test("should render without crashing", () => {
+  it("should render without crashing", () => {
     expect(setup).toBeTruthy();
   });
 
-  test("has a imageUpload", async () => {
+  it("has a imageUpload", async () => {
     setup();
     expect(screen.getByTestId("imageUpload")).toBeInTheDocument();
   });
 
-  test("has questions to be answered", async () => {
+  it("has questions to be answered", async () => {
     setup();
     await waitFor(() => {
       for (let i = 1; i < 9; i++) {
@@ -271,46 +273,40 @@ describe("New submission page", () => {
     });
   });
 
-  test("has a submit button", async () => {
+  it("has a submit button", async () => {
     setup();
     expect(screen.getByTestId("submitButton")).toBeInTheDocument();
   });
 
-  test("has a back button", async () => {
+  it("has a back button", async () => {
     setup();
     expect(screen.getByTestId("backButton")).toBeInTheDocument();
   });
 
-  test("has a next button", async () => {
+  it("has a next button", async () => {
     setup();
     expect(screen.getByTestId("nextButton")).toBeInTheDocument();
   });
 });
 
+//Image upload is an external component
 describe("Image upload", () => {
   it("uploads an image", async () => {
     setup();
 
     const imageInput = screen.getByTestId("imageUpload");
     act(() => {
-      fireEvent.click(imageInput);
-    });
-
-    act(() => {
-      fireEvent.change(imageInput, { target: { files: "chucknorris.png" } });
+      fireEvent.change(imageInput, {
+        target: { files: "chucknorris.png", length: 1 },
+      });
     });
     expect(imageInput.files).toBe("chucknorris.png");
   });
-});
 
-describe("Multiple Image Upload", () => {
   it("User can upload multiple images", async () => {
     setup();
 
     const imageInput = screen.getByTestId("imageUpload");
-    act(() => {
-      fireEvent.click(imageInput);
-    });
 
     act(() => {
       fireEvent.change(imageInput, {
@@ -319,4 +315,47 @@ describe("Multiple Image Upload", () => {
     });
     expect(imageInput.files).toStrictEqual(["chucknorris.png", "mazzkcby.jpg"]);
   });
+});
+
+//Questionnaire Page
+describe("Questionnaire Form", () => {
+  const actions = () => {
+    setup();
+    expect(screen.getByTestId("tabQuestion")).toBeInTheDocument();
+    const tab = screen.getByTestId("tabQuestion");
+    act(() => {
+      fireEvent.click(tab);
+    });
+    const tabPanel = screen.getByTestId("tabPanel");
+    expect(tabPanel).toBeInTheDocument();
+    // screen.debug(tabPanel, 10000);
+    return tabPanel;
+  };
+
+  it("has a correct heading", async () => {
+    const tabPanel = actions();
+    expect(within(tabPanel).getByTestId("questionHeading")).toBeInTheDocument();
+  });
+
+  it("has stepper component with correct data", async () => {
+    const tabPanel = actions();
+    const steps = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Review"];
+
+    expect(within(tabPanel).getByTestId("stepperHolder")).toBeInTheDocument();
+    steps.map((label) => {
+      expect(
+        within(tabPanel).getByTestId(`stepperInnerHolder${label}`)
+      ).toBeInTheDocument();
+
+      expect(
+        within(tabPanel).getByTestId(`stepperLabel${label}`)
+      ).toBeInTheDocument();
+
+      expect(
+        within(screen.getByTestId(`stepperLabel${label}`)).getByText(label)
+      ).toBeInTheDocument();
+    });
+  });
+
+  
 });

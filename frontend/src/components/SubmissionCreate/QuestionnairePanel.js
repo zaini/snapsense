@@ -16,17 +16,25 @@ const QuestionnairePanel = ({
   answers,
   setAnswers,
   handleBack,
-  handleNext
+  handleNext,
 }) => {
-  console.log(isQuestionnaireVisible)
-  console.log(activeStep);
   return (
     <Paper className={classes.paper}>
-      <Heading style={{ textAlign: "center" }}>Questionnaire</Heading>
-      <Stepper activeStep={activeStep} className={classes.stepper}>
-        {steps.map(label => (
-          <Step key={label} className="QuestionnaireSteps">
-            <StepLabel>{label}</StepLabel>
+      <Heading data-testid="questionHeading" style={{ textAlign: "center" }}>
+        Questionnaire
+      </Heading>
+      <Stepper
+        data-testid="stepperHolder"
+        activeStep={activeStep}
+        className={classes.stepper}
+      >
+        {steps.map((label) => (
+          <Step
+            data-testid={`stepperInnerHolder${label}`}
+            key={label}
+            className="QuestionnaireSteps"
+          >
+            <StepLabel data-testid={`stepperLabel${label}`}>{label}</StepLabel>
           </Step>
         ))}
       </Stepper>
