@@ -1,9 +1,3 @@
-//page doesnt crash
-//elements render - heading for correct name/fname; ID hospital name email; create admin button,n delete button
-//clicking buttons leadas to correct url / opens up correct modal
-//elements display correct info
-//invalid hospital gives error message
-
 import { React } from "react";
 import {
   cleanup,
@@ -148,8 +142,8 @@ test("Text holders have correct info displayed", async () => {
   });
 });
 
-describe("Buttons", () => {
-  it("create admin button leads to a correct url on click", async () => {
+describe("Buttons on page", () => {
+  it("should redirect correct url on create admin button click", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
@@ -159,7 +153,7 @@ describe("Buttons", () => {
     });
   });
 
-  it("delete hospital button opens a modal on click", async () => {
+  it("should open a modal when hospital delete button is clicked", async () => {
     setup();
     await waitFor(() => {
       act(() => {
@@ -198,7 +192,7 @@ describe("Buttons", () => {
 });
 
 describe("Delete modal", () => {
-  it("has a correct text", async () => {
+  it("should have correct text", async () => {
     setup();
     await waitFor(() => {
       act(() => {
