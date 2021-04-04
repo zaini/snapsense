@@ -14,7 +14,7 @@ describe("doctor utility functions resolvers", () => {
   });
 
   // Account deletion
-  test("should not delete doctor if provided incorrect password", async (done) => {
+  it("should not delete doctor if provided incorrect password", async (done) => {
     const response = await deleteAccountRequest(
       "Password1234",
       "Password1234",
@@ -27,7 +27,7 @@ describe("doctor utility functions resolvers", () => {
     done();
   });
 
-  test("should not delete doctor if password and password confirmation do not match", async (done) => {
+  it("should not delete doctor if password and password confirmation do not match", async (done) => {
     const response = await deleteAccountRequest(
       "Password1234",
       "Password123",
@@ -40,7 +40,7 @@ describe("doctor utility functions resolvers", () => {
     done();
   });
 
-  test("should not delete doctor if not authenticated", async (done) => {
+  it("should not delete doctor if not authenticated", async (done) => {
     const response = await deleteAccountRequest("Password123", "Password123");
 
     const errorMessage = response.body.errors[0].message;
@@ -49,7 +49,7 @@ describe("doctor utility functions resolvers", () => {
     done();
   });
 
-  test("should delete doctor if password and password confirmation match and authenticated", async (done) => {
+  it("should delete doctor if password and password confirmation match and authenticated", async (done) => {
     const response = await deleteAccountRequest(
       "Password123",
       "Password123",
@@ -68,7 +68,7 @@ describe("doctor utility functions resolvers", () => {
   });
 
   // Change password
-  test("should not change doctor password if password and password confirmation don't match", async (done) => {
+  it("should not change doctor password if password and password confirmation don't match", async (done) => {
     const response = await changePasswordRequest(
       "BrandNewPassword123",
       "BrandNewPassword1234",
@@ -81,7 +81,7 @@ describe("doctor utility functions resolvers", () => {
     done();
   });
 
-  test("should not change doctor password if not authenticated", async (done) => {
+  it("should not change doctor password if not authenticated", async (done) => {
     const response = await changePasswordRequest(
       "BrandNewPassword123",
       "BrandNewPassword123"
@@ -93,7 +93,7 @@ describe("doctor utility functions resolvers", () => {
     done();
   });
 
-  test("should change doctor password if password and password confirmation match and authenticated", async (done) => {
+  it("should change doctor password if password and password confirmation match and authenticated", async (done) => {
     const response = await changePasswordRequest(
       "BrandNewPassword123",
       "BrandNewPassword123",
