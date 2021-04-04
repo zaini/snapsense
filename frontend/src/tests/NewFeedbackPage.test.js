@@ -1,6 +1,4 @@
-
-import Feedback, { CREATE_FEEDBACK } from "../components/Feedback/Feedback";
-import { GET_SPECIFIC_FEEDBACK } from "../components/Feedback/ViewFeedback";
+import Feedback from "../components/Feedback/Feedback";
 import { MockedProvider } from "@apollo/client/testing";
 import {
   render,
@@ -14,35 +12,7 @@ import { act } from "react-dom/test-utils";
 
 /* Essential */
 afterEach(cleanup);
-
-//Creating mock data
-const mocks = [
-  {
-    request: {
-      query: CREATE_FEEDBACK,
-      variables: {
-        stars: 1,
-        extra: "This is a random feedback.",
-      },
-    },
-    result: { data: { createFeedback: true } },
-  },
-  {
-    request: {
-      query: GET_SPECIFIC_FEEDBACK,
-      variables: {},
-    },
-    result: {
-      data: {
-        getSpecificFeedback: {
-          id: "1",
-          stars: 1,
-          extra: "This is a random feedback.",
-        },
-      },
-    },
-  },
-];
+import mocks from "./mocks/newFeedbackPageMocks";
 
 // Render
 const setup = async () => {
