@@ -10,42 +10,9 @@ jest.mock("../components/utils/Table", () => (params) => {
 });
 
 import FeedbackPage from "../pages/My/FeedbackPage";
+import mocks from "./mocks/feedbackPageMocks";
 
 afterEach(cleanup);
-
-//TODO test to check that buttons render in row, test that buttons lead to correct URL
-
-const { GET_FEEDBACK } = require("../pages/My/FeedbackPage");
-
-const mocks = [
-  {
-    request: {
-      query: GET_FEEDBACK,
-      variables: {},
-    },
-    result: {
-      data: {
-        getFeedback: [
-          {
-            id: "1",
-            stars: 5,
-            extra: "Long live bluej blues",
-          },
-          {
-            id: "2",
-            stars: 4,
-            extra: "Nice website",
-          },
-          {
-            id: "3",
-            stars: 0,
-            extra: null,
-          },
-        ],
-      },
-    },
-  },
-];
 
 //Render component
 const setup = () => {
