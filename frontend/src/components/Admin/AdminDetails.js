@@ -8,23 +8,29 @@ const AdminDetails = ({ admin }) => {
     <Stack spacing={4}>
       <FormControl id="id">
         <FormLabel>ID</FormLabel>
-        <Input value={admin.id} isReadOnly />
+        <Input data-testid="adminIDHolder" value={admin.id} isReadOnly />
       </FormControl>
       <FormControl id="fname">
         <FormLabel>First name</FormLabel>
-        <Input value={admin.fname} isReadOnly />
+        <Input data-testid="adminFNameHolder" value={admin.fname} isReadOnly />
       </FormControl>
       <FormControl id="lname">
         <FormLabel>Last name</FormLabel>
-        <Input value={admin.lname} isReadOnly />
+        <Input data-testid="adminLNameHolder" value={admin.lname} isReadOnly />
       </FormControl>
       <FormControl id="hospital">
         <FormLabel>Hospital</FormLabel>
-        <Input value={admin.Hospital.name} isReadOnly />
+        <Input
+          data-testid="hospitalNameHolder"
+          value={admin.Hospital.name}
+          isReadOnly
+        />
       </FormControl>
       <FormControl id="email">
         <FormLabel>Email</FormLabel>
-        <CopyLink link={admin.email} />
+        <div data-testid="hospitalEmailHolder">
+          <CopyLink link={admin.email} />
+        </div>
       </FormControl>
     </Stack>
   );

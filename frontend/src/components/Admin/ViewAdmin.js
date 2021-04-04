@@ -22,7 +22,7 @@ const ViewAdmin = ({ admin }) => {
         <hr />
         <AdminDetails admin={admin} />
         <Center>
-          <Button onClick={onDeleteOpen} colorScheme="red">
+          <Button data-testid="deleteButton" onClick={onDeleteOpen} colorScheme="red">
             Delete Admin
           </Button>
         </Center>
