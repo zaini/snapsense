@@ -198,7 +198,7 @@ describe("Buttons", () => {
 });
 
 describe("Delete modal", () => {
-  it("has a correct text", async () => {
+  it("has correct text", async () => {
     setup();
     await waitFor(() => {
       act(() => {
