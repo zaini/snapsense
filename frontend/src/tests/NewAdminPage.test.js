@@ -187,7 +187,7 @@ describe("Placeholders", () => {
     });
   });
 
-  it("can have text written in it for family name", async () => {
+  it("can have text written in it for last name", async () => {
     setup();
     await waitFor(() => {
       const fnameInput = screen.getByTestId("adminLNameInput");
@@ -232,13 +232,13 @@ describe("Submitting form with invalid input", () => {
       });
       expect(nameInput.value).toBe("invalidName");
 
-      const fnameInput = screen.getByTestId("adminLNameInput");
+      const lnameInput = screen.getByTestId("adminLNameInput");
       act(() => {
-        fireEvent.change(fnameInput, {
+        fireEvent.change(lnameInput, {
           target: { value: "validFName" },
         });
       });
-      expect(fnameInput.value).toBe("validFName");
+      expect(lnameInput.value).toBe("validFName");
 
       const emailInput = screen.getByTestId("adminEmailInput");
       act(() => {
@@ -266,7 +266,7 @@ describe("Submitting form with invalid input", () => {
     });
   });
 
-  it("doesn't submit when the family name is invalid", async () => {
+  it("doesn't submit when the last name is invalid", async () => {
     setup();
 
     await waitFor(() => {
@@ -276,13 +276,13 @@ describe("Submitting form with invalid input", () => {
       });
       expect(nameInput.value).toBe("validName");
 
-      const fnameInput = screen.getByTestId("adminLNameInput");
+      const lnameInput = screen.getByTestId("adminLNameInput");
       act(() => {
-        fireEvent.change(fnameInput, {
+        fireEvent.change(lnameInput, {
           target: { value: "invalidFName" },
         });
       });
-      expect(fnameInput.value).toBe("invalidFName");
+      expect(lnameInput.value).toBe("invalidFName");
 
       const emailInput = screen.getByTestId("adminEmailInput");
       act(() => {
@@ -320,13 +320,13 @@ describe("Submitting form with invalid input", () => {
       });
       expect(nameInput.value).toBe("validName");
 
-      const fnameInput = screen.getByTestId("adminLNameInput");
+      const lnameInput = screen.getByTestId("adminLNameInput");
       act(() => {
-        fireEvent.change(fnameInput, {
+        fireEvent.change(lnameInput, {
           target: { value: "invalidFName" },
         });
       });
-      expect(fnameInput.value).toBe("invalidFName");
+      expect(lnameInput.value).toBe("invalidFName");
 
       const emailInput = screen.getByTestId("adminLNameInput");
       act(() => {
@@ -364,13 +364,13 @@ describe("Submitting form with invalid input", () => {
       });
       expect(nameInput.value).toBe("validName");
 
-      const fnameInput = screen.getByTestId("adminLNameInput");
+      const lnameInput = screen.getByTestId("adminLNameInput");
       act(() => {
-        fireEvent.change(fnameInput, {
-          target: { value: "validFName" },
+        fireEvent.change(lnameInput, {
+          target: { value: "validLName" },
         });
       });
-      expect(fnameInput.value).toBe("validFName");
+      expect(lnameInput.value).toBe("validLName");
 
       const emailInput = screen.getByTestId("adminEmailInput");
       act(() => {
@@ -411,13 +411,13 @@ describe("Submitting form with valid input", () => {
       expect(nameInput.value).toBe("Admin");
     });
 
-    const fnameInput = screen.getByTestId("adminLNameInput");
+    const lnameInput = screen.getByTestId("adminLNameInput");
     act(() => {
-      fireEvent.change(fnameInput, {
+      fireEvent.change(lnameInput, {
         target: { value: "One" },
       });
     });
-    expect(fnameInput.value).toBe("One");
+    expect(lnameInput.value).toBe("One");
 
     const emailInput = screen.getByTestId("adminEmailInput");
     act(() => {
