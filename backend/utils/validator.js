@@ -43,12 +43,14 @@ module.exports = {
       }
 
       static isImage(url) {
-        const fileExtensions = ["jpg", "jpeg", "jpe", "png", "webp" ];
-        const fileExtension = url.substring(url.length - 3, url.length);
-        if (fileExtensions.includes(fileExtension, 0)) {
-            return true;
-        }
-        return false;
+        /*
+            Check if:
+                - the file has the following extensions: jpe, jpeg, png, jpg, webp
+                - contains a string of characters before the dot
+            
+        */
+        const re = /[^\s]+(\.(jpe|jpeg|png|jpg|webp))$/;
+        return re.test(url);
       }
     }
     return validator;
