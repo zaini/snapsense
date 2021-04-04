@@ -1,10 +1,5 @@
 import { React } from "react";
-import {
-  cleanup,
-  render,
-  screen,
-  waitFor,
-} from "@testing-library/react";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
 import { act } from "react-dom/test-utils";
 
@@ -20,40 +15,7 @@ afterEach(cleanup);
 
 //TODO: add test for buttons and their links
 
-const { GET_ADMINS } = require("../pages/My/AdminsPage");
-
-const mocks = [
-  {
-    request: {
-      query: GET_ADMINS,
-      variables: {},
-    },
-    result: {
-      data: {
-        getAdmins: [
-          {
-            id: "1",
-            fname: "Admin",
-            lname: "One",
-            email: "admin1@gmail.com",
-            Hospital: {
-              name: "Hospital One",
-            },
-          },
-          {
-            id: "3",
-            fname: "Admin",
-            lname: "Three",
-            email: "admin3@gmail.com",
-            Hospital: {
-              name: "Hospital One",
-            },
-          },
-        ],
-      },
-    },
-  },
-];
+import mocks from "./mocks/adminsPageMocks";
 
 //Render component
 const setup = () => {
