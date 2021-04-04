@@ -12,6 +12,7 @@ import { Route, MemoryRouter } from "react-router";
 import { AuthContext } from "../context/auth";
 import { MockedProvider } from "@apollo/client/testing";
 
+
 const {
   GET_SUBMISSIONS,
 } = require("../components/SubmissionsView/SubmissionsComponent");
@@ -350,34 +351,4 @@ describe("delete account modal tests", () => {
     expect(screen.getByText("Incorrect password!")).toBeInTheDocument();
   });
 
-  // TODO not sure how to check that logout is working and user is redirected to login page since their account is delete
-  //   it("should redirect to login page if account is delete", async () => {
-  //     setup();
-
-  //     act(() => {
-  //       const openModalBtn = screen.getByTestId("deleteAccountButton");
-  //       fireEvent.click(openModalBtn);
-  //     });
-
-  //     act(() => {
-  //       const passwordInput = screen.getByTestId("password");
-  //       fireEvent.change(passwordInput, { target: { value: "Password123" } });
-  //       expect(passwordInput.value).toBe("Password123");
-
-  //       const passwordRepeatInput = screen.getByTestId("passwordRepeat");
-  //       fireEvent.change(passwordRepeatInput, {
-  //         target: { value: "Password123" },
-  //       });
-  //       expect(passwordRepeatInput.value).toBe("Password123");
-  //     });
-
-  //     await waitFor(() => {
-  //       act(() => {
-  //         const btnSubmit = screen.getByTestId("submitDeleteAccount");
-  //         fireEvent.click(btnSubmit);
-  //       });
-  //     });
-
-  //     expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
-  //   });
 });
