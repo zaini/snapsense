@@ -12,6 +12,9 @@ const {
 const {
     CHANGE_PASSWORD,
 } = require("../components/utils/ChangePasswordModal");
+const {
+    DELETE_ACCOUNT,
+} = require("../components/utils/DeleteAccountModal");
 
 const Mock = [
     {
@@ -26,7 +29,7 @@ const Mock = [
                 getSubmissions: [
                     {
                         id: "1", flag: "High Risk", createdAt: "1234567890", Patient: {
-                            id: "1", fname: "first", lname: "last", email: "patient1@gmail.com", flag: "asdfghjk"
+                            id: "1", fname: "first", lname: "last", email: "patient1@gmail.com", password: "Password123", flag: "asdfghjk"
                         }, Images: {
                             id: "1", url: "asdfghjk"
                         }, Answers: {
@@ -51,6 +54,16 @@ const Mock = [
             },
         },
         result: { data: { changePassword: true } },
+    },
+    {
+        request: {
+            query: DELETE_ACCOUNT,
+            variables: {
+                password: "Password123",
+                password_confirmation: "Password123"
+            },
+        },
+        result: { data: { deleteAccount: true } },
     },
 ]
 
@@ -85,7 +98,6 @@ const setup = async () => {
         );
     });
 };
-
 
 it("renders without crashing", () => {
     setup();
@@ -127,7 +139,22 @@ it("should be able to open change password form", async () => {
     expect(screen.getByTestId("changePasswordModal")).toBeInTheDocument();
 });
 
-it("should be able to submit form", async () => {
+it("should be able to open delete account modal", async () => {
+    setup();
+    act(() => {
+        fireEvent(
+            screen.getByTestId("deleteAccountButton"),
+            new MouseEvent("click", {
+                bubbles: true,
+                cancelable: true,
+            })
+        );
+    });
+
+    expect(screen.getByTestId("deleteAccountModal")).toBeInTheDocument();
+});
+
+it("should be able to submit change password form", async () => {
     setup();
     act(() => {
         fireEvent(
@@ -147,7 +174,30 @@ it("should be able to submit form", async () => {
         fireEvent.click(btnSubmit);
     });
 
-    expect(screen.alert).toBeCalledWith(
+    expect(window.alert).toBeCalledWith(
         "Password has been updated!"
     );
+});
+
+it("should be able to delete account", async () => {
+    setup();
+    act(() => {
+        fireEvent(
+            screen.getByTestId("deleteAccountButton"),
+            new MouseEvent("click", {
+                bubbles: true,
+                cancelable: true,
+            })
+        );
+    });
+
+    const form = screen.getByTestId("deleteAccountModal");
+    const buttonDelete = within(form).getByTestId("formDeleteAccount");
+
+    act(() => {
+        fireEvent.click(buttonDelete);
+    });
+
+    expect(screen.getByText(/Choose Account Type/i));
+
 });
