@@ -196,3 +196,41 @@ describe("Buttons", () => {
     });
   });
 });
+
+describe("Delete modal", () => {
+  it("has a correct text", async () => {
+    setup();
+    await waitFor(() => {
+      act(() => {
+        fireEvent(
+          screen.getByTestId("deleteHospitalButton"),
+          new MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+          })
+        );
+      });
+      expect(
+        screen.getByText(
+          "Are you sure you want to delete this hospital? There is no going back..."
+        )
+      ).toBeInTheDocument();
+    });
+  });
+
+  it("Has close button", async () => {
+    setup();
+    await waitFor(() => {
+      act(() => {
+        fireEvent(
+          screen.getByTestId("deleteHospitalButton"),
+          new MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+          })
+        );
+      });
+      expect(screen.getByTestId("cancelButton")).toBeInTheDocument();
+    });
+  });
+});

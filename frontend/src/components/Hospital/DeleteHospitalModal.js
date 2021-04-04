@@ -80,7 +80,7 @@ const DeleteHospitalModal = ({ isOpen, onClose, hospital }) => {
           >
             Delete Hospital
           </Button>
-          <Button onClick={onClose}>Cancel</Button>
+          <Button data-testid="cancelButton" onClick={onClose}>Cancel</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
