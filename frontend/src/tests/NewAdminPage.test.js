@@ -138,7 +138,7 @@ describe("New admin page", () => {
     expect(screen.getByText("Create an Admin")).toBeInTheDocument();
   });
 
-  it("has correct name, family name, email and password text input forms", async () => {
+  it("displays the correct placeholder for Name, Family Name, Email and Password input fields", async () => {
     setup();
     await waitFor(() => {
       expect(screen.getByTestId("adminNameInput")).toBeInTheDocument();
