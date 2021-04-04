@@ -1,6 +1,6 @@
 const request = require("supertest");
 
-const app = require("../../index");
+const app = require("../../../index");
 
 // Access tokens for various users that are needed
 let doctorOneToken, patientOneToken, patientTwoToken;
