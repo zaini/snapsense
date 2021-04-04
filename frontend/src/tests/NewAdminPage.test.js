@@ -138,7 +138,7 @@ describe("New admin page", () => {
     expect(screen.getByText("Create an Admin")).toBeInTheDocument();
   });
 
-  it("has correct text placeholders", async () => {
+  it("has correct name, family name, email and password text input forms", async () => {
     setup();
     await waitFor(() => {
       expect(screen.getByTestId("adminNameInput")).toBeInTheDocument();
@@ -175,8 +175,8 @@ describe("New admin page", () => {
   });
 });
 
-describe("Placeholders can have text written in it", () => {
-  it("name placeholder", async () => {
+describe("Placeholders", () => {
+  it("can have text written in it for name", async () => {
     setup();
     await waitFor(() => {
       const nameInput = screen.getByTestId("adminNameInput");
@@ -187,7 +187,7 @@ describe("Placeholders can have text written in it", () => {
     });
   });
 
-  it("family name placeholder", async () => {
+  it("can have text written in it for family name", async () => {
     setup();
     await waitFor(() => {
       const fnameInput = screen.getByTestId("adminLNameInput");
@@ -198,7 +198,7 @@ describe("Placeholders can have text written in it", () => {
     });
   });
 
-  it("email placeholder", async () => {
+  it("can have text written in it for email", async () => {
     setup();
     await waitFor(() => {
       const emailInput = screen.getByTestId("adminEmailInput");
@@ -209,7 +209,7 @@ describe("Placeholders can have text written in it", () => {
     });
   });
 
-  it("email placeholder", async () => {
+  it("can have text written in it for password", async () => {
     setup();
     await waitFor(() => {
       const passwordInput = screen.getByTestId("adminPasswordInput");
