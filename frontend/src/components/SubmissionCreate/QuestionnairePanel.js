@@ -66,7 +66,11 @@ const QuestionnairePanel = ({
               />
             )}
             {activeStep < 7 && (
-              <NextButton handleNext={handleNext} classes={classes.button} />
+              <NextButton
+                handleNext={handleNext}
+                name="Next"
+                classes={classes.button}
+              />
             )}
             {activeStep === 7 && (
               <NextButton
