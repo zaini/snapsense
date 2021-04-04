@@ -10,7 +10,7 @@ const {
 const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
 
 describe("patients authorisation resolver", () => {
-  test("should login as a patient with valid credentials", async (done) => {
+  it("should login as a patient with valid credentials", async (done) => {
     const response = await loginRequest(
       "patient1@gmail.com",
       "Password123",
@@ -42,7 +42,7 @@ describe("patients authorisation resolver", () => {
     done();
   });
 
-  test("should not login as a patient with an invalid password", async (done) => {
+  it("should not login as a patient with an invalid password", async (done) => {
     const response = await loginRequest(
       "patient1@gmail.com",
       "Password1234",
@@ -58,7 +58,7 @@ describe("patients authorisation resolver", () => {
     done();
   });
 
-  test("should not login as a patient with an invalid email (i.e. non-existing account)", async (done) => {
+  it("should not login as a patient with an invalid email (i.e. non-existing account)", async (done) => {
     const response = await loginRequest(
       "invalidpatient@gmail.com",
       "Password1234",
@@ -74,7 +74,7 @@ describe("patients authorisation resolver", () => {
     done();
   });
 
-  test("should not login as a patient with an incorrect account type but valid credentials", async (done) => {
+  it("should not login as a patient with an incorrect account type but valid credentials", async (done) => {
     const response = await loginRequest(
       "patient1@gmail.com",
       "Password123",
@@ -90,7 +90,7 @@ describe("patients authorisation resolver", () => {
     done();
   });
 
-  test("should register a new patient with with valid details and a valid invite token", async (done) => {
+  it("should register a new patient with with valid details and a valid invite token", async (done) => {
     const inviteToken = registerUser(
       "doctor1@nhs.net",
       "newpatientemail@gmail.com",
@@ -118,7 +118,7 @@ describe("patients authorisation resolver", () => {
     done();
   });
 
-  test("should not register a new patient with valid details and an invalid invite token", async (done) => {
+  it("should not register a new patient with valid details and an invalid invite token", async (done) => {
     const inviteToken = registerUser(
       "doctor1@nhs.net",
       "newpatientemail@gmail.com",
@@ -143,7 +143,7 @@ describe("patients authorisation resolver", () => {
     done();
   });
 
-  test("should not register a new patient with non-matching password and password confirmations", async (done) => {
+  it("should not register a new patient with non-matching password and password confirmations", async (done) => {
     const inviteToken = registerUser(
       "doctor1@nhs.net",
       "newpatientemail@gmail.com",
@@ -169,7 +169,7 @@ describe("patients authorisation resolver", () => {
     done();
   });
 
-  test("should not register a new patient with a non existing doctor", async (done) => {
+  it("should not register a new patient with a non existing doctor", async (done) => {
     const inviteToken = registerUser(
       "fakedoctor@nhs.net",
       "newpatientemail@gmail.com",
@@ -193,7 +193,7 @@ describe("patients authorisation resolver", () => {
     done();
   });
 
-  test("should not register a new user with an incorrect account type field", async (done) => {
+  it("should not register a new user with an incorrect account type field", async (done) => {
     const inviteToken = registerUser(
       "doctor1@nhs.net",
       "patient1@gmail.com",
@@ -217,7 +217,7 @@ describe("patients authorisation resolver", () => {
     done();
   });
 
-	test("should not register a new patient if the patient already exists", async (done) => {
+	it("should not register a new patient if the patient already exists", async (done) => {
     const inviteToken = registerUser(
       "doctor1@nhs.net",
       "patient1@gmail.com",
@@ -241,7 +241,7 @@ describe("patients authorisation resolver", () => {
     done();
   });
 
-	test("should not register a new patient if the patient already exists but the input email is upper cased", async (done) => {
+	it("should not register a new patient if the patient already exists but the input email is upper cased", async (done) => {
     const inviteToken = registerUser(
       "doctor1@nhs.net",
       "PATIENT1@gmail.com",
