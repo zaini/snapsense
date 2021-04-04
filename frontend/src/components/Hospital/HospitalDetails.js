@@ -16,7 +16,7 @@ const HospitalDetails = ({ hospital }) => {
     <Container>
       <Stack spacing={4}>
         <Center>
-          <Heading>{hospital.name}</Heading>
+          <Heading data-testid="hospitalHeader">{hospital.name}</Heading>
         </Center>
         <hr />
         <FormControl id="id">
@@ -29,7 +29,9 @@ const HospitalDetails = ({ hospital }) => {
         </FormControl>
         <FormControl id="email">
           <FormLabel>Contact Email</FormLabel>
-          <CopyLink data-testid="hospitalNameHolder" link={hospital.contact_email} />
+          <div data-testid="hospitalEmailHolder">
+            <CopyLink link={hospital.contact_email} />
+          </div>
         </FormControl>
         <hr />
       </Stack>

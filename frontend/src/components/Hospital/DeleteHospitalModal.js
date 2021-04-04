@@ -58,7 +58,7 @@ const DeleteHospitalModal = ({ isOpen, onClose, hospital }) => {
               <Error
                 errors={[
                   {
-                    message: error.graphQLErrors[0].message,
+                    message: error.message,
                   },
                 ]}
               />
@@ -70,7 +70,8 @@ const DeleteHospitalModal = ({ isOpen, onClose, hospital }) => {
           </Text>
         </ModalBody>
         <ModalFooter>
-          <Button
+          <Button 
+            data-testid="modalSubmitButton"
             mr={3}
             colorScheme="red"
             type="submit"
@@ -88,7 +89,7 @@ const DeleteHospitalModal = ({ isOpen, onClose, hospital }) => {
 
 export default DeleteHospitalModal;
 
-const GET_HOSPITALS = gql`
+export const GET_HOSPITALS = gql`
   query getHospitals {
     getHospitals {
       id
@@ -98,7 +99,7 @@ const GET_HOSPITALS = gql`
   }
 `;
 
-const DELETE_HOSPITAL = gql`
+export const DELETE_HOSPITAL = gql`
   mutation deleteHospital($hospital_id: ID!) {
     deleteHospital(hospital_id: $hospital_id)
   }
