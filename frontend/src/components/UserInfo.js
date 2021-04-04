@@ -32,10 +32,19 @@ const UserInfo = () => {
       <br />
 
       <Center>
-        <Button onClick={onOpen} colorScheme="blue" mr={4}>
+        <Button
+          data-testid="changePasswordButton"
+          onClick={onOpen}
+          colorScheme="blue"
+          mr={4}
+        >
           Change my password
         </Button>
-        <Button onClick={onDeleteOpen} colorScheme="red">
+        <Button
+          data-testid="deleteAccountButton"
+          onClick={onDeleteOpen}
+          colorScheme="red"
+        >
           Delete my account
         </Button>
       </Center>

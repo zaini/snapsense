@@ -1,0 +1,27 @@
+{
+  "name": "snapsense",
+  "version": "1.0.0",
+  "description": "Snapsense telemedicine application",
+  "main": "index.js",
+  "scripts": {
+    "setup-backend": "cd backend && npm install && npm run db:setup",
+    "setup-frontend": "cd frontend && npm install",
+    "setup": "npm run setup-backend & npm run setup-frontend",
+    "start-backend": "cd backend && npm start",
+    "start-frontend": "cd frontend && npm start",
+    "start": "npm run start-backend & npm run start-frontend",
+    "test-backend": "cd backend && npm test",
+    "test-frontend": "cd frontend && npm test",
+    "test": "npm run test-backend && npm run test-frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zaini/snapsense.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zaini/snapsense/issues"
+  },
+  "homepage": "https://github.com/zaini/snapsense#readme"
+}

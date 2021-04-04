@@ -27,7 +27,10 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
       setError("password", {
         type: "manual",
         message:
-          (err.graphQLErrors && err.graphQLErrors[0].message) || err.message,
+          (err.graphQLErrors &&
+            err.graphQLErrors[0] &&
+            err.graphQLErrors[0].message) ||
+          err.message,
       });
     },
   });
@@ -51,7 +54,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent data-testid="changePasswordModal">
         <ModalHeader>
           Change your password
           <Text fontSize="xs" pt="5px">
@@ -77,6 +80,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
         <ModalFooter>
           <Button
             mr={3}
+            data-testid="submitChangePassword"
             colorScheme="blue"
             type="submit"
             isLoading={formState.isSubmitting || loading}
@@ -93,7 +97,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
 
 export default ChangePasswordModal;
 
-const CHANGE_PASSWORD = gql`
+export const CHANGE_PASSWORD = gql`
   mutation changePassword($password: String!, $password_confirmation: String!) {
     changePassword(
       password: $password
