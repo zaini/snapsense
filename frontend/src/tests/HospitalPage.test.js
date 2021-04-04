@@ -34,7 +34,7 @@ const mocks = [
         getSpecificHospital: {
           id: "1",
           name: "Hospital One",
-          contact_email: "hospital.one@hospitals.uk",
+          contact_email: "hospital.one@gmail.com",
         },
       },
     },
@@ -58,65 +58,141 @@ const mocks = [
 
 //Render component
 const setup = () => {
+  act(() => {
+    render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <MemoryRouter initialEntries={["/my/hospitals/show/1"]}>
+          <Route path="/my/hospitals/show/:hospital_id">
+            <HospitalPage />
+          </Route>
+        </MemoryRouter>
+      </MockedProvider>
+    );
+  });
+};
+
+describe("Specific hospital page", () => {
+  it("renders without crashing", () => {
+    expect(setup).toBeTruthy();
+  });
+
+  it("renders details component", async () => {
+    setup();
+    await waitFor(() => {
+      expect(screen.getByTestId("hospitalDetailContainer")).toBeInTheDocument();
+    });
+  });
+
+  it("loads spinner when opening a new page", async () => {
+    setup();
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+  });
+
+  it("has correct header", async () => {
+    setup();
+    await waitFor(() => {
+      expect(screen.getByText(/Hospital One/i)).toBeInTheDocument();
+    });
+  });
+
+  it("has text holders", async () => {
+    setup();
+    await waitFor(() => {
+      expect(screen.getByTestId("hospitaIDHolder")).toBeInTheDocument();
+      expect(screen.getByTestId("hospitalNameHolder")).toBeInTheDocument();
+      expect(screen.getByTestId("hospitalEmailHolder")).toBeInTheDocument();
+    });
+  });
+
+  it("has delete hospital button", async () => {
+    setup();
+    await waitFor(() => {
+      expect(screen.getByTestId("deleteHospitalButton")).toBeInTheDocument();
+    });
+  });
+
+  it("has create admin for this hospital button", async () => {
+    setup();
+    await waitFor(() => {
+      expect(screen.getByTestId("createAdminButton")).toBeInTheDocument();
+    });
+  });
+
+  it("shows error message for invalid hospital", () => {
     act(() => {
       render(
         <MockedProvider mocks={mocks} addTypename={false}>
-          <MemoryRouter initialEntries={["/my/hospitals/show/1"]}>
-            <Route path="//my/hospitals/show/:hospital_id">
-              <NewHospitalPage />
+          <MemoryRouter initialEntries={["/my/hospitals/show/2"]}>
+            <Route path="/my/hospitals/show/:hospital_id">
+              <HospitalPage />
             </Route>
           </MemoryRouter>
         </MockedProvider>
       );
     });
-  };
+  });
+});
 
-  describe("Specific hospital page", () => {
-      it("renders without crashing", () => {
+test("Text holders have correct info displayed", async () => {
+  setup();
+  await waitFor(() => {
+    expect(screen.getByTestId("hospitaIDHolder")).toBeInTheDocument();
+    expect(screen.getByTestId("hospitalNameHolder")).toBeInTheDocument();
+    expect(screen.getByTestId("hospitalEmailHolder")).toBeInTheDocument();
 
-      });
+    expect(screen.getByDisplayValue("1")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("Hospital One")).toBeInTheDocument();
+    expect(
+      screen.getByDisplayValue("hospital.one@gmail.com")
+    ).toBeInTheDocument();
+  });
+});
 
-      it("loads loading spinner when opening a new page", () => {
-
-      })
-
-      it("has text holders", () => {
-
-      });
-
-      it("has delete hospital button", () => {
-
-      });
-
-      it("has create admin for this hospital button", () => {
-
-      });
-
-      it("shows error message for invalid hospital", () => {
-
-      });
+describe("Buttons", () => {
+  it("create admin button leads to a correct url on click", async () => {
+    setup();
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+    await waitFor(() => {
+      const createLink = screen.getByTestId("createAdminButton");
+      expect(createLink).toBeInTheDocument();
+      expect(createLink).toHaveAttribute("href", "/my/hospitals/1/admins/new");
+    });
   });
 
-  describe("Text holders", () => {
-      it("ID has correct info loaded into it", () => {
-
+  it("delete hospital button opens a modal on click", async () => {
+    setup();
+    await waitFor(() => {
+      act(() => {
+        fireEvent(
+          screen.getByTestId("deleteHospitalButton"),
+          new MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+          })
+        );
       });
-
-      it("Name has correct info loaded into it", () => {
-
-      });
-
-      it("email has corect info loaded into it", () => {
-
-      });
+      expect(screen.getByTestId("deleteModal")).toBeInTheDocument();
+    });
   });
 
-  describe("Buttons", () => {
-      it("create admin button leads to a correct url on click", () => {
-
+  it("should be able to submit delete form", async () => {
+    setup();
+    await waitFor(() => {
+      act(() => {
+        fireEvent(
+          screen.getByTestId("deleteHospitalButton"),
+          new MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+          })
+        );
       });
+      const btnSubmit = screen.getByTestId("modalSubmitButton");
 
-      it("delete hospital button opens a modal on click", () => {
-
+      jest.spyOn(window, "alert").mockImplementation(() => {});
+      act(() => {
+        fireEvent.click(btnSubmit);
       });
+    });
   });
+});
