@@ -5,7 +5,6 @@ import {
   waitFor,
   render,
   fireEvent,
-  within,
 } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import ProfilePage from "../pages/My/ProfilePage";
@@ -64,6 +63,16 @@ const Mock = [
     request: {
       query: CHANGE_PASSWORD,
       variables: {
+        password: "asd",
+        password_confirmation: "asd",
+      },
+    },
+    error: { message: "Validation error: Invalid password" },
+  },
+  {
+    request: {
+      query: CHANGE_PASSWORD,
+      variables: {
         password: "Password000",
         password_confirmation: "Password000",
       },
@@ -74,11 +83,21 @@ const Mock = [
     request: {
       query: DELETE_ACCOUNT,
       variables: {
+        password: "WRONGPASSWORD",
+        password_confirmation: "WRONGPASSWORD",
+      },
+    },
+    error: { message: "Incorrect password!" },
+  },
+  {
+    request: {
+      query: DELETE_ACCOUNT,
+      variables: {
         password: "Password123",
         password_confirmation: "Password123",
       },
     },
-    result: { data: { deleteAccount: true } },
+    response: { data: { deleteAccount: true } },
   },
 ];
 
@@ -91,12 +110,13 @@ const setup = async () => {
     lname: "last",
     email: "patient1@gmail.com",
     createdAt: "2021-03-26T17:42:58.000Z",
-    createdAt: "2021-03-26T17:42:58.000Z",
     accountType: "PATIENT",
   };
 
   const toRet = {
     user: patient,
+    login: () => {},
+    logout: () => {},
   };
 
   act(() => {
@@ -151,7 +171,9 @@ it("should be able to open change password form", async () => {
     );
   });
 
-  expect(screen.getByTestId("changePasswordModal")).toBeInTheDocument();
+  await waitFor(() =>
+    expect(screen.getByTestId("changePasswordModal")).toBeInTheDocument()
+  );
 });
 
 it("should be able to open delete account modal", async () => {
@@ -169,47 +191,193 @@ it("should be able to open delete account modal", async () => {
   expect(screen.getByTestId("deleteAccountModal")).toBeInTheDocument();
 });
 
-it("should be able to submit change password form", async () => {
-  setup();
-  act(() => {
-    fireEvent(
-      screen.getByTestId("changePasswordButton"),
-      new MouseEvent("click", {
-        bubbles: true,
-        cancelable: true,
-      })
-    );
+describe("change password modal tests", () => {
+  it("should give an error if fail to properly repeat password", async () => {
+    setup();
+
+    act(() => {
+      const openModalBtn = screen.getByTestId("changePasswordButton");
+      fireEvent.click(openModalBtn);
+    });
+
+    act(() => {
+      const newPasswordInput = screen.getByTestId("password");
+      fireEvent.change(newPasswordInput, { target: { value: "Password000" } });
+      expect(newPasswordInput.value).toBe("Password000");
+
+      const newPasswordRepeatInput = screen.getByTestId("passwordRepeat");
+      fireEvent.change(newPasswordRepeatInput, {
+        target: { value: "Password123" },
+      });
+      expect(newPasswordRepeatInput.value).toBe("Password123");
+    });
+
+    await waitFor(() => {
+      act(() => {
+        const btnSubmit = screen.getByTestId("submitChangePassword");
+        fireEvent.click(btnSubmit);
+      });
+    });
+
+    expect(
+      screen.getByText("'Password' must match 'Repeat Password'")
+    ).toBeInTheDocument();
   });
 
-  const form = screen.getByTestId("changePasswordModal");
-  const btnSubmit = within(form).getByText(/Change Password/i);
+  it("should give an error if repeated password is too simple", async () => {
+    setup();
 
-  jest.spyOn(window, "alert").mockImplementation(() => {});
-  act(() => {
-    fireEvent.click(btnSubmit);
+    act(() => {
+      const openModalBtn = screen.getByTestId("changePasswordButton");
+      fireEvent.click(openModalBtn);
+    });
+
+    act(() => {
+      const newPasswordInput = screen.getByTestId("password");
+      fireEvent.change(newPasswordInput, { target: { value: "asd" } });
+      expect(newPasswordInput.value).toBe("asd");
+
+      const newPasswordRepeatInput = screen.getByTestId("passwordRepeat");
+      fireEvent.change(newPasswordRepeatInput, {
+        target: { value: "asd" },
+      });
+      expect(newPasswordRepeatInput.value).toBe("asd");
+    });
+
+    await waitFor(() => {
+      act(() => {
+        const btnSubmit = screen.getByTestId("submitChangePassword");
+        fireEvent.click(btnSubmit);
+      });
+    });
+
+    expect(
+      screen.getByText("Validation error: Invalid password")
+    ).toBeInTheDocument();
   });
 
-  expect(window.alert).toBeCalledWith("Password has been updated!");
+  it("should give a message saying that the password has successfully changed if it is valid", async () => {
+    setup();
+
+    act(() => {
+      const openModalBtn = screen.getByTestId("changePasswordButton");
+      fireEvent.click(openModalBtn);
+    });
+
+    act(() => {
+      const newPasswordInput = screen.getByTestId("password");
+      fireEvent.change(newPasswordInput, { target: { value: "Password000" } });
+      expect(newPasswordInput.value).toBe("Password000");
+
+      const newPasswordRepeatInput = screen.getByTestId("passwordRepeat");
+      fireEvent.change(newPasswordRepeatInput, {
+        target: { value: "Password000" },
+      });
+      expect(newPasswordRepeatInput.value).toBe("Password000");
+    });
+
+    await waitFor(() => {
+      act(() => {
+        const btnSubmit = screen.getByTestId("submitChangePassword");
+        fireEvent.click(btnSubmit);
+      });
+    });
+
+    expect(screen.getByText("Password has been updated!")).toBeInTheDocument();
+  });
 });
 
-it("should be able to delete account", async () => {
-  setup();
-  act(() => {
-    fireEvent(
-      screen.getByTestId("deleteAccountButton"),
-      new MouseEvent("click", {
-        bubbles: true,
-        cancelable: true,
-      })
-    );
+describe("delete account modal tests", () => {
+  it("should give an error if fail to properly repeat password", async () => {
+    setup();
+
+    act(() => {
+      const openModalBtn = screen.getByTestId("deleteAccountButton");
+      fireEvent.click(openModalBtn);
+    });
+
+    act(() => {
+      const passwordInput = screen.getByTestId("password");
+      fireEvent.change(passwordInput, { target: { value: "Password000" } });
+      expect(passwordInput.value).toBe("Password000");
+
+      const passwordRepeatInput = screen.getByTestId("passwordRepeat");
+      fireEvent.change(passwordRepeatInput, {
+        target: { value: "Password123" },
+      });
+      expect(passwordRepeatInput.value).toBe("Password123");
+    });
+
+    await waitFor(() => {
+      act(() => {
+        const btnSubmit = screen.getByTestId("submitDeleteAccount");
+        fireEvent.click(btnSubmit);
+      });
+    });
+
+    expect(
+      screen.getByText("'Password' must match 'Repeat Password'")
+    ).toBeInTheDocument();
   });
 
-  const form = screen.getByTestId("deleteAccountModal");
-  const buttonDelete = within(form).getByTestId("formDeleteAccount");
+  it("should give an error if repeated password is wrong", async () => {
+    setup();
 
-  act(() => {
-    fireEvent.click(buttonDelete);
+    act(() => {
+      const openModalBtn = screen.getByTestId("deleteAccountButton");
+      fireEvent.click(openModalBtn);
+    });
+
+    act(() => {
+      const passwordInput = screen.getByTestId("password");
+      fireEvent.change(passwordInput, { target: { value: "WRONGPASSWORD" } });
+      expect(passwordInput.value).toBe("WRONGPASSWORD");
+
+      const passwordRepeatInput = screen.getByTestId("passwordRepeat");
+      fireEvent.change(passwordRepeatInput, {
+        target: { value: "WRONGPASSWORD" },
+      });
+      expect(passwordRepeatInput.value).toBe("WRONGPASSWORD");
+    });
+
+    await waitFor(() => {
+      act(() => {
+        const btnSubmit = screen.getByTestId("submitDeleteAccount");
+        fireEvent.click(btnSubmit);
+      });
+    });
+
+    expect(screen.getByText("Incorrect password!")).toBeInTheDocument();
   });
 
-  expect(screen.getByText(/Choose Account Type/i));
-});
+// TODO not sure how to check that logout is working and user is redirected to login page since their account is delete
+//   it("should redirect to login page if account is delete", async () => {
+//     setup();
+
+//     act(() => {
+//       const openModalBtn = screen.getByTestId("deleteAccountButton");
+//       fireEvent.click(openModalBtn);
+//     });
+
+//     act(() => {
+//       const passwordInput = screen.getByTestId("password");
+//       fireEvent.change(passwordInput, { target: { value: "Password123" } });
+//       expect(passwordInput.value).toBe("Password123");
+
+//       const passwordRepeatInput = screen.getByTestId("passwordRepeat");
+//       fireEvent.change(passwordRepeatInput, {
+//         target: { value: "Password123" },
+//       });
+//       expect(passwordRepeatInput.value).toBe("Password123");
+//     });
+
+//     await waitFor(() => {
+//       act(() => {
+//         const btnSubmit = screen.getByTestId("submitDeleteAccount");
+//         fireEvent.click(btnSubmit);
+//       });
+//     });
+
+//     expect(screen.getByText("Choose Account Type")).toBeInTheDocument();
+//   });
+// });
