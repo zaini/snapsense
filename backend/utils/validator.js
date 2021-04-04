@@ -49,7 +49,7 @@ module.exports = {
                 - contains a string of characters before the dot
             
         */
-        const re = /[^\s]+(\.(jpe|jpeg|png|jpg|webp))$/;
+        const re = /[^\s]+(\.(jpe|jpeg|png|jpg|webp|JPE|JPEG|PNG|JPG|WEBP))$/;
         return re.test(url);
       }
     }
