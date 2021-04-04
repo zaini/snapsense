@@ -10,7 +10,6 @@ for (let i = 1; i < 9; i++) {
 }
 
 const toSend = JSON.stringify(response);
-console.log(toSend);
 //Creating mock data
 const mockSuccess = [
   {
