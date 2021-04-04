@@ -59,7 +59,7 @@ const ShowInvitePage = (props) => {
 
 export default ShowInvitePage;
 
-const CHECK_INVITATION = gql`
+export const CHECK_INVITATION = gql`
   query checkInvitation($invitationToken: String!) {
     checkInvitation(invitationToken: $invitationToken)
   }
