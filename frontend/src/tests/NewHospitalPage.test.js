@@ -13,44 +13,7 @@ import { Route, MemoryRouter } from "react-router";
 
 afterEach(cleanup);
 
-//TODO add error render test
-
-const {
-  CREATE_HOSPITAL,
-  GET_HOSPITALS,
-} = require("../components/Hospital/NewHospitalForm");
-
-const mocks = [
-  {
-    request: {
-      query: CREATE_HOSPITAL,
-      variables: { name: "Hospital", contact_email: "hospital@gmail.com" },
-    },
-    result: { data: { createHospital: true } },
-  },
-  {
-    request: {
-      query: GET_HOSPITALS,
-      variables: {},
-    },
-    result: {
-      data: {
-        getHospitals: [
-          {
-            id: "1",
-            name: "Hospital One",
-            contact_email: "hospital.one@hospitals.uk",
-          },
-          {
-            id: "2",
-            name: "Hospital Two",
-            contact_email: "hospital.two@hospitals.uk",
-          },
-        ],
-      },
-    },
-  },
-];
+import mocks from "./mocks/newHospitalpageMocks";
 
 //Render component
 const setup = () => {
@@ -200,7 +163,7 @@ describe("Submitting form with valid input", () => {
     await waitFor(() => {
       expect(screen.getByTestId("formSubmitInnerLoader")).toBeInTheDocument();
     });
-    
+
     // TODO: Fix this success state
     // await waitFor(() => {
     //   expect(
