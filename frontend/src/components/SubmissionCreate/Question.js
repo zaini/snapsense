@@ -4,6 +4,7 @@ import { TextField } from "@material-ui/core";
 import Options from "./Options";
 
 const Question = ({
+  step,
   defVal,
   defExtra,
   question,
@@ -12,14 +13,16 @@ const Question = ({
 }) => {
   return (
     <Stack w={"100%"}>
-      <Text>{question.questionText}</Text>
+      <Text data-testid={`qText${step}`}>{question.questionText}</Text>
       <Options
+        step={step}
         options={question.answerOptions}
         onChangeOption={onChangeOption}
       />
       <Divider />
       <SimpleGrid column={[1]}>
         <TextField
+          data-testid={`qExtra${step}`}
           id="filled-multiline-flexible"
           label="Explain your choice (optional)"
           multiline
