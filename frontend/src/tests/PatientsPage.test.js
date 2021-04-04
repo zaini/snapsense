@@ -19,38 +19,7 @@ import PatientsPage from "../pages/My/PatientsPage";
 
 afterEach(cleanup);
 
-//TODO test to check that buttons render in row, test that buttons lead to correct URL
-
-const { GET_PATIENTS_AS_DOCTOR } = require("../pages/My/PatientsPage");
-
-const mocks = [
-  {
-    request: {
-      query: GET_PATIENTS_AS_DOCTOR,
-      variables: {},
-    },
-    result: {
-      data: {
-        getPatientsAsDoctor: [
-          {
-            id: "1",
-            flag: "1",
-            fname: "Patient",
-            lname: "One",
-            email: "PatientOne@email.com",
-          },
-          {
-            id: "2",
-            flag: "2",
-            fname: "Patient",
-            lname: "Two",
-            email: "PatientTwo@email.com",
-          },
-        ],
-      },
-    },
-  },
-];
+import mocks from "./mocks/patientsPageMocks";
 
 //Render component
 const setup = () => {
