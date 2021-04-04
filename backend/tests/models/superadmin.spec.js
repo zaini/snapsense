@@ -1,4 +1,4 @@
-const { SuperAdmin, Hospital } = require("../../models/index");
+const { SuperAdmin } = require("../../models/index");
 
 describe("Super Admin Model Test", () => {
   it("should save a valid superadmin", async (done) => {
@@ -164,15 +164,14 @@ describe("Super Admin Model Test", () => {
     done();
   });
 
-  // TODO: Duplicated email occurs
-  // it("should throw an error on duplicated email", async (done) => {
-  //   await expect(
-  //     SuperAdmin.create({
-  //       name: "SuperAdmin",
-  //       email: "snapsense@gmail.com",
-  //       password: "AdminPass123",
-  //     })
-  //   ).rejects.toThrow();
-  //   done();
-  // });
+  it("should throw an error on duplicated email", async (done) => {
+    await expect(
+      SuperAdmin.create({
+        name: "SuperAdmin",
+        email: "snapsense@gmail.com",
+        password: "AdminPass123",
+      })
+    ).rejects.toThrow();
+    done();
+  });
 });
