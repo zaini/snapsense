@@ -1,5 +1,6 @@
 // File containing helper post requests for the authorisation testing
 
+require("dotenv").config({ path: "../../../../../.env" });
 const request = require("supertest");
 const { sign } = require("jsonwebtoken");
 
