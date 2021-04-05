@@ -256,4 +256,105 @@ describe("invite links resolvers", () => {
 
     done();
   });
+
+	// Invitation resolver tests
+	
+	it("should invite a new doctor as a valid admin", async (done) => {
+		const response = await inviteUser("newdoctor@nhs.net", adminToken);
+		const {
+      data: { inviteUser: result },
+    } = response.body;
+
+    const decodedResponse = verify(result, ACCESS_TOKEN_SECRET_KEY);
+
+		expect(decodedResponse).toEqual(
+      expect.objectContaining({
+        accountExists: false,
+        accountType: "DOCTOR",
+        inviterEmail: "admin1@gmail.com",
+        newAccountEmail: "newdoctor@nhs.net",
+      })
+    );
+
+    done();
+	});
+
+	it("should not invite a new doctor if email is not an nhs email", async (done) => {
+		const response = await inviteUser("newdoctor@notnhs.net", adminToken);
+
+		const errorMessage = response.body.errors[0].message;
+
+		expect(errorMessage).toEqual("Only NHS email recipients allowed");
+
+    done();
+	});
+
+	it("should not invite an existing doctor", async (done) => {
+		const response = await inviteUser("doctor1@nhs.net", adminToken);
+
+		const errorMessage = response.body.errors[0].message;
+
+		expect(errorMessage).toEqual("Invalid recipient");
+
+    done();
+	});
+
+	it("should not invite a user with an invalid login token", async (done) => {
+		const response = await inviteUser("doctor1@nhs.net");
+
+		const errorMessage = response.body.errors[0].message;
+
+		expect(errorMessage).toEqual("Invalid Login Token");
+
+    done();
+	});
+
+	it("should invite a new patient as a valid doctor", async (done) => {
+		const response = await inviteUser("newpatient@gmail.com", doctorOneToken);
+		const {
+      data: { inviteUser: result },
+    } = response.body;
+
+    const decodedResponse = verify(result, ACCESS_TOKEN_SECRET_KEY);
+
+		expect(decodedResponse).toEqual(
+      expect.objectContaining({
+        accountExists: false,
+        accountType: "PATIENT",
+        inviterEmail: "doctor1@nhs.net",
+        newAccountEmail: "newpatient@gmail.com",
+      })
+    );
+
+    done();
+	});
+
+	it("should invite an existing patient as a valid doctor if there is no existing connection between them", async (done) => {
+		const response = await inviteUser("patient2@gmail.com", doctorOneToken);
+		const {
+      data: { inviteUser: result },
+    } = response.body;
+
+    const decodedResponse = verify(result, ACCESS_TOKEN_SECRET_KEY);
+
+		expect(decodedResponse).toEqual(
+      expect.objectContaining({
+        accountExists: true, // patient2@gmail.com is an existing user
+        accountType: "PATIENT",
+        inviterEmail: "doctor1@nhs.net",
+        newAccountEmail: "patient2@gmail.com",
+      })
+    );
+
+    done();
+	});
+
+	it("should not invite an existing patient as a valid doctor if there is an existing connection between them", async (done) => {
+		const response = await inviteUser("patient1@gmail.com", doctorOneToken);
+		const errorMessage = response.body.errors[0].message;
+
+		expect(errorMessage).toEqual("This patient is already registered with you");
+
+    done();
+	});
 });
