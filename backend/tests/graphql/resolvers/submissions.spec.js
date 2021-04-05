@@ -5,8 +5,11 @@ const {
   getSubmission,
   getSubmissions,
   getSubmissionsForReview,
+  getRequestsAsPatient,
+  getRequestsAsDoctor,
   flagSubmission,
   createSubmission,
+  createRequest,
 } = require("./util/requestsHelpers");
 const {
   patientOneSubmissions,
@@ -413,12 +416,12 @@ describe("submissions resolvers", () => {
       JSON.stringify(answers)
     );
 
-		const errorMessage = response.body.errors[0].message;
+    const errorMessage = response.body.errors[0].message;
     expect(errorMessage).toMatch("Please answer all questions");
     done();
   });
 
-	it("should not create a submission as a patient if a question answer is missing", async (done) => {
+  it("should not create a submission as a patient if a question answer is missing", async (done) => {
     const newQuestionnaire = questionnaireObject;
     newQuestionnaire.questionnaire[2].val = undefined;
     const answers = JSON.stringify(newQuestionnaire);
@@ -428,7 +431,7 @@ describe("submissions resolvers", () => {
       JSON.stringify(answers)
     );
 
-		const errorMessage = response.body.errors[0].message;
+    const errorMessage = response.body.errors[0].message;
     expect(errorMessage).toMatch("Please answer all questions");
     done();
   });
@@ -469,6 +472,108 @@ describe("submissions resolvers", () => {
 
     const errorMessage = response.body.errors[0].message;
     expect(errorMessage).toMatch("Invalid account type!");
+    done();
+  });
+
+  it("should fulfill a questionnaire request with a questionnaire submission", async (done) => {
+    const tomorrow = new Date(new Date());
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const requestResponse = await createRequest(
+      doctorTwoToken,
+      2,
+      tomorrow.getTime(),
+      2
+    );
+
+    const {
+      body: {
+        data: { createRequest: createRequestResult },
+      },
+    } = requestResponse;
+    expect(createRequestResult).toBe(true);
+
+    const priorRequestsPatient = await (
+      await getRequestsAsPatient(patientTwoToken)
+    ).body;
+    const priorRequestsDoctor = await (
+      await getRequestsAsDoctor(doctorTwoToken)
+    ).body;
+
+    const priorRequests = [
+      {
+        Doctor: { email: "doctor2@nhs.net" },
+        Patient: { email: "patient2@gmail.com" },
+        Submission: { id: "2" },
+      },
+      {
+        Doctor: { email: "doctor2@nhs.net" },
+        Patient: { email: "patient2@gmail.com" },
+        Submission: null,
+      },
+    ];
+
+    expect(priorRequestsPatient.data.getRequestsAsPatient[0]).toEqual(
+      expect.objectContaining(priorRequests[0])
+    );
+    expect(priorRequestsPatient.data.getRequestsAsPatient[1]).toEqual(
+      expect.objectContaining(priorRequests[1])
+    );
+
+    expect(priorRequestsDoctor.data.getRequestsAsDoctor[0]).toEqual(
+      expect.objectContaining(priorRequests[0])
+    );
+    expect(priorRequestsDoctor.data.getRequestsAsDoctor[1]).toEqual(
+      expect.objectContaining(priorRequests[1])
+    );
+
+    const answers = JSON.stringify(questionnaireObject);
+
+    const submissionResponse = await createSubmission(
+      patientTwoToken,
+      JSON.stringify(answers)
+    );
+
+    const {
+      body: {
+        data: { createSubmission: createSubmissionResult },
+      },
+    } = submissionResponse;
+
+    expect(createSubmissionResult).toBe(true);
+
+    const newRequests = [
+      {
+        Doctor: { email: "doctor2@nhs.net" },
+        Patient: { email: "patient2@gmail.com" },
+        Submission: { id: "2" },
+      },
+      {
+        Doctor: { email: "doctor2@nhs.net" },
+        Patient: { email: "patient2@gmail.com" },
+        Submission: { id: "4" },
+      },
+    ];
+
+    const newRequestsPatient = await (
+      await getRequestsAsPatient(patientTwoToken)
+    ).body;
+    const newRequestsDoctor = await (await getRequestsAsDoctor(doctorTwoToken))
+      .body;
+
+    expect(newRequestsPatient.data.getRequestsAsPatient[0]).toEqual(
+      expect.objectContaining(newRequests[0])
+    );
+    expect(newRequestsPatient.data.getRequestsAsPatient[1]).toEqual(
+      expect.objectContaining(newRequests[1])
+    );
+
+    expect(newRequestsDoctor.data.getRequestsAsDoctor[0]).toEqual(
+      expect.objectContaining(newRequests[0])
+    );
+    expect(newRequestsDoctor.data.getRequestsAsDoctor[1]).toEqual(
+      expect.objectContaining(newRequests[1])
+    );
+
     done();
   });
 });
