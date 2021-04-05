@@ -93,6 +93,20 @@ describe("submissions resolvers", () => {
     });
     done();
   });
+
+	test("should get all submissions of patients assigned to a doctor #1", async (done) => {
+		const response = await getSubmissions(doctorOneToken);
+		const { body } = response;
+		expect(body).toMatchObject(patientOneSubmissions); // patientOne is the only patient assigned to doctorOne
+		done();
+	});
+
+	test("should get all submissions of patients assigned to a doctor #2", async (done) => {
+		const response = await getSubmissions(doctorTwoToken);
+		const { body } = response;
+		expect(body).toMatchObject(patientTwoSubmissions); // patientTwo is the only patient assigned to doctorTwo
+		done();
+	});
 });
 
 const patientOneSubmissions = {
