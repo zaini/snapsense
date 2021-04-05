@@ -1,4 +1,4 @@
-const { GET_SPECIFIC_FEEDBACK } = require("../../pages/My/ViewFeedbackPage");
+import { GET_SPECIFIC_FEEDBACK } from "../../components/Feedback/ViewFeedback";
 
 const mocks = [
   {
