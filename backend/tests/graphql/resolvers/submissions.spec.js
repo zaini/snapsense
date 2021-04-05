@@ -166,6 +166,20 @@ describe("submissions resolvers", () => {
     expect(result).toMatchObject(patientOneSubmissions.data.getSubmissions[0]);
     done();
   });
+
+	test("should not get specific submission if the logged in patient does not own the submission", async (done) => {
+    const response = await getSubmission(patientOneToken, 2);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("This submission does not exist!");
+    done();
+  });
+
+	test("should not get specific submission if the submission does not exist", async (done) => {
+    const response = await getSubmission(patientOneToken, 200);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("This submission does not exist.");
+    done();
+  });
 });
 
 const patientOneSubmissions = {
