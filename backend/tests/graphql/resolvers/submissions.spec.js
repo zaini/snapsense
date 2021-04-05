@@ -6,6 +6,7 @@ const {
   getSubmissions,
   getSubmissionsForReview,
   flagSubmission,
+  createSubmission,
 } = require("./util/requestsHelpers");
 const {
   patientOneSubmissions,
@@ -21,35 +22,35 @@ let superAdminToken,
   patientThreeToken;
 
 // The below does not work, credit from https://github.com/nestjs/graphql/issues/1057
-const createSubmission = (authToken) => {
-  const fixturePath = path.join(__dirname, "../../fixtures/image.png");
+// const createSubmission = (authToken) => {
+//   const fixturePath = path.join(__dirname, "../../fixtures/image.png");
 
-  const query = `
-			mutation($images: [Upload!]) {
-				createSubmission(images: $images)
-			}
-	`;
-  return request(app)
-    .post("/graphql")
-    .set("authorization", `Bearer ${authToken}`)
-    .set("Content-Type", "multipart/form-data")
-    .field(
-      "operations",
-      JSON.stringify({
-        query,
-        variables: {
-          images: null,
-        },
-      })
-    )
-    .field(
-      "map",
-      JSON.stringify({
-        images: ["variables.images"],
-      })
-    )
-    .attach("images", [fixturePath]);
-};
+//   const query = `
+// 			mutation($images: [Upload!]) {
+// 				createSubmission(images: $images)
+// 			}
+// 	`;
+//   return request(app)
+//     .post("/graphql")
+//     .set("authorization", `Bearer ${authToken}`)
+//     .set("Content-Type", "multipart/form-data")
+//     .field(
+//       "operations",
+//       JSON.stringify({
+//         query,
+//         variables: {
+//           images: null,
+//         },
+//       })
+//     )
+//     .field(
+//       "map",
+//       JSON.stringify({
+//         images: ["variables.images"],
+//       })
+//     )
+//     .attach("images", [fixturePath]);
+// };
 
 describe("submissions resolvers", () => {
   beforeAll(async (done) => {
@@ -383,4 +384,124 @@ describe("submissions resolvers", () => {
     expect(errorMessage).toMatch("Invalid account type!");
     done();
   });
+
+  it("should create submission as a patient", async (done) => {
+    const answers = JSON.stringify(questionnaireObject);
+
+    const response = await createSubmission(
+      patientOneToken,
+      JSON.stringify(answers)
+    );
+
+    const {
+      body: {
+        data: { createSubmission: result },
+      },
+    } = response;
+
+    expect(result).toBe(true);
+    done();
+  });
+
+  it("should not create a submission as a patient if a question is missing", async (done) => {
+    const newQuestionnaire = questionnaireObject;
+    delete newQuestionnaire.questionnaire[1];
+    const answers = JSON.stringify(newQuestionnaire);
+
+    const response = await createSubmission(
+      patientOneToken,
+      JSON.stringify(answers)
+    );
+
+		const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Please answer all questions");
+    done();
+  });
+
+	it("should not create a submission as a patient if a question answer is missing", async (done) => {
+    const newQuestionnaire = questionnaireObject;
+    newQuestionnaire.questionnaire[2].val = undefined;
+    const answers = JSON.stringify(newQuestionnaire);
+
+    const response = await createSubmission(
+      patientOneToken,
+      JSON.stringify(answers)
+    );
+
+		const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Please answer all questions");
+    done();
+  });
+
+  it("should not create submission as a doctor", async (done) => {
+    const answers = JSON.stringify(questionnaireObject);
+
+    const response = await createSubmission(
+      doctorOneToken,
+      JSON.stringify(answers)
+    );
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid account type!");
+    done();
+  });
+
+  it("should not create submission as an admin", async (done) => {
+    const answers = JSON.stringify(questionnaireObject);
+
+    const response = await createSubmission(
+      adminToken,
+      JSON.stringify(answers)
+    );
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid account type!");
+    done();
+  });
+
+  it("should not create submission as a super-admin", async (done) => {
+    const answers = JSON.stringify(questionnaireObject);
+
+    const response = await createSubmission(
+      superAdminToken,
+      JSON.stringify(answers)
+    );
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid account type!");
+    done();
+  });
 });
+
+const questionnaireObject = {
+  questionnaire: {
+    1: {
+      val: "1",
+    },
+    2: {
+      val: "0",
+    },
+    3: {
+      val: "1",
+      extra: "I don't feel good",
+    },
+    4: {
+      val: "1",
+    },
+    5: {
+      val: "0",
+      extra: "Not really",
+    },
+    6: {
+      val: "1",
+      extra: "I feel sick",
+    },
+    7: {
+      val: "0",
+    },
+    8: {
+      val: "1",
+      extra: "How long will my pain last?",
+    },
+  },
+};
