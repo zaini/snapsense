@@ -286,7 +286,7 @@ describe("requests resolvers", () => {
     );
 
     const errorMessage = response.body.errors[0].message;
-    expect(errorMessage).toMatch("Invalid Frequency!");
+    expect(errorMessage).toMatch("Invalid Frequency");
     done();
   });
 
@@ -303,7 +303,7 @@ describe("requests resolvers", () => {
     );
 
     const errorMessage = response.body.errors[0].message;
-    expect(errorMessage).toMatch("Invalid Interval!");
+    expect(errorMessage).toMatch("Invalid Interval");
     done();
   });
 
@@ -320,7 +320,7 @@ describe("requests resolvers", () => {
     );
 
     const errorMessage = response.body.errors[0].message;
-    expect(errorMessage).toMatch("Invalid Frequency!");
+    expect(errorMessage).toMatch("Invalid Frequency");
     done();
   });
 
@@ -337,7 +337,7 @@ describe("requests resolvers", () => {
     );
 
     const errorMessage = response.body.errors[0].message;
-    expect(errorMessage).toMatch("Invalid Interval!");
+    expect(errorMessage).toMatch("Invalid Interval");
     done();
   });
 });
