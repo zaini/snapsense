@@ -372,75 +372,6 @@ describe("submissions resolvers", () => {
     done();
   });
 
-  it("should not create a submission as a patient if a question is missing", async (done) => {
-    const newQuestionnaire = questionnaireObject;
-    delete newQuestionnaire.questionnaire[1];
-    const answers = JSON.stringify(newQuestionnaire);
-
-    const response = await createSubmission(
-      patientOneToken,
-      JSON.stringify(answers)
-    );
-
-    const errorMessage = response.body.errors[0].message;
-    expect(errorMessage).toMatch("Please answer all questions");
-    done();
-  });
-
-  it("should not create a submission as a patient if a question answer is missing", async (done) => {
-    const newQuestionnaire = questionnaireObject;
-    newQuestionnaire.questionnaire[2].val = undefined;
-    const answers = JSON.stringify(newQuestionnaire);
-
-    const response = await createSubmission(
-      patientOneToken,
-      JSON.stringify(answers)
-    );
-
-    const errorMessage = response.body.errors[0].message;
-    expect(errorMessage).toMatch("Please answer all questions");
-    done();
-  });
-
-  it("should not create submission as a doctor", async (done) => {
-    const answers = JSON.stringify(questionnaireObject);
-
-    const response = await createSubmission(
-      doctorOneToken,
-      JSON.stringify(answers)
-    );
-
-    const errorMessage = response.body.errors[0].message;
-    expect(errorMessage).toMatch("Invalid account type!");
-    done();
-  });
-
-  it("should not create submission as an admin", async (done) => {
-    const answers = JSON.stringify(questionnaireObject);
-
-    const response = await createSubmission(
-      adminToken,
-      JSON.stringify(answers)
-    );
-
-    const errorMessage = response.body.errors[0].message;
-    expect(errorMessage).toMatch("Invalid account type!");
-    done();
-  });
-
-  it("should not create submission as a super-admin", async (done) => {
-    const answers = JSON.stringify(questionnaireObject);
-
-    const response = await createSubmission(
-      superAdminToken,
-      JSON.stringify(answers)
-    );
-
-    const errorMessage = response.body.errors[0].message;
-    expect(errorMessage).toMatch("Invalid account type!");
-    done();
-  });
-
   it("should fulfill a questionnaire request with a questionnaire submission", async (done) => {
     const tomorrow = new Date(new Date());
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -516,7 +447,6 @@ describe("submissions resolvers", () => {
       {
         Doctor: { email: "doctor2@nhs.net" },
         Patient: { email: "patient2@gmail.com" },
-        Submission: { id: "4" },
       },
     ];
 
@@ -540,6 +470,83 @@ describe("submissions resolvers", () => {
       expect.objectContaining(newRequests[1])
     );
 
+    expect(
+      newRequestsPatient.data.getRequestsAsPatient[1].Submission.id
+    ).not.toBeNull();
+
+    expect(
+      newRequestsDoctor.data.getRequestsAsDoctor[1].Submission.id
+    ).not.toBeNull();
+
+    done();
+  });
+
+  it("should not create a submission as a patient if a question is missing", async (done) => {
+    const newQuestionnaire = questionnaireObject;
+    delete newQuestionnaire.questionnaire[1];
+    const answers = JSON.stringify(newQuestionnaire);
+
+    const response = await createSubmission(
+      patientOneToken,
+      JSON.stringify(answers)
+    );
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Please answer all questions");
+    done();
+  });
+
+  it("should not create a submission as a patient if a question answer is missing", async (done) => {
+    const newQuestionnaire = questionnaireObject;
+    newQuestionnaire.questionnaire[2].val = undefined;
+    const answers = JSON.stringify(newQuestionnaire);
+
+    const response = await createSubmission(
+      patientOneToken,
+      JSON.stringify(answers)
+    );
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Please answer all questions");
+    done();
+  });
+
+  it("should not create submission as a doctor", async (done) => {
+    const answers = JSON.stringify(questionnaireObject);
+
+    const response = await createSubmission(
+      doctorOneToken,
+      JSON.stringify(answers)
+    );
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid account type!");
+    done();
+  });
+
+  it("should not create submission as an admin", async (done) => {
+    const answers = JSON.stringify(questionnaireObject);
+
+    const response = await createSubmission(
+      adminToken,
+      JSON.stringify(answers)
+    );
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid account type!");
+    done();
+  });
+
+  it("should not create submission as a super-admin", async (done) => {
+    const answers = JSON.stringify(questionnaireObject);
+
+    const response = await createSubmission(
+      superAdminToken,
+      JSON.stringify(answers)
+    );
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid account type!");
     done();
   });
 });
