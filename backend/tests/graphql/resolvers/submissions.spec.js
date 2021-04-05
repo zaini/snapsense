@@ -2,7 +2,11 @@ const request = require("supertest");
 
 const app = require("../../../index");
 
-let doctorOneToken, doctorTwoToken, patientOneToken, patientTwoToken;
+let doctorOneToken,
+  doctorTwoToken,
+  patientOneToken,
+  patientTwoToken,
+  patientThreeToken;
 
 const getSubmissions = (authToken, patientId) => {
   return request(app)
@@ -38,11 +42,13 @@ describe("submissions resolvers", () => {
       doctorTwo,
       patientOne,
       patientTwo,
+      patientThree,
     } = await require("./util/authTokens");
     doctorOneToken = doctorOne;
     doctorTwoToken = doctorTwo;
     patientOneToken = patientOne;
     patientTwoToken = patientTwo;
+    patientThreeToken = patientThree;
 
     done();
   });
@@ -58,6 +64,33 @@ describe("submissions resolvers", () => {
     const response = await getSubmissions(patientTwoToken);
     const { body } = response;
     expect(body).toMatchObject(patientTwoSubmissions);
+    done();
+  });
+
+  it("should throw error if logged out user tries to retrieve all submissions", async (done) => {
+    const response = await getSubmissions();
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid Login Token");
+    done();
+  });
+
+  it("should return empty array of submissions if logged in patient has no submissions and tries to retrieve them", async (done) => {
+    const response = await getSubmissions(patientThreeToken);
+    const { body } = response;
+    expect(body).toMatchObject({
+      data: {
+        getSubmissions: [
+          {
+            Answers: [],
+            Images: [],
+            Patient: {
+              email: "ben.parker@marvel.com",
+            },
+            flag: null,
+          },
+        ],
+      },
+    });
     done();
   });
 });
