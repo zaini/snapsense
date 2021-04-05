@@ -35,6 +35,33 @@ const getSubmissions = (authToken, patientId) => {
     .set("authorization", `Bearer ${authToken}`);
 };
 
+const getSubmission = (authToken, submissionsId) => {
+  return request(app)
+    .post("/graphql")
+    .send({
+      query: `
+			query {
+				getSubmission(submission_id: ${submissionsId}) {
+					flag
+					Patient {
+						email
+					}
+					Answers {
+						Question {
+							text
+						}
+						value
+					}
+					Images {
+						url
+					}
+				}
+			}		
+		`,
+    })
+    .set("authorization", `Bearer ${authToken}`);
+};
+
 describe("submissions resolvers", () => {
   beforeAll(async (done) => {
     const {
@@ -126,6 +153,13 @@ describe("submissions resolvers", () => {
 		const response = await getSubmissions(doctorTwoToken, 1);
 		const errorMessage = response.body.errors[0].message;
 		expect(errorMessage).toMatch("This patient does not belong to you.");
+		done();
+	});
+
+	test("should get specific submission if the logged in patient owns the submission", async (done) => {
+		const response = await getSubmission(patientOneToken, 1);
+		const { body: { data: { getSubmission: result }} } = response;
+		expect(result).toMatchObject(patientOneSubmissions.data.getSubmissions[0]);
 		done();
 	});
 });
