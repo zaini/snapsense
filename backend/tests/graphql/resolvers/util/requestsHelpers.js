@@ -200,6 +200,32 @@ const getRequestsForReview = (authToken) => {
     .set("authorization", `Bearer ${authToken}`);
 };
 
+const createRequest = (
+  authToken,
+  requestType,
+  deadline,
+  patientId,
+  frequency = 1,
+  interval = 1
+) => {
+  return request(app)
+    .post("/graphql")
+    .send({
+      query: `
+				mutation {
+					createRequest(
+						request_type: ${requestType}
+						deadline: ${deadline}
+						patient_id: ${patientId}
+						frequency: ${frequency}
+						interval: ${interval}
+					)
+				}			
+			`,
+    })
+    .set("authorization", `Bearer ${authToken}`);
+};
+
 module.exports = {
   getSubmissions,
   getSubmission,
@@ -209,4 +235,5 @@ module.exports = {
   getRequestsAsPatient,
   getRequestsAsDoctor,
   getRequestsForReview,
+  createRequest,
 };
