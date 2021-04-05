@@ -107,6 +107,20 @@ describe("submissions resolvers", () => {
 		expect(body).toMatchObject(patientTwoSubmissions); // patientTwo is the only patient assigned to doctorTwo
 		done();
 	});
+
+	test("should get submissions of a specific patient assigned to a doctor #1", async (done) => {
+		const response = await getSubmissions(doctorOneToken, 1);
+		const { body } = response;
+		expect(body).toMatchObject(patientOneSubmissions);
+		done();
+	});
+
+	test("should get submissions of a specific patient assigned to a doctor #2", async (done) => {
+		const response = await getSubmissions(doctorTwoToken, 2);
+		const { body } = response;
+		expect(body).toMatchObject(patientTwoSubmissions);
+		done();
+	});
 });
 
 const patientOneSubmissions = {
