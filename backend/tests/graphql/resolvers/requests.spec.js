@@ -74,6 +74,27 @@ describe("requests resolvers", () => {
     done();
   });
 
+	it("should throw error if getRequestsAsPatient is called as a doctor", async (done) => {
+    const response = await getRequestsAsPatient(doctorOneToken);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("You are not logged into the correct account for this feature.");
+    done();
+  });
+
+	it("should throw error if getRequestsAsPatient is called as an admin", async (done) => {
+    const response = await getRequestsAsPatient(adminToken);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("You are not logged into the correct account for this feature.");
+    done();
+  });
+
+	it("should throw error if getRequestsAsPatient is called as a super-admin", async (done) => {
+    const response = await getRequestsAsPatient(superAdminToken);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("You are not logged into the correct account for this feature.");
+    done();
+  });
+
 	it("should get requests as the logged in doctor", async (done) => {
     const response = await getRequestsAsDoctor(doctorOneToken);
     const { body } = response;
@@ -108,6 +129,27 @@ describe("requests resolvers", () => {
     const response = await getRequestsAsDoctor("invalidlogintoken");
     const errorMessage = response.body.errors[0].message;
     expect(errorMessage).toMatch("Invalid Login Token");
+    done();
+  });
+
+	it("should throw error if getRequestsAsDoctor is called as a patient", async (done) => {
+    const response = await getRequestsAsDoctor(patientOneToken);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("You are not logged into the correct account for this feature.");
+    done();
+  });
+
+	it("should throw error if getRequestsAsDoctor is called as an admin", async (done) => {
+    const response = await getRequestsAsDoctor(adminToken);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("You are not logged into the correct account for this feature.");
+    done();
+  });
+
+	it("should throw error if getRequestsAsDoctor is called as a super-admin", async (done) => {
+    const response = await getRequestsAsDoctor(superAdminToken);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("You are not logged into the correct account for this feature.");
     done();
   });
 });
