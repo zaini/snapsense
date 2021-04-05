@@ -10,8 +10,6 @@ let superAdminToken,
   doctorOneToken,
   doctorTwoToken,
   patientOneToken,
-  patientTwoToken,
-  patientThreeToken,
   patientFourToken;
 
 describe("requests resolvers", () => {
@@ -22,8 +20,6 @@ describe("requests resolvers", () => {
       doctorOne,
       doctorTwo,
       patientOne,
-      patientTwo,
-      patientThree,
       patientFour,
     } = await require("./util/authTokens");
 
@@ -32,8 +28,6 @@ describe("requests resolvers", () => {
     doctorOneToken = doctorOne;
     doctorTwoToken = doctorTwo;
     patientOneToken = patientOne;
-    patientTwoToken = patientTwo;
-    patientThreeToken = patientThree;
     patientFourToken = patientFour;
 
     done();
