@@ -12,3 +12,5 @@ global.beforeAll(async () => {
   await deleteAll();
   await seedFixtures();
 });
+
+jest.setTimeout(30000);
