@@ -2,6 +2,7 @@ const {
   getRequestsAsPatient,
   getRequestsAsDoctor,
   getRequestsForReview,
+  createRequest,
 } = require("./util/requestsHelpers");
 
 let superAdminToken,
@@ -220,6 +221,55 @@ describe("requests resolvers", () => {
     expect(errorMessage).toMatch(
       "You are not logged into the correct account for this feature."
     );
+    done();
+  });
+
+  it("should create a request as a doctor to a patient assigned to them", async (done) => {
+    const tomorrow = new Date(new Date());
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const response = await createRequest(
+      doctorOneToken,
+      1,
+      tomorrow.getTime(),
+      1
+    );
+
+    const {
+      body: {
+        data: { createRequest: result },
+      },
+    } = response;
+    expect(result).toBe(true);
+    done();
+  });
+
+  it("should not create a request as a doctor to a patient not assigned to them", async (done) => {
+    const tomorrow = new Date(new Date());
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const response = await createRequest(
+      doctorOneToken,
+      1,
+      tomorrow.getTime(),
+      2
+    );
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("This patient does not belong to you!");
+    done();
+  });
+
+	it("should not create a request as a doctor to a non-existing patient", async (done) => {
+    const tomorrow = new Date(new Date());
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const response = await createRequest(
+      doctorOneToken,
+      1,
+      tomorrow.getTime(),
+      200
+    );
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid patient!");
     done();
   });
 });
