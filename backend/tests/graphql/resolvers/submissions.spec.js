@@ -450,8 +450,6 @@ describe("submissions resolvers", () => {
     expect(errorMessage).toMatch("Invalid account type!");
     done();
   });
-
-
 });
 
 const patientOneSubmissions = {
