@@ -40,8 +40,10 @@ const AdminPage = () => {
   } else {
     markup = (
       <>
-        <Heading textAlign="center">{admin.fname}'s Profile</Heading>
+        <Heading data-testid="adminHeader" textAlign="center">{admin.fname}'s Profile</Heading>
+        <div data-testid="adminDetailContainer">
         <ViewAdmin admin={admin} />
+        </div>
       </>
     );
   }
@@ -51,7 +53,7 @@ const AdminPage = () => {
 
 export default AdminPage;
 
-const GET_ADMIN = gql`
+export const GET_ADMIN = gql`
   query getAdminById($admin_id: ID!) {
     getAdminById(admin_id: $admin_id) {
       id
