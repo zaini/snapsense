@@ -10,7 +10,9 @@ const ViewFeedbackPage = () => {
       <br />
       <hr />
       <br />
-      <ViewFeedback />
+      <div data-testid="feedbackDetailContainer">
+        <ViewFeedback />
+      </div>
     </Container>
   );
 };

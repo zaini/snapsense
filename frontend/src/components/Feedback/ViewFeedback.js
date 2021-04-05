@@ -51,11 +51,16 @@ const ViewFeedback = (props) => {
           </Center>
           <FormControl id="id">
             <FormLabel>ID</FormLabel>
-            <Input value={feedback.id} isReadOnly />
+            <Input
+              data-testid="feedbackIdHolder"
+              value={feedback.id}
+              isReadOnly
+            />
           </FormControl>
           <FormControl id="stars">
             <FormLabel>Number of Stars</FormLabel>
             <Input
+              data-testid="feedbackStarsHolder"
               value={
                 feedback.stars === 0
                   ? "No stars 😢"
@@ -67,6 +72,7 @@ const ViewFeedback = (props) => {
           <FormControl id="info">
             <FormLabel>Extra Information</FormLabel>
             <Textarea
+              data-testid="feedbackExtraHolder"
               fontWeight="bold"
               value={
                 feedback.extra === null
