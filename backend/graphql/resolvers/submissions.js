@@ -1,4 +1,4 @@
-const { AuthenticationError, UserInputError } = require("apollo-server");
+const { ApolloError, AuthenticationError, UserInputError } = require("apollo-server");
 
 const {
   Answer,
@@ -82,6 +82,7 @@ module.exports = {
           });
           break;
         default:
+          throw new ApolloError("Invalid user type", 400);
           break;
       }
       return submissions || [];
