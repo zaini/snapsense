@@ -215,8 +215,8 @@ const createRequest = (
 				mutation {
 					createRequest(
 						request_type: ${requestType}
-						deadline: ${deadline}
-						patient_id: ${patientId}
+						deadline: "${deadline}"
+						patient_id: "${patientId}"
 						frequency: ${frequency}
 						interval: ${interval}
 					)
