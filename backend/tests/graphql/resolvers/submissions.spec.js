@@ -2,7 +2,9 @@ const request = require("supertest");
 
 const app = require("../../../index");
 
-let doctorOneToken,
+let superAdminToken,
+  adminToken,
+  doctorOneToken,
   doctorTwoToken,
   patientOneToken,
   patientTwoToken,
@@ -65,12 +67,17 @@ const getSubmission = (authToken, submissionsId) => {
 describe("submissions resolvers", () => {
   beforeAll(async (done) => {
     const {
+      superAdmin,
+      admin,
       doctorOne,
       doctorTwo,
       patientOne,
       patientTwo,
       patientThree,
     } = await require("./util/authTokens");
+
+    superAdminToken = superAdmin;
+    adminToken = admin;
     doctorOneToken = doctorOne;
     doctorTwoToken = doctorTwo;
     patientOneToken = patientOne;
@@ -156,6 +163,20 @@ describe("submissions resolvers", () => {
     done();
   });
 
+  it("should not get submissions if logged in user as an admin", async (done) => {
+    const response = await getSubmissions(adminToken);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid user type");
+    done();
+  });
+
+  it("should not get submissions if logged in user as a super-admin", async (done) => {
+    const response = await getSubmissions(superAdminToken);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid user type");
+    done();
+  });
+
   it("should get specific submission if the logged in patient owns the submission", async (done) => {
     const response = await getSubmission(patientOneToken, 1);
     const {
@@ -167,24 +188,67 @@ describe("submissions resolvers", () => {
     done();
   });
 
-	it("should not get specific submission if the logged in patient does not own the submission", async (done) => {
+  it("should not get specific submission if the logged in patient does not own the submission", async (done) => {
     const response = await getSubmission(patientOneToken, 2);
     const errorMessage = response.body.errors[0].message;
     expect(errorMessage).toMatch("This submission does not exist!");
     done();
   });
 
-	it("should not get specific submission if the submission does not exist", async (done) => {
+  it("should not get specific submission if the submission does not exist", async (done) => {
     const response = await getSubmission(patientOneToken, 200);
     const errorMessage = response.body.errors[0].message;
     expect(errorMessage).toMatch("This submission does not exist.");
     done();
   });
 
-	it("should not get specific submission if not logged in", async (done) => {
+  it("should not get specific submission if not logged in", async (done) => {
     const response = await getSubmission("invalidlogintoken", 200);
     const errorMessage = response.body.errors[0].message;
     expect(errorMessage).toMatch("Invalid Login Token");
+    done();
+  });
+
+  it("should get specific submission as a doctor if the submission belongs to a patient the doctor owns", async (done) => {
+    const response = await getSubmission(doctorOneToken, 1);
+    const {
+      body: {
+        data: { getSubmission: result },
+      },
+    } = response;
+    expect(result).toMatchObject(patientOneSubmissions.data.getSubmissions[0]);
+    done();
+  });
+
+  it("should not get specific submission as a doctor if the submission belongs to a patient the doctor does not own", async (done) => {
+    const response = await getSubmission(doctorTwoToken, 1);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("This submission does not exist!!");
+    done();
+  });
+
+  it("should not get specific submission as a doctor if the submission does not exist", async (done) => {
+    const response = await getSubmission(doctorTwoToken, 100);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("This submission does not exist.");
+    done();
+  });
+
+  it("should not get specific submission if logged in user as an admin", async (done) => {
+    const response = await getSubmission(adminToken, 1);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch(
+      "You are not logged into the correct account to access this submission."
+    );
+    done();
+  });
+
+  it("should not get specific submission if logged in user as a super-admin", async (done) => {
+    const response = await getSubmission(superAdminToken, 1);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch(
+      "You are not logged into the correct account to access this submission."
+    );
     done();
   });
 });
