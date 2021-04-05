@@ -262,7 +262,7 @@ module.exports = {
       isFlagValid(flag);
 
       const doctor = await getDoctorById(user.id);
-      const submission = await Submission.findByPk(submission_id);
+      const submission = await getSubmissionById(submission_id);
       const patient = await submission.getPatient();
 
       const canFlag = await doctor.hasPatient(patient);
