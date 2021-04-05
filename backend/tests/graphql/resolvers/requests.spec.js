@@ -93,12 +93,12 @@ describe("requests resolvers", () => {
     done();
   });
 
-	it("should return empty array if logged in doctor has no requests", async (done) => {
+	it("should return null if logged in doctor has no requests", async (done) => {
     const response = await getRequestsAsDoctor(patientFourToken);
     const { body } = response;
     expect(body).toMatchObject({
       data: {
-        getRequestsAsDoctor: [],
+        getRequestsAsDoctor: null,
       },
     });
     done();
