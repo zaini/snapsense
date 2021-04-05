@@ -123,10 +123,36 @@ const createSubmission = (authToken, answers) => {
     .set("authorization", `Bearer ${authToken}`);
 };
 
+const getRequestsAsPatient = (authToken) => {
+  return request(app)
+    .post("/graphql")
+    .send({
+      query: `
+				query {
+					getRequestsAsPatient {
+						Doctor {
+							email
+						}
+						Patient {
+							email
+						}
+						Submission {
+							id
+						}
+						deadline
+						fulfilled
+					}
+				}
+			`,
+    })
+    .set("authorization", `Bearer ${authToken}`);
+};
+
 module.exports = {
   getSubmissions,
   getSubmission,
   getSubmissionsForReview,
   flagSubmission,
   createSubmission,
+  getRequestsAsPatient,
 };
