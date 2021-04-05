@@ -3,8 +3,8 @@ const sendMail = require("./mailSender");
 const giveTemplate = require("./emailTemplateProvider");
 
 const transactionalEmailSender = async (emailParams, htmlParams) => {
-	// If the env is in testing, don't send emails as it could hang or take a while and break the tests
-	if(process.env.NODE_ENV && process.env.NODE_ENV === "test") return true;
+  // If the env is in testing, don't send emails as it could hang or take a while and break the tests
+  if (process.env.NODE_ENV && process.env.NODE_ENV === "test") return true;
 
   try {
     // Retrieve HTML code by passing essential information to Template Provider
