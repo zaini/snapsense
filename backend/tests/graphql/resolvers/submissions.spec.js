@@ -15,24 +15,24 @@ const getSubmissions = (authToken, patientId) => {
     .post("/graphql")
     .send({
       query: `
-			query {
-				getSubmissions${patientId ? `(patient_id: ${patientId})` : ""} {
-					flag
-					Patient {
-						email
-					}
-					Answers {
-						Question {
-							text
+				query {
+					getSubmissions${patientId ? `(patient_id: ${patientId})` : ""} {
+						flag
+						Patient {
+							email
 						}
-						value
+						Answers {
+							Question {
+								text
+							}
+							value
+						}
+						Images {
+							url
+						}
 					}
-					Images {
-						url
-					}
-				}
-			}		
-		`,
+				}		
+			`,
     })
     .set("authorization", `Bearer ${authToken}`);
 };
@@ -42,24 +42,24 @@ const getSubmission = (authToken, submissionsId) => {
     .post("/graphql")
     .send({
       query: `
-			query {
-				getSubmission(submission_id: ${submissionsId}) {
-					flag
-					Patient {
-						email
-					}
-					Answers {
-						Question {
-							text
+				query {
+					getSubmission(submission_id: ${submissionsId}) {
+						flag
+						Patient {
+							email
 						}
-						value
+						Answers {
+							Question {
+								text
+							}
+							value
+						}
+						Images {
+							url
+						}
 					}
-					Images {
-						url
-					}
-				}
-			}		
-		`,
+				}		
+			`,
     })
     .set("authorization", `Bearer ${authToken}`);
 };
@@ -68,24 +68,52 @@ const getSubmissionsForReview = (authToken) => {
   return request(app)
     .post("/graphql")
     .send({
-      query: `query {
-			getSubmissionsForReview {
-				flag
-				Patient {
-					email
-				}
-				Answers {
-					Question {
-						text
+      query: `
+				query {
+					getSubmissionsForReview {
+						flag
+						Patient {
+							email
+						}
+						Answers {
+							Question {
+								text
+							}
+							value
+						}
+						Images {
+							url
+						}
 					}
-					value
 				}
-				Images {
-					url
+			`,
+    })
+    .set("authorization", `Bearer ${authToken}`);
+};
+
+const flagSubmission = (authToken, submissionId, flag) => {
+  return request(app)
+    .post("/graphql")
+    .send({
+      query: `
+				mutation {
+					flagSubmission(submission_id: ${submissionId}, flag: ${flag}) {
+						flag
+						Patient {
+							email
+						}
+						Answers {
+							Question {
+								text
+							}
+							value
+						}
+						Images {
+							url
+						}
+					}
 				}
-			}
-		}
-		`,
+			`,
     })
     .set("authorization", `Bearer ${authToken}`);
 };
@@ -289,7 +317,7 @@ describe("submissions resolvers", () => {
     done();
   });
 
-	it("should return an empty array if the logged in doctor has no requests to review", async (done) => {
+  it("should return an empty array if the logged in doctor has no requests to review", async (done) => {
     const response = await getSubmissionsForReview(doctorOneToken);
     const {
       body: {
@@ -325,6 +353,27 @@ describe("submissions resolvers", () => {
       "You are not logged into the correct account for this feature."
     );
     done();
+  });
+
+  it("should flag submission as a doctor if the submission belongs to a patient the doctor owns", async (done) => {
+    const response = await flagSubmission(doctorTwoToken, 2, 1);
+    const { body } = response;
+    expect(body).toMatchObject({
+      data: {
+        flagSubmission: {
+          flag: 1,
+          Patient: { email: "patient2@gmail.com" },
+          Answers: [],
+          Images: [
+            {
+              url:
+                "https://snapsensebucket.s3.ap-south-1.amazonaws.com/f150d94e-25cb-4973-bf26-d987b5bde188.jpg",
+            },
+          ],
+        },
+      },
+    });
+		done();
   });
 });
 
