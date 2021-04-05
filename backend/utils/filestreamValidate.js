@@ -1,5 +1,5 @@
 const { UserInputError } = require("apollo-server");
-require("dotenv").config({ path: "../.env" });
+require("dotenv").config({ path: "../../.env" });
 
 // the actual validation happens here
 const validateUpload = async (file) => {
