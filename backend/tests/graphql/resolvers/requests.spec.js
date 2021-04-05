@@ -290,7 +290,7 @@ describe("requests resolvers", () => {
     done();
   });
 
-	it("should not create a request as a doctor with an interval less than -1", async (done) => {
+  it("should not create a request as a doctor with an interval less than -1", async (done) => {
     const tomorrow = new Date(new Date());
     tomorrow.setDate(tomorrow.getDate() + 1);
     const response = await createRequest(
@@ -307,7 +307,7 @@ describe("requests resolvers", () => {
     done();
   });
 
-	it("should not create a request as a doctor with a frequency greater than 20", async (done) => {
+  it("should not create a request as a doctor with a frequency greater than 20", async (done) => {
     const tomorrow = new Date(new Date());
     tomorrow.setDate(tomorrow.getDate() + 1);
     const response = await createRequest(
@@ -324,7 +324,7 @@ describe("requests resolvers", () => {
     done();
   });
 
-	it("should not create a request as a doctor with an interval less than 20", async (done) => {
+  it("should not create a request as a doctor with an interval less than 20", async (done) => {
     const tomorrow = new Date(new Date());
     tomorrow.setDate(tomorrow.getDate() + 1);
     const response = await createRequest(
@@ -338,6 +338,46 @@ describe("requests resolvers", () => {
 
     const errorMessage = response.body.errors[0].message;
     expect(errorMessage).toMatch("Invalid Interval");
+    done();
+  });
+
+  it("should not create a request as a patient", async (done) => {
+    const tomorrow = new Date(new Date());
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const response = await createRequest(
+      patientOneToken,
+      1,
+      tomorrow.getTime(),
+      1
+    );
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid user credentials!");
+    done();
+  });
+
+  it("should not create a request as an admin", async (done) => {
+    const tomorrow = new Date(new Date());
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const response = await createRequest(adminToken, 1, tomorrow.getTime(), 1);
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid user credentials!");
+    done();
+  });
+
+  it("should not create a request as a super-admin", async (done) => {
+    const tomorrow = new Date(new Date());
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const response = await createRequest(
+      superAdminToken,
+      1,
+      tomorrow.getTime(),
+      1
+    );
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid user credentials!");
     done();
   });
 });
