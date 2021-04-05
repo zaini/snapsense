@@ -41,7 +41,9 @@ const AdminPage = () => {
     markup = (
       <>
         <Heading data-testid="adminHeader" textAlign="center">{admin.fname}'s Profile</Heading>
+        <div data-testid="adminDetailContainer">
         <ViewAdmin admin={admin} />
+        </div>
       </>
     );
   }

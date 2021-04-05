@@ -22,15 +22,21 @@ const ViewAdmin = ({ admin }) => {
         <hr />
         <AdminDetails admin={admin} />
         <Center>
-          <Button data-testid="deleteButton" onClick={onDeleteOpen} colorScheme="red">
+          <Button
+            data-testid="deleteButton"
+            onClick={onDeleteOpen}
+            colorScheme="red"
+          >
             Delete Admin
           </Button>
         </Center>
-        <DeleteAdminModal
-          isOpen={isDeleteOpen}
-          onClose={onDeleteClose}
-          admin={admin}
-        />
+        <div data-testid="deleteModal">
+          <DeleteAdminModal
+            isOpen={isDeleteOpen}
+            onClose={onDeleteClose}
+            admin={admin}
+          />
+        </div>
         <hr />
       </Stack>
     </Container>
