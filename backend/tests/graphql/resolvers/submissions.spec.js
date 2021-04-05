@@ -47,10 +47,17 @@ describe("submissions resolvers", () => {
     done();
   });
 
-  it("should get submissions as a logged in patient", async (done) => {
+  it("should get submissions as a logged in patient with reviewed submissions", async (done) => {
     const response = await getSubmissions(patientOneToken);
     const { body } = response;
     expect(body).toMatchObject(patientOneSubmissions);
+    done();
+  });
+
+  it("should get submissions as a logged in patient with unreviewed submissions", async (done) => {
+    const response = await getSubmissions(patientTwoToken);
+    const { body } = response;
+    expect(body).toMatchObject(patientTwoSubmissions);
     done();
   });
 });
@@ -116,6 +123,24 @@ const patientOneSubmissions = {
             value: true,
           },
         ],
+        Images: [
+          {
+            url:
+              "https://snapsensebucket.s3.ap-south-1.amazonaws.com/f150d94e-25cb-4973-bf26-d987b5bde188.jpg",
+          },
+        ],
+      },
+    ],
+  },
+};
+
+const patientTwoSubmissions = {
+  data: {
+    getSubmissions: [
+      {
+        flag: null,
+        Patient: { email: "patient2@gmail.com" },
+        Answers: [],
         Images: [
           {
             url:
