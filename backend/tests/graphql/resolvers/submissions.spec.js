@@ -118,6 +118,37 @@ const flagSubmission = (authToken, submissionId, flag) => {
     .set("authorization", `Bearer ${authToken}`);
 };
 
+// The below does not work, credit from https://github.com/nestjs/graphql/issues/1057
+const createSubmission = (authToken) => {
+  const fixturePath = path.join(__dirname, "../../fixtures/image.png");
+
+  const query = `
+			mutation($images: [Upload!]) {
+				createSubmission(images: $images)
+			}
+	`;
+  return request(app)
+    .post("/graphql")
+    .set("authorization", `Bearer ${authToken}`)
+    .set("Content-Type", "multipart/form-data")
+    .field(
+      "operations",
+      JSON.stringify({
+        query,
+        variables: {
+          images: null,
+        },
+      })
+    )
+    .field(
+      "map",
+      JSON.stringify({
+        images: ["variables.images"],
+      })
+    )
+    .attach("images", [fixturePath]);
+};
+
 describe("submissions resolvers", () => {
   beforeAll(async (done) => {
     const {
