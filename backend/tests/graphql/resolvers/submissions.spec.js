@@ -373,8 +373,85 @@ describe("submissions resolvers", () => {
         },
       },
     });
-		done();
+    done();
   });
+
+  it("should not flag submission as a doctor if the flag is greater than 3", async (done) => {
+    const response = await flagSubmission(doctorTwoToken, 2, 4);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid flag value. Must be 1-3 (inclusive)");
+    done();
+  });
+
+  it("should not flag submission as a doctor if the flag is less than 1", async (done) => {
+    const response = await flagSubmission(doctorTwoToken, 2, 0);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid flag value. Must be 1-3 (inclusive)");
+    done();
+  });
+
+  it("should flag submission as a doctor if the flag is 3", async (done) => {
+    const response = await flagSubmission(doctorTwoToken, 2, 3);
+    const {
+      body: {
+        data: {
+          flagSubmission: { flag },
+        },
+      },
+    } = response;
+    expect(flag).toBe(3);
+    done();
+  });
+
+  it("should flag submission as a doctor if the flag is 1", async (done) => {
+    const response = await flagSubmission(doctorTwoToken, 2, 1);
+    const {
+      body: {
+        data: {
+          flagSubmission: { flag },
+        },
+      },
+    } = response;
+    expect(flag).toBe(1);
+    done();
+  });
+
+  it("should not flag submission as a doctor if the submission belongs to a patient the doctor does not own", async (done) => {
+    const response = await flagSubmission(doctorOneToken, 2, 1);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("You cannot flag this submission");
+    done();
+  });
+
+  it("should not flag submission a non-existing submission", async (done) => {
+    const response = await flagSubmission(doctorOneToken, 200, 1);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("This submission does not exist.");
+    done();
+  });
+
+  it("should not flag submission as a patient", async (done) => {
+    const response = await flagSubmission(patientOneToken, 1, 1);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid account type!");
+    done();
+  });
+
+  it("should not flag submission as an admin", async (done) => {
+    const response = await flagSubmission(adminToken, 1, 1);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid account type!");
+    done();
+  });
+
+  it("should not flag submission as a super-admin", async (done) => {
+    const response = await flagSubmission(superAdminToken, 1, 1);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid account type!");
+    done();
+  });
+
+
 });
 
 const patientOneSubmissions = {
