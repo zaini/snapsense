@@ -64,6 +64,32 @@ const getSubmission = (authToken, submissionsId) => {
     .set("authorization", `Bearer ${authToken}`);
 };
 
+const getSubmissionsForReview = (authToken) => {
+  return request(app)
+    .post("/graphql")
+    .send({
+      query: `query {
+			getSubmissionsForReview {
+				flag
+				Patient {
+					email
+				}
+				Answers {
+					Question {
+						text
+					}
+					value
+				}
+				Images {
+					url
+				}
+			}
+		}
+		`,
+    })
+    .set("authorization", `Bearer ${authToken}`);
+};
+
 describe("submissions resolvers", () => {
   beforeAll(async (done) => {
     const {
@@ -248,6 +274,55 @@ describe("submissions resolvers", () => {
     const errorMessage = response.body.errors[0].message;
     expect(errorMessage).toMatch(
       "You are not logged into the correct account to access this submission."
+    );
+    done();
+  });
+
+  it("should get submissions for review as a doctor", async (done) => {
+    const response = await getSubmissionsForReview(doctorTwoToken);
+    const {
+      body: {
+        data: { getSubmissionsForReview: result },
+      },
+    } = response;
+    expect(result).toMatchObject(patientTwoSubmissions.data.getSubmissions);
+    done();
+  });
+
+	it("should return an empty array if the logged in doctor has no requests to review", async (done) => {
+    const response = await getSubmissionsForReview(doctorOneToken);
+    const {
+      body: {
+        data: { getSubmissionsForReview: result },
+      },
+    } = response;
+    expect(result).toEqual([]);
+    done();
+  });
+
+  it("should throw error if a patient tries to get submissions for review", async (done) => {
+    const response = await getSubmissionsForReview(patientOneToken);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch(
+      "You are not logged into the correct account for this feature."
+    );
+    done();
+  });
+
+  it("should throw error if an admin tries to get submissions for review", async (done) => {
+    const response = await getSubmissionsForReview(adminToken);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch(
+      "You are not logged into the correct account for this feature."
+    );
+    done();
+  });
+
+  it("should throw error if a super admin tries to get submissions for review", async (done) => {
+    const response = await getSubmissionsForReview(superAdminToken);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch(
+      "You are not logged into the correct account for this feature."
     );
     done();
   });
