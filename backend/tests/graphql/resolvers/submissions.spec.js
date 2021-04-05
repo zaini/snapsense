@@ -121,47 +121,51 @@ describe("submissions resolvers", () => {
     done();
   });
 
-	test("should get all submissions of patients assigned to a doctor #1", async (done) => {
-		const response = await getSubmissions(doctorOneToken);
-		const { body } = response;
-		expect(body).toMatchObject(patientOneSubmissions); // patientOne is the only patient assigned to doctorOne
-		done();
-	});
+  test("should get all submissions of patients assigned to a doctor #1", async (done) => {
+    const response = await getSubmissions(doctorOneToken);
+    const { body } = response;
+    expect(body).toMatchObject(patientOneSubmissions); // patientOne is the only patient assigned to doctorOne
+    done();
+  });
 
-	test("should get all submissions of patients assigned to a doctor #2", async (done) => {
-		const response = await getSubmissions(doctorTwoToken);
-		const { body } = response;
-		expect(body).toMatchObject(patientTwoSubmissions); // patientTwo is the only patient assigned to doctorTwo
-		done();
-	});
+  test("should get all submissions of patients assigned to a doctor #2", async (done) => {
+    const response = await getSubmissions(doctorTwoToken);
+    const { body } = response;
+    expect(body).toMatchObject(patientTwoSubmissions); // patientTwo is the only patient assigned to doctorTwo
+    done();
+  });
 
-	test("should get submissions of a specific patient assigned to a doctor #1", async (done) => {
-		const response = await getSubmissions(doctorOneToken, 1);
-		const { body } = response;
-		expect(body).toMatchObject(patientOneSubmissions);
-		done();
-	});
+  test("should get submissions of a specific patient assigned to a doctor #1", async (done) => {
+    const response = await getSubmissions(doctorOneToken, 1);
+    const { body } = response;
+    expect(body).toMatchObject(patientOneSubmissions);
+    done();
+  });
 
-	test("should get submissions of a specific patient assigned to a doctor #2", async (done) => {
-		const response = await getSubmissions(doctorTwoToken, 2);
-		const { body } = response;
-		expect(body).toMatchObject(patientTwoSubmissions);
-		done();
-	});
+  test("should get submissions of a specific patient assigned to a doctor #2", async (done) => {
+    const response = await getSubmissions(doctorTwoToken, 2);
+    const { body } = response;
+    expect(body).toMatchObject(patientTwoSubmissions);
+    done();
+  });
 
-	test("should not get submissions of a specific patient that is not assigned to a doctor", async (done) => {
-		const response = await getSubmissions(doctorTwoToken, 1);
-		const errorMessage = response.body.errors[0].message;
-		expect(errorMessage).toMatch("This patient does not belong to you.");
-		done();
-	});
+  test("should not get submissions of a specific patient that is not assigned to a doctor", async (done) => {
+    const response = await getSubmissions(doctorTwoToken, 1);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("This patient does not belong to you.");
+    done();
+  });
 
-	test("should get specific submission if the logged in patient owns the submission", async (done) => {
-		const response = await getSubmission(patientOneToken, 1);
-		const { body: { data: { getSubmission: result }} } = response;
-		expect(result).toMatchObject(patientOneSubmissions.data.getSubmissions[0]);
-		done();
-	});
+  test("should get specific submission if the logged in patient owns the submission", async (done) => {
+    const response = await getSubmission(patientOneToken, 1);
+    const {
+      body: {
+        data: { getSubmission: result },
+      },
+    } = response;
+    expect(result).toMatchObject(patientOneSubmissions.data.getSubmissions[0]);
+    done();
+  });
 });
 
 const patientOneSubmissions = {
