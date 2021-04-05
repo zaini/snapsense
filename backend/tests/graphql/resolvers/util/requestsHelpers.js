@@ -1,3 +1,4 @@
+// File that contains post requests that are re-used frequently to avoid code duplication
 const request = require("supertest");
 
 const app = require("../../../../index");
@@ -173,6 +174,31 @@ const getRequestsAsDoctor = (authToken) => {
     .set("authorization", `Bearer ${authToken}`);
 };
 
+const getRequestsForReview = (authToken) => {
+  return request(app)
+    .post("/graphql")
+    .send({
+      query: `
+				query {
+					getRequestsForReview {
+						Doctor {
+							email
+						}
+						Patient {
+							email
+						}
+						Submission {
+							id
+						}
+						deadline
+						fulfilled
+					}
+				}
+			`,
+    })
+    .set("authorization", `Bearer ${authToken}`);
+};
+
 module.exports = {
   getSubmissions,
   getSubmission,
@@ -181,4 +207,5 @@ module.exports = {
   createSubmission,
   getRequestsAsPatient,
   getRequestsAsDoctor,
+  getRequestsForReview,
 };
