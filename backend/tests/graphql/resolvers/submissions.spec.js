@@ -1,6 +1,12 @@
 const request = require("supertest");
 
 const app = require("../../../index");
+const {
+  getSubmission,
+  getSubmissions,
+  getSubmissionsForReview,
+  flagSubmission,
+} = require("./util/requestsHelpers");
 
 let superAdminToken,
   adminToken,
@@ -9,114 +15,6 @@ let superAdminToken,
   patientOneToken,
   patientTwoToken,
   patientThreeToken;
-
-const getSubmissions = (authToken, patientId) => {
-  return request(app)
-    .post("/graphql")
-    .send({
-      query: `
-				query {
-					getSubmissions${patientId ? `(patient_id: ${patientId})` : ""} {
-						flag
-						Patient {
-							email
-						}
-						Answers {
-							Question {
-								text
-							}
-							value
-						}
-						Images {
-							url
-						}
-					}
-				}		
-			`,
-    })
-    .set("authorization", `Bearer ${authToken}`);
-};
-
-const getSubmission = (authToken, submissionsId) => {
-  return request(app)
-    .post("/graphql")
-    .send({
-      query: `
-				query {
-					getSubmission(submission_id: ${submissionsId}) {
-						flag
-						Patient {
-							email
-						}
-						Answers {
-							Question {
-								text
-							}
-							value
-						}
-						Images {
-							url
-						}
-					}
-				}		
-			`,
-    })
-    .set("authorization", `Bearer ${authToken}`);
-};
-
-const getSubmissionsForReview = (authToken) => {
-  return request(app)
-    .post("/graphql")
-    .send({
-      query: `
-				query {
-					getSubmissionsForReview {
-						flag
-						Patient {
-							email
-						}
-						Answers {
-							Question {
-								text
-							}
-							value
-						}
-						Images {
-							url
-						}
-					}
-				}
-			`,
-    })
-    .set("authorization", `Bearer ${authToken}`);
-};
-
-const flagSubmission = (authToken, submissionId, flag) => {
-  return request(app)
-    .post("/graphql")
-    .send({
-      query: `
-				mutation {
-					flagSubmission(submission_id: ${submissionId}, flag: ${flag}) {
-						flag
-						Patient {
-							email
-						}
-						Answers {
-							Question {
-								text
-							}
-							value
-						}
-						Images {
-							url
-						}
-					}
-				}
-			`,
-    })
-    .set("authorization", `Bearer ${authToken}`);
-};
 
 // The below does not work, credit from https://github.com/nestjs/graphql/issues/1057
 const createSubmission = (authToken) => {
