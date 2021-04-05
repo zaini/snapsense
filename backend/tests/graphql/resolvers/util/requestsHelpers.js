@@ -189,6 +189,7 @@ const getRequestsForReview = (authToken) => {
 						}
 						Submission {
 							id
+							flag
 						}
 						deadline
 						fulfilled

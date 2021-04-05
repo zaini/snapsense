@@ -166,5 +166,60 @@ describe("requests resolvers", () => {
     done();
   });
 
-  
+  it("should get the requests the logged in doctor has to review", async (done) => {
+    const response = await getRequestsForReview(doctorTwoToken);
+    const { body } = response;
+    expect(body).toMatchObject({
+      data: {
+        getRequestsForReview: [
+          {
+            Doctor: { email: "doctor2@nhs.net" },
+            Patient: { email: "patient2@gmail.com" },
+            Submission: { id: "2", flag: null }, // flag must be null as that means the doctor has not reviewed it
+            deadline: "1610236800000",
+            fulfilled: "1610064000000",
+          },
+        ],
+      },
+    });
+    done();
+  });
+
+  it("should empty array if logged in doctor has no requests to review", async (done) => {
+    const response = await getRequestsForReview(doctorOneToken);
+    const { body } = response;
+    expect(body).toMatchObject({
+      data: {
+        getRequestsForReview: [],
+      },
+    });
+    done();
+  });
+
+  it("should not get requests to review as a patient", async (done) => {
+    const response = await getRequestsForReview(patientOneToken);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch(
+      "You are not logged into the correct account for this feature."
+    );
+    done();
+  });
+
+  it("should not get requests to review as an admin", async (done) => {
+    const response = await getRequestsForReview(adminToken);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch(
+      "You are not logged into the correct account for this feature."
+    );
+    done();
+  });
+
+  it("should not get requests to review as a super-admin", async (done) => {
+    const response = await getRequestsForReview(superAdminToken);
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch(
+      "You are not logged into the correct account for this feature."
+    );
+    done();
+  });
 });
