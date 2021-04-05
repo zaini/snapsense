@@ -258,7 +258,7 @@ describe("requests resolvers", () => {
     done();
   });
 
-	it("should not create a request as a doctor to a non-existing patient", async (done) => {
+  it("should not create a request as a doctor to a non-existing patient", async (done) => {
     const tomorrow = new Date(new Date());
     tomorrow.setDate(tomorrow.getDate() + 1);
     const response = await createRequest(
@@ -270,6 +270,74 @@ describe("requests resolvers", () => {
 
     const errorMessage = response.body.errors[0].message;
     expect(errorMessage).toMatch("Invalid patient!");
+    done();
+  });
+
+  it("should not create a request as a doctor with a frequency less than -1", async (done) => {
+    const tomorrow = new Date(new Date());
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const response = await createRequest(
+      doctorOneToken,
+      1,
+      tomorrow.getTime(),
+      1,
+      -1,
+      1
+    );
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid Frequency!");
+    done();
+  });
+
+	it("should not create a request as a doctor with an interval less than -1", async (done) => {
+    const tomorrow = new Date(new Date());
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const response = await createRequest(
+      doctorOneToken,
+      1,
+      tomorrow.getTime(),
+      1,
+      1,
+      -1
+    );
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid Interval!");
+    done();
+  });
+
+	it("should not create a request as a doctor with a frequency greater than 20", async (done) => {
+    const tomorrow = new Date(new Date());
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const response = await createRequest(
+      doctorOneToken,
+      1,
+      tomorrow.getTime(),
+      1,
+      21,
+      1
+    );
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid Frequency!");
+    done();
+  });
+
+	it("should not create a request as a doctor with an interval less than 20", async (done) => {
+    const tomorrow = new Date(new Date());
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const response = await createRequest(
+      doctorOneToken,
+      1,
+      tomorrow.getTime(),
+      1,
+      1,
+      21
+    );
+
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Invalid Interval!");
     done();
   });
 });
