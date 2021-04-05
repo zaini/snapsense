@@ -182,7 +182,7 @@ describe("submissions resolvers", () => {
   });
 
 	it("should not get specific submission if not logged in", async (done) => {
-    const response = await getSubmission("", 200);
+    const response = await getSubmission("invalidlogintoken", 200);
     const errorMessage = response.body.errors[0].message;
     expect(errorMessage).toMatch("Invalid Login Token");
     done();
