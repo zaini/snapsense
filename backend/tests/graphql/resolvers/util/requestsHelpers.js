@@ -110,9 +110,23 @@ const flagSubmission = (authToken, submissionId, flag) => {
     .set("authorization", `Bearer ${authToken}`);
 };
 
+const createSubmission = (authToken, answers) => {
+  return request(app)
+    .post("/graphql")
+    .send({
+      query: `
+			mutation {
+				createSubmission(answers: ${answers} images: [])
+			}
+		`,
+    })
+    .set("authorization", `Bearer ${authToken}`);
+};
+
 module.exports = {
   getSubmissions,
   getSubmission,
   getSubmissionsForReview,
   flagSubmission,
+  createSubmission,
 };
