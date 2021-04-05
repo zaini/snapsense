@@ -53,6 +53,8 @@ describe("invite links resolvers", () => {
     done();
   });
 
+	// Check invitation resolver
+
 	it("should return correct token if checkInvitation is called with a valid invite for a patient", async (done) => {
     const token = inviteToken(
       "doctor1@nhs.net",
@@ -258,7 +260,7 @@ describe("invite links resolvers", () => {
   });
 
 	// Invitation resolver tests
-	
+
 	it("should invite a new doctor as a valid admin", async (done) => {
 		const response = await inviteUser("newdoctor@nhs.net", adminToken);
 		const {
