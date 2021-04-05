@@ -120,6 +120,13 @@ describe("submissions resolvers", () => {
 		const { body } = response;
 		expect(body).toMatchObject(patientTwoSubmissions);
 		done();
+
+		test("should not get submissions of a specific patient that is not assigned to a doctor", async (done) => {
+			const response = await getSubmissions(doctorTwoToken, 1);
+			const errorMessage = response.body.errors[0].message;
+			expect(errorMessage).toMatch("This patient does not belong to you.");
+			done();
+		});
 	});
 });
 
