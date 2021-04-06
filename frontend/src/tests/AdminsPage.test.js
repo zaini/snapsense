@@ -2,22 +2,17 @@ import { React } from "react";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
 import { act } from "react-dom/test-utils";
-
 import { Route, MemoryRouter } from "react-router";
+
+import mocks from "./mocks/adminsPageMocks";
+import AdminsPage from "../pages/My/AdminsPage";
 
 jest.mock("../components/utils/Table", () => (params) => {
   return <div data-testid="renderedTable">{JSON.stringify(params)}</div>;
 });
 
-import AdminsPage from "../pages/My/AdminsPage";
-
 afterEach(cleanup);
 
-//TODO: add test for buttons and their links
-
-import mocks from "./mocks/adminsPageMocks";
-
-//Render component
 const setup = () => {
   act(() => {
     render(
