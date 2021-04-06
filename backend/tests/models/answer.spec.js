@@ -16,8 +16,8 @@ describe("Answer Model Test", () => {
   });
 
   it("should return a valid extra", async (done) => {
-    const answer = await Answer.findByPk(9);
-    expect(answer.extra).toMatch("I don't feel good");
+    const answer = await Answer.findByPk(5);
+    expect(answer.extra).toMatch("My foot still hurts");
     done();
   });
 });
