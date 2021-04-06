@@ -1,11 +1,12 @@
 const request = require("supertest");
 
-const app = require("../../../index");
+const app = require("../../../../index");
 
 // Login and get the access tokens for various users needed in testing
 let superAdminToken,
   adminToken,
   doctorOneToken,
+  doctorTwoToken,
   patientOneToken,
   patientTwoToken,
   patientThreeToken,
@@ -62,6 +63,23 @@ module.exports = (async () => {
   });
 
   doctorOneToken = doctorOneToken.body.data.login.accessToken;
+
+  doctorTwoToken = await request(app).post("/graphql").send({
+    query: `
+			mutation {
+				login(
+					email: "doctor2@nhs.net"
+					password: "Password123"
+					account_type: "DOCTOR"
+				)	
+				{
+					accessToken
+				}
+			}
+		`,
+  });
+
+  doctorTwoToken = doctorTwoToken.body.data.login.accessToken;
 
   patientOneToken = await request(app).post("/graphql").send({
     query: `
@@ -134,6 +152,7 @@ module.exports = (async () => {
     superAdmin: superAdminToken,
     admin: adminToken,
     doctorOne: doctorOneToken,
+    doctorTwo: doctorTwoToken,
     patientOne: patientOneToken,
     patientTwo: patientTwoToken,
     patientThree: patientThreeToken,

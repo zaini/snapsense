@@ -1,4 +1,8 @@
-const { AuthenticationError, UserInputError } = require("apollo-server");
+const {
+  ApolloError,
+  AuthenticationError,
+  UserInputError,
+} = require("apollo-server");
 
 const {
   Answer,
@@ -82,6 +86,7 @@ module.exports = {
           });
           break;
         default:
+          throw new ApolloError("Invalid user type", 400);
           break;
       }
       return submissions || [];
@@ -261,7 +266,7 @@ module.exports = {
       isFlagValid(flag);
 
       const doctor = await getDoctorById(user.id);
-      const submission = await Submission.findByPk(submission_id);
+      const submission = await getSubmissionById(submission_id);
       const patient = await submission.getPatient();
 
       const canFlag = await doctor.hasPatient(patient);

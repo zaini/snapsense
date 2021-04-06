@@ -1,6 +1,6 @@
 const request = require("supertest");
 
-const app = require("../../index");
+const app = require("../../../index");
 
 // Access tokens for various users that are needed
 let doctorOneToken, patientOneToken, patientTwoToken;
@@ -20,7 +20,7 @@ describe("patients resolvers", () => {
 		done()
   });
 
-  test("should get a patient as a doctor where the patient belongs to the doctor", async (done) => {
+  it("should get a patient as a doctor where the patient belongs to the doctor", async (done) => {
     // Get the patients belonging to the logged in doctor
     const response = await request(app)
       .post("/graphql")
@@ -53,7 +53,7 @@ describe("patients resolvers", () => {
     done();
   });
 
-  test("should not get a patient as a doctor where the patient does not belongs to the doctor", async (done) => {
+  it("should not get a patient as a doctor where the patient does not belongs to the doctor", async (done) => {
     // Try to get a patient that does not belong to the logged in doctor
     const response = await request(app)
       .post("/graphql")
@@ -77,7 +77,7 @@ describe("patients resolvers", () => {
     done();
   });
 
-  test("should not get a patient as a doctor where the patient does not exist", async (done) => {
+  it("should not get a patient as a doctor where the patient does not exist", async (done) => {
     // Look for patient_id 100, as an id of 100 does not exist in the test fixtures
     const response = await request(app)
       .post("/graphql")
@@ -101,7 +101,7 @@ describe("patients resolvers", () => {
     done();
   });
 
-  test("should not get a patient as a doctor without authorization header", async (done) => {
+  it("should not get a patient as a doctor without authorization header", async (done) => {
     // Do not attach an authorization header
     const response = await request(app).post("/graphql").send({
       query: `
@@ -122,7 +122,7 @@ describe("patients resolvers", () => {
     done();
   });
 
-  test("should get patients as a doctor where doctor is valid", async (done) => {
+  it("should get patients as a doctor where doctor is valid", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -157,7 +157,7 @@ describe("patients resolvers", () => {
     done();
   });
 
-  test("should not get patients as a doctor without authorization header", async (done) => {
+  it("should not get patients as a doctor without authorization header", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 				query {
@@ -177,7 +177,7 @@ describe("patients resolvers", () => {
     done();
   });
 
-  test("should add a valid patient to a new valid doctor", async (done) => {
+  it("should add a valid patient to a new valid doctor", async (done) => {
     // Add a patient to a new doctor
     const response = await request(app)
       .post("/graphql")
@@ -241,7 +241,7 @@ describe("patients resolvers", () => {
     done();
   });
 
-  test("should not add new doctor patient relationship if it exists already", async (done) => {
+  it("should not add new doctor patient relationship if it exists already", async (done) => {
     // Add a patient to an existing doctor where there is already a relationship between the doctor and patient
     const response = await request(app)
       .post("/graphql")
@@ -299,7 +299,7 @@ describe("patients resolvers", () => {
     done();
   });
 
-  test("should not add a doctor patient relationship if the patient_email does not match the logged in user email", async (done) => {
+  it("should not add a doctor patient relationship if the patient_email does not match the logged in user email", async (done) => {
     // Add a patient to an existing doctor where there is already a relationship between the doctor and patient
     const response = await request(app)
       .post("/graphql")

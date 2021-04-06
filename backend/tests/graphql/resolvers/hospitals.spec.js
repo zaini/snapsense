@@ -1,6 +1,6 @@
 const request = require("supertest");
 
-const app = require("../../index");
+const app = require("../../../index");
 
 let superAdminToken, adminToken;
 
@@ -13,7 +13,7 @@ describe("hospitals resolvers", () => {
     done();
   });
 
-  test("should get all hospitals as super-admin", async (done) => {
+  it("should get all hospitals as super-admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -51,7 +51,7 @@ describe("hospitals resolvers", () => {
     done();
   });
 
-  test("should not get all hospitals if not logged in", async (done) => {
+  it("should not get all hospitals if not logged in", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 					query {
@@ -69,7 +69,7 @@ describe("hospitals resolvers", () => {
     done();
   });
 
-  test("should not get all hospitals if logged in as a user that's not a super admin", async (done) => {
+  it("should not get all hospitals if logged in as a user that's not a super admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -90,7 +90,7 @@ describe("hospitals resolvers", () => {
     done();
   });
 
-  test("should get specific hospital as super-admin", async (done) => {
+  it("should get specific hospital as super-admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -118,7 +118,7 @@ describe("hospitals resolvers", () => {
     done();
   });
 
-  test("should throw error on invalid hospital retrieval as super-admin", async (done) => {
+  it("should throw error on invalid hospital retrieval as super-admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -139,7 +139,7 @@ describe("hospitals resolvers", () => {
     done();
   });
 
-  test("should not get specific hospital if logged in as a user that's not a super admin", async (done) => {
+  it("should not get specific hospital if logged in as a user that's not a super admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -160,7 +160,7 @@ describe("hospitals resolvers", () => {
     done();
   });
 
-  test("should create hospital as a super-admin", async (done) => {
+  it("should create hospital as a super-admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -192,7 +192,7 @@ describe("hospitals resolvers", () => {
     done();
   });
 
-  test("should should not create hospital if not logged in", async (done) => {
+  it("should should not create hospital if not logged in", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 					mutation {
@@ -213,7 +213,7 @@ describe("hospitals resolvers", () => {
     done();
   });
 
-  test("should not create hospital if not logged in as a super-admin", async (done) => {
+  it("should not create hospital if not logged in as a super-admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -237,7 +237,7 @@ describe("hospitals resolvers", () => {
     done();
   });
 
-  test("should delete valid hospital as super", async (done) => {
+  it("should delete valid hospital as super", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -259,7 +259,7 @@ describe("hospitals resolvers", () => {
     done();
   });
 
-  test("should throw error if trying to delete invalid hospital", async (done) => {
+  it("should throw error if trying to delete invalid hospital", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -277,7 +277,7 @@ describe("hospitals resolvers", () => {
     done();
   });
 
-  test("should not delete hospital if not logged in as a super admin", async (done) => {
+  it("should not delete hospital if not logged in as a super admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -295,7 +295,7 @@ describe("hospitals resolvers", () => {
     done();
   });
 
-  test("should not delete hospital if not logged in", async (done) => {
+  it("should not delete hospital if not logged in", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 				mutation {

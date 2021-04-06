@@ -110,6 +110,7 @@ module.exports = {
             accountExists = !!patient;
             break;
           default:
+						throw new ApolloError("Invalid Account Type!", 400);
             break;
         }
         return createAccessToken(

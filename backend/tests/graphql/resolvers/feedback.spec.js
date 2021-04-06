@@ -1,6 +1,6 @@
 const request = require("supertest");
 
-const app = require("../../index");
+const app = require("../../../index");
 
 let superAdminToken, adminToken;
 
@@ -13,7 +13,7 @@ describe("feedback resolvers", () => {
     done();
   });
 
-  test("should get all feedback as super admin", async (done) => {
+  it("should get all feedback as super admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -44,7 +44,7 @@ describe("feedback resolvers", () => {
     done();
   });
 
-  test("should not get all feedback if not logged in", async (done) => {
+  it("should not get all feedback if not logged in", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 				query {
@@ -62,7 +62,7 @@ describe("feedback resolvers", () => {
     done();
   });
 
-  test("should not get all feedback if not logged in as a super admin", async (done) => {
+  it("should not get all feedback if not logged in as a super admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -83,7 +83,7 @@ describe("feedback resolvers", () => {
     done();
   });
 
-  test("should get specific feedback as super admin", async (done) => {
+  it("should get specific feedback as super admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -109,7 +109,7 @@ describe("feedback resolvers", () => {
     done();
   });
 
-	test("should throw an error when trying to get a specific feedback that does not exist", async (done) => {
+  it("should throw an error when trying to get a specific feedback that does not exist", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -124,14 +124,13 @@ describe("feedback resolvers", () => {
       })
       .set("authorization", `Bearer ${superAdminToken}`);
 
-    const { body } = response;
-
-    expect(body).toMatch("Feedback does not exist!");
+    const errorMessage = response.body.errors[0].message;
+    expect(errorMessage).toMatch("Feedback does not exist!");
 
     done();
   });
 
-  test("should not get specific feedback if not logged in", async (done) => {
+  it("should not get specific feedback if not logged in", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 					query {
@@ -149,7 +148,7 @@ describe("feedback resolvers", () => {
     done();
   });
 
-  test("should not get specific feedback if not logged in as a super admin", async (done) => {
+  it("should not get specific feedback if not logged in as a super admin", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -170,7 +169,7 @@ describe("feedback resolvers", () => {
     done();
   });
 
-  test("should create feedback if logged in", async (done) => {
+  it("should create feedback if logged in", async (done) => {
     const response = await request(app)
       .post("/graphql")
       .send({
@@ -199,7 +198,7 @@ describe("feedback resolvers", () => {
     done();
   });
 
-  test("should create feedback if not logged in", async (done) => {
+  it("should create feedback if not logged in", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 					mutation {
@@ -225,7 +224,7 @@ describe("feedback resolvers", () => {
     done();
   });
 
-  test("should create feedback if extra information is empty", async (done) => {
+  it("should create feedback if extra information is empty", async (done) => {
     const response = await request(app).post("/graphql").send({
       query: `
 					mutation {
