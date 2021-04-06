@@ -11,6 +11,35 @@ describe("Feedback Model Test", () => {
     done();
   });
 
+	it("should save a feedback with 0 stars", async (done) => {
+    await expect(
+      Feedback.create({
+        stars: 0,
+        extra: "Not a great experience",
+      })
+    ).toBeTruthy();
+    done();
+  });
+
+	it("should save a feedback with 5 stars", async (done) => {
+    await expect(
+      Feedback.create({
+        stars: 0,
+        extra: "Amazing website and service!",
+      })
+    ).toBeTruthy();
+    done();
+  });
+
+	it("should save a feedback with null extra", async (done) => {
+    await expect(
+      Feedback.create({
+        stars: 4,
+      })
+    ).toBeTruthy();
+    done();
+  });
+
   it("should throw an error on invalid stars value", async (done) => {
     await expect(
       Feedback.create({
