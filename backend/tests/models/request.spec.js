@@ -52,7 +52,7 @@ describe("Request Model Test", () => {
 
   it("should return a valid submission id", async (done) => {
     const request = await Request.findByPk(4);
-    expect(request.submission_id.toString()).toMatch("1");
+    expect(request.submission_id.toString()).toMatch("3");
     done();
   });
 });
