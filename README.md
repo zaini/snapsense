@@ -65,7 +65,7 @@ This application requires setting up various environment and configuration files
       "username": "dev_user",
       "password": "dev_user",
       "database": "snapsense",
-      "host": "yourhostIPgoeshere",
+      "host": "yourHostIPgoesHere",
       "dialect": "mysql"
     }
   }
