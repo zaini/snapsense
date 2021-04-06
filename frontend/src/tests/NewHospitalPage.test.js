@@ -163,12 +163,5 @@ describe("Submitting form with valid input", () => {
     await waitFor(() => {
       expect(screen.getByTestId("formSubmitInnerLoader")).toBeInTheDocument();
     });
-
-    // TODO: Fix this success state
-    // await waitFor(() => {
-    //   expect(
-    //     screen.getByText(/Hospital successfully created!/i)
-    //   ).toBeInTheDocument();
-    // });
   });
 });

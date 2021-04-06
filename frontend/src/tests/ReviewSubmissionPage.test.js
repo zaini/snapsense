@@ -302,9 +302,6 @@ describe("fulfilled and unreviewed tab on screening page", () => {
     );
   });
 
-
-  // TODO: Check if cache has been edited properly
-  // TODO: Getting null error for request card called query
   test("if submit button correctly submits form in card three", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();

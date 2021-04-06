@@ -220,7 +220,6 @@ describe("Questionnaire Form", () => {
     expect(screen.getAllByText(/Loading../i)[0]).toBeInTheDocument();
     expect(screen.getAllByText(/Loading../i)[1]).toBeInTheDocument();
 
-    // TODO: Fix This
     await waitFor(() => {
       expect(screen.getByTestId("formDone")).toBeInTheDocument();
     });
