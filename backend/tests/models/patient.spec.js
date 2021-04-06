@@ -25,6 +25,78 @@ describe("Patient Model Test", () => {
     done();
   });
 
+  it("should throw an error on short first name", async (done) => {
+    await expect(
+      Patient.create({
+        fname: "J",
+        lname: "Doe",
+        email: "johndoe@gmail.com",
+        password: "12345ABCDEfghi!",
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
+  it("should throw an error on short last name", async (done) => {
+    await expect(
+      Patient.create({
+        fname: "John",
+        lname: "D",
+        email: "johndoe@gmail.com",
+        password: "12345ABCDEfghi!",
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
+  it("should throw an error on long first name", async (done) => {
+    await expect(
+      Patient.create({
+        fname: "Johnkahsdlkjhaksdjghjashdglahsdgakjdsas",
+        lname: "Doe",
+        email: "johndoe@gmail.com",
+        password: "12345ABCDEfghi!",
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
+  it("should throw an error on long last name", async (done) => {
+    await expect(
+      Patient.create({
+        fname: "John",
+        lname: "Doeojhaskdhalksduqwhealksdhaskjahsdjhad",
+        email: "johndoe@gmail.com",
+        password: "12345ABCDEfghi!",
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
+  it("should throw an error on first name containing illegal characters", async (done) => {
+    await expect(
+      Patient.create({
+        fname: "J0hn",
+        lname: "Doe",
+        email: "johndoe@gmail.com",
+        password: "12345ABCDEfghi!",
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
+  it("should throw an error on last name containing illegal characters", async (done) => {
+    await expect(
+      Patient.create({
+        fname: "John",
+        lname: "D03",
+        email: "johndoe@gmail.com",
+        password: "12345ABCDEfghi!",
+      })
+    ).rejects.toThrow();
+    done();
+  });
+
   it("should throw an error on null first name", async (done) => {
     await expect(
       Patient.create({

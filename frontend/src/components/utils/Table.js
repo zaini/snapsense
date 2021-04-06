@@ -7,7 +7,7 @@ import Toolbar from "./Toolbar";
 //SuperTable component
 const Table = ({ data, cols }) => {
   return (
-    <Box height="73vh" width="100%">
+    <Box data-testid="renderedTable" height="73vh" width="100%">
       <DataGrid
         columns={cols}
         rows={data}
@@ -15,6 +15,7 @@ const Table = ({ data, cols }) => {
         components={{
           Toolbar,
         }}
+        columnBuffer={5}
       />
     </Box>
   );

@@ -51,7 +51,12 @@ const InviteNewUser = ({ invitation }) => {
   };
 
   return (
-    <Box p="7" borderWidth="1px" borderRadius="lg">
+    <Box
+      data-testid="InvitePatientNewForm"
+      p="7"
+      borderWidth="1px"
+      borderRadius="lg"
+    >
       <h1>
         You've been invited by {invitation.inviterEmail} to join their clinic.
         They just need the following information to create an account.
@@ -64,17 +69,28 @@ const InviteNewUser = ({ invitation }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl id="first_name" isRequired>
           <FormLabel htmlFor="first_name">First name</FormLabel>
-          <Input placeholder="First name" name="first_name" ref={register} />
+          <Input
+            data-testid="fnameForm"
+            placeholder="First name"
+            name="first_name"
+            ref={register}
+          />
         </FormControl>
         <br />
         <FormControl id="last_name" isRequired>
           <FormLabel htmlFor="last_name">Last name</FormLabel>
-          <Input placeholder="Last name" name="last_name" ref={register} />
+          <Input
+            data-testid="lnameForm"
+            placeholder="Last name"
+            name="last_name"
+            ref={register}
+          />
         </FormControl>
         <br />
         <FormControl id="password" isRequired>
           <FormLabel htmlFor="password">Password</FormLabel>
           <Input
+            data-testid="passwordForm"
             type="password"
             placeholder="Password"
             name="password"
@@ -85,6 +101,7 @@ const InviteNewUser = ({ invitation }) => {
         <FormControl id="repeat_password" isRequired>
           <FormLabel htmlFor="repeat_password">Repeat Password</FormLabel>
           <Input
+            data-testid="repPasswordForm"
             type="password"
             placeholder="Repeat password"
             name="repeat_password"
@@ -93,6 +110,7 @@ const InviteNewUser = ({ invitation }) => {
         </FormControl>
         <Center>
           <Button
+            data-testid="submitForm"
             mt={4}
             colorScheme="blue"
             type="submit"
@@ -108,7 +126,7 @@ const InviteNewUser = ({ invitation }) => {
 
 export default InviteNewUser;
 
-const REGISTER_USER = gql`
+export const REGISTER_USER = gql`
   mutation register(
     $fname: String!
     $lname: String!

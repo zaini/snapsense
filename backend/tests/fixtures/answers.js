@@ -1,7 +1,7 @@
 const { Answer } = require("../../models/index");
 
 const seed = async () => {
-  await new Answer({
+  await Answer.create({
     id: 1,
     question_id: 1,
     submission_id: 1,
@@ -9,9 +9,9 @@ const seed = async () => {
     extra: "My foot hurts",
     createdAt: new Date(),
     updatedAt: new Date(),
-  }).save();
+  });
 
-  await new Answer({
+  await Answer.create({
     id: 2,
     question_id: 2,
     submission_id: 1,
@@ -19,9 +19,9 @@ const seed = async () => {
     extra: "My foot still hurts",
     createdAt: new Date(),
     updatedAt: new Date(),
-  }).save();
+  });
 
-  await new Answer({
+  await Answer.create({
     id: 3,
     question_id: 3,
     submission_id: 1,
@@ -29,9 +29,9 @@ const seed = async () => {
     extra: null,
     createdAt: new Date(),
     updatedAt: new Date(),
-  }).save();
+  });
 
-  await new Answer({
+  await Answer.create({
     id: 4,
     question_id: 4,
     submission_id: 1,
@@ -39,9 +39,9 @@ const seed = async () => {
     extra: null,
     createdAt: new Date(),
     updatedAt: new Date(),
-  }).save();
+  });
 
-  await new Answer({
+  await Answer.create({
     id: 5,
     question_id: 5,
     submission_id: 1,
@@ -49,9 +49,9 @@ const seed = async () => {
     extra: "My foot still hurts",
     createdAt: new Date(),
     updatedAt: new Date(),
-  }).save();
+  });
 
-  await new Answer({
+  await Answer.create({
     id: 6,
     question_id: 6,
     submission_id: 1,
@@ -59,9 +59,9 @@ const seed = async () => {
     extra: "HELP!!!",
     createdAt: new Date(),
     updatedAt: new Date(),
-  }).save();
+  });
 
-  await new Answer({
+  await Answer.create({
     id: 7,
     question_id: 7,
     submission_id: 1,
@@ -69,9 +69,9 @@ const seed = async () => {
     extra: null,
     createdAt: new Date(),
     updatedAt: new Date(),
-  }).save();
+  });
 
-  await new Answer({
+  await Answer.create({
     id: 8,
     question_id: 8,
     submission_id: 1,
@@ -79,7 +79,17 @@ const seed = async () => {
     extra: "I might die, just saying",
     createdAt: new Date(),
     updatedAt: new Date(),
-  }).save();
+  });
+
+  await Answer.create({
+    id: 9,
+    question_id: 8,
+    submission_id: 3,
+    value: true,
+    extra: "I don't feel good",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  });
 };
 
 module.exports = seed;

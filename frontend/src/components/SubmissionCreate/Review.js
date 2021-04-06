@@ -4,9 +4,9 @@ import { Box } from "@material-ui/core";
 import { SimpleGrid, Stack } from "@chakra-ui/layout";
 import ReviewListItem from "./ReviewListItem";
 
-const Review = ({ isVisible, answers }) => {
+const Review = ({ answers }) => {
   return (
-    <Box hidden={!isVisible}>
+    <Box data-testid="reviewPage">
       <Stack style={{ margin: "3px" }}>
         <Typography style={{ marginLeft: "5px" }} variant="h5" gutterBottom>
           Submission Summary

@@ -6,6 +6,8 @@ const ImageUpload = ({ setImages }) => {
   return (
     <Box w={"100%"}>
       <ImageUploader
+        data-testid="imageUpload"
+        className="ImageUpload"
         withIcon={true}
         withPreview={true}
         buttonText="Choose images to Upload"

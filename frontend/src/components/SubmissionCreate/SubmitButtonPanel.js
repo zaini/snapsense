@@ -22,13 +22,14 @@ const SubmitButtonPanel = ({ answers, images, classes, uploadSubmission }) => {
     <Paper className={classes.paper}>
       <Center>
         <Button
+          data-testid="submitButton"
           disabled={
             !imageUploadExists && !(answerUploadExists && validateAnswers)
           }
-          rightIcon={<CheckCircleIcon />}
+          righticon={<CheckCircleIcon />}
           variant="contained"
           color="primary"
-          colorScheme="blue"
+          colorscheme="blue"
           onClick={() => {
             uploadSubmission({
               variables: {

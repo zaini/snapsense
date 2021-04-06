@@ -16,20 +16,22 @@ const HospitalDetails = ({ hospital }) => {
     <Container>
       <Stack spacing={4}>
         <Center>
-          <Heading>{hospital.name}</Heading>
+          <Heading data-testid="hospitalHeader">{hospital.name}</Heading>
         </Center>
         <hr />
         <FormControl id="id">
           <FormLabel>ID</FormLabel>
-          <Input value={hospital.id} isReadOnly />
+          <Input data-testid="hospitaIDHolder" value={hospital.id} isReadOnly />
         </FormControl>
         <FormControl id="name">
           <FormLabel>Hospital name</FormLabel>
-          <Input value={hospital.name} isReadOnly />
+          <Input data-testid="hospitalNameHolder" value={hospital.name} isReadOnly />
         </FormControl>
         <FormControl id="email">
           <FormLabel>Contact Email</FormLabel>
-          <CopyLink link={hospital.contact_email} />
+          <div data-testid="hospitalEmailHolder">
+            <CopyLink link={hospital.contact_email} />
+          </div>
         </FormControl>
         <hr />
       </Stack>

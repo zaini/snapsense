@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { Alert, AlertIcon, Spinner } from "@chakra-ui/react";
-import { Center } from "@chakra-ui/layout";
+import { Center, Heading } from "@chakra-ui/layout";
 import Submission from "../../components/ShowSubmission";
 
 // Viewing a specific submission
@@ -27,7 +27,10 @@ const ShowSubmissionPage = () => {
     markup = (
       <Alert status="error">
         <AlertIcon />
-        {error.graphQLErrors[0].message}
+        {(error.graphQLErrors &&
+          error.graphQLErrors[0] &&
+          error.graphQLErrors[0].message) ||
+          error.message}
       </Alert>
     );
   } else {
@@ -35,12 +38,20 @@ const ShowSubmissionPage = () => {
     markup = <Submission submission={submission} />;
   }
 
-  return markup;
+  return (
+    <>
+      <Center>
+        <Heading>View Submission</Heading>
+      </Center>
+      <br />
+      {markup}
+    </>
+  );
 };
 
 export default ShowSubmissionPage;
 
-const GET_SUBMISSION = gql`
+export const GET_SUBMISSION = gql`
   query getSubmission($submission_id: ID!) {
     getSubmission(submission_id: $submission_id) {
       id

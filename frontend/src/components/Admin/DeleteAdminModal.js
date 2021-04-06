@@ -69,6 +69,7 @@ const DeleteAdminModal = ({ isOpen, onClose, admin }) => {
         </ModalBody>
         <ModalFooter>
           <Button
+            data-testid="modalSubmitButton"
             mr={3}
             colorScheme="red"
             type="submit"
@@ -77,7 +78,7 @@ const DeleteAdminModal = ({ isOpen, onClose, admin }) => {
           >
             Delete Admin
           </Button>
-          <Button onClick={onClose}>Cancel</Button>
+          <Button data-testid="cancelButton" onClick={onClose}>Cancel</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
@@ -86,7 +87,7 @@ const DeleteAdminModal = ({ isOpen, onClose, admin }) => {
 
 export default DeleteAdminModal;
 
-const GET_ADMINS = gql`
+export const GET_ADMINS = gql`
   query getAdmins {
     getAdmins {
       id
@@ -100,7 +101,7 @@ const GET_ADMINS = gql`
   }
 `;
 
-const DELETE_ADMIN = gql`
+export const DELETE_ADMIN = gql`
   mutation deleteAdmin($admin_id: ID!) {
     deleteAdmin(admin_id: $admin_id)
   }

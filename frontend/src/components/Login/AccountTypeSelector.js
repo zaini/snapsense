@@ -4,15 +4,27 @@ const AccountTypeSelector = ({ accountType, onAccountTypeChange }) => {
   return (
     <RadioGroup value={accountType} onChange={onAccountTypeChange}>
       <FormControlLabel
+        data-testid="labelPatient"
         value="PATIENT"
-        control={<Radio />}
+        control={<Radio data-testid="btnPatient" />}
         label="🤒 Patient"
       />
-      <FormControlLabel value="DOCTOR" control={<Radio />} label="👩‍⚕️ Doctor" />
-      <FormControlLabel value="ADMIN" control={<Radio />} label="🤖 Admin" />
       <FormControlLabel
+        data-testid="labelDoctor"
+        value="DOCTOR"
+        control={<Radio data-testid="btnDoctor" />}
+        label="👩‍⚕️ Doctor"
+      />
+      <FormControlLabel
+        data-testid="labelAdmin"
+        value="ADMIN"
+        control={<Radio data-testid="btnAdmin" />}
+        label="🤖 Admin"
+      />
+      <FormControlLabel
+        data-testid="labelSuperAdmin"
         value="SUPERADMIN"
-        control={<Radio />}
+        control={<Radio data-testid="btnSuperAdmin" />}
         label="🌟 SnapSense"
       />
     </RadioGroup>

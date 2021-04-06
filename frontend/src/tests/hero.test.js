@@ -1,10 +1,10 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import LandingPage from "../pages/Home/LandingPage";
 
 test("the correct hero is rendered", () => {
   const landingPage = render(<LandingPage />);
-  const foundHero = landingPage.findByTestId("landingHero");
+  const foundHero = landingPage.getByTestId("landingHero");
   expect(foundHero).toBeTruthy();
 });
 
@@ -23,9 +23,11 @@ describe("hero displays correct information", () => {
     );
   });
 
-  test("hero contains correct image", () => {
+  test("hero contains correct image", async () => {
     const landingPage = render(<LandingPage />);
-    const heroImage = landingPage.queryByTestId("heroImage");
-    expect(heroImage).toBeTruthy();
+    await waitFor(() => {
+      const heroImage = landingPage.queryByTestId("heroImage");
+      expect(heroImage).toBeTruthy();
+    });
   });
 });
