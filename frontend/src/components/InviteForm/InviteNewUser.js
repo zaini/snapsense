@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import gql from "graphql-tag";
 import { useHistory } from "react-router-dom";
@@ -12,15 +12,22 @@ import {
   Center,
 } from "@chakra-ui/react";
 import Error from "../utils/Error";
+import Alert from "../utils/Alert";
 
 const InviteNewUser = ({ invitation }) => {
   const { register, handleSubmit, errors, setError, formState } = useForm();
   const history = useHistory();
 
+  const [isOpen, setIsOpen] = useState(false);
+  const onClose = () => {
+    setIsOpen(false);
+    history.push("/login");
+  };
+  const cancelRef = useRef();
+
   const [registerUser] = useMutation(REGISTER_USER, {
     onCompleted(res) {
-      alert("You have created an account and accepted this invitation.");
-      history.push("/login");
+      setIsOpen(true);
     },
     onError(err) {
       setError("graphql", {
@@ -120,6 +127,14 @@ const InviteNewUser = ({ invitation }) => {
           </Button>
         </Center>
       </form>
+
+      <Alert
+        isOpen={isOpen}
+        cancelRef={cancelRef}
+        onClose={onClose}
+        alertHeader="Invitation"
+        alertMessage="You have created an account and accepted this invitation."
+      />
     </Box>
   );
 };
