@@ -25,7 +25,7 @@ const ErrorPage = () => {
         borderColor="#262626"
       >
         <AlertIcon boxSize="50px" mr={0} />
-        <AlertTitle mt={4} mb={1} fontSize="lg">
+        <AlertTitle mt={4} mb={1} fontSize="lg" data-testid="error-title">
           404: Page not found 😢
         </AlertTitle>
         <AlertDescription maxWidth="sm">

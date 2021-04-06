@@ -157,7 +157,7 @@ describe("visit routes without being logged in", () => {
       </AuthContext.Provider>,
       { route: "/error" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit my profile page", () => {
@@ -528,7 +528,7 @@ describe("visit routes while logged in as patient", () => {
       </AuthContext.Provider>,
       { route: "/error" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit my profile page", () => {
@@ -554,7 +554,7 @@ describe("visit routes while logged in as patient", () => {
       </AuthContext.Provider>,
       { route: "/my/invites/new" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit my doctors page", () => {
@@ -578,7 +578,7 @@ describe("visit routes while logged in as patient", () => {
       </AuthContext.Provider>,
       { route: "/my/feedback" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit specific feedback page", () => {
@@ -590,7 +590,7 @@ describe("visit routes while logged in as patient", () => {
       </AuthContext.Provider>,
       { route: "/my/feedback/show/1" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit hospitals page", () => {
@@ -602,7 +602,7 @@ describe("visit routes while logged in as patient", () => {
       </AuthContext.Provider>,
       { route: "/my/hospitals" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit patients page", () => {
@@ -614,7 +614,7 @@ describe("visit routes while logged in as patient", () => {
       </AuthContext.Provider>,
       { route: "/my/patients" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit admins page", () => {
@@ -626,7 +626,7 @@ describe("visit routes while logged in as patient", () => {
       </AuthContext.Provider>,
       { route: "/my/admins" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit doctors page", () => {
@@ -650,7 +650,7 @@ describe("visit routes while logged in as patient", () => {
       </AuthContext.Provider>,
       { route: "/my/hospitals/new" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit new admin for hospital page", () => {
@@ -662,7 +662,7 @@ describe("visit routes while logged in as patient", () => {
       </AuthContext.Provider>,
       { route: "/my/hospitals/1/admins/new" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit specific hospital page", () => {
@@ -674,7 +674,7 @@ describe("visit routes while logged in as patient", () => {
       </AuthContext.Provider>,
       { route: "/my/hospitals/show/1" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit specific admin page", () => {
@@ -686,7 +686,7 @@ describe("visit routes while logged in as patient", () => {
       </AuthContext.Provider>,
       { route: "/my/admins/show/1" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit specific patient page", () => {
@@ -698,7 +698,7 @@ describe("visit routes while logged in as patient", () => {
       </AuthContext.Provider>,
       { route: "/my/patients/show/1" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("view requests for patient page", () => {
@@ -722,7 +722,7 @@ describe("visit routes while logged in as patient", () => {
       </AuthContext.Provider>,
       { route: "/my/patients/1/requests/new" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("view patients pending requests", () => {
@@ -758,7 +758,7 @@ describe("visit routes while logged in as patient", () => {
       </AuthContext.Provider>,
       { route: "/my/submissions/review" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("view create new submission page", () => {
@@ -884,7 +884,7 @@ describe("visit routes while logged in as doctor", () => {
       </AuthContext.Provider>,
       { route: "/error" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit my profile page", () => {
@@ -922,7 +922,7 @@ describe("visit routes while logged in as doctor", () => {
       </AuthContext.Provider>,
       { route: "/my/doctors" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit my feedback page", () => {
@@ -934,7 +934,7 @@ describe("visit routes while logged in as doctor", () => {
       </AuthContext.Provider>,
       { route: "/my/feedback" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit specific feedback page", () => {
@@ -946,7 +946,7 @@ describe("visit routes while logged in as doctor", () => {
       </AuthContext.Provider>,
       { route: "/my/feedback/show/1" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit hospitals page", () => {
@@ -958,7 +958,7 @@ describe("visit routes while logged in as doctor", () => {
       </AuthContext.Provider>,
       { route: "/my/hospitals" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit patients page", () => {
@@ -982,7 +982,7 @@ describe("visit routes while logged in as doctor", () => {
       </AuthContext.Provider>,
       { route: "/my/admins" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit doctors page", () => {
@@ -994,7 +994,7 @@ describe("visit routes while logged in as doctor", () => {
       </AuthContext.Provider>,
       { route: "/my/doctors" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit new hospital page", () => {
@@ -1006,7 +1006,7 @@ describe("visit routes while logged in as doctor", () => {
       </AuthContext.Provider>,
       { route: "/my/hospitals/new" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit new admin for hospital page", () => {
@@ -1018,7 +1018,7 @@ describe("visit routes while logged in as doctor", () => {
       </AuthContext.Provider>,
       { route: "/my/hospitals/1/admins/new" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit specific hospital page", () => {
@@ -1030,7 +1030,7 @@ describe("visit routes while logged in as doctor", () => {
       </AuthContext.Provider>,
       { route: "/my/hospitals/show/1" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit specific admin page", () => {
@@ -1042,7 +1042,7 @@ describe("visit routes while logged in as doctor", () => {
       </AuthContext.Provider>,
       { route: "/my/admins/show/1" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit specific patient page", () => {
@@ -1128,7 +1128,7 @@ describe("visit routes while logged in as doctor", () => {
       </AuthContext.Provider>,
       { route: "/my/submissions/new" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("view specific submission page", () => {
@@ -1213,7 +1213,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/my" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("show invite page route", () => {
@@ -1238,7 +1238,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/error" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit my profile page", () => {
@@ -1288,7 +1288,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/my/feedback" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit specific feedback page", () => {
@@ -1300,7 +1300,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/my/feedback/show/1" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit hospitals page", () => {
@@ -1312,7 +1312,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/my/hospitals" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit patients page", () => {
@@ -1324,7 +1324,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/my/patients" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit admins page", () => {
@@ -1336,7 +1336,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/my/admins" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit doctors page", () => {
@@ -1360,7 +1360,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/my/hospitals/new" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit new admin for hospital page", () => {
@@ -1372,7 +1372,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/my/hospitals/1/admins/new" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit specific hospital page", () => {
@@ -1384,7 +1384,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/my/hospitals/show/1" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit specific admin page", () => {
@@ -1396,7 +1396,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/my/admins/show/1" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit specific patient page", () => {
@@ -1408,7 +1408,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/my/patients/show/1" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("view requests for patient page", () => {
@@ -1422,7 +1422,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/my/requests" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("create new request for patient page", () => {
@@ -1434,7 +1434,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/my/patients/1/requests/new" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("view patients pending requests", () => {
@@ -1446,7 +1446,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/my/requests" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("view all submissions page", () => {
@@ -1458,7 +1458,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/my/submissions" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("view review submissions page", () => {
@@ -1470,7 +1470,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/my/submissions/review" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("view create new submission page", () => {
@@ -1482,7 +1482,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/my/submissions/new" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("view specific submission page", () => {
@@ -1494,7 +1494,7 @@ describe("visit routes while logged in as an admin", () => {
       </AuthContext.Provider>,
       { route: "/my/submissions/show/1" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 });
 
@@ -1567,7 +1567,7 @@ describe("visit routes while logged in as a superadmin", () => {
       </AuthContext.Provider>,
       { route: "/my" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("show invite page route", () => {
@@ -1592,7 +1592,7 @@ describe("visit routes while logged in as a superadmin", () => {
       </AuthContext.Provider>,
       { route: "/error" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit my profile page", () => {
@@ -1617,7 +1617,7 @@ describe("visit routes while logged in as a superadmin", () => {
       </AuthContext.Provider>,
       { route: "/my/invites/new" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit my doctors page", () => {
@@ -1629,7 +1629,7 @@ describe("visit routes while logged in as a superadmin", () => {
       </AuthContext.Provider>,
       { route: "/my/doctors" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit my feedback page", () => {
@@ -1677,7 +1677,7 @@ describe("visit routes while logged in as a superadmin", () => {
       </AuthContext.Provider>,
       { route: "/my/patients" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit admins page", () => {
@@ -1701,7 +1701,7 @@ describe("visit routes while logged in as a superadmin", () => {
       </AuthContext.Provider>,
       { route: "/my/doctors" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("visit new hospital page", () => {
@@ -1761,7 +1761,7 @@ describe("visit routes while logged in as a superadmin", () => {
       </AuthContext.Provider>,
       { route: "/my/patients/show/1" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("view requests for patient page", () => {
@@ -1773,7 +1773,7 @@ describe("visit routes while logged in as a superadmin", () => {
       </AuthContext.Provider>,
       { route: "/my/requests" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("create new request for patient page", () => {
@@ -1785,7 +1785,7 @@ describe("visit routes while logged in as a superadmin", () => {
       </AuthContext.Provider>,
       { route: "/my/patients/1/requests/new" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("view patients pending requests", () => {
@@ -1797,7 +1797,7 @@ describe("visit routes while logged in as a superadmin", () => {
       </AuthContext.Provider>,
       { route: "/my/requests" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("view all submissions page", () => {
@@ -1809,7 +1809,7 @@ describe("visit routes while logged in as a superadmin", () => {
       </AuthContext.Provider>,
       { route: "/my/submissions" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("view review submissions page", () => {
@@ -1821,7 +1821,7 @@ describe("visit routes while logged in as a superadmin", () => {
       </AuthContext.Provider>,
       { route: "/my/submissions/review" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("view create new submission page", () => {
@@ -1833,7 +1833,7 @@ describe("visit routes while logged in as a superadmin", () => {
       </AuthContext.Provider>,
       { route: "/my/submissions/new" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 
   test("view specific submission page", () => {
@@ -1845,6 +1845,6 @@ describe("visit routes while logged in as a superadmin", () => {
       </AuthContext.Provider>,
       { route: "/my/submissions/show/1" }
     );
-    expect(screen.getByText("An Error Occured!")).toBeInTheDocument();
+    expect(screen.getByTestId("error-title")).toBeInTheDocument();
   });
 });
