@@ -29,6 +29,7 @@ const HomeLayout = () => {
         <Route exact path="/feedback" component={NewFeedbackPage} />
         <Route exact path="/about" component={AboutUsPage} />
         <Route path="/error" component={ErrorPage} />
+        <Route component={ErrorPage} />
       </Switch>
     </>
   );

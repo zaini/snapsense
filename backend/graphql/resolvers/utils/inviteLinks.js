@@ -9,6 +9,9 @@ const { createAccessToken } = require("./authTokens");
 const { Admin, Doctor, Patient } = require("../../../models/index");
 require("dotenv").config({ path: "../.env" });
 const transactionalEmailSender = require("../../../utils/transactionalEmailSender");
+const { Validator } = require("../../../utils/validator");
+
+const ModelValidator = Validator();
 
 const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
 const FRONTEND_URL = process.env.FRONTEND_URL;
@@ -110,7 +113,7 @@ module.exports = {
             accountExists = !!patient;
             break;
           default:
-						throw new ApolloError("Invalid Account Type!", 400);
+            throw new ApolloError("Invalid Account Type!", 400);
             break;
         }
         return createAccessToken(
@@ -148,10 +151,8 @@ module.exports = {
             throw new ApolloError("Invalid user", 400);
           }
 
-          //Check for NHS email
-          // TODO: use validator class
-          const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@nhs.net$/;
-          if (!re.test(String(email).trim())) {
+          // Check for NHS email
+          if (!ModelValidator.isEmail(email, true)) {
             throw new UserInputError("Only NHS email recipients allowed");
           }
 
