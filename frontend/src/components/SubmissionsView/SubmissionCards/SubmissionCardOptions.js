@@ -23,6 +23,7 @@ const SubmissionCardOptions = ({
   flag,
 }) => {
   const [flagValue, setFlagValue] = useState(flag || -1);
+
   return (
     <VStack>
       <Box w="500px">
@@ -91,7 +92,6 @@ const SubmissionCardOptions = ({
                   flag: parseInt(flagValue),
                 },
               });
-              alert("This submission has now been reviewed.");
             }}
           >
             Submit Review
