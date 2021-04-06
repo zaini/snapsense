@@ -23,6 +23,7 @@ const SubmissionCardOptions = ({
   flag,
 }) => {
   const [flagValue, setFlagValue] = useState(flag || -1);
+
   return (
     <VStack>
       <Box w="500px">

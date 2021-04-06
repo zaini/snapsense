@@ -8,7 +8,6 @@ const reminderJobMapper = async (result, days, isCancelled) => {
   // return early if the job was already cancelled
   if (isCancelled) return;
   try {
-    // TODO : Convert to Left join or Inner join to improve efficiency (Low Priority)
     const request = result;
     const deadline = moment(request.dataValues.deadline);
     const diffHours = deadline.diff(moment(), "hours");

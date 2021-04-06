@@ -1,19 +1,28 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { Box, Button, Center, Heading } from "@chakra-ui/react";
 import { AuthContext } from "../../context/auth";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import LoginFormWrapper from "../Login/LoginFormWrapper";
+import Alert from "../utils/Alert";
 
 const InvitePatientExists = ({ invitation }) => {
   const history = useHistory();
   const { user, logout } = useContext(AuthContext);
 
+  const [alertMessage, setAlertMessage] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const onClose = () => {
+    setIsOpen(false);
+    history.push("/");
+  };
+  const cancelRef = useRef();
+
   const [addRelation] = useMutation(ADD_PATIENT_TO_DOCTOR, {
-    onCompleted(data) {
-      alert("You have accepted this invitation.");
-      history.push("/");
+    onCompleted() {
+      setAlertMessage("You have accepted this invitation.");
+      setIsOpen(true);
     },
     variables: {
       patient_email: invitation.newAccountEmail,
@@ -33,12 +42,14 @@ const InvitePatientExists = ({ invitation }) => {
     }
   }, []);
 
+  let markup;
+
   if (
     user &&
     user.accountType === "PATIENT" &&
     user.email === invitation.newAccountEmail
   ) {
-    return (
+    markup = (
       <Box
         data-testid="InvitePatientExistingForm"
         p="7"
@@ -72,10 +83,11 @@ const InvitePatientExists = ({ invitation }) => {
             mt={4}
             colorScheme="red"
             onClick={() => {
-              alert(
+              console.log("test");
+              setAlertMessage(
                 "You have declined this invitation. You can come back to this link to accept it before it expires."
               );
-              history.push("/");
+              setIsOpen(true);
             }}
           >
             Decline Invite
@@ -84,7 +96,7 @@ const InvitePatientExists = ({ invitation }) => {
       </Box>
     );
   } else {
-    return (
+    markup = (
       <>
         <Center>
           <Heading>Login to View Invite</Heading>
@@ -93,6 +105,19 @@ const InvitePatientExists = ({ invitation }) => {
       </>
     );
   }
+
+  return (
+    <>
+      {markup}
+      <Alert
+        isOpen={isOpen}
+        cancelRef={cancelRef}
+        onClose={onClose}
+        alertHeader="Invitation"
+        alertMessage={alertMessage}
+      />
+    </>
+  );
 };
 
 export default InvitePatientExists;

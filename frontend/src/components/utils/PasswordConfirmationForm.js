@@ -12,6 +12,11 @@ const PasswordConfirmationForm = ({ register, onSubmit, handleSubmit }) => {
           name="password"
           placeholder="Password"
           ref={register}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSubmit(onSubmit)();
+            }
+          }}
         />
       </FormControl>
       <br />
@@ -23,6 +28,11 @@ const PasswordConfirmationForm = ({ register, onSubmit, handleSubmit }) => {
           name="repeat_password"
           placeholder="Repeat password"
           ref={register}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSubmit(onSubmit)();
+            }
+          }}
         />
       </FormControl>
     </form>

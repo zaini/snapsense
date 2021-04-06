@@ -145,7 +145,6 @@ describe("fulfilled and unreviewed tab on screening page", () => {
     within(requestCard).getByTestId("ImageSlideshow");
   });
 
-  //TODO: Check Image URLS
   test("if images in slideshow and buttons are in the correct state in card three", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
@@ -302,9 +301,6 @@ describe("fulfilled and unreviewed tab on screening page", () => {
     );
   });
 
-
-  // TODO: Check if cache has been edited properly
-  // TODO: Getting null error for request card called query
   test("if submit button correctly submits form in card three", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();

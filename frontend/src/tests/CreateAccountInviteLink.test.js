@@ -5,7 +5,6 @@ import {
   render,
   screen,
   waitFor,
-  within,
 } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
 import { act } from "react-dom/test-utils";
@@ -186,14 +185,16 @@ describe("submitting invite form for a new user", () => {
     });
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     await waitFor(() => {
-      expect(window.alert).toBeCalledWith(
-        "You have created an account and accepted this invitation."
-      );
+      expect(
+        screen.getByText(
+          "You have created an account and accepted this invitation."
+        )
+      ).toBeInTheDocument();
     });
   });
 });
 
-describe("viewing invite for an existing user patient ", () => {
+describe("viewing invite for an existing user patient", () => {
   test("if page renders without crashing for existing user", async () => {
     expect(setupExists).toBeTruthy();
   });
@@ -246,9 +247,11 @@ describe("taking action on invite form for existing user patient", () => {
       fireEvent.click(decline);
     });
 
-    expect(window.alert).toBeCalledWith(
-      "You have declined this invitation. You can come back to this link to accept it before it expires."
-    );
+    expect(
+      screen.getByText(
+        "You have declined this invitation. You can come back to this link to accept it before it expires."
+      )
+    ).toBeInTheDocument();
   });
 
   test("if accepting the invite shows correct alert", async () => {
@@ -267,7 +270,9 @@ describe("taking action on invite form for existing user patient", () => {
     });
 
     await waitFor(() => {
-      expect(window.alert).toBeCalledWith("You have accepted this invitation.");
+      expect(
+        screen.getByText("You have accepted this invitation.")
+      ).toBeInTheDocument();
     });
   });
 });
