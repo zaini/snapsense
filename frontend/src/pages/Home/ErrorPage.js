@@ -4,12 +4,15 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  Box,
+  Text,
+  Container,
+  Link,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 
 const ErrorPage = () => {
   return (
-    <div>
+    <Container>
       <Alert
         status="error"
         variant="subtle"
@@ -17,18 +20,26 @@ const ErrorPage = () => {
         alignItems="center"
         justifyContent="center"
         textAlign="center"
-        height="100vh"
+        height="450px"
+        border="1px"
+        borderColor="#262626"
       >
-        <AlertIcon boxSize="40px" mr={0} />
+        <AlertIcon boxSize="50px" mr={0} />
         <AlertTitle mt={4} mb={1} fontSize="lg">
-          An Error Occured!
+          404: Page not found 😢
         </AlertTitle>
         <AlertDescription maxWidth="sm">
-          Something went wrong. If this persists, please send us feedback{" "}
-          {<Link to="/feedback">here.</Link>}
+          <Text>
+            Something went wrong. If this persists, please send us feedback{" "}
+            {
+              <Link color="teal.500" href="/feedback">
+                here.
+              </Link>
+            }
+          </Text>
         </AlertDescription>
       </Alert>
-    </div>
+    </Container>
   );
 };
 

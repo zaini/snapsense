@@ -1,6 +1,5 @@
 import { Alert, AlertIcon, Container } from "@chakra-ui/react";
 
-// TODO make errors look nicer
 const Error = ({ errors }) => {
   return (
     <Container>
