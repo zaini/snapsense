@@ -1,18 +1,6 @@
-import {
-  Box,
-  Stack,
-  Text,
-  Center,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay,
-  Button,
-} from "@chakra-ui/react";
+import { Box, Stack, Text, Center } from "@chakra-ui/react";
 import { useMediaQuery } from "react-responsive";
-import { useContext, useState, useRef } from "react";
+import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../context/auth";
 import ImageSlideshow from "../../utils/ImageSlideshow";
@@ -27,13 +15,6 @@ const SubmissionCard = ({ testID, data, vertical, redirect }) => {
   const isTabletOrMobile = useMediaQuery({ maxWidth: 1600 });
   vertical = vertical || isTabletOrMobile;
 
-  const [isOpen, setIsOpen] = useState(false);
-  const onClose = () => {
-    setIsOpen(false);
-    redirect && history.push(redirect);
-  };
-  const cancelRef = useRef();
-
   // data here is a submission object
   const { Patient, Images, Answers, createdAt, flag, id } = data;
 
@@ -46,7 +27,7 @@ const SubmissionCard = ({ testID, data, vertical, redirect }) => {
 
   const [flagSubmission] = useMutation(FLAG_SUBMISSION, {
     onCompleted() {
-      setIsOpen(true);
+      redirect && history.push(redirect);
     },
     onError(err) {
       console.log(err);
@@ -151,30 +132,6 @@ const SubmissionCard = ({ testID, data, vertical, redirect }) => {
           </Box>
         </Stack>
       </Center>
-
-      <AlertDialog
-        isOpen={isOpen}
-        leastDestructiveRef={cancelRef}
-        onClose={onClose}
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Review Submission
-            </AlertDialogHeader>
-
-            <AlertDialogBody>
-              This submission has now been reviewed.
-            </AlertDialogBody>
-
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
-                OK
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
     </Box>
   );
 };
