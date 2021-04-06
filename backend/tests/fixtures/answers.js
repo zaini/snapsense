@@ -80,16 +80,6 @@ const seed = async () => {
     createdAt: new Date(),
     updatedAt: new Date(),
   });
-
-  await Answer.create({
-    id: 9,
-    question_id: 8,
-    submission_id: 3,
-    value: true,
-    extra: "I don't feel good",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  });
 };
 
 module.exports = seed;

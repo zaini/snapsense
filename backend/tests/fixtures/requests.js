@@ -41,7 +41,7 @@ const seed = async () => {
     id: 4,
     doctor_id: 3,
     patient_id: 3,
-    type: 2,
+    type: 1,
     submission_id: 3,
     deadline: new Date(new Date().getFullYear(), 0, 10),
     fulfilled: new Date(new Date().getFullYear(), 0, 8),
