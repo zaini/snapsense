@@ -15,7 +15,15 @@ import Error from "../utils/Error";
 import Alert from "../utils/Alert";
 
 const InviteNewUser = ({ invitation }) => {
-  const { register, handleSubmit, errors, setError, formState } = useForm();
+  const {
+    register,
+    handleSubmit,
+    errors,
+    setError,
+    formState,
+    clearErrors,
+  } = useForm();
+
   const history = useHistory();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -30,15 +38,21 @@ const InviteNewUser = ({ invitation }) => {
       setIsOpen(true);
     },
     onError(err) {
-      setError("graphql", {
+      const message =
+        (err.graphQLErrors &&
+          err.graphQLErrors[0] &&
+          err.graphQLErrors[0].message) ||
+        err.message;
+
+      setError("first_name", {
         type: "manual",
-        message:
-          (err.graphQLErrors && err.graphQLErrors[0].message) || err.message,
+        message,
       });
     },
   });
 
   const onSubmit = ({ first_name, last_name, password, repeat_password }) => {
+    clearErrors();
     if (password === repeat_password) {
       registerUser({
         variables: {
