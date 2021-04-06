@@ -19,7 +19,7 @@ let superAdminToken,
   doctorTwoToken,
   patientOneToken,
   patientTwoToken,
-  patientThreeToken;
+  patientFourToken;
 
 describe("submissions resolvers", () => {
   beforeAll(async (done) => {
@@ -30,7 +30,7 @@ describe("submissions resolvers", () => {
       doctorTwo,
       patientOne,
       patientTwo,
-      patientThree,
+      patientFour,
     } = await require("./util/authTokens");
 
     superAdminToken = superAdmin;
@@ -39,7 +39,7 @@ describe("submissions resolvers", () => {
     doctorTwoToken = doctorTwo;
     patientOneToken = patientOne;
     patientTwoToken = patientTwo;
-    patientThreeToken = patientThree;
+    patientFourToken = patientFour;
 
     done();
   });
@@ -66,20 +66,11 @@ describe("submissions resolvers", () => {
   });
 
   it("should return empty array of submissions if logged in patient has no submissions and tries to retrieve them", async (done) => {
-    const response = await getSubmissions(patientThreeToken);
+    const response = await getSubmissions(patientFourToken);
     const { body } = response;
     expect(body).toMatchObject({
       data: {
-        getSubmissions: [
-          {
-            Answers: [],
-            Images: [],
-            Patient: {
-              email: "ben.parker@marvel.com",
-            },
-            flag: null,
-          },
-        ],
+        getSubmissions: [],
       },
     });
     done();
