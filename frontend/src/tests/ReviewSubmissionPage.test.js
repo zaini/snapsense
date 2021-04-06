@@ -145,7 +145,6 @@ describe("fulfilled and unreviewed tab on screening page", () => {
     within(requestCard).getByTestId("ImageSlideshow");
   });
 
-  //TODO: Check Image URLS
   test("if images in slideshow and buttons are in the correct state in card three", async () => {
     setup();
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
