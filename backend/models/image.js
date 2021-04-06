@@ -1,5 +1,5 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, ValidationError } = require("sequelize");
 const { Validator } = require("../utils/validator");
 const ModelValidator = Validator();
 
@@ -21,9 +21,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isNotEmpty(value) {
-            if (ModelValidator.isEmpty(value)) {
-              throw new Error("Invalid image url");
+          isImage(value) {
+            if (!ModelValidator.isImage(value)) {
+              throw new ValidationError("Invalid image url");
             }
           },
         },

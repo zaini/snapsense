@@ -36,6 +36,18 @@ const seed = async () => {
     createdAt: new Date(new Date().getFullYear(), 0, 7),
     updatedAt: new Date(new Date().getFullYear(), 0, 7),
   });
+
+  await Request.create({
+    id: 4,
+    doctor_id: 3,
+    patient_id: 3,
+    type: 1,
+    submission_id: 1,
+    deadline: new Date(new Date().getFullYear(), 0, 10),
+    fulfilled: new Date(new Date().getFullYear(), 0, 8),
+    createdAt: new Date(new Date().getFullYear(), 0, 7),
+    updatedAt: new Date(new Date().getFullYear(), 0, 7),
+  });
 };
 
 module.exports = seed;
