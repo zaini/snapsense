@@ -18,7 +18,7 @@ import Error from "./Error";
 import PasswordConfirmationForm from "./PasswordConfirmationForm";
 import { AuthContext } from "../../context/auth";
 
-const ChangePasswordModal = ({ isOpen, onClose }) => {
+const ChangePasswordModal = ({ testName, isOpen, onClose }) => {
   const history = useHistory();
   const { logout } = useContext(AuthContext);
   const { register, handleSubmit, errors, setError, formState } = useForm();
@@ -30,7 +30,10 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
     },
     onError(err) {
       const message =
-        (err.graphQLErrors && err.graphQLErrors[0].message) || err.message;
+        (err.graphQLErrors &&
+          err.graphQLErrors[0] &&
+          err.graphQLErrors[0].message) ||
+        err.message;
       setError("password", { type: "manual", message });
     },
   });
@@ -54,7 +57,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent data-testid="deleteAccountModal">
         <ModalHeader>Delete your account</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
@@ -68,6 +71,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
         <ModalFooter>
           <Button
             mr={3}
+            data-testid="submitDeleteAccount"
             colorScheme="red"
             type="submit"
             isLoading={formState.isSubmitting || loading}
@@ -84,7 +88,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
 
 export default ChangePasswordModal;
 
-const DELETE_ACCOUNT = gql`
+export const DELETE_ACCOUNT = gql`
   mutation deleteAccount($password: String!, $password_confirmation: String!) {
     deleteAccount(
       password: $password

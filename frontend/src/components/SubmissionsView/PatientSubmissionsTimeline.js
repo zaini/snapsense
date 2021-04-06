@@ -37,12 +37,12 @@ const PatientSubmissionsTimeline = ({ data }) => {
     );
   } else {
     return (
-      <Timeline align="right">
+      <Timeline data-testid="timelineContainer" align="right">
         {data.map((submission, index) => {
           return (
-            <TimelineItem key={index}>
+            <TimelineItem data-testid={`tCard${index}`} key={index}>
               <TimelineOppositeContent>
-                <Typography variant="body2" color="textSecondary">
+                <Typography data-testid={`tTypo${index}`} variant="body2" color="textSecondary">
                   {new Date(submission.createdAt).toDateString()}
                 </Typography>
               </TimelineOppositeContent>

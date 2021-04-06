@@ -11,8 +11,7 @@ const LoginFormWrapper = () => {
 
   return (
     <Container p="7" borderWidth="1px" borderRadius="lg" mt="20">
-      <Grid
-        container
+      <Container
         justify="center"
         direction="column"
         alignItems="center"
@@ -25,7 +24,7 @@ const LoginFormWrapper = () => {
           accountType={accountType}
         />
 
-        <h4>
+        <h4 data-testid="formHelper">
           Hello {accountType.toLowerCase()}! Please fill out the form below to
           get started
         </h4>
@@ -33,7 +32,7 @@ const LoginFormWrapper = () => {
         <br />
 
         <LoginForm accountType={accountType} />
-      </Grid>
+      </Container>
     </Container>
   );
 };

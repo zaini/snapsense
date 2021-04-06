@@ -4,7 +4,7 @@ import { Box, Flex, Stack } from "@chakra-ui/layout";
 import Question from "./Question";
 import questionsObject from "../../utils/QuestionsObject";
 
-const QuestionForm = ({ isVisible, step, answers, setAnswers }) => {
+const QuestionForm = ({ step, answers, setAnswers }) => {
   if (!answers.questionnaire[step + 1]) {
     answers.questionnaire[step + 1] = {};
   }
@@ -19,9 +19,8 @@ const QuestionForm = ({ isVisible, step, answers, setAnswers }) => {
     temp.questionnaire[step + 1].extra = extraInfo;
     setAnswers(temp);
   };
-
   return (
-    <Box hidden={!isVisible}>
+    <Box data-testid="questionMaster">
       <Flex>
         <Stack w={"100%"} textAlign={"center"}>
           <Typography variant="h6" gutterBottom>
@@ -31,15 +30,17 @@ const QuestionForm = ({ isVisible, step, answers, setAnswers }) => {
           <Flex>
             {questionsObject.map((e, i) => (
               <Box
+                key={i}
                 borderWidth="1px"
                 borderRadius="lg"
                 width={"100%"}
                 overflow="hidden"
                 padding="4"
                 display={step === i ? "block" : "none"}
+                data-testid={`Questionnaire${i + 1}`}
               >
                 <Question
-                  step={step}
+                  step={i}
                   answers={answers}
                   question={questionsObject[i]}
                   onChangeOption={onChangeOption}

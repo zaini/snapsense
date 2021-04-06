@@ -39,7 +39,12 @@ const InvitePatientExists = ({ invitation }) => {
     user.email === invitation.newAccountEmail
   ) {
     return (
-      <Box p="7" borderWidth="1px" borderRadius="lg">
+      <Box
+        data-testid="InvitePatientExistingForm"
+        p="7"
+        borderWidth="1px"
+        borderRadius="lg"
+      >
         <h1>
           You've been invited by {invitation.inviterEmail} to join their clinic.
           You already have an account so you will be added to this clinician's
@@ -54,6 +59,7 @@ const InvitePatientExists = ({ invitation }) => {
           textAlign="center"
         >
           <Button
+            data-testid="btnAccept"
             mt={4}
             mr={4}
             colorScheme="blue"
@@ -62,6 +68,7 @@ const InvitePatientExists = ({ invitation }) => {
             Accept
           </Button>
           <Button
+            data-testid="btnDecline"
             mt={4}
             colorScheme="red"
             onClick={() => {
@@ -90,7 +97,7 @@ const InvitePatientExists = ({ invitation }) => {
 
 export default InvitePatientExists;
 
-const ADD_PATIENT_TO_DOCTOR = gql`
+export const ADD_PATIENT_TO_DOCTOR = gql`
   mutation addPatientToDoctor($patient_email: String!, $doctor_email: String!) {
     addPatientToDoctor(
       patient_email: $patient_email

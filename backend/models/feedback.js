@@ -1,5 +1,7 @@
 "use strict";
 const { Model, ValidationError } = require("sequelize");
+const { Validator } = require("../utils/validator");
+const ModelValidator = Validator();
 module.exports = (sequelize, DataTypes) => {
   class Feedback extends Model {
     /**
@@ -18,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isValidStarNumber(value) {
-            if (value < 0 || value > 5) {
+            if (!ModelValidator.isWithinRange(value, 0,5)) {
               throw new ValidationError(
                 "Invalid number of stars, must be between 0-5 (inclusive)"
               );

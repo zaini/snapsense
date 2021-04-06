@@ -1,7 +1,7 @@
 const AWS = require("aws-sdk");
 const { v4: uuidv4 } = require("uuid");
 const { ApolloError } = require("apollo-server");
-require("dotenv").config({ path: "../.env" });
+require("dotenv").config({ path: "../../.env" });
 
 const col = require("./loggingFunc");
 const { Image } = require("../models/index");
@@ -26,6 +26,7 @@ const s3DefaultParams = {
 
 // the actual upload happens here
 const handleFileUpload = async (file) => {
+  if (process.env.NODE_ENV && process.env.NODE_ENV === "test") return true;
   const { createReadStream, filename } = await file;
   const extension = filename.split(".").pop();
   const extensionsAllowed = [

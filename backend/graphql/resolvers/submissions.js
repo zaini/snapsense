@@ -1,4 +1,8 @@
-const { AuthenticationError, UserInputError } = require("apollo-server");
+const {
+  ApolloError,
+  AuthenticationError,
+  UserInputError,
+} = require("apollo-server");
 
 const {
   Answer,
@@ -82,6 +86,7 @@ module.exports = {
           });
           break;
         default:
+          throw new ApolloError("Invalid user type", 400);
           break;
       }
       return submissions || [];
@@ -261,7 +266,7 @@ module.exports = {
       isFlagValid(flag);
 
       const doctor = await getDoctorById(user.id);
-      const submission = await Submission.findByPk(submission_id);
+      const submission = await getSubmissionById(submission_id);
       const patient = await submission.getPatient();
 
       const canFlag = await doctor.hasPatient(patient);
@@ -284,11 +289,16 @@ const isFlagValid = (flag) => {
 
 const requestIsFulfilled = (images, answers, request) => {
   return (
-    (images !== undefined && images.length > 0 && answers !== undefined) ||
+    (images !== undefined &&
+      images.length > 0 &&
+      answers !== undefined &&
+      Object.keys(answers.questionnaire).length > 1) ||
     (images !== undefined &&
       images.length > 0 &&
       request.getDataValue("type") === 1) ||
-    (answers !== undefined && request.getDataValue("type") === 2)
+    (answers !== undefined &&
+      Object.keys(answers.questionnaire).length > 1 &&
+      request.getDataValue("type") === 2)
   );
 };
 

@@ -5,6 +5,7 @@ import { Center, Heading } from "@chakra-ui/layout";
 import { Alert, AlertIcon, Button, Spinner, Stack } from "@chakra-ui/react";
 import { ViewIcon, CalendarIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
+import getFlagText from "../../utils/Flags";
 
 // Shows all the patients that belong to a doctor
 const PatientsPage = () => {
@@ -42,7 +43,7 @@ const PatientsPage = () => {
 
 export default PatientsPage;
 
-const GET_PATIENTS_AS_DOCTOR = gql`
+export const GET_PATIENTS_AS_DOCTOR = gql`
   query {
     getPatientsAsDoctor {
       id
@@ -66,6 +67,10 @@ const cols = [
     field: "flag",
     headerName: "Flag",
     flex: 0.3,
+    renderCell: ({ row }) => {
+      const flag = row.flag;
+      return <p>{getFlagText(flag)}</p>;
+    },
   },
   {
     field: "fname",

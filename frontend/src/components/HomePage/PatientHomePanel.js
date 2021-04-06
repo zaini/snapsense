@@ -6,7 +6,7 @@ import { Alert, AlertIcon, Spinner, Box, Button, Text } from "@chakra-ui/react";
 import { Center, Container, Stack } from "@chakra-ui/layout";
 
 const PatientHomePanel = () => {
-  const { loading, data, error } = useQuery(GET_REQUESTS);
+  const { loading, data, error } = useQuery(GET_REQUESTS_PATIENT_PAGE);
 
   let markup;
 
@@ -20,7 +20,7 @@ const PatientHomePanel = () => {
     markup = (
       <Alert status="error">
         <AlertIcon />
-        {error.graphQLErrors[0].message}
+        {error.graphQLErrors && error.graphQLErrors[0] && error.graphQLErrors[0].message || error.message}
       </Alert>
     );
   } else {
@@ -37,11 +37,16 @@ const PatientHomePanel = () => {
         p="15px"
         fontWeight="bold"
         backgroundColor="blue.100"
+        data-testid="patientHomeContainer"
       >
         <Stack>
-          <Text>You have {request_data.length} request(s) to fulfil.</Text>
-          <Link to="/my/requests">
-            <Button colorScheme="blue">View My Requests</Button>
+          <Text data-testid="patientHomeText">
+            You have {request_data.length} request(s) to fulfil.
+          </Text>
+          <Link data-testid="reviewLink" to="/my/requests">
+            <Button data-testid="reviewRequestsButton" colorScheme="blue">
+              View My Requests
+            </Button>
           </Link>
         </Stack>
       </Box>
@@ -51,8 +56,10 @@ const PatientHomePanel = () => {
   return (
     <Container>
       <Center>
-        <Link to="/my/submissions/new">
-          <Button colorScheme="blue">Create New Submission Now</Button>
+        <Link data-testid="newSubmissionLink" to="/my/submissions/new">
+          <Button data-testid="newSubmissionButton" colorScheme="blue">
+            Create New Submission Now
+          </Button>
         </Link>
       </Center>
 
@@ -64,8 +71,8 @@ const PatientHomePanel = () => {
 
 export default PatientHomePanel;
 
-const GET_REQUESTS = gql`
-  query getRequests {
+export const GET_REQUESTS_PATIENT_PAGE = gql`
+  query getRequestsAsPatient {
     getRequestsAsPatient {
       id
       fulfilled

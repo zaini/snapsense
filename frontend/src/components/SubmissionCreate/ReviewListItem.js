@@ -19,7 +19,9 @@ const ReviewListItem = ({ display, answerIndex, answer, extra }) => {
         <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
           {questionsObject[answerIndex - 1].questionText}
         </Heading>
-        <Text color={"gray.600"}>{answerOption[parseInt(answer)]}</Text>
+        <Text color={"gray.600"} data-testid={`aOption${answerIndex}`}>
+          {answerOption[parseInt(answer)]}
+        </Text>
         <Text color={"gray.500"}>{extra}</Text>
       </Stack>
     </Box>

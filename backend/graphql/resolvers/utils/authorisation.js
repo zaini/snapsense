@@ -54,7 +54,7 @@ module.exports = {
             lname,
             password,
             email: newAccountEmail,
-            hospital_id: inviter.getDataValue("hospital_id"),
+            hospital_id: inviter ? inviter.getDataValue("hospital_id") : null, // Non existing inviter gets caught below, so leaving it as null if admin does not exist prevents duplicate checks for inviter existence
           });
           break;
 

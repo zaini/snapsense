@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Center, Radio, RadioGroup, Stack } from "@chakra-ui/react";
 
-const Options = ({ defVal, options, onChangeOption }) => {
+const Options = ({ step, defVal, options, onChangeOption }) => {
   const [value, setValue] = useState();
 
   return (
@@ -15,7 +15,7 @@ const Options = ({ defVal, options, onChangeOption }) => {
       >
         <Stack>
           {options.map((e, i) => (
-            <Radio key={i} value={`${i}`}>
+            <Radio data-testid={`q${step}Option${i}`} key={i} value={`${i}`}>
               {e.answerText}
             </Radio>
           ))}

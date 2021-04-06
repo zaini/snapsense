@@ -50,8 +50,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+export const steps = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Review"];
 const NewSubmissionPage = () => {
   const [images, setImages] = useState([]);
+  const [isQuestionnaireVisible, setIsQuestionnaireVisible] = useState(true);
+
   const [answers, setAnswers] = useState({ questionnaire: {} });
   const [activeStep, setActiveStep] = useState(0);
   const [uploadSubmission, { loading, error, data }] = useMutation(
@@ -82,15 +85,23 @@ const NewSubmissionPage = () => {
   const classes = useStyles();
 
   const handleNext = () => {
-    const temp = activeStep + 1;
-    setActiveStep(temp);
+    const newStep = activeStep + 1;
+    if (newStep === 8) {
+      setIsQuestionnaireVisible(false);
+    }
+    setActiveStep(newStep);
   };
+
   const handleBack = () => {
-    const temp = activeStep - 1;
-    setActiveStep(temp);
+    const newStep = activeStep - 1;
+    if (newStep <= 7) {
+      setIsQuestionnaireVisible(true);
+    }
+    setActiveStep(newStep);
   };
 
   let body;
+
   if (loading) {
     body = (
       <InformationCard
@@ -104,7 +115,7 @@ const NewSubmissionPage = () => {
           />
         }
         body={
-          <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
+          <Heading data-testid="formDone" color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
             Uploading...
           </Heading>
         }
@@ -113,6 +124,7 @@ const NewSubmissionPage = () => {
   } else if (data) {
     body = (
       <InformationCard
+        data-testid="formSubmitInnerSuccess"
         head={<CheckIcon />}
         body={
           <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
@@ -127,9 +139,14 @@ const NewSubmissionPage = () => {
         <Stack>
           {error && (
             <Error
+              data-testid="formSubmitInnerError"
               errors={[
                 {
-                  message: error.graphQLErrors[0].message,
+                  message:
+                    (error.graphQLErrors &&
+                      error.graphQLErrors[0] &&
+                      error.graphQLErrors[0].message) ||
+                    error.message,
                 },
               ]}
             />
@@ -141,14 +158,15 @@ const NewSubmissionPage = () => {
           <Tabs variant="enclosed">
             <TabList>
               <Tab>Image</Tab>
-              <Tab>Questionnaire</Tab>
+              <Tab data-testid="tabQuestion">Questionnaire</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
                 <ImageUploadPanel classes={classes} setImages={setImages} />
               </TabPanel>
-              <TabPanel>
+              <TabPanel data-testid="tabPanel">
                 <QuestionnairePanel
+                  isQuestionnaireVisible={isQuestionnaireVisible}
                   classes={classes}
                   activeStep={activeStep}
                   answers={answers}
@@ -175,7 +193,7 @@ const NewSubmissionPage = () => {
 
 export default NewSubmissionPage;
 
-const UPLOAD_SUBMISSION = gql`
+export const UPLOAD_SUBMISSION = gql`
   mutation createSubmission($images: [Upload!], $answers: String!) {
     createSubmission(images: $images, answers: $answers)
   }

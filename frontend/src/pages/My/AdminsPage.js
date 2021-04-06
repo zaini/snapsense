@@ -41,7 +41,7 @@ const HospitalsPage = () => {
   }
 
   return (
-    <Stack spacing={4}>
+    <Stack spacing={4} data-testid="admins-page">
       <Center>
         <Heading>Admins</Heading>
       </Center>
@@ -53,7 +53,7 @@ const HospitalsPage = () => {
 
 export default HospitalsPage;
 
-const GET_ADMINS = gql`
+export const GET_ADMINS = gql`
   query getAdmins {
     getAdmins {
       id

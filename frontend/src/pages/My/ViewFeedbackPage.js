@@ -5,12 +5,14 @@ import ViewFeedback from "../../components/Feedback/ViewFeedback";
 
 const ViewFeedbackPage = () => {
   return (
-    <Container>
+    <Container data-testid="view-feedback-page">
       <Heading textAlign="center">View Feedback</Heading>
       <br />
       <hr />
       <br />
-      <ViewFeedback />
+      <div data-testid="feedbackDetailContainer">
+        <ViewFeedback />
+      </div>
     </Container>
   );
 };

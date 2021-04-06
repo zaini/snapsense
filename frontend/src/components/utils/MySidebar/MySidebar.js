@@ -86,7 +86,7 @@ const MySidebar = (props) => {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar back style={{ background: "primary.500" }}>
+        <Toolbar back="true" style={{ background: "primary.500" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"

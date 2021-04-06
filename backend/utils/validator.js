@@ -1,15 +1,11 @@
 module.exports = {
   Validator: () => {
     class validator {
+      static isWithinRange(value, lowerBound, higherBound) {
+          return value >= lowerBound && value <= higherBound;
+      }
       static isEmpty(value) {
         return String(value) === "";
-      }
-      static isShort(value, minLength) {
-        return String(value).length < minLength;
-      }
-
-      static isLong(value, maxLength) {
-        return String(value).length > maxLength;
       }
       
       static isName(name) {
@@ -44,6 +40,17 @@ module.exports = {
         */
         const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
         return re.test(password);
+      }
+
+      static isImage(url) {
+        /*
+            Check if:
+                - the file has the following extensions: jpe, jpeg, png, jpg, webp
+                - contains a string of characters before the dot
+            
+        */
+        const re = /[^\s]+(\.(jpe|jpeg|png|jpg|webp|JPE|JPEG|PNG|JPG|WEBP))$/;
+        return re.test(url);
       }
     }
     return validator;
