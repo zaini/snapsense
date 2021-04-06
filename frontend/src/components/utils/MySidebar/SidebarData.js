@@ -13,8 +13,6 @@ import {
   Event,
 } from "@material-ui/icons";
 
-// TODO update icons
-
 const SuperAdminSideBarData = [
   {
     title: "Create Hospitals",
