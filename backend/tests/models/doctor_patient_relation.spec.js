@@ -30,7 +30,7 @@ describe("Doctor Patient Relation Model Test", () => {
     done();
   });
 
-  it("should throw an error on invalid patiend id", async (done) => {
+  it("should throw an error on invalid patient id", async (done) => {
     await expect(
       Doctor_Patient_Relation.create({
         patient_id: 15,
@@ -47,6 +47,33 @@ describe("Doctor Patient Relation Model Test", () => {
         doctor_id: 82,
       })
     ).rejects.toThrow();
+    done();
+  });
+
+  it("should not insert duplicate doctor patient relationship", async (done) => {
+    const doctor = await Doctor.create({
+      fname: "Steve",
+      lname: "Alex",
+      email: "temp@nhs.net",
+      password: "Password123",
+      hospital_id: 1,
+    });
+
+    const patient = await Patient.create({
+      fname: "Mia",
+      lname: "Alice",
+      email: "patient.new@gmail.com",
+      password: "Password123",
+    });
+
+    const relationCount = await Doctor_Patient_Relation.count();
+
+    await doctor.addPatient(patient);
+    await patient.addDoctor(doctor);
+
+    const newRelationCount = await Doctor_Patient_Relation.count();
+
+    expect(relationCount + 1).toBe(newRelationCount);
     done();
   });
 });
