@@ -46,7 +46,7 @@ describe("Request Model Test", () => {
 
   it("should return a valid doctor id", async (done) => {
     const request = await Request.findByPk(4);
-    expect(request.patient_id.toString()).toMatch("3");
+    expect(request.doctor_id.toString()).toMatch("3");
     done();
   });
 
