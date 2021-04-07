@@ -40,9 +40,11 @@ const AdminPage = () => {
   } else {
     markup = (
       <>
-        <Heading data-testid="adminHeader" textAlign="center">{admin.fname}'s Profile</Heading>
+        <Heading data-testid="adminHeader" textAlign="center">
+          {admin.fname}'s Profile
+        </Heading>
         <div data-testid="adminDetailContainer">
-        <ViewAdmin admin={admin} />
+          <ViewAdmin admin={admin} />
         </div>
       </>
     );

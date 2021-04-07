@@ -42,7 +42,11 @@ const PatientSubmissionsTimeline = ({ data }) => {
           return (
             <TimelineItem data-testid={`tCard${index}`} key={index}>
               <TimelineOppositeContent>
-                <Typography data-testid={`tTypo${index}`} variant="body2" color="textSecondary">
+                <Typography
+                  data-testid={`tTypo${index}`}
+                  variant="body2"
+                  color="textSecondary"
+                >
                   {new Date(submission.createdAt).toDateString()}
                 </Typography>
               </TimelineOppositeContent>

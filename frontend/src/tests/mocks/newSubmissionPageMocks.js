@@ -6,7 +6,7 @@ const response = {
 };
 for (let i = 1; i < 9; i++) {
   response.questionnaire[i] = {};
-  response.questionnaire[i].val = '1';
+  response.questionnaire[i].val = "1";
 }
 
 const toSend = JSON.stringify(response);

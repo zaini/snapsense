@@ -70,7 +70,7 @@ const DeleteHospitalModal = ({ isOpen, onClose, hospital }) => {
           </Text>
         </ModalBody>
         <ModalFooter>
-          <Button 
+          <Button
             data-testid="modalSubmitButton"
             mr={3}
             colorScheme="red"
@@ -80,7 +80,9 @@ const DeleteHospitalModal = ({ isOpen, onClose, hospital }) => {
           >
             Delete Hospital
           </Button>
-          <Button data-testid="cancelButton" onClick={onClose}>Cancel</Button>
+          <Button data-testid="cancelButton" onClick={onClose}>
+            Cancel
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

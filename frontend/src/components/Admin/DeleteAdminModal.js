@@ -78,7 +78,9 @@ const DeleteAdminModal = ({ isOpen, onClose, admin }) => {
           >
             Delete Admin
           </Button>
-          <Button data-testid="cancelButton" onClick={onClose}>Cancel</Button>
+          <Button data-testid="cancelButton" onClick={onClose}>
+            Cancel
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

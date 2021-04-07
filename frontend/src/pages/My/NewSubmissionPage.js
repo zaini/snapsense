@@ -115,7 +115,12 @@ const NewSubmissionPage = () => {
           />
         }
         body={
-          <Heading data-testid="formDone" color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
+          <Heading
+            data-testid="formDone"
+            color={"gray.700"}
+            fontSize={"2xl"}
+            fontFamily={"body"}
+          >
             Uploading...
           </Heading>
         }

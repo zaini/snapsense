@@ -20,7 +20,10 @@ const PatientHomePanel = () => {
     markup = (
       <Alert status="error">
         <AlertIcon />
-        {error.graphQLErrors && error.graphQLErrors[0] && error.graphQLErrors[0].message || error.message}
+        {(error.graphQLErrors &&
+          error.graphQLErrors[0] &&
+          error.graphQLErrors[0].message) ||
+          error.message}
       </Alert>
     );
   } else {
