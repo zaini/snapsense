@@ -77,7 +77,7 @@ const inviteTemplate = (p) => {
                             <div style="color: #15578a; line-height: 140%; text-align: left; word-wrap: break-word;">
                             <p style="font-size: 14px; line-height: 140%; text-align: center;"><span
                                 style="font-size: 24px; line-height: 33.6px;"><strong><span
-                                    style="line-height: 33.6px; font-size: 24px;">${obj.hospName} has been created!<br /></span></strong></span></p>
+                                    style="line-height: 33.6px; font-size: 24px;">The hospital/clinic: ${obj.hospName} has been created!<br /></span></strong></span></p>
                             </div>
 
                         </td>
@@ -95,7 +95,7 @@ const inviteTemplate = (p) => {
 
                             <div style="color: #868990; line-height: 170%; text-align: left; word-wrap: break-word;">
                             <p style="font-size: 14px; line-height: 170%; text-align: center;"><span
-                                style="font-size: 16px; line-height: 27.2px;">We look forward to welcoming you onboard with Snapsense.<br /></span></p>
+                                style="font-size: 16px; line-height: 27.2px;">We look forward to welcoming you onboard with Snapsense. This email has been added as the point of contact for this hospital/clinic.<br /></span></p>
                             <p style="font-size: 14px; line-height: 170%; text-align: center;">&nbsp;</p>
                             </div>
 
