@@ -1,7 +1,6 @@
 const moment = require("moment");
 const enqueueEmail = require("../scheduledEmail");
 
-
 const scheduleJob = async (doctor, patient, daysLeft) => {
   // Set email parameters for the template
   const htmlParams = {

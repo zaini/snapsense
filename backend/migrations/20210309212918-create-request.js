@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Requests', {
+    await queryInterface.createTable("Requests", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       doctor_id: {
         type: Sequelize.INTEGER,
@@ -15,8 +15,8 @@ module.exports = {
         references: {
           model: "Doctors",
           key: "id",
-          as: "doctor_id"
-        }
+          as: "doctor_id",
+        },
       },
       patient_id: {
         type: Sequelize.INTEGER,
@@ -25,17 +25,17 @@ module.exports = {
         references: {
           model: "Patients",
           key: "id",
-          as: "patient_id"
-        }
+          as: "patient_id",
+        },
       },
       type: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       deadline: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       fulfilled: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       submission_id: {
         type: Sequelize.INTEGER,
@@ -44,20 +44,20 @@ module.exports = {
         references: {
           model: "Submissions",
           key: "id",
-          as: "submission_id"
-        }
+          as: "submission_id",
+        },
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Requests');
-  }
+    await queryInterface.dropTable("Requests");
+  },
 };

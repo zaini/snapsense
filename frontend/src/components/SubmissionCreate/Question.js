@@ -4,6 +4,7 @@ import { TextField } from "@material-ui/core";
 import Options from "./Options";
 
 const Question = ({
+  isHidden,
   step,
   defVal,
   defExtra,
@@ -12,7 +13,7 @@ const Question = ({
   onChangeText,
 }) => {
   return (
-    <Stack w={"100%"}>
+    <Stack hidden={isHidden} w={"100%"}>
       <Text data-testid={`qText${step}`}>{question.questionText}</Text>
       <Options
         step={step}

@@ -18,7 +18,6 @@ const seed = async () => {
     name: "London Hospital 3",
     contact_email: "london.hospital.three@mail.com",
   });
-
 };
 
 module.exports = seed;

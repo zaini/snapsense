@@ -115,7 +115,12 @@ const NewSubmissionPage = () => {
           />
         }
         body={
-          <Heading data-testid="formDone" color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
+          <Heading
+            data-testid="formDone"
+            color={"gray.700"}
+            fontSize={"2xl"}
+            fontFamily={"body"}
+          >
             Uploading...
           </Heading>
         }
@@ -128,7 +133,7 @@ const NewSubmissionPage = () => {
         head={<CheckIcon />}
         body={
           <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
-            Form has been submitted !
+            Submission has been sent!
           </Heading>
         }
       />
@@ -182,6 +187,7 @@ const NewSubmissionPage = () => {
             images={images}
             classes={classes}
             uploadSubmission={uploadSubmission}
+            step={activeStep}
           />
         </Stack>
       </Box>

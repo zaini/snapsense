@@ -40,7 +40,7 @@ const deleteAll = async () => {
     where: {},
     truncate: { cascade: true },
   });
-  
+
   await Submission.destroy({
     where: {},
     truncate: { cascade: true },
@@ -64,7 +64,7 @@ const deleteAll = async () => {
   await Request.destroy({
     where: {},
     truncate: { cascade: true },
-  })
+  });
 
   await SuperAdmin.destroy({
     where: {},

@@ -13,5 +13,4 @@ global.beforeAll(async () => {
   await seedFixtures();
 });
 
-
 jest.setTimeout(30000);

@@ -16,16 +16,25 @@ const SubmitButtonPanel = ({ answers, images, classes, uploadSubmission }) => {
         }
       }
     }
+  } else {
+    validateAnswers = false;
   }
+
+  let canSubmit = false;
+  canSubmit =
+    (imageUploadExists && !answerUploadExists) ||
+    (imageUploadExists && validateAnswers) ||
+    (validateAnswers && !imageUploadExists);
 
   return (
     <Paper className={classes.paper}>
       <Center>
         <Button
           data-testid="submitButton"
-          disabled={
-            !imageUploadExists && !(answerUploadExists && validateAnswers)
-          }
+          // when is it valid: when you have just imagfes
+          // when you have just questionnnaire fully
+          // whjen you have both fully
+          disabled={!canSubmit}
           righticon={<CheckCircleIcon />}
           variant="contained"
           color="primary"

@@ -80,13 +80,18 @@ const Feedback = () => {
   } else {
     markup = (
       <div data-testid="formSubmitInnerSuccess">
-        {data && (
-          <Alert status="success" borderRadius="50px" mb={4} textAlign="center">
-            <AlertIcon />
-            Thank you for your feedback!
-          </Alert>
-        )}
         <Container p="10" borderWidth="2em" borderRadius="lg" mt="10">
+          {data && (
+            <Alert
+              status="success"
+              borderRadius="50px"
+              mb={4}
+              textAlign="center"
+            >
+              <AlertIcon />
+              Thank you for your feedback!
+            </Alert>
+          )}
           <Grid
             justify="center"
             direction="column"

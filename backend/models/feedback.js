@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isValidStarNumber(value) {
-            if (!ModelValidator.isWithinRange(value, 0,5)) {
+            if (!ModelValidator.isWithinRange(value, 0, 5)) {
               throw new ValidationError(
                 "Invalid number of stars, must be between 0-5 (inclusive)"
               );

@@ -39,11 +39,23 @@ const PatientSubmissionsTimeline = ({ data }) => {
     return (
       <Timeline data-testid="timelineContainer" align="right">
         {data.map((submission, index) => {
+          let createdAt = submission.createdAt;
+          let createdAtDate = parseInt(createdAt);
+          if (isNaN(createdAtDate)) {
+            createdAtDate = createdAt;
+          }
+
+          const submission_date = new Date(createdAtDate);
+
           return (
             <TimelineItem data-testid={`tCard${index}`} key={index}>
               <TimelineOppositeContent>
-                <Typography data-testid={`tTypo${index}`} variant="body2" color="textSecondary">
-                  {new Date(submission.createdAt).toDateString()}
+                <Typography
+                  data-testid={`tTypo${index}`}
+                  variant="body2"
+                  color="textSecondary"
+                >
+                  {submission_date.toDateString()}
                 </Typography>
               </TimelineOppositeContent>
               <TimelineSeparator>

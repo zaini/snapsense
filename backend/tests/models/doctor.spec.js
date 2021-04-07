@@ -299,7 +299,7 @@ describe("Doctor Model Test", () => {
     done();
   });
 
-  it("should delete doctor if hospital is deleted", async (done) => {    
+  it("should delete doctor if hospital is deleted", async (done) => {
     const hospital = await Hospital.findByPk(1);
     await hospital.destroy();
 

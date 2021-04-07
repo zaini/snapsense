@@ -27,11 +27,11 @@ const seed = async () => {
     password: "Password123",
   });
 
-	await Patient.create({
+  await Patient.create({
     id: 4,
     fname: "Patient",
     lname: "Four",
-		email: "patient4@gmail.com",
+    email: "patient4@gmail.com",
     password: "Password123",
   });
 };

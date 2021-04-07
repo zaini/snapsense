@@ -1,11 +1,7 @@
 require("dotenv").config({ path: "../../../../../.env" });
 const { verify } = require("jsonwebtoken");
 
-const {
-  loginRequest,
-  registerUser,
-  registerRequest,
-} = require("./helper");
+const { loginRequest, registerUser, registerRequest } = require("./helper");
 
 const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
 
@@ -217,14 +213,14 @@ describe("doctors authorisation resolver", () => {
     done();
   });
 
-	it("should not register a new doctor if the patient already exists", async (done) => {
+  it("should not register a new doctor if the patient already exists", async (done) => {
     const inviteToken = registerUser(
       "admin1@gmail.com",
       "doctor1@nhs.net",
       "DOCTOR"
     );
 
-		const response = await registerRequest(
+    const response = await registerRequest(
       {
         fname: "New",
         lname: "Doctor",
@@ -241,14 +237,14 @@ describe("doctors authorisation resolver", () => {
     done();
   });
 
-	it("should not register a new doctor if the doctor already exists but the input email is upper cased", async (done) => {
+  it("should not register a new doctor if the doctor already exists but the input email is upper cased", async (done) => {
     const inviteToken = registerUser(
       "admin1@gmail.com",
       "DOCTOR1@nhs.net",
       "DOCTOR"
     );
 
-		const response = await registerRequest(
+    const response = await registerRequest(
       {
         fname: "New",
         lname: "Doctor",

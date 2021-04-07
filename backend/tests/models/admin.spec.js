@@ -274,7 +274,7 @@ describe("Admin Model Test", () => {
   it("should delete an admin if hospital is deleted", async (done) => {
     const hospital = await Hospital.findByPk(1);
     await hospital.destroy();
-    
+
     const adminFind = await Admin.findByPk(1);
     await expect(adminFind).toBeNull();
     done();

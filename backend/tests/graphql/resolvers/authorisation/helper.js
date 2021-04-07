@@ -26,7 +26,12 @@ const loginRequest = (email, password, accountType) => {
     });
 };
 
-const registerUser = (inviterEmail, newAccountEmail, accountType, duration = "2h") => {
+const registerUser = (
+  inviterEmail,
+  newAccountEmail,
+  accountType,
+  duration = "2h"
+) => {
   return sign(
     {
       inviterEmail,

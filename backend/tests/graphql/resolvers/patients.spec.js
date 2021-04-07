@@ -7,17 +7,17 @@ let doctorOneToken, patientOneToken, patientTwoToken;
 
 describe("patients resolvers", () => {
   beforeAll(async (done) => {
-  	const {
+    const {
       doctorOne,
       patientOne,
-      patientTwo
+      patientTwo,
     } = await require("./util/authTokens");
 
-		doctorOneToken = doctorOne;
-		patientOneToken = patientOne;
-		patientTwoToken = patientTwo;
+    doctorOneToken = doctorOne;
+    patientOneToken = patientOne;
+    patientTwoToken = patientTwo;
 
-		done()
+    done();
   });
 
   it("should get a patient as a doctor where the patient belongs to the doctor", async (done) => {

@@ -53,9 +53,9 @@ const HospitalPage = (props) => {
     markup = (
       <Container>
         <Stack spacing={4}>
-        <div data-testid="hospitalDetailContainer">
-          <HospitalDetails hospital={hospital} />
-        </div>
+          <div data-testid="hospitalDetailContainer">
+            <HospitalDetails hospital={hospital} />
+          </div>
           <Center>
             <Button
               data-testid="createAdminButton"
@@ -66,16 +66,20 @@ const HospitalPage = (props) => {
             >
               Create Admin for this Hospital
             </Button>
-            <Button data-testid="deleteHospitalButton" onClick={onDeleteOpen} colorScheme="red">
+            <Button
+              data-testid="deleteHospitalButton"
+              onClick={onDeleteOpen}
+              colorScheme="red"
+            >
               Delete Hospital
             </Button>
           </Center>
           <div data-testid="deleteModal">
-          <DeleteHospitalModal
-            isOpen={isDeleteOpen}
-            onClose={onDeleteClose}
-            hospital={hospital}
-          />
+            <DeleteHospitalModal
+              isOpen={isDeleteOpen}
+              onClose={onDeleteClose}
+              hospital={hospital}
+            />
           </div>
         </Stack>
       </Container>

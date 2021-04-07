@@ -46,11 +46,11 @@ module.exports = {
           ...user_details,
         }).save();
         return {
-					id: admin.id,
+          id: admin.id,
           fname: admin.fname,
           lname: admin.lname,
           email: admin.email,
-					Hospital: hospital,
+          Hospital: hospital,
           createdAt: admin.createdAt,
         };
       } catch (error) {

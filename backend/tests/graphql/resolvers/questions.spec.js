@@ -5,12 +5,12 @@ const app = require("../../../index");
 let patientOneToken;
 
 describe("questions resolvers", () => {
-	beforeAll(async (done) => {
-		const { patientOne } = await require("./util/authTokens");
-		patientOneToken = patientOne;
+  beforeAll(async (done) => {
+    const { patientOne } = await require("./util/authTokens");
+    patientOneToken = patientOne;
 
-		done();
-	});
+    done();
+  });
 
   it("should not get questionnaire if not logged in", async (done) => {
     const response = await request(app).post("/graphql").send({

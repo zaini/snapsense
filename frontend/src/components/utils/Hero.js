@@ -43,7 +43,13 @@ export default function Hero({ title, subtitle, image, ...rest }) {
         </Heading>
       </Stack>
       <Box w={{ base: "80%", sm: "60%", md: "50%" }} mb={{ base: 12, md: 0 }}>
-        <Image src={image} size="100%" rounded="1rem" shadow="2xl" data-testid="heroImage"/>
+        <Image
+          src={image}
+          size="100%"
+          rounded="1rem"
+          shadow="2xl"
+          data-testid="heroImage"
+        />
       </Box>
     </Flex>
   );

@@ -19,7 +19,7 @@ const seed = async () => {
     updatedAt: new Date(),
   });
 
-	await Image.create({
+  await Image.create({
     id: 3,
     url:
       "https://snapsensebucket.s3.ap-south-1.amazonaws.com/f150d94e-25cb-4973-bf26-d987b5bde188.jpg",

@@ -25,7 +25,11 @@ const HospitalDetails = ({ hospital }) => {
         </FormControl>
         <FormControl id="name">
           <FormLabel>Hospital name</FormLabel>
-          <Input data-testid="hospitalNameHolder" value={hospital.name} isReadOnly />
+          <Input
+            data-testid="hospitalNameHolder"
+            value={hospital.name}
+            isReadOnly
+          />
         </FormControl>
         <FormControl id="email">
           <FormLabel>Contact Email</FormLabel>

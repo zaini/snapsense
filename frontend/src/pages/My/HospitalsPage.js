@@ -90,12 +90,23 @@ const cols = [
       return (
         <Stack direction="row" spacing={4}>
           <Link data-testid="hospitalShowLink" to={`/my/hospitals/show/${id}`}>
-            <Button data-testid="viewButton" leftIcon={<ViewIcon />} colorScheme="blue">
+            <Button
+              data-testid="viewButton"
+              leftIcon={<ViewIcon />}
+              colorScheme="blue"
+            >
               View Hospital
             </Button>
           </Link>
-          <Link data-testid="newAdminLink" to={`/my/hospitals/${id}/admins/new`}>
-            <Button data-testid="createAdminButton" leftIcon={<AddIcon />} colorScheme="blue">
+          <Link
+            data-testid="newAdminLink"
+            to={`/my/hospitals/${id}/admins/new`}
+          >
+            <Button
+              data-testid="createAdminButton"
+              leftIcon={<AddIcon />}
+              colorScheme="blue"
+            >
               Create Admin
             </Button>
           </Link>

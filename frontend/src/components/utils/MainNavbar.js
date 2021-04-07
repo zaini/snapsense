@@ -10,7 +10,7 @@ const Header = () => {
 
   return (
     <Flex
-    data-testid="MainNavbarID"
+      data-testid="MainNavbarID"
       as="nav"
       align="center"
       justify="space-between"
@@ -42,7 +42,7 @@ const Header = () => {
           direction={["column", "row", "row", "row"]}
           pt={[4, 4, 0, 0]}
         >
-          <NavbarMenuItems testName="navbarItems"/>
+          <NavbarMenuItems testName="navbarItems" />
         </Flex>
       </Box>
     </Flex>

@@ -35,20 +35,21 @@ describe("requests resolvers", () => {
 
   it("should get requests as the logged in patient", async (done) => {
     const response = await getRequestsAsPatient(patientOneToken);
-    const { body } = response;
-    expect(body).toMatchObject({
-      data: {
-        getRequestsAsPatient: [
-          {
-            Doctor: { email: "doctor1@nhs.net" },
-            Patient: { email: "patient1@gmail.com" },
-            Submission: { id: "1" },
-            deadline: "1609804800000",
-            fulfilled: "1609718400000",
-          },
-        ],
+    const {
+      body: {
+        data: { getRequestsAsPatient: result },
       },
-    });
+    } = response;
+
+    expect(result[0]).toEqual(
+      expect.objectContaining({
+        Doctor: { email: "doctor1@nhs.net" },
+        Patient: { email: "patient1@gmail.com" },
+        Submission: { id: "1" },
+      })
+    );
+    expect(result[0].deadline).not.toBeNull();
+    expect(result[0].fulfilled).not.toBeNull();
     done();
   });
 
@@ -99,20 +100,22 @@ describe("requests resolvers", () => {
 
   it("should get requests as the logged in doctor", async (done) => {
     const response = await getRequestsAsDoctor(doctorOneToken);
-    const { body } = response;
-    expect(body).toMatchObject({
-      data: {
-        getRequestsAsDoctor: [
-          {
-            Doctor: { email: "doctor1@nhs.net" },
-            Patient: { email: "patient1@gmail.com" },
-            Submission: { id: "1" },
-            deadline: "1609804800000",
-            fulfilled: "1609718400000",
-          },
-        ],
+    const {
+      body: {
+        data: { getRequestsAsDoctor: result },
       },
-    });
+    } = response;
+
+    expect(result[0]).toEqual(
+      expect.objectContaining({
+        Doctor: { email: "doctor1@nhs.net" },
+        Patient: { email: "patient1@gmail.com" },
+        Submission: { id: "1" },
+      })
+    );
+
+    expect(result[0].deadline).not.toBeNull();
+    expect(result[0].fulfilled).not.toBeNull();
     done();
   });
 
@@ -163,20 +166,22 @@ describe("requests resolvers", () => {
 
   it("should get the requests the logged in doctor has to review", async (done) => {
     const response = await getRequestsForReview(doctorTwoToken);
-    const { body } = response;
-    expect(body).toMatchObject({
-      data: {
-        getRequestsForReview: [
-          {
-            Doctor: { email: "doctor2@nhs.net" },
-            Patient: { email: "patient2@gmail.com" },
-            Submission: { id: "2", flag: null }, // flag must be null as that means the doctor has not reviewed it
-            deadline: "1610236800000",
-            fulfilled: "1610064000000",
-          },
-        ],
+    const {
+      body: {
+        data: { getRequestsForReview: result },
       },
-    });
+    } = response;
+
+    expect(result[0]).toEqual(
+      expect.objectContaining({
+        Doctor: { email: "doctor2@nhs.net" },
+        Patient: { email: "patient2@gmail.com" },
+        Submission: { id: "2", flag: null }, // flag must be null as that means the doctor has not reviewed it
+      })
+    );
+
+    expect(result[0].deadline).not.toBeNull;
+    expect(result[0].fulfilled).not.toBeNull;
     done();
   });
 
