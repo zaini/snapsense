@@ -148,7 +148,7 @@ const FLAG_SUBMISSION = gql`
 `;
 
 const GET_SUBMISSIONS = gql`
-  query getSubmissions {
+  query getSubmissionsForReview {
     getSubmissionsForReview {
       id
       flag
@@ -178,7 +178,7 @@ const GET_SUBMISSIONS = gql`
 `;
 
 const GET_REQUESTS = gql`
-  query getRequests {
+  query getRequestsForReview {
     getRequestsForReview {
       id
       type
