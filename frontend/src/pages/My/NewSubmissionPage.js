@@ -187,6 +187,7 @@ const NewSubmissionPage = () => {
             images={images}
             classes={classes}
             uploadSubmission={uploadSubmission}
+            step={activeStep}
           />
         </Stack>
       </Box>
