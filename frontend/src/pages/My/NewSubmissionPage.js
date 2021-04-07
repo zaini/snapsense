@@ -133,7 +133,7 @@ const NewSubmissionPage = () => {
         head={<CheckIcon />}
         body={
           <Heading color={"gray.700"} fontSize={"2xl"} fontFamily={"body"}>
-            Form has been submitted !
+            Submission has been sent!
           </Heading>
         }
       />
