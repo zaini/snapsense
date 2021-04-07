@@ -236,7 +236,7 @@ const commons = {
                                       <tr style="vertical-align: top">
                                         <td align="left" valign="middle"
                                           style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                          <a href="${ essentials.youtube }" title="YouTube" target="_blank">
+                                          <a href="${essentials.youtube}" title="YouTube" target="_blank">
                                             <img src="https://snapsensebucket.s3.ap-south-1.amazonaws.com/image-4.png" alt="YouTube" title="YouTube" width="32"
                                               style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
                                           </a>
@@ -253,7 +253,7 @@ const commons = {
                                       <tr style="vertical-align: top">
                                         <td align="left" valign="middle"
                                           style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                          <a href="${ essentials.twitter }" title="Twitter" target="_blank">
+                                          <a href="${essentials.twitter}" title="Twitter" target="_blank">
                                             <img src="https://snapsensebucket.s3.ap-south-1.amazonaws.com/image-5.png" alt="Twitter" title="Twitter" width="32"
                                               style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
                                           </a>
@@ -270,7 +270,7 @@ const commons = {
                                       <tr style="vertical-align: top">
                                         <td align="left" valign="middle"
                                           style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                          <a href="${ essentials.fb }" title="Facebook" target="_blank">
+                                          <a href="${essentials.fb}" title="Facebook" target="_blank">
                                             <img src="https://snapsensebucket.s3.ap-south-1.amazonaws.com/image-3.png" alt="Facebook" title="Facebook" width="32"
                                               style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
                                           </a>
@@ -287,7 +287,7 @@ const commons = {
                                       <tr style="vertical-align: top">
                                         <td align="left" valign="middle"
                                           style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                          <a href="${ essentials.ig }" title="Instagram" target="_blank">
+                                          <a href="${essentials.ig}" title="Instagram" target="_blank">
                                             <img src="https://snapsensebucket.s3.ap-south-1.amazonaws.com/image-2.png" alt="Instagram" title="Instagram" width="32"
                                               style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
                                           </a>
@@ -344,9 +344,9 @@ const commons = {
                                 style="color: #4e4d52; line-height: 140%; text-align: center; word-wrap: break-word;">
                                 <p style="font-size: 14px; line-height: 140%;"><span
                                     style="font-size: 14px; line-height: 19.6px;">Useful Links:&nbsp; <strong><a
-                                        href="${ essentials.url }" target="_blank" rel="noopener">Website</a> &nbsp; <a
-                                        href="${ essentials.about }" target="_blank" rel="noopener">About Us&nbsp;</a> &nbsp;<a
-                                        href="${ essentials.contact }" target="_blank" rel="noopener">Contact Us</a></strong></span>
+                                        href="${essentials.url}" target="_blank" rel="noopener">Website</a> &nbsp; <a
+                                        href="${essentials.about}" target="_blank" rel="noopener">About Us&nbsp;</a> &nbsp;<a
+                                        href="${essentials.contact}" target="_blank" rel="noopener">Contact Us</a></strong></span>
                                 </p>
                               </div>
 

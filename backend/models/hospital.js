@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isCorrectLength(value) {
-            if (!ModelValidator.isWithinRange(value.length, 10,75)) {
+            if (!ModelValidator.isWithinRange(value.length, 10, 75)) {
               throw new ValidationError("Invalid name");
             }
           },

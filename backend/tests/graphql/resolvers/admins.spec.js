@@ -10,7 +10,7 @@ describe("admins resolvers", () => {
     superAdminToken = superAdmin;
     adminToken = admin;
 
-		done();
+    done();
   });
 
   it("should create admin as a super-admin", async (done) => {

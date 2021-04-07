@@ -11,7 +11,7 @@ describe("Feedback Model Test", () => {
     done();
   });
 
-	it("should save a feedback with 0 stars", async (done) => {
+  it("should save a feedback with 0 stars", async (done) => {
     await expect(
       Feedback.create({
         stars: 0,
@@ -21,7 +21,7 @@ describe("Feedback Model Test", () => {
     done();
   });
 
-	it("should save a feedback with 5 stars", async (done) => {
+  it("should save a feedback with 5 stars", async (done) => {
     await expect(
       Feedback.create({
         stars: 0,
@@ -31,7 +31,7 @@ describe("Feedback Model Test", () => {
     done();
   });
 
-	it("should save a feedback with null extra", async (done) => {
+  it("should save a feedback with null extra", async (done) => {
     await expect(
       Feedback.create({
         stars: 4,

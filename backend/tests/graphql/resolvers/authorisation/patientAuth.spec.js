@@ -1,11 +1,7 @@
 require("dotenv").config({ path: "../../../../../.env" });
 const { verify } = require("jsonwebtoken");
 
-const {
-  loginRequest,
-  registerUser,
-  registerRequest,
-} = require("./helper");
+const { loginRequest, registerUser, registerRequest } = require("./helper");
 
 const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
 
@@ -217,7 +213,7 @@ describe("patients authorisation resolver", () => {
     done();
   });
 
-	it("should not register a new patient if the patient already exists", async (done) => {
+  it("should not register a new patient if the patient already exists", async (done) => {
     const inviteToken = registerUser(
       "doctor1@nhs.net",
       "patient1@gmail.com",
@@ -241,7 +237,7 @@ describe("patients authorisation resolver", () => {
     done();
   });
 
-	it("should not register a new patient if the patient already exists but the input email is upper cased", async (done) => {
+  it("should not register a new patient if the patient already exists but the input email is upper cased", async (done) => {
     const inviteToken = registerUser(
       "doctor1@nhs.net",
       "PATIENT1@gmail.com",
