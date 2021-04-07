@@ -120,6 +120,8 @@ The database should now work. You'll probably also want to seed it by running `n
 
 You can do this with a single command in the backend `npm run db:setup`.
 
+Make sure MySQL is running: ```sudo service mysql start```
+
 ## Running Application
 
 To run the frontend, `cd frontend && npm start`
