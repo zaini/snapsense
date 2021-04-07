@@ -3,7 +3,6 @@ import Typography from "@material-ui/core/Typography";
 import { Box, Flex, Stack } from "@chakra-ui/layout";
 import Question from "./Question";
 import questionsObject from "../../utils/QuestionsObject";
-import Review from "./Review";
 
 const QuestionForm = ({
   step,
@@ -42,6 +41,7 @@ const QuestionForm = ({
                 width={"100%"}
                 overflow="hidden"
                 padding="4"
+                hidden={!isQuestionnaireVisible}
                 display={step === i ? "block" : "none"}
                 data-testid={`Questionnaire${i + 1}`}
               >
@@ -53,8 +53,6 @@ const QuestionForm = ({
                   onChangeOption={onChangeOption}
                   onChangeText={onChangeText}
                 />
-
-                <Review isHidden={isQuestionnaireVisible} answers={answers} />
               </Box>
             ))}
           </Flex>
