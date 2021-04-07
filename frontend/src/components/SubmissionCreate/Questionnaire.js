@@ -3,8 +3,14 @@ import Typography from "@material-ui/core/Typography";
 import { Box, Flex, Stack } from "@chakra-ui/layout";
 import Question from "./Question";
 import questionsObject from "../../utils/QuestionsObject";
+import Review from "./Review";
 
-const QuestionForm = ({ step, answers, setAnswers }) => {
+const QuestionForm = ({
+  step,
+  answers,
+  setAnswers,
+  isQuestionnaireVisible,
+}) => {
   if (!answers.questionnaire[step + 1]) {
     answers.questionnaire[step + 1] = {};
   }
@@ -41,11 +47,14 @@ const QuestionForm = ({ step, answers, setAnswers }) => {
               >
                 <Question
                   step={i}
+                  isHidden={!isQuestionnaireVisible}
                   answers={answers}
                   question={questionsObject[i]}
                   onChangeOption={onChangeOption}
                   onChangeText={onChangeText}
                 />
+
+                <Review isHidden={isQuestionnaireVisible} answers={answers} />
               </Box>
             ))}
           </Flex>

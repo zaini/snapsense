@@ -3,7 +3,6 @@ import { StepLabel, Step, Paper, Stepper } from "@material-ui/core";
 import { Heading, Stack, Box, Center } from "@chakra-ui/react";
 
 import QuestionForm from "./Questionnaire";
-import Review from "./Review";
 import BackButton from "./BackButton";
 import NextButton from "./NextButton";
 
@@ -40,15 +39,12 @@ const QuestionnairePanel = ({
       </Stepper>
       <Box>
         <Stack>
-          {isQuestionnaireVisible ? (
-            <QuestionForm
-              step={activeStep}
-              answers={answers}
-              setAnswers={setAnswers}
-            />
-          ) : (
-            <Review answers={answers} />
-          )}
+          <QuestionForm
+            isQuestionnaireVisible={isQuestionnaireVisible}
+            step={activeStep}
+            answers={answers}
+            setAnswers={setAnswers}
+          />
 
           <Center columns={[2]}>
             {activeStep > 0 ? (
