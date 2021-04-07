@@ -1,13 +1,3 @@
-const essentials = {
-  youtube: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  twitter: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  fb: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  ig: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  about: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  contact: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-};
-
 const commons = {
   header: `
   <!DOCTYPE HTML
@@ -229,75 +219,6 @@ const commons = {
                                   <!--[if (mso)|(IE)]><table width="259" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-collapse:collapse;" align="center"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; mso-table-lspace: 0pt;mso-table-rspace: 0pt; width:259px;"><tr><![endif]-->
 
 
-                                  <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 33px;" valign="top"><![endif]-->
-                                  <table align="left" border="0" cellspacing="0" cellpadding="0" width="32" height="32"
-                                    style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 33px">
-                                    <tbody>
-                                      <tr style="vertical-align: top">
-                                        <td align="left" valign="middle"
-                                          style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                          <a href="${essentials.youtube}" title="YouTube" target="_blank">
-                                            <img src="https://snapsensebucket.s3.ap-south-1.amazonaws.com/image-4.png" alt="YouTube" title="YouTube" width="32"
-                                              style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
-                                          </a>
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                  <!--[if (mso)|(IE)]></td><![endif]-->
-
-                                  <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 33px;" valign="top"><![endif]-->
-                                  <table align="left" border="0" cellspacing="0" cellpadding="0" width="32" height="32"
-                                    style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 33px">
-                                    <tbody>
-                                      <tr style="vertical-align: top">
-                                        <td align="left" valign="middle"
-                                          style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                          <a href="${essentials.twitter}" title="Twitter" target="_blank">
-                                            <img src="https://snapsensebucket.s3.ap-south-1.amazonaws.com/image-5.png" alt="Twitter" title="Twitter" width="32"
-                                              style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
-                                          </a>
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                  <!--[if (mso)|(IE)]></td><![endif]-->
-
-                                  <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 33px;" valign="top"><![endif]-->
-                                  <table align="left" border="0" cellspacing="0" cellpadding="0" width="32" height="32"
-                                    style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 33px">
-                                    <tbody>
-                                      <tr style="vertical-align: top">
-                                        <td align="left" valign="middle"
-                                          style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                          <a href="${essentials.fb}" title="Facebook" target="_blank">
-                                            <img src="https://snapsensebucket.s3.ap-south-1.amazonaws.com/image-3.png" alt="Facebook" title="Facebook" width="32"
-                                              style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
-                                          </a>
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                  <!--[if (mso)|(IE)]></td><![endif]-->
-
-                                  <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 0px;" valign="top"><![endif]-->
-                                  <table align="left" border="0" cellspacing="0" cellpadding="0" width="32" height="32"
-                                    style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 0px">
-                                    <tbody>
-                                      <tr style="vertical-align: top">
-                                        <td align="left" valign="middle"
-                                          style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                          <a href="${essentials.ig}" title="Instagram" target="_blank">
-                                            <img src="https://snapsensebucket.s3.ap-south-1.amazonaws.com/image-2.png" alt="Instagram" title="Instagram" width="32"
-                                              style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
-                                          </a>
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                  <!--[if (mso)|(IE)]></td><![endif]-->
-
-
                                   <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
                                 </div>
                               </div>
@@ -344,9 +265,9 @@ const commons = {
                                 style="color: #4e4d52; line-height: 140%; text-align: center; word-wrap: break-word;">
                                 <p style="font-size: 14px; line-height: 140%;"><span
                                     style="font-size: 14px; line-height: 19.6px;">Useful Links:&nbsp; <strong><a
-                                        href="${essentials.url}" target="_blank" rel="noopener">Website</a> &nbsp; <a
-                                        href="${essentials.about}" target="_blank" rel="noopener">About Us&nbsp;</a> &nbsp;<a
-                                        href="${essentials.contact}" target="_blank" rel="noopener">Contact Us</a></strong></span>
+                                        href="http://ec2-15-206-186-188.ap-south-1.compute.amazonaws.com/" target="_blank" rel="noopener">Website</a> &nbsp; <a
+                                        href="http://ec2-15-206-186-188.ap-south-1.compute.amazonaws.com/about" target="_blank" rel="noopener">About Us&nbsp;</a> &nbsp;<a
+                                        href="http://ec2-15-206-186-188.ap-south-1.compute.amazonaws.com/feedback" target="_blank" rel="noopener">Contact Us</a></strong></span>
                                 </p>
                               </div>
 
