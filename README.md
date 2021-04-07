@@ -7,6 +7,8 @@ This project was developed as part of coursework for 5CCS2SEG.
 
 Developed by Ali Zaini, Mohammad Albinhassan, Ayan Ahmad, Sonia Baileys, Mahsum Kocabey, Era Mullahasani Dula, Soyoung Park, Benedict Udall and Alisher Zhaken.
 
+Demo video: https://youtu.be/v3hdHfxxA5Y
+
 ## Features
 
 - Superadmin can create hospitals and admins for those hospitals
