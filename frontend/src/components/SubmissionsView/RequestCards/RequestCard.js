@@ -86,7 +86,7 @@ const RequestCard = ({ data, vertical, testID }) => {
                 </Box>
               </Center>
             ) : (
-              <ImageSlideshow images={Submission.Images} />
+              <ImageSlideshow images={Submission.Images || []} />
             )}
           </Box>
 
@@ -108,7 +108,7 @@ const RequestCard = ({ data, vertical, testID }) => {
                 </Center>
               </Box>
             ) : (
-              <ViewQuestionnaireResponse answers={Submission.Answers} />
+              <ViewQuestionnaireResponse answers={Submission.Answers || []} />
             )}
           </Box>
 

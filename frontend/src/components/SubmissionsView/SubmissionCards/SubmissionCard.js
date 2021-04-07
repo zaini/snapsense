@@ -86,7 +86,7 @@ const SubmissionCard = ({ testID, data, vertical, redirect }) => {
                 </Box>
               </Center>
             ) : (
-              <ImageSlideshow images={Images} />
+              <ImageSlideshow images={Images || []} />
             )}
           </Box>
 
@@ -108,7 +108,7 @@ const SubmissionCard = ({ testID, data, vertical, redirect }) => {
                 </Center>
               </Box>
             ) : (
-              <ViewQuestionnaireResponse answers={Answers} />
+              <ViewQuestionnaireResponse answers={Answers || []} />
             )}
           </Box>
 
