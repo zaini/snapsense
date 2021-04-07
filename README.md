@@ -9,6 +9,8 @@ Developed by Ali Zaini, Mohammad Albinhassan, Ayan Ahmad, Sonia Baileys, Mahsum 
 
 Demo video: https://youtu.be/v3hdHfxxA5Y
 
+Deployed link: http://ec2-15-206-186-188.ap-south-1.compute.amazonaws.com/
+
 ## Features
 
 - Superadmin can create hospitals and admins for those hospitals
