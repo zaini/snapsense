@@ -57,7 +57,7 @@ describe("Hospital Model Test", () => {
   it("should throw an error on short name", async (done) => {
     await expect(
       Hospital.create({
-        name: "ShortName",
+        name: "AI",
         contact_email: "test_hospital@mail.com",
       })
     ).rejects.toThrow();

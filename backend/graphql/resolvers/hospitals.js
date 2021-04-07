@@ -2,6 +2,7 @@ const { UserInputError } = require("apollo-server");
 
 const { Hospital } = require("../../models/index.js");
 const { getAuthenticatedSuperAdmin } = require("./utils/userAuthorisation");
+const transactionalEmailSender = require("../../utils/transactionalEmailSender");
 
 module.exports = {
   Query: {
@@ -40,6 +41,23 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       }).save();
+
+      // Set email parameters for the template
+      const htmlParams = {
+        hospName: hospital_details.name,
+      };
+
+      // Set essential email parameters
+      const emailParams = {
+        to: hospital_details.contact_email,
+        subject: "Snapsense Hospital Creation ",
+        altbody: "Hospital has been created",
+        template: "hospital",
+        status: 0,
+      };
+
+      // Insert bundled email params into model
+      await transactionalEmailSender(emailParams, htmlParams);
 
       return hospital;
     },
